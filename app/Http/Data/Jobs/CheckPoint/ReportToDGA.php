@@ -77,7 +77,6 @@ class ReportToDGA extends SoapController implements ShouldQueue
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('tx-nivel');
             })->where('check_point_id',$checkPoint->id)->first();
-            $max_value = $device->sensors->first()->max_value;
             $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
 
             $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);

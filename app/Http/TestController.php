@@ -2,9 +2,13 @@
 
 namespace App\Http;
 
+use App\App\Controllers\Soap\InstanceSoapClient;
 use App\App\Controllers\Soap\SoapController;
 use App\Domain\Client\Area\Area;
+use App\Domain\Client\CheckPoint\CheckPoint;
+use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Sentinel;
 
@@ -14,37 +18,104 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $time_start = microtime(true);
+        $checkPoint = CheckPoint::whereNotNull('work_code')->first();
 
-        $areas = Area::with('zones.sub_zones.configuration')->get()->filter(function($item){
-            return $item->zones->filter(function($zone) {
-                    return $zone->sub_zones->filter(function($sub_zone) {
-                        return (Sentinel::getUser()->inSubZone($sub_zone->id) && isset($sub_zone->configuration));
-                        })->count() > 0;
-                })->count() > 0;
-        })->toArray();
-        $zones = Area::has('zones.sub_zones.configuration')->whereHas('zones.sub_zones', $filter =  function($query){
-           $query->whereIn('id',Sentinel::getUser()->getSubZonesIds());
-        })->with( ['zones.sub_zones' => $filter])->get();
-        $time_end = microtime(true);
 
-        $execution_time = ($time_end - $time_start);
-        dd($execution_time,$areas,$zones);
+            $device = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('totalizador');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->first();
+                }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('totalizador');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $totalizador = $device->sensors->first()->analogous_reports->first()->result;
+
+            $flow = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('tx-caudal');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->first();
+                }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('tx-caudal');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $caudal = $flow->sensors->first()->analogous_reports->first()->result;
+
+
+
+            $device = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('tx-nivel');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->first();
+                }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('tx-nivel');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
+            dd($totalizador,$caudal,$nivel,$checkPoint->work_code);
+            $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
+
     }
 
 
-    protected function getSensors()
+    public function ReportToDGA($totalizador,$caudal,$nivelFreatico,$codigoDeObra,$checkPoint)
     {
-        $sensors = Sensor::with('type','device.check_point.type')->whereHas('type', function($query){
-            $query->where('slug','tx-caudal')
-                ->orWhere('slug','ee-tension-l-n')
-                ->orWhere('slug','ee-corriente')
-                ->orWhere('slug','ee-p-activa')
-                ->orWhere('slug','ee-p-aparente')
-                ->orWhere('slug','ee-p-act-u')
-                ->orWhere('slug','partidor-danfoss')
-                ->orWhere('slug','ee-tension-l-l')
-                ->orWhere('slug','modbus');
-        })->get();
+        try {
+            ini_set('default_socket_timeout', 600);
+            self::setWsdl('https://snia.mop.gob.cl/controlextraccion/wsdl/datosExtraccion/SendDataExtraccionService');
+            $service = InstanceSoapClient::init();
+            $params = [
+                'sendDataExtraccionRequest' => [
+                    'dataExtraccionSubterranea' => [
+                        'fechaMedicion' => Carbon::now()->format('d-m-Y'),
+                        'horaMedicion' => Carbon::now()->format('H:i:s'),
+                        'totalizador' => number_format($totalizador,0,'',''),
+                        'caudal' => number_format($caudal,2,'.',''),
+                        'nivelFreaticoDelPozo' => number_format($nivelFreatico,2,'.',''),
+                    ]
+                ]
+            ];
+
+            $headerParams = array(
+                'codigoDeLaObra' => $codigoDeObra,
+                'timeStampOrigen' =>   Carbon::now()->timestamp
+            );
+
+
+            $headers[] = new SoapHeader('http://www.mop.cl/controlextraccion/xsd/datosExtraccion/SendDataExtraccionRequest',
+                'sendDataExtraccionTraza',
+                $headerParams
+            );
+
+            $service->__setSoapHeaders($headers);
+
+            $response = $service->__soapCall('sendDataExtraccionOp',$params);
+
+            $checkPoint->dga_reports()->create([
+                'response' => $response->status->Code,
+                'response_text' => $response->status->Description,
+                'tote_reported' => $totalizador,
+                'flow_reported' => $caudal,
+                'water_table_reported' => $nivelFreatico,
+                'report_date' => Carbon::now()->toDateTimeString()
+            ]);
+
+
+
+        } catch(\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
