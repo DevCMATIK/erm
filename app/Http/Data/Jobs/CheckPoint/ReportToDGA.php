@@ -103,7 +103,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
 
             $headerParams = array(
                 'codigoDeLaObra' => $codigoDeObra,
-                'timeStampOrigen' =>   Carbon::now()->timestamp
+                'timeStampOrigen' =>   Carbon::now()->toIso8601ZuluString()
             );
 
 
