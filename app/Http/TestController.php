@@ -64,7 +64,7 @@ class TestController extends SoapController
                 return $q->sensorType('tx-nivel');
             })->where('check_point_id',$checkPoint->id)->first();
             $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
-            dd($totalizador,$caudal,$nivel,$checkPoint->work_code);
+
             $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
 
     }
@@ -103,14 +103,7 @@ class TestController extends SoapController
 
             $response = $service->__soapCall('sendDataExtraccionOp',$params);
 
-            $checkPoint->dga_reports()->create([
-                'response' => $response->status->Code,
-                'response_text' => $response->status->Description,
-                'tote_reported' => $totalizador,
-                'flow_reported' => $caudal,
-                'water_table_reported' => $nivelFreatico,
-                'report_date' => Carbon::now()->toDateTimeString()
-            ]);
+           dd($response,$headers,$headerParams,$service,$params);
 
 
 
