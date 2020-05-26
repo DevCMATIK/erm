@@ -92,7 +92,7 @@ class TestController extends SoapController
 
             $headerParams = array(
                 'codigoDeLaObra' => $codigoDeObra,
-                'timeStampOrigen' =>   Carbon::now()->toIsoString()
+                'timeStampOrigen' =>   Carbon::now()->toIso8601ZuluString()
             );
 
 
