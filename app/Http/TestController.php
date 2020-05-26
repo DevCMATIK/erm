@@ -11,6 +11,8 @@ use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Sentinel;
+use SoapHeader;
+
 
 class TestController extends SoapController
 {
