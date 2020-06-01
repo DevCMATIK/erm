@@ -14,7 +14,8 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-
+        ElectricityConsumption::query()->truncate();
+        dd(ElectricityConsumption::count());
         $time_start = microtime(true);
         $toInsert = array();
 
@@ -39,7 +40,7 @@ class TestController extends Controller
                         'consumption' => $consumption,
                         'sensor_type' => $sensor->type->slug,
                         'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                        'date' => Carbon::yesterday()->toDateString()
+                        'date' => $request->date
                     ]);
                 }
             }
