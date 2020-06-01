@@ -15,7 +15,7 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
         $time_start = microtime(true);
-
+        $toInsert = array();
 
 
         if($request->has('date')) {
@@ -29,7 +29,7 @@ class TestController extends Controller
                     $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
                     $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
                 }
-                dd($first_read,$last_read);
+
                 if($first_read && $last_read) {
                     $consumption = $last_read - $first_read;
                     array_push($toInsert,[
@@ -43,8 +43,10 @@ class TestController extends Controller
                     ]);
                 }
             }
+            if(count($toInsert) > 0) {
+                ElectricityConsumption::insert($toInsert);
+            }
 
-            ElectricityConsumption::insert($toInsert);
         }
         $time_end = microtime(true);
 

@@ -33,6 +33,8 @@ class BackupEnergy implements ShouldQueue
      */
     public function handle()
     {
+
+        $toInsert = array();
         $first_date = Carbon::yesterday();
         $second_date = Carbon::today();
         return  Sensor::whereHas('type', $typeFilter = function ($q) {
@@ -46,7 +48,6 @@ class BackupEnergy implements ShouldQueue
             'consumptions'
         ])->get();
 
-        $toInsert = array();
         foreach($sensors as $sensor) {
             if(count($sensor->consumptions) > 0) {
                 $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
