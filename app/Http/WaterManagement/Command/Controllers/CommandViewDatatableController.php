@@ -12,7 +12,7 @@ class CommandViewDatatableController extends DataTableAbstract
     {
         return CommandLog::with([
             'user',
-            'device',
+            'device.check_point.sub_zones',
             'sensor.address',
             'sensor.label'
         ])->orderBy('execution_date','desc')->get();
@@ -24,6 +24,7 @@ class CommandViewDatatableController extends DataTableAbstract
             optional($record->user)->full_name,
             optional($record->user)->email,
             optional($record->device)->name,
+            optional($record->device)->check_point->sub_zones->first()->name,
             optional($record->sensor)->name,
             optional($record->sensor)->full_address,
             $record->grd_id,

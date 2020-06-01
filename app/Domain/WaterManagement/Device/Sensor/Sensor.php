@@ -115,6 +115,7 @@ class Sensor extends Model
         return $this->hasMany(AnalogousReport::class,'sensor_id','id');
     }
 
+
     public function today_analogous_reports()
     {
         return $this->analogous_reports()->where('analogous_reports.result','>',1)->today('analogous_reports.date');

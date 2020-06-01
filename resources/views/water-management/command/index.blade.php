@@ -3,5 +3,5 @@
 @section('page-icon','database')
 
 @section('page-content')
-    {!! makeDefaultView(['Usuario','Email','Dispositivo','Sensor','Address','grd_id','Orden ejecutada','Fecha','IP'],'command-log') !!}
+    {!! makeDefaultView(['Usuario','Email','Sub Zona','Dispositivo','Sensor','Address','grd_id','Orden ejecutada','Fecha','IP'],'command-log') !!}
 @endsection

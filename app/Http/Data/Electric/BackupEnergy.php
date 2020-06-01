@@ -33,26 +33,30 @@ class BackupEnergy implements ShouldQueue
      */
     public function handle()
     {
-        $sensors = Sensor::with([
-            'type' => function ($q) {
-                return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-            },
-            'device.check_point.sub_zones',
-            'yesterday_analogous_reports'
-        ])->whereHas('type', function ($q) {
+        $first_date = Carbon::yesterday();
+        $second_date = Carbon::today();
+        return  Sensor::whereHas('type', $typeFilter = function ($q) {
             return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->get();
+        })->whereHas('analogous_report', $reportsFilter = function($query) use ($first_date,$second_date){
+            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
+        })->with([
+            'type' => $typeFilter,
+            'device.check_point.sub_zones',
+            'analogous_reports' => $reportsFilter,
+            'consumptions'
+        ])->get();
 
         $toInsert = array();
         foreach($sensors as $sensor) {
-            $first_read = optional($sensor->yesterday_analogous_reports->first())->result;
-            if($first_read && $first_read != '') {
-                $last_read = $sensor->yesterday_analogous_reports->sortByDesc('id')->first()->result;
-                $consumption = $last_read - $first_read;
+            if(count($sensor->consumptions) > 0) {
+                $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
+                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
             } else {
-                $consumption = 0;
+                $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
+                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
             }
-            if(isset($first_read) && $first_read != '' && $consumption > 0){
+            if($first_read && $last_read) {
+                $consumption = $last_read - $first_read;
                 array_push($toInsert,[
                     'sensor_id' => $sensor->id,
                     'first_read' => $first_read,
@@ -65,9 +69,6 @@ class BackupEnergy implements ShouldQueue
             }
         }
 
-
-
         ElectricityConsumption::insert($toInsert);
-
     }
 }

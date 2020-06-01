@@ -70,6 +70,7 @@ trait CheckAlarmsTrait
                 }
             } else {
                 $this->handleEmails($alarm,$value);
+
             }
 
         }
@@ -109,34 +110,44 @@ trait CheckAlarmsTrait
                                 }
                             }
                         }
-                        LaravelMailer::to(['no-reply@cmatik.cl'])
-                            ->bcc($users)
-                            ->send(new SystemMail(
-                                $notification->mail,
-                                Carbon::now()->toDateString(),
-                                '',
-                                $alarm->sensor->name,
-                                $alarm->sensor->device->check_point->name,
-                                $alarm->sensor->device->name,
-                                $alarm->sensor->device->check_point->sub_zones->first()->zone->name,
-                                $alarm->sensor->device->check_point->sub_zones->first()->name,
-                                $type,
-                                $val,
-                                Carbon::parse(optional($alarm->last_log()->first())->start_date)->toDateString(),
-                                false,
-                                Carbon::now()->toDateTimeString(),
-                                Carbon::now()->toTimeString(),
-                                Carbon::parse(optional($alarm->last_log()->first())->start_date)->toTimeString()
-                            ));
-                        $log = MailLog::create([
-                            'mail_id' => $notification->mail->id,
-                            'mail_name' => $notification->mail->name,
-                            'identifier' => 'alarms-email',
-                            'date' => Carbon::now()->toDateTimeString(),
-                        ]);
-                        foreach($notification->group->users->pluck('id')->toArray() as $user) {
-                            $log->users()->create(['user_id' => $user]);
+                        try{
+                            LaravelMailer::to(['no-reply@cmatik.cl'])
+                                ->bcc($users)
+                                ->send(new SystemMail(
+                                    $notification->mail,
+                                    Carbon::now()->toDateString(),
+                                    '',
+                                    $alarm->sensor->name,
+                                    $alarm->sensor->device->check_point->name,
+                                    $alarm->sensor->device->name,
+                                    $alarm->sensor->device->check_point->sub_zones->first()->zone->name,
+                                    $alarm->sensor->device->check_point->sub_zones->first()->name,
+                                    $type,
+                                    $val,
+                                    Carbon::parse(optional($alarm->last_log()->first())->start_date)->toDateString(),
+                                    false,
+                                    Carbon::now()->toDateTimeString(),
+                                    Carbon::now()->toTimeString(),
+                                    Carbon::parse(optional($alarm->last_log()->first())->start_date)->toTimeString()
+                                ));
+                            $log = MailLog::create([
+                                'mail_id' => $notification->mail->id,
+                                'mail_name' => $notification->mail->name,
+                                'identifier' => 'alarms-email',
+                                'date' => Carbon::now()->toDateTimeString(),
+                            ]);
+                            foreach($notification->group->users->pluck('id')->toArray() as $user) {
+                                $log->users()->create(['user_id' => $user]);
+                            }
+                        }catch (\Exception $e) {
+                            $log = MailLog::create([
+                                'mail_id' => $notification->mail->id,
+                                'mail_name' => $notification->mail->name,
+                                'identifier' => 'alarms-email-failed',
+                                'date' => Carbon::now()->toDateTimeString(),
+                            ]);
                         }
+
 
                 }
 
