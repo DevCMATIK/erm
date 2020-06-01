@@ -22,6 +22,7 @@ class TestController extends Controller
             $day = str_pad($i, 2, '0', STR_PAD_LEFT);
             $sensors = $this->getSensors("2020-{$month}-{$day}");
             foreach($sensors as $sensor) {
+                if(!$sensor->consumptions()->whereDate('date',"2020-{$month}-{$day}")->first()) {
                 if(count($sensor->consumptions) > 0) {
                     $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
                     $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
@@ -32,7 +33,7 @@ class TestController extends Controller
 
                 if($first_read != '' && $last_read != '') {
                     $consumption = $last_read - $first_read;
-                    if(!$sensor->consumptions()->whereDate('date',"2020-{$month}-{$day}")->first()) {
+
                         array_push($toInsert,[
                             'sensor_id' => $sensor->id,
                             'first_read' => $first_read,
@@ -44,13 +45,13 @@ class TestController extends Controller
                         ]);
                     }
 
-                }
+
             }
             if(count($toInsert) > 0) {
                 ElectricityConsumption::insert($toInsert);
             }
 
-
+            }
 
         }
         $time_end = microtime(true);
