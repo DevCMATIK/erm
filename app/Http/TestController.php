@@ -15,8 +15,6 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
 
-        ElectricityConsumption::query()->truncate();
-        dd(ElectricityConsumption::count());
         $time_start = microtime(true);
         $toInsert = array();
 
@@ -54,7 +52,7 @@ class TestController extends Controller
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
-        dd($execution_time);
+        dd($execution_time,ElectricityConsumption::count());
     }
 
     protected function getSensors($date)
