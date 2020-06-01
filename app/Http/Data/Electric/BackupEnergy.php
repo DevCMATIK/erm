@@ -33,8 +33,7 @@ class BackupEnergy implements ShouldQueue
      */
     public function handle()
     {
-        ElectricityConsumption::query()->truncate();
-        dd(ElectricityConsumption::count());
+
         $toInsert = array();
         $first_date = Carbon::yesterday();
         $second_date = Carbon::today();
