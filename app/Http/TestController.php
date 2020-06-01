@@ -52,7 +52,7 @@ class TestController extends Controller
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
-        dd($execution_time,ElectricityConsumption::count());
+        dd($execution_time,ElectricityConsumption::count(),$sensors);
     }
 
     protected function getSensors($date)
