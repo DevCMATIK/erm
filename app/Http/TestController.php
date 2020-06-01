@@ -29,6 +29,7 @@ class TestController extends Controller
                     $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
                     $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
                 }
+                dd($first_read,$last_read);
                 if($first_read && $last_read) {
                     $consumption = $last_read - $first_read;
                     array_push($toInsert,[
