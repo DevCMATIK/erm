@@ -16,6 +16,8 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
         $time_start = microtime(true);
+        ElectricityConsumption::query()->truncate();
+        dd(ElectricityConsumption::count());
         for($i=$request->from;$i<$request->max_days;$i++){
             $toInsert = array();
             $month = str_pad($request->month, 2, '0', STR_PAD_LEFT);
@@ -47,10 +49,11 @@ class TestController extends Controller
 
 
                 }
+
+
+            }
             if(count($toInsert) > 0) {
                 ElectricityConsumption::insert($toInsert);
-            }
-
             }
 
         }
