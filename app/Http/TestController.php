@@ -14,6 +14,10 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
+        $time_start = microtime(true);
+
+
+
         if($request->has('date')) {
             $sensors = $this->getSensors($request->date);
 
@@ -41,7 +45,10 @@ class TestController extends Controller
 
             ElectricityConsumption::insert($toInsert);
         }
+        $time_end = microtime(true);
 
+        $execution_time = ($time_end - $time_start);
+        dd($execution_time);
     }
 
     protected function getSensors($date)

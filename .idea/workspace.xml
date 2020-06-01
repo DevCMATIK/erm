@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/WaterManagement/Device/Sensor/Sensor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/WaterManagement/Device/Sensor/Sensor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Data/Electric/BackupEnergy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Electric/BackupEnergy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/WaterManagement/Command/Controllers/CommandViewDatatableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/WaterManagement/Command/Controllers/CommandViewDatatableController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Alarm/Traits/CheckAlarmsTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Alarm/Traits/CheckAlarmsTrait.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/water-management/command/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/water-management/command/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -396,6 +391,7 @@
       <workItem from="1590627352553" duration="52000" />
       <workItem from="1590967184646" duration="48000" />
       <workItem from="1590967265645" duration="3434000" />
+      <workItem from="1591021403608" duration="998000" />
     </task>
     <servers />
   </component>
