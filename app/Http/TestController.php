@@ -14,7 +14,7 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
- 
+        dd(ElectricityConsumption::orderBy('date','desc')->first());
         $time_start = microtime(true);
 
         for($i=$request->from;$i<$request->max_days;$i++){
