@@ -14,8 +14,6 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        ElectricityConsumption::query()->truncate();
-        dd(ElectricityConsumption::count());
         $time_start = microtime(true);
         $toInsert = array();
 
