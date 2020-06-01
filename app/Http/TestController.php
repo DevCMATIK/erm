@@ -21,7 +21,6 @@ class TestController extends Controller
 
         if($request->has('date')) {
             $sensors = $this->getSensors($request->date);
-            dd($sensors);
             foreach($sensors as $sensor) {
                 if(count($sensor->consumptions) > 0) {
                     $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
