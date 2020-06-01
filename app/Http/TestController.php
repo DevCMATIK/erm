@@ -15,11 +15,12 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
         $time_start = microtime(true);
-        $toInsert = array();
 
-
-        if($request->has('date')) {
-            $sensors = $this->getSensors($request->date);
+        for($i=1;$i<$request->max_days;$i++){
+            $toInsert = array();
+            $month = str_pad($request->month, 2, '0', STR_PAD_LEFT);
+            $day = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $sensors = $this->getSensors("2020-{$month}-{$day}");
             foreach($sensors as $sensor) {
                 if(count($sensor->consumptions) > 0) {
                     $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
@@ -46,11 +47,14 @@ class TestController extends Controller
                 ElectricityConsumption::insert($toInsert);
             }
 
+
+
         }
         $time_end = microtime(true);
 
+
         $execution_time = ($time_end - $time_start);
-        dd($execution_time,ElectricityConsumption::count(),$sensors);
+        dd($execution_time,ElectricityConsumption::count());
     }
 
     protected function getSensors($date)
