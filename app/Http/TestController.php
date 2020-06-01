@@ -21,7 +21,7 @@ class TestController extends Controller
 
         if($request->has('date')) {
             $sensors = $this->getSensors($request->date);
-
+            dd($sensors);
             foreach($sensors as $sensor) {
                 if(count($sensor->consumptions) > 0) {
                     $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
@@ -59,15 +59,15 @@ class TestController extends Controller
     {
         $first_date = Carbon::parse($date)->toDateString();
         $second_date = Carbon::parse($date)->addDay()->toDateString();
-        dd( Sensor::whereHas('type', $typeFilter = function ($q) {
+        return  Sensor::whereHas('type', $typeFilter = function ($q) {
             return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
         })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
+            return $query->whereRaw("analogous_reports.date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
         })->with([
             'type' => $typeFilter,
             'device.check_point.sub_zones',
             'analogous_reports' => $reportsFilter,
             'consumptions'
-        ])->toSql());
+        ])->get();
     }
 }
