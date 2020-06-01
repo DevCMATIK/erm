@@ -39,7 +39,7 @@ class TestController extends Controller
                         'consumption' => $consumption,
                         'sensor_type' => $sensor->type->slug,
                         'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                        'date' => $request->date
+                        'date' => "2020-{$month}-{$day}"
                     ]);
                 }
             }
