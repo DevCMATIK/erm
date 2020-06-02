@@ -2,6 +2,7 @@
 
 namespace App\Http\WaterManagement\Report\Traits;
 
+use App\Domain\System\Mail\MailLog;
 use App\Domain\WaterManagement\Main\Report;
 use App\Mail\SystemMail;
 use Carbon\Carbon;
@@ -13,26 +14,41 @@ trait SendMailReportTrait
     {
         $sensor_list = $this->getTable($this->getValuesArray($reportMail));
         $users = $this->getUsersArray($reportMail);
+        try {
+            LaravelMailer::to(['no-reply@cmatik.cl'])
+                ->bcc($users)
+                ->send(new SystemMail(
+                    $reportMail->mail,
+                    Carbon::now()->toDateString(),
+                    '',
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    $sensor_list,
+                    Carbon::now()->toDateTimeString(),
+                    Carbon::now()->toTimeString(),
+                    false
+                ));
+            $log = MailLog::create([
+                'mail_id' => $reportMail->mail->id,
+                'mail_name' => $reportMail->mail->name,
+                'identifier' => 'report-email',
+                'date' => Carbon::now()->toDateTimeString(),
+            ]);
+        } catch(\Exception $e) {
+            $log = MailLog::create([
+                'mail_id' => $reportMail->mail->id,
+                'mail_name' => $reportMail->mail->name,
+                'identifier' => 'report-email-failed',
+                'date' => Carbon::now()->toDateTimeString(),
+            ]);
+        }
 
-        LaravelMailer::to(['no-reply@cmatik.cl'])
-            ->bcc($users)
-            ->send(new SystemMail(
-                $reportMail->mail,
-                Carbon::now()->toDateString(),
-                '',
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                $sensor_list,
-                Carbon::now()->toDateTimeString(),
-                Carbon::now()->toTimeString(),
-                false
-            ));
 
         $reportMail->last_execution = Carbon::now();
         $reportMail->save();
