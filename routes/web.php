@@ -216,3 +216,21 @@ Route::get('download-file/{id}',function($id){
     $file = \App\Domain\Data\Export\ExportReminderFile::find($id);
     return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.csv');
 });
+
+Route::get('/route-cache', function() {
+    $exitCode = Artisan::call('route:cache');
+    return 'Routes cache cleared';
+});
+
+//Clear config cache:
+Route::get('/config-cache', function() {
+    $exitCode = Artisan::call('config:cache');
+    return 'Config cache cleared';
+});
+
+
+// Clear view cache:
+Route::get('/view-clear', function() {
+    $exitCode = Artisan::call('view:clear');
+    return 'View cache cleared';
+});
