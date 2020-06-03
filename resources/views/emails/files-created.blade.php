@@ -16,7 +16,7 @@
     <p>Haga click en los siguientes enlaces para descargarlos:</p>
     <p>
         @foreach($files as $file)
-            <a href="{{ env('APP_URL') }}/download-file/{{ $file->id }}" target="_blank">{{ $file->display_name }}</a><br>
+            <a href="https://erm.cmatik.app/download-file/{{ $file->id }}" target="_blank">{{ $file->display_name }}</a><br>
         @endforeach
     </p>
     <p>
