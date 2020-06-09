@@ -18,7 +18,7 @@ class TestController extends Controller
     {
         $time_start = microtime(true);
 
-        $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',$this->dga_report)->get();
+        $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',1)->get();
         $time_end = microtime(true);
 
 
