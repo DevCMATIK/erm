@@ -29,7 +29,7 @@ class TestController extends Controller
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('totalizador');
@@ -43,7 +43,7 @@ class TestController extends Controller
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('tx-caudal');
@@ -59,7 +59,7 @@ class TestController extends Controller
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('tx-nivel');
@@ -80,19 +80,5 @@ class TestController extends Controller
         dd($execution_time,$checkPoints,$registros);
     }
 
-    protected function getSensors($date)
-    {
-        $first_date = Carbon::parse($date)->toDateString();
-        $second_date = Carbon::parse($date)->addDay()->toDateString();
-        return  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("analogous_reports.date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->get();
-    }
+
 }
