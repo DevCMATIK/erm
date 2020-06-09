@@ -39,7 +39,7 @@ class BackupEnergy implements ShouldQueue
         $second_date = Carbon::today();
         return  Sensor::whereHas('type', $typeFilter = function ($q) {
             return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->whereHas('analogous_report', $reportsFilter = function($query) use ($first_date,$second_date){
+        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
             return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
         })->with([
             'type' => $typeFilter,
