@@ -30,7 +30,7 @@ class FilesCreatedMail extends Mailable
     public function build()
     {
         $files = ExportReminderFile::where('export_reminder_id',$this->reminder->id)->get();
-        return $this->from('no-reply@cmatik.cl', 'CMATIK - ERM')
+        return $this->from('sys-erm@cmatik.app', 'ERM ®')
             ->subject('Archivos listo para descargar')
             ->view('emails.files-created')
             ->with([
