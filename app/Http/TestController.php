@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\App\Controllers\Controller;
+use App\Domain\Client\CheckPoint\CheckPoint;
+use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -16,65 +18,67 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
         $time_start = microtime(true);
-        for($i=$request->from;$i<$request->max_days;$i++){
-            $toInsert = array();
-            $month = str_pad($request->month, 2, '0', STR_PAD_LEFT);
-            $day = str_pad($i, 2, '0', STR_PAD_LEFT);
-            $sensors = $this->getSensors("2020-{$month}-{$day}");
-            foreach($sensors as $sensor) {
-                if(!$sensor->consumptions()->whereDate('date',"2020-{$month}-{$day}")->first()) {
-                    if(count($sensor->consumptions) > 0) {
-                        $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
-                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-                    } else {
-                        $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
-                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-                    }
 
-                    if($first_read != '' && $last_read != '') {
-                        $consumption = $last_read - $first_read;
-
-                            array_push($toInsert,[
-                                'sensor_id' => $sensor->id,
-                                'first_read' => $first_read,
-                                'last_read' => $last_read,
-                                'consumption' => $consumption,
-                                'sensor_type' => $sensor->type->slug,
-                                'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                                'date' => "2020-{$month}-{$day}"
-                            ]);
-                        }
-
-
+        $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',1)->get();
+        $registros = array();
+        foreach($checkPoints as $checkPoint) {
+            $device = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('totalizador');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->take(1);
                 }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('totalizador');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $totalizador = $device->sensors->first()->analogous_reports->first()->result;
+
+            $flow = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('tx-caudal');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->take(1);
+                }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('tx-caudal');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $caudal = $flow->sensors->first()->analogous_reports->first()->result;
 
 
-            }
-            if(count($toInsert) > 0) {
-                ElectricityConsumption::insert($toInsert);
-            }
 
+            $device = Device::with([
+                'sensors' => function ($q) {
+                    return $q->sensorType('tx-nivel');
+                },
+                'sensors.type',
+                'sensors.analogous_reports' => function($q)
+                {
+                    $q->orderBy('id', 'desc')->take(1);
+                }
+            ])->whereHas('sensors', function ($q) {
+                return $q->sensorType('tx-nivel');
+            })->where('check_point_id',$checkPoint->id)->first();
+            $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
+            array_push($registros,[
+                'totalizador' => $totalizador,
+                'nivel' => $nivel,
+                'caudal' => $caudal,
+                'device' => $device
+            ]);
+            //$this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
         }
         $time_end = microtime(true);
 
 
         $execution_time = ($time_end - $time_start);
-        dd($execution_time,ElectricityConsumption::count());
+        dd($execution_time,$checkPoints,$registros);
     }
 
-    protected function getSensors($date)
-    {
-        $first_date = Carbon::parse($date)->toDateString();
-        $second_date = Carbon::parse($date)->addDay()->toDateString();
-        return  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("analogous_reports.date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->get();
-    }
+
 }
