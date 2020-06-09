@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/files-created.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/files-created.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -393,7 +393,8 @@
       <workItem from="1591021403608" duration="6826000" />
       <workItem from="1591044170987" duration="222000" />
       <workItem from="1591141915691" duration="1733000" />
-      <workItem from="1591144823720" duration="26000" />
+      <workItem from="1591144823720" duration="179000" />
+      <workItem from="1591228038855" duration="522000" />
     </task>
     <servers />
   </component>
