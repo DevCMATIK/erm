@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@cmatik.cl'),
+        'address' => env('MAIL_FROM_ADDRESS', 'sys-erm@cmatik.app'),
         'name' => env('MAIL_FROM_NAME', 'CMATIK - ERM'),
     ],
 
