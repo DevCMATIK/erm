@@ -42,7 +42,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('totalizador');
@@ -56,7 +56,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('tx-caudal');
@@ -72,7 +72,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 'sensors.type',
                 'sensors.analogous_reports' => function($q)
                 {
-                    $q->orderBy('id', 'desc')->first();
+                    $q->orderBy('id', 'desc')->take(1);
                 }
             ])->whereHas('sensors', function ($q) {
                 return $q->sensorType('tx-nivel');
