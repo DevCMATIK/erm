@@ -25,7 +25,7 @@ class NotifyDevicesOffline extends Mailable
      */
     public function build()
     {
-        return $this->from('sys-erm@cmatik.app', 'CMATIK - ERM')
+        return $this->from('sys-erm@cmatik.app', 'ERM® CMATIK')
             ->subject('Alerta de dispositivos Offline')
             ->view('emails.notify-offline-devices')
             ->with(['logs' => $this->logs]);
