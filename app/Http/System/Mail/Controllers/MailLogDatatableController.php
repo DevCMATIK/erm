@@ -11,7 +11,7 @@ class MailLogDatatableController extends DataTableAbstract
 
     public function getRecords()
     {
-        return MailLog::with('mail')->withCount('users')->get();
+        return MailLog::with('mail')->withCount('users')->orderBy('date','desc')->get();
     }
 
     public function getRecord($record)
