@@ -78,7 +78,7 @@
             <input type="text" class="form-control" id="max_value" name="max_value" value="{{ $type->max_value }}">
         </div>
         <label class="custom-control custom-checkbox">
-            <input type="checkbox"  class="custom-control-input" value="1" name="appy_to_sensors">
+            <input type="checkbox"  class="custom-control-input" value="1" name="apply_to_sensors">
             <span class="custom-control-label">Aplicar los valores a todos los sensores</span>
         </label>
     </form>
