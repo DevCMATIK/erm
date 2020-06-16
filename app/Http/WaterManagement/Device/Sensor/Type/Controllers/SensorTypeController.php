@@ -69,7 +69,7 @@ class SensorTypeController extends Controller
                     foreach ($sensors as $sensor) {
                         $sensor->fix_min_value = $request->min_value;
                         $sensor->fix_max_value = $request->max_value;
-                        $sensor->fix_values = 1;
+                        $sensor->fix_values = ($request->min_value != '' && $request->max_value != '')?1:0;
                         $sensor->save();
                     }
                 }
