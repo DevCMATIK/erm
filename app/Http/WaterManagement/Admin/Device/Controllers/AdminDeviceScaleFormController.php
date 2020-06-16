@@ -36,7 +36,10 @@ class AdminDeviceScaleFormController extends Controller
             'enabled' => ($request->has('enabled'))?1:0,
             'has_alarm' => ($request->has('has_alarm'))?1:0,
             'historial' => ($request->has('historial'))?1:0,
-            'fix_values_out_of_range' => ($request->has('fix_values_out_of_range'))?1:0
+            'fix_values_out_of_range' => ($request->has('fix_values_out_of_range'))?1:0,
+            'fix_values' => ($request->has('fix_values'))?1:0,
+            'fix_min_value' =>  ($request->has('fix_values'))?$request->fix_min_value:null,
+            'fix_max_value' =>  ($request->has('fix_values'))?$request->fix_max_value:null
         ]) ) {
             $sensor->dispositions()->delete();
 

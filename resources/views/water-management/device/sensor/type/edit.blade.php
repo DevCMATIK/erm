@@ -69,6 +69,18 @@
                 @endswitch
             </select>
         </div>
+        <div class="form-group">
+            <label class="form-label">Valor Mínimo</label>
+            <input type="text" class="form-control" id="min_value" name="min_value" value="{{ $type->min_value }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Valor máximo</label>
+            <input type="text" class="form-control" id="max_value" name="max_value" value="{{ $type->max_value }}">
+        </div>
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox"  class="custom-control-input" value="1" name="appy_to_sensors">
+            <span class="custom-control-label">Aplicar los valores a todos los sensores</span>
+        </label>
     </form>
 @endsection
 @section('modal-validation')

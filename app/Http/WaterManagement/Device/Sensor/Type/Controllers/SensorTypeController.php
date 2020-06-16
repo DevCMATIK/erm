@@ -4,6 +4,7 @@ namespace App\Http\WaterManagement\Device\Sensor\Type\Controllers;
 
 
 use App\App\Controllers\Controller;
+use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Device\Sensor\Type\SensorType;
 use App\Http\WaterManagement\Device\Sensor\Type\Requests\SensorTypeRequest;
 use Illuminate\Support\Str;
@@ -28,7 +29,9 @@ class SensorTypeController extends Controller
             if ($new = SensorType::create([
                 'slug' => $request->name,
                 'name' => $request->name,
-                'interval' => $request->interval
+                'interval' => $request->interval,
+                'min_value' => $request->min_value,
+                'max_value' => $request->max_value,
             ])) {
                 addChangeLog('Tipo Sensor Creado','sensor_types',null,convertColumns($new));
 
@@ -55,8 +58,22 @@ class SensorTypeController extends Controller
             if ($type->update([
                 'slug' => $request->name,
                 'name' => $request->name,
-                'interval' => $request->interval
+                'interval' => $request->interval,
+                'min_value' => $request->min_value,
+                'max_value' => $request->max_value,
             ])) {
+
+                if($request->has('apply_to_sensors')) {
+                    $sensors = Sensor::where('type_id',$type->id)->get();
+
+                    foreach ($sensors as $sensor) {
+                        $sensor->fix_min_value = $request->min_value;
+                        $sensor->fix_max_value = $request->max_value;
+                        $sensor->fix_values = 1;
+                        $sensor->save();
+                    }
+                }
+
                 addChangeLog('Tipo sensor Modificado','sensor_types',$old,convertColumns($type));
 
                 return $this->getResponse('success.update');

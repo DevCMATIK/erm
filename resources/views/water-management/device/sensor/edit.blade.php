@@ -36,7 +36,18 @@
                 @endforeach
             </select>
         </div>
-
+        <div class="form-group">
+            <label class="form-label">Valor Mínimo</label>
+            <input type="text" class="form-control" id="fix_min_value" name="fix_min_value" value="{{ $sensor->fix_min_value }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Valor máximo</label>
+            <input type="text" class="form-control" id="fix_max_value" name="fix_max_value" value="{{ $sensor->fix_max_value }}">
+        </div>
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox"  class="custom-control-input" value="1" @if($sensor->fix_values === 1) checked @endif name="fix_values">
+            <span class="custom-control-label">Reparar valores erróneos</span>
+        </label>
     </form>
 @endsection
 @section('modal-validation')

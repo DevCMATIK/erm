@@ -13,7 +13,7 @@ class SensorType extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'slug','name','interval'
+        'slug','name','min_value','max_value','interval'
     ];
 
     public function sensors()

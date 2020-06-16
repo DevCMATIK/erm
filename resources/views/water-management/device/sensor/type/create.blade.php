@@ -19,6 +19,14 @@
                 <option value="60">Cada 60 Minutos</option>
             </select>
         </div>
+        <div class="form-group">
+            <label class="form-label">Valor Mínimo</label>
+            <input type="text" class="form-control" id="min_value" name="min_value">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Valor máximo</label>
+            <input type="text" class="form-control" id="max_value" name="max_value">
+        </div>
     </form>
 @endsection
 @section('modal-validation')

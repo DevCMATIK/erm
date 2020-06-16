@@ -74,7 +74,26 @@
             @endif
         </div>
     </div>
-
+    <div class="row p-2 border-top">
+        <div class="col-xl-4">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox"  class="custom-control-input" value="1" @if($sensor->fix_values === 1) checked @endif name="fix_values">
+                <span class="custom-control-label">Reparar valores erróneos</span>
+            </label>
+        </div>
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label class="form-label">Valor Mínimo</label>
+                <input type="text" class="form-control" id="fix_min_value" name="fix_min_value" value="{{ $sensor->fix_min_value }}">
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="form-group">
+                <label class="form-label">Valor máximo</label>
+                <input type="text" class="form-control" id="fix_max_value" name="fix_max_value" value="{{ $sensor->fix_max_value }}">
+            </div>
+        </div>
+    </div>
     <div class="row p-2">
         <div class="col-12 p-2" id="scales-div">
             <h6 class="text-primary border-bottom">Disposiciones <a href="javascript:void(0)" class="btn btn-info float-right btn-xs" onclick="addScale()">Agregar nueva</a></h6>
@@ -173,6 +192,7 @@
 
 
         </div>
+
     </div>
     <div class="form-group p-2">
         <button class="btn btn-primary float-right" type="submit">Guardar</button>

@@ -19,6 +19,8 @@ class SensorTypeDatatableController extends DataTableAbstract
         return [
             $record->name,
             'Cada '.$record->interval.' minuto(s)',
+            $record->min_value,
+            $record->max_value,
             $this->getOptionButtons($record)
         ];
     }

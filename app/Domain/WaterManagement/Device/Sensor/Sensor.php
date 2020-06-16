@@ -37,7 +37,11 @@ class Sensor extends Model
         'historial',
         'max_value',
         'default_disposition',
-        'fix_values_out_of_range'
+        'fix_values_out_of_range',
+        'fix_values',
+        'fix_min_value',
+        'fix_max_value',
+        'last_value'
     ];
 
     protected $appends = ['full_address'];
