@@ -33,7 +33,7 @@
 
 <form id="scale-form">
     @csrf
-    <div class="row border-bottom m-2 pb-2">
+    <div class="row m-2 pb-2">
         <div class="col-xl-3">
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" value="1" class="custom-control-input" id="enable" name="enabled"
