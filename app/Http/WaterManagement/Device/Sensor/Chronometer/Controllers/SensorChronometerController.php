@@ -15,9 +15,10 @@ class SensorChronometerController extends Controller
         return view('water-management.device.sensor.chronometer.index',compact('sensor'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('water-management.device.sensor.chronometer.create');
+        $sensor = Sensor::findOrFail($request->sensor_id);
+        return view('water-management.device.sensor.chronometer.create'.compact('sensor'));
     }
 
     public function store(Request $request)
