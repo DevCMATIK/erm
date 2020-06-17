@@ -47,7 +47,7 @@ class TrackSensors implements ShouldQueue
             $address = $chronometer->sensor->full_address;
             $report_value = optional($chronometer->sensor->device->report)->{$address};
 
-            if (!$disposition = $chronometer->selected_disposition()->first()) {
+            if (!$disposition = $chronometer->sensor->selected_disposition()->first()) {
                 $disposition = $chronometer->sensor->dispositions()->first();
             }
             $result = $this->calculateData($disposition,$report_value,$chronometer->sensor);
