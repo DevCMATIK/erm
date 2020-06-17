@@ -12,6 +12,7 @@ class SensorChronometer extends Model
     protected $fillable = [
         'sensor_id',
         'equals_to',
+        'name',
         'is_valid'
     ];
 
