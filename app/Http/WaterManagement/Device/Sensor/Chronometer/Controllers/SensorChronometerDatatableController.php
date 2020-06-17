@@ -18,6 +18,7 @@ class SensorChronometerDatatableController extends DataTableAbstract
     public function getRecord($record)
     {
         return [
+            $record->name,
             $record->equals_to,
             $record->trackings_count,
             $this->getOptionButtons($record->id)
