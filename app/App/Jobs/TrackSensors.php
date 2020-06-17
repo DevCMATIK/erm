@@ -35,7 +35,7 @@ class TrackSensors implements ShouldQueue
         $chronometers = SensorChronometer::with([
             'sensor.device.report',
             'sensor.dispositions.unit',
-            'address',
+            'sensor.address',
             'sensor.selected_disposition.unit',
             'last_tracking'
         ])->where('is_valid',1)->get();
