@@ -50,7 +50,12 @@ class TrackSensors implements ShouldQueue
             if (!$disposition = $chronometer->sensor->selected_disposition()->first()) {
                 $disposition = $chronometer->sensor->dispositions()->first();
             }
-            $result = $this->calculateData($disposition,$report_value,$chronometer->sensor);
+            if($disposition) {
+                $result = $this->calculateData($disposition,$report_value,$chronometer->sensor);
+            } else {
+                $result = $report_value;
+            }
+
 
             if($result === $chronometer->equals_to) {
                 if(!$chronometer->last_tracking) {
