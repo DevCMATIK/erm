@@ -10,6 +10,7 @@ use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarm;
 use App\Domain\WaterManagement\Device\Sensor\Behavior\SensorAverage;
 use App\Domain\WaterManagement\Device\Sensor\Behavior\SensorBehavior;
 use App\Domain\WaterManagement\Device\Sensor\Behavior\SensorDailyAverage;
+use App\Domain\WaterManagement\Device\Sensor\Chronometer\SensorChronometer;
 use App\Domain\WaterManagement\Device\Sensor\Disposition\SensorDisposition;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Label\SensorLabel;
@@ -216,5 +217,10 @@ class Sensor extends Model
     public function consumptions()
     {
         return $this->hasMany(ElectricityConsumption::class,'sensor_id','id');
+    }
+
+    public function chronometers()
+    {
+        return $this->hasMany(SensorChronometer::class,'sensor_id','id');
     }
 }

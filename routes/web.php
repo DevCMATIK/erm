@@ -183,6 +183,8 @@ Route::middleware('auth')->group(function() {
     Route::get('alarms-list','WaterManagement\Device\Sensor\Alarm\Controllers\AlarmListController')->name('alarms-list');
     Route::get('alarm/accused/{id}','WaterManagement\Device\Sensor\Alarm\Controllers\AccuseAlarmController');
     Route::get('testValue/{sensor}/{disposition?}','WaterManagement\Admin\Device\Controllers\TestValueController');
+    //Chronometers
+    Route::resource('sensor-chronometers','WaterManagement\Device\Sensor\Chronometer\Controllers\SensorChronometerController');
     // UserSubZones
     Route::get('userSubZones/{id}','User\SubZone\Controllers\UserSubZonesController@index');
     Route::post('userSubZones/{id}','User\SubZone\Controllers\UserSubZonesController@storeSubZones');

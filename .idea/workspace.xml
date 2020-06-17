@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Data/Jobs/Sensors/BackupAnalogousSensors.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Jobs/Sensors/BackupAnalogousSensors.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/WaterManagement/Device/Sensor/Sensor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/WaterManagement/Device/Sensor/Sensor.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/horizon.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/horizon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/water-management/admin/device/boolean-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/water-management/admin/device/boolean-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/water-management/admin/device/scale-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/water-management/admin/device/scale-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/datatables.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/datatables.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +154,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/.env&#10;C:/devilbox/data/www/better-core/app/Domain/System/Permission/Traits/HasPermission.php&#10;C:/devilbox/data/www/better-core/vendor/laravel/framework/src/Illuminate/Foundation/Console/ProviderMakeCommand.php&#10;C:/devilbox/data/www/better-core/storage/logs/laravel-2019-09-26.log" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bios" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -157,19 +162,19 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\devilbox\data\www\erm\resources\views\water-management\device\sensor\chronometer" />
+      <recent name="C:\devilbox\data\www\water-management\app\App\Controllers" />
+      <recent name="C:\devilbox\data\www\water-management\resources\views\water-management\device\sensor\type\interpreter" />
+      <recent name="C:\devilbox\data\www\water-management\public\plugins" />
+      <recent name="C:\devilbox\data\www\water-management\resources\views\auth\pages" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\devilbox\data\www\better-core\resources\views" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\layouts\partials\navs" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\water-management\dashboard\views" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\water-management" />
       <recent name="C:\devilbox\data\www\better-core\app\Http\WaterManagement" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\devilbox\data\www\water-management\app\App\Controllers" />
-      <recent name="C:\devilbox\data\www\water-management\resources\views\water-management\device\sensor\type\interpreter" />
-      <recent name="C:\devilbox\data\www\water-management\public\plugins" />
-      <recent name="C:\devilbox\data\www\water-management\resources\views\auth\pages" />
-      <recent name="C:\devilbox\data\www\water-management\public\images" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -403,7 +408,7 @@
       <workItem from="1591801880979" duration="658000" />
       <workItem from="1591822572049" duration="1462000" />
       <workItem from="1591825670007" duration="449000" />
-      <workItem from="1592315221639" duration="3320000" />
+      <workItem from="1592315221639" duration="9856000" />
     </task>
     <servers />
   </component>

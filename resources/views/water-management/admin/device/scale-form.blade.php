@@ -3,6 +3,7 @@
 
     <a class="btn btn-xs btn-default float-right mx-1" href="/sensor-triggers?sensor_id={{ $sensor->id }}" target="_blank"><i class="fas fa-link"></i> Triggers</a>
     <a class="btn btn-xs btn-default float-right mx-1" href="/sensor-alarms?sensor_id={{ $sensor->id }}" target="_blank"><i class="fas fa-exclamation-triangle"></i> Alarmas</a>
+    <a class="btn btn-xs btn-default float-right mx-1" href="/sensor-chronometers?sensor_id={{ $sensor->id }}" target="_blank"><i class="fas fa-clock"></i> Cronómetros</a>
 
 </h5>
 <script>

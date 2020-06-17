@@ -3,6 +3,7 @@
 namespace App\App\Console;
 
 
+use App\App\Jobs\TrackSensors;
 use App\Domain\WaterManagement\Report\MailReport;
 use App\Http\Data\Electric\BackupEnergy;
 use App\Http\Data\Jobs\Average\BackupDailySensorAverages;
@@ -20,6 +21,7 @@ use App\Http\WaterManagement\Device\Sensor\Alarm\Jobs\CheckAlarms;
 use App\Http\WaterManagement\Device\Sensor\Alarm\Jobs\SendReminderMail;
 use App\Http\WaterManagement\Device\Sensor\Trigger\Jobs\ExecuteCommandTriggered;
 use App\Http\WaterManagement\Report\Jobs\SendReportMail;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -82,7 +84,24 @@ class Kernel extends ConsoleKernel
             })->cron($task->generateCron());
         }
 
+        //chronometers
+        $seconds = 10;
 
+        $schedule->call(function () use ($seconds) {
+
+            $dt = Carbon::now();
+
+            $x=60/$seconds;
+
+            do{
+
+                TrackSensors::dispatch()->onQueue('tracking-queue');
+                //app(InputReadingController::class)->handle();
+                time_sleep_until($dt->addSeconds($seconds)->timestamp);
+
+            } while($x-- > 0);
+
+        })->everyMinute();
     }
 
     /**

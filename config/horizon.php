@@ -188,6 +188,16 @@ return [
                 'tries' => 2,
                 'timeout' => 1500,
             ],
+            'supervisor-track-queue' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'tracking-queue'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'timeout' => 15,
+            ],
         ],
 
         'local' => [
@@ -238,6 +248,16 @@ return [
                 'tries' => 2,
                 'timeout' => 3000,
             ],
+            'supervisor-track-queue' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'tracking-queue'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'timeout' => 15,
+            ]
         ],
     ],
 ];

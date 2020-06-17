@@ -33,6 +33,7 @@ Route::prefix('datatable/')->group(function () {
         Route::get('check-list-controls/{sub_module_id}','Inspection\CheckList\Control\Controllers\CheckListControlDatatableController@getData')->name('datatable.check-list-controls');
         Route::get('sensor-triggers/{sensor_id}','WaterManagement\Device\Sensor\Trigger\Controllers\SensorTriggerDatatableController@getData')->name('datatable.sensor-triggers');
         Route::get('sensor-alarms/{sensor_id}','WaterManagement\Device\Sensor\Alarm\Controllers\SensorAlarmDatatableController@getData')->name('datatable.sensor-alarms');
+        Route::get('sensor-chronometers/{sensor_id}','WaterManagement\Device\Sensor\Chronometer\Controllers\SensorChronometerDatatableController@getData')->name('datatable.sensor-chronometer');
         //commandLOG
         Route::get('command-log','WaterManagement\Command\Controllers\CommandViewDatatableController@getData')->name('datatable.command-log');
         Route::get('triggers-list','WaterManagement\Device\Sensor\Trigger\Controllers\SensorTriggerListDatatableController@getData')->name('datatable.triggers-list');
