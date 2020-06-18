@@ -7,6 +7,7 @@ use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\Client\CheckPoint\Flow\CheckPointAuthorizedFlow;
 use App\Domain\Client\CheckPoint\Flow\CheckPointFlow;
 use App\Domain\Client\CheckPoint\Grid\CheckPointGrid;
+use App\Domain\Client\CheckPoint\Indicator\CheckPointIndicator;
 use App\Domain\Client\CheckPoint\Label\CheckPointLabel;
 use App\Domain\Client\CheckPoint\Totalizer\CheckPointTotalizer;
 use App\Domain\Client\CheckPoint\Type\CheckPointType;
@@ -109,5 +110,10 @@ class CheckPoint extends Model
     public function dga_reports()
     {
         return $this->hasMany(CheckPointReport::class,'check_point_id','id');
+    }
+
+    public function indicators()
+    {
+        return $this->hasMany(CheckPointIndicator::class,'check_point_id','id');
     }
 }
