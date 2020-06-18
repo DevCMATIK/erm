@@ -22,7 +22,9 @@ class CreateCheckPointIndicatorsTable extends Migration
             $table->string('type');
             $table->string('frame');
             $table->string('measurement');
+            $table->string('group_name');
             $table->integer('group');
+            $table->integer('position')->nullable();
 
             $table->foreign('check_point_id')->references('id')->on('check_points')->onDelete('cascade');
             $table->foreign('sensor_id')->references('id')->on('sensors')->onDelete('cascade');

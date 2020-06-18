@@ -35,4 +35,32 @@ class CheckPointIndicator extends Model
     {
         return $this->belongsTo(Sensor::class,'to_compare_sensor','id');
     }
+
+    public function getTypes()
+    {
+        return [
+            'simple-rule-of-three',
+            'count',
+        ];
+    }
+
+    public function getFrames()
+    {
+        return [
+            'last-hour',
+            'today',
+            'yesterday',
+            'this-week',
+            'last-week',
+        ];
+    }
+
+    public function getMeasurements()
+    {
+        return [
+            'seconds',
+            'minutes',
+            'hours'
+        ];
+    }
 }
