@@ -71,9 +71,9 @@ class TrackSensors implements ShouldQueue
                     $last_tracking = $chronometer->last_tracking;
                     $last_tracking->update([
                         'end_date' => Carbon::now()->toDateTimeString(),
-                        'diff_in_seconds' => Carbon::now()->toDateTimeString()->diffInSeconds(Carbon::parse($last_tracking->start_date)),
-                        'diff_in_minutes' => Carbon::now()->toDateTimeString()->diffInMinutes(Carbon::parse($last_tracking->start_date)),
-                        'diff_in_hours' => Carbon::now()->toDateTimeString()->diffInHours(Carbon::parse($last_tracking->start_date)),
+                        'diff_in_seconds' => Carbon::now()->diffInSeconds(Carbon::parse($last_tracking->start_date)),
+                        'diff_in_minutes' => Carbon::now()->diffInMinutes(Carbon::parse($last_tracking->start_date)),
+                        'diff_in_hours' => Carbon::now()->diffInHours(Carbon::parse($last_tracking->start_date)),
                     ]);
                 }
             }
