@@ -16,7 +16,7 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-       dd(ChronometerTracking::get()->toJson());
+       return ChronometerTracking::get()->toJson();
     }
 
     protected function getSensors($date)
