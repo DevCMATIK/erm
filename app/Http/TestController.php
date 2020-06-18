@@ -16,13 +16,7 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $trackings = ChronometerTracking::whereNotNull('end_date')->whereNull('diff_in_seconds')->get();
-        foreach($trackings as $tracking) {
-            $tracking->diff_in_seconds = Carbon::parse($tracking->end_date)->diffInSeconds(Carbon::parse($tracking->start_date));
-            $tracking->diff_in_minutes = Carbon::parse($tracking->end_date)->diffInMinutes(Carbon::parse($tracking->start_date));
-            $tracking->diff_in_hours = Carbon::parse($tracking->end_date)->diffInHours(Carbon::parse($tracking->start_date));
-            $tracking->save();
-        }
+       dd(ChronometerTracking::get()->toJson());
     }
 
     protected function getSensors($date)
