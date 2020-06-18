@@ -16,7 +16,7 @@ class AddColumnToChronometerTrackingsTable extends Migration
         Schema::table('chronometer_trackings', function (Blueprint $table) {
             $table->float('diff_in_seconds',255,6)->nullable()->after('end_date');
             $table->float('diff_in_minutes',255,6)->nullable()->after('diff_in_seconds');
-            $table->float('diff_in_hours',255,6)->nullable()->after('diss_in_minutes');
+            $table->float('diff_in_hours',255,6)->nullable()->after('diff_in_minutes');
         });
     }
 
