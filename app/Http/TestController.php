@@ -86,6 +86,13 @@ class TestController extends Controller
 
 
                         break;
+                    case 'hour-meter':
+                        if($chronometer) {
+                            $value = $chronometer->trackings->sum('diff_in_hours');
+                        } else {
+                            $value = 0;
+                        }
+                        break;
                     default:
                         if(!$chronometer) {
                             $value = 0;
