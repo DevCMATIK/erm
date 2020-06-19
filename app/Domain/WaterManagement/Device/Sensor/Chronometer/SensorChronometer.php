@@ -2,11 +2,14 @@
 
 namespace App\Domain\WaterManagement\Device\Sensor\Chronometer;
 
+use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
 
 class SensorChronometer extends Model
 {
+    use HasDateScopes;
+
     public $timestamps = false;
 
     protected $fillable = [
