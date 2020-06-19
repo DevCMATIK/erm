@@ -107,7 +107,7 @@ class CheckPointIndicatorsController extends Controller
                     'frame' => $name,
                     'value' => $value,
                     'suffix' => $suffix,
-                    'color' => $item->color ?? 'bg-primary'
+                    'color' => $group->color ?? 'bg-primary'
                 ]);
             }
         }
