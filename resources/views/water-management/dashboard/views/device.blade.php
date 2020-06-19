@@ -63,7 +63,7 @@
                 <div class="col-xl-12">
                     <div class="card my-2">
                         <div class="card-body">
-                            <h5 class="border-bottom">{{ $groupName }}</h5>
+                            <h5 class="mb-2">{{ $groupName }}</h5>
                             <div class="row">
                                 @foreach($group as $item)
                                     <div class="col-xl-3">
