@@ -71,7 +71,7 @@ class CheckPointIndicatorsController extends Controller
                                 $value = 0;
                             } else {
                                 $value = $toCompareVal * 100 / $val;
-                                $value = number_format($value,1,',');
+                                $value = number_format($value,1);
                             }
                         } else {
                             $value = 0;
