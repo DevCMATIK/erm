@@ -17,14 +17,7 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $trackings = ChronometerTracking::whereNotNull('end_date')->whereNull('diff_in_seconds')->get();
-        foreach($trackings as $tracking) {
-            $tracking->diff_in_seconds = Carbon::parse($tracking->end_date)->diffInSeconds(Carbon::parse($tracking->start_date));
-            $tracking->diff_in_minutes = Carbon::parse($tracking->end_date)->diffInMinutes(Carbon::parse($tracking->start_date));
-            $tracking->diff_in_hours = Carbon::parse($tracking->end_date)->diffInHours(Carbon::parse($tracking->start_date));
-            $tracking->save();
-        }
-        dd($trackings);
+
         $indicators = CheckPointIndicator::with(['check_point','sensor','sensor_to_compare'])->get();
         $indicatorsArray = array();
         foreach ($indicators->groupBy('group') as $groups) {
@@ -79,7 +72,12 @@ class TestController extends Controller
                         $measurement = 'diff_in_'.$group->measurement;
                         $val = $sensor->chronometers->sum($measurement);
                         $toCompareVal = $toCompare->chronometers->sum($measurement);
-                        $value = $toCompareVal * 100 / $val;
+                        if($val === 0 || $toCompareVal === 0) {
+                            $value = 0;
+                        } else {
+                            $value = $toCompareVal * 100 / $val;
+                        }
+
                         break;
                     default:
                         $value = $sensor->chronometers->count();
@@ -92,6 +90,8 @@ class TestController extends Controller
                 ]);
             }
         }
+
+        return json_encode($indicatorsArray,JSON_PRETTY_PRINT);
     }
 
     protected function getSensors($date)
