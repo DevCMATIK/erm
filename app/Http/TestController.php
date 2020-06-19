@@ -23,8 +23,10 @@ class TestController extends Controller
         $indicatorsArray = array();
         foreach ($indicators->groupBy('group') as $groups) {
             $groupName = $groups->first()->group_name;
+            $indicatorsArray[$groupName] = array();
             foreach ($groups as $group) {
                 $chronometer = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
+
                     switch($group->frame) {
                         case 'this-week':
                             $query->whereNotNull('end_date')->thisWeek('start_date');
@@ -84,7 +86,7 @@ class TestController extends Controller
                         $value = $chronometer->trackings->count();
                         break;
                 }
-                array_push($indicatorsArray[$groupName]['indicadores'],[
+                array_push($indicatorsArray[$groupName],[
                         'nombre' => $group->name,
                         'intervalo' => $name,
                         'value' => $value
