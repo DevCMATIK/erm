@@ -68,15 +68,18 @@ class CheckPointIndicatorsController extends Controller
                             $val = $chronometer->trackings->sum($measurement);
                             $toCompareVal = $toCompare->trackings->sum($measurement);
                             if($val === 0 || $toCompareVal === 0) {
-                                $value = 0;
+                                $value = 'N/A';
+                                $suffix = '';
                             } else {
                                 $value = $toCompareVal * 100 / $val;
                                 $value = number_format($value,1);
+                                $suffix = '%';
                             }
                         } else {
-                            $value = 0;
+                            $value = 'N/A';
+                            $suffix = '';
                         }
-                        $suffix = '%';
+
 
                         break;
                     case 'hour-meter':
