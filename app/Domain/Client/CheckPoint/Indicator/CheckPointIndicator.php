@@ -3,6 +3,7 @@
 namespace App\Domain\Client\CheckPoint\Indicator;
 
 use App\Domain\Client\CheckPoint\CheckPoint;
+use App\Domain\WaterManagement\Device\Sensor\Chronometer\SensorChronometer;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,8 @@ class CheckPointIndicator extends Model
 
     protected $fillable = [
         'check_point_id',
-        'sensor_id',
-        'to_compare_sensor',
+        'chronometer_id',
+        'chronometer_to_compare',
         'name',
         'type',
         'frame',
@@ -26,14 +27,14 @@ class CheckPointIndicator extends Model
         return $this->belongsTo(CheckPoint::class,'check_point_id','id');
     }
 
-    public function sensor()
+    public function chronometer()
     {
-        return $this->belongsTo(Sensor::class,'sensor_id','id');
+        return $this->belongsTo(SensorChronometer::class,'chronometer_id','id');
     }
 
-    public function sensor_to_compare()
+    public function chronometer_to_compare()
     {
-        return $this->belongsTo(Sensor::class,'to_compare_sensor','id');
+        return $this->belongsTo(SensorChronometer::class,'chronometer_to_compare','id');
     }
 
     public function getTypes()
