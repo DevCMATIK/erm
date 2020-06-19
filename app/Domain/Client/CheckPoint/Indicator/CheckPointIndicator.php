@@ -17,6 +17,7 @@ class CheckPointIndicator extends Model
         'chronometer_to_compare',
         'name',
         'type',
+        'color',
         'frame',
         'measurement',
         'group'
