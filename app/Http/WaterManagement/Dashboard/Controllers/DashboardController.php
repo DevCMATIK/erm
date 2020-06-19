@@ -9,6 +9,7 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Consumption\DeviceConsumption;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
+use App\Http\Client\CheckPoint\Controllers\CheckPointIndicatorsController;
 use App\Http\WaterManagement\Dashboard\CheckPoint\Kpi\CheckPointCostKpiController;
 use App\Http\WaterManagement\Dashboard\CheckPoint\Kpi\CheckPointKpiController;
 use Sentinel;
@@ -111,13 +112,20 @@ class DashboardController extends Controller
         $chk = CheckPoint::with([
             'authorized_flow',
             'flow_averages',
-            'totalizers'
+            'totalizers',
+            'indicators'
         ])->find($check_point);
         $flow = app(CheckPointKpiController::class)->getFlowKpi($check_point);
         $totalizer = app(CheckPointKpiController::class)->getTotalizerKpi($check_point);
         $costs = app(CheckPointCostKpiController::class)->getCostKpi($check_point,true);
 
-        return view('water-management.dashboard.views.device',compact('sub_elements','subColumns','subZone','check_point','flow','totalizer','costs'));
+        if(count($chk->indicators) > 0) {
+            $indicators = app(CheckPointIndicatorsController::class)->getIndicators($check_point);
+        } else {
+            $indicators = false;
+        }
+
+        return view('water-management.dashboard.views.device',compact('sub_elements','subColumns','subZone','check_point','flow','totalizer','costs','indicators'));
     }
 
     public function getDeviceContent($check_point)

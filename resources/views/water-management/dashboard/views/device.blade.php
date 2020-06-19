@@ -57,7 +57,35 @@
     <div class="row" id="device-content">
 
     </div>
-
+    @if($indicators)
+        @foreach($indicators as $groupName => $group)
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ $groupName }}</h5>
+                            <div class="row">
+                                @foreach($group as $item)
+                                    <div class="col-xl-3">
+                                        <h3 class="display-4 d-block l-h-n m-0 fw-500" >
+                                                    <span class="text-white"  id="" >
+                                                        <span class="hidden-md-down" style="font-size: 0.7em !important;">{{ $item['value'] }}</span>
+                                                        <span class="hidden-lg-up">{{ $item['value'] }}</span>
+                                                        <span class="fs-nano">
+                                                        {{ $item['suffix'] }}
+                                                        </span>
+                                                    </span>
+                                            <small class="m-0 l-h-n font-weight-bolder fs-nano">{{ $item['name'].' - '. $item['frame'] }}</small>
+                                        </h3>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach;
+    @endif
 @endsection
 @section('page-extra-scripts')
 
