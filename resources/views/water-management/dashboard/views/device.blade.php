@@ -67,7 +67,7 @@
                             <div class="row">
                                 @foreach($group as $item)
                                     <div class="col-xl-3">
-                                        <div class="px-2 py-1 bg-primary  rounded overflow-hidden position-relative text-white mb-1 text-center "  >
+                                        <div class="px-2 py-1 {{ $item['color'] }}  rounded overflow-hidden position-relative text-white mb-1 text-center "  >
                                             <div class="">
                                         <h3 class="display-4 d-block l-h-n m-0 fw-500" >
                                                     <span class="text-white"  id="" >

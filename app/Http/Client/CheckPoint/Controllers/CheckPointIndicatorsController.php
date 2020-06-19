@@ -16,7 +16,8 @@ class CheckPointIndicatorsController extends Controller
         foreach ($indicators->groupBy('group') as $groups) {
             $groupName = $groups->first()->group_name;
             $indicatorsArray[$groupName] = array();
-            foreach ($groups as $group) {
+            foreach ($groups->sortBy('position') as $group) {
+                $color = 'bg-primary';
                 $chronometer = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
                     switch($group->frame) {
                         case 'this-week':
@@ -24,6 +25,7 @@ class CheckPointIndicatorsController extends Controller
                             break;
                         case 'last-week':
                             $query->whereNotNull('end_date')->lastWeek('start_date');
+
                             break;
                         default:
                             $query->whereNotNull('end_date')->today('start_date');
@@ -56,6 +58,7 @@ class CheckPointIndicatorsController extends Controller
                         break;
                     case 'last-week':
                         $name = 'Semana pasada';
+                        $color = 'bg-info';
                         break;
                     default:
                         $name = 'Hoy';
@@ -104,7 +107,8 @@ class CheckPointIndicatorsController extends Controller
                     'name' => $group->name,
                     'frame' => $name,
                     'value' => $value,
-                    'suffix' => $suffix
+                    'suffix' => $suffix,
+                    'color' => $color
                 ]);
             }
         }
