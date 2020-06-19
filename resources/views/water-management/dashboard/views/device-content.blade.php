@@ -134,8 +134,12 @@
                     <div class="card-body">
                         <h5 class="mb-2">{{ $groupName }}</h5>
                         <div class="row">
+                                @php
+                                    $group_count = count($group);
+                                @endphp
                             @foreach($group as $item)
-                                <div class="col-xl-3">
+
+                                <div class="col-xl-{{ 12 / $group_count }}">
                                     <div class="px-2 py-1 {{ $item['color'] }}  rounded overflow-hidden position-relative text-white mb-1 text-center "  >
                                         <div class="">
                                             <h3 class="display-4 d-block l-h-n m-0 fw-500" >

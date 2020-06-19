@@ -70,16 +70,19 @@ class TrackSensors implements ShouldQueue
                 if($chronometer->last_tracking && $chronometer->last_tracking->end_date === null){
                     $last_tracking = $chronometer->last_tracking;
                     $last_tracking->update([
-                        'end_date' => Carbon::now()->toDateTimeString(),
-                        'diff_in_seconds' => Carbon::now()->diffInSeconds(Carbon::parse($last_tracking->start_date)),
-                        'diff_in_minutes' => Carbon::now()->diffInMinutes(Carbon::parse($last_tracking->start_date)),
-                        'diff_in_hours' => Carbon::now()->diffInHours(Carbon::parse($last_tracking->start_date)),
+                        'end_date' => Carbon::now()->toDateTimeString()
                     ]);
                 }
             }
         }
 
-
+        $trackings = ChronometerTracking::whereNotNull('end_date')->whereNull('diff_in_seconds')->get();
+        foreach($trackings as $tracking) {
+            $tracking->diff_in_seconds = Carbon::parse($tracking->end_date)->diffInSeconds(Carbon::parse($tracking->start_date));
+            $tracking->diff_in_minutes = Carbon::parse($tracking->end_date)->diffInMinutes(Carbon::parse($tracking->start_date));
+            $tracking->diff_in_hours = Carbon::parse($tracking->end_date)->diffInHours(Carbon::parse($tracking->start_date));
+            $tracking->save();
+        }
     }
 
     protected function calculateData($disposition,$report_value,$sensor)

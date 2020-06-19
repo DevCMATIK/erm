@@ -54,7 +54,7 @@
         $options = false;
     @endphp
     @include('water-management.dashboard.partials.navigation')
-    <div  id="device-content">
+    <div  id="device-content" class="bg-">
 
     </div>
 
