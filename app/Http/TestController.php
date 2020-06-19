@@ -41,7 +41,7 @@ class TestController extends Controller
                     'trackings' => $filter
                 ])->find($group->chronometer_id);
 
-                if($group->to_compare_sensor) {
+                if($group->chronometer_to_compare) {
                     $toCompare = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
                         switch($group->frame) {
                             case 'this-week':
