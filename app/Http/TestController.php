@@ -82,8 +82,11 @@ class TestController extends Controller
 
                         break;
                     default:
-                        dd($chronometer);
-                        $value = count($chronometer->trackings);
+                        if(!$chronometer) {
+                            $value = 0;
+                        } else {
+                            $value = count($chronometer->trackings);
+                        }
                         break;
                 }
                 array_push($indicatorsArray[$groupName],[
