@@ -25,6 +25,7 @@ class TestController extends Controller
             $groupName = $groups->first()->group_name;
             $indicatorsArray[$groupName] = array();
             foreach ($groups as $group) {
+                dd($group);
                 $chronometer = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
 
                     switch($group->frame) {
