@@ -5,7 +5,6 @@ namespace App\Http;
 use App\App\Controllers\Controller;
 use App\Domain\Client\CheckPoint\Indicator\CheckPointIndicator;
 use App\Domain\WaterManagement\Device\Sensor\Chronometer\ChronometerTracking;
-use App\Domain\WaterManagement\Device\Sensor\Chronometer\SensorChronometer;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -19,101 +18,67 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
 
-        $indicators = CheckPointIndicator::with(['check_point','chronometer','chronometer_to_compare'])->get();
-        $indicatorsArray = array();
-        foreach ($indicators->groupBy('group') as $groups) {
-            $groupName = $groups->first()->group_name;
-            $indicatorsArray[$groupName] = array();
-            foreach ($groups as $group) {
-                $chronometer = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
-                    switch($group->frame) {
-                        case 'this-week':
-                            $query->whereNotNull('end_date')->thisWeek('start_date');
-                            break;
-                        case 'last-week':
-                            $query->whereNotNull('end_date')->lastWeek('start_date');
-                            break;
-                        default:
-                            $query->whereNotNull('end_date')->today('start_date');
-                            break;
+        $time_start = microtime(true);
+        for($i=$request->from;$i<$request->max_days;$i++){
+            $toInsert = array();
+            $month = str_pad($request->month, 2, '0', STR_PAD_LEFT);
+            $day = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $sensors = $this->getSensors("2020-{$month}-{$day}");
+            foreach($sensors as $sensor) {
+                if(!$sensor->consumptions()->whereDate('date',"2020-{$month}-{$day}")->first()) {
+                    if(count($sensor->consumptions) > 0) {
+                        $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
+                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
+                    } else {
+                        $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
+                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
                     }
-                })->with([
-                    'trackings' => $filter
-                ])->find($group->chronometer_id);
 
-                if($group->chronometer_to_compare) {
-                    $toCompare = SensorChronometer::whereHas('trackings',$filter =  function($query) use($group){
-                        switch($group->frame) {
-                            case 'this-week':
-                                $query->whereNotNull('end_date')->thisWeek('start_date');
-                                break;
-                            case 'last-week':
-                                $query->whereNotNull('end_date')->lastWeek('start_date');
-                                break;
-                            default:
-                                $query->whereNotNull('end_date')->today('start_date');
-                                break;
-                        }
-                    })->with([
-                        'trackings' => $filter
-                    ])->find($group->chronometer_to_compare);
-                }
-                switch($group->frame) {
-                    case 'this-week':
-                        $name = 'Esta semana';
-                        break;
-                    case 'last-week':
-                        $name = 'Semana pasada';
-                        break;
-                    default:
-                        $name = 'Hoy';
-                        break;
-                }
-                switch ($group->type) {
-                    case  'simple-rule-of-three':
-                        if($chronometer && $toCompare) {
-                            $measurement = 'diff_in_'.$group->measurement;
-                            $val = $chronometer->trackings->sum($measurement);
-                            $toCompareVal = $toCompare->trackings->sum($measurement);
-                            if($val === 0 || $toCompareVal === 0) {
-                                $value = 0;
-                            } else {
-                                $value = $toCompareVal * 100 / $val;
-                            }
-                        } else {
-                            $value = 0;
-                        }
+                    if($first_read != '' && $last_read != '') {
+                        $consumption = $last_read - $first_read;
+
+                        array_push($toInsert,[
+                            'sensor_id' => $sensor->id,
+                            'first_read' => $first_read,
+                            'last_read' => $last_read,
+                            'consumption' => $consumption,
+                            'sensor_type' => $sensor->type->slug,
+                            'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
+                            'date' => "2020-{$month}-{$day}"
+                        ]);
+                    }
 
 
-                        break;
-                    case 'hour-meter':
-                        if($chronometer) {
-                            $value = $chronometer->trackings->sum('diff_in_hours');
-                        } else {
-                            $value = 0;
-                        }
-                        break;
-                    default:
-                        if(!$chronometer) {
-                            $value = 0;
-                        } else {
-                            $value = count($chronometer->trackings);
-                        }
-                        break;
                 }
-                array_push($indicatorsArray[$groupName],[
-                        'nombre' => $group->name,
-                        'intervalo' => $name,
-                        'value' => $value
-                ]);
+
+
             }
-        }
+            if(count($toInsert) > 0) {
+                ElectricityConsumption::insert($toInsert);
+            }
 
-        return json_encode($indicatorsArray,JSON_PRETTY_PRINT);
+        }
+        $time_end = microtime(true);
+
+
+        $execution_time = ($time_end - $time_start);
+        dd($execution_time,ElectricityConsumption::count());
+
     }
 
     protected function getSensors($date)
     {
-
+        $first_date = Carbon::parse($date)->toDateString();
+        $second_date = Carbon::parse($date)->addDay()->toDateString();
+        return  Sensor::whereHas('type', $typeFilter = function ($q) {
+            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
+        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
+            return $query->whereRaw("analogous_reports.date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
+        })->with([
+            'type' => $typeFilter,
+            'device.check_point.sub_zones',
+            'analogous_reports' => $reportsFilter,
+            'consumptions'
+        ])->get();
     }
 }
