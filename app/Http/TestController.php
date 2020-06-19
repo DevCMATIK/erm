@@ -71,14 +71,19 @@ class TestController extends Controller
                 }
                 switch ($group->type) {
                     case  'simple-rule-of-three':
-                        $measurement = 'diff_in_'.$group->measurement;
-                        $val = $chronometer->trackings->sum($measurement);
-                        $toCompareVal = $toCompare->trackings->sum($measurement);
-                        if($val === 0 || $toCompareVal === 0) {
-                            $value = 0;
+                        if($chronometer && $toCompare) {
+                            $measurement = 'diff_in_'.$group->measurement;
+                            $val = $chronometer->trackings->sum($measurement);
+                            $toCompareVal = $toCompare->trackings->sum($measurement);
+                            if($val === 0 || $toCompareVal === 0) {
+                                $value = 0;
+                            } else {
+                                $value = $toCompareVal * 100 / $val;
+                            }
                         } else {
-                            $value = $toCompareVal * 100 / $val;
+                            $value = 0;
                         }
+
 
                         break;
                     default:
