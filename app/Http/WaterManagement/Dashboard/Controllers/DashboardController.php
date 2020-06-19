@@ -135,7 +135,19 @@ class DashboardController extends Controller
         $subZone = SubZone::with([
             'sub_elements.device'
         ])->find($sub_elements->first()->parent->sub_zone_id);
-        return view('water-management.dashboard.views.device-content',compact('sub_elements','subColumns','subZone','check_point'));
+        $chk = CheckPoint::with([
+            'authorized_flow',
+            'flow_averages',
+            'totalizers',
+            'indicators'
+        ])->find($check_point);
+
+        if(count($chk->indicators) > 0) {
+            $indicators = app(CheckPointIndicatorsController::class)->getIndicators($check_point);
+        } else {
+            $indicators = false;
+        }
+        return view('water-management.dashboard.views.device-content',compact('sub_elements','subColumns','subZone','check_point','indicators'));
     }
 
     protected function getData($id,$check_point = false)
