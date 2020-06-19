@@ -1,10 +1,11 @@
-<div class="col-xl-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                @forelse($subColumns  as  $column => $key)
-                    <div class="@if(count($subColumns) == 1)offset-xl-3 col-xl-6 offset-sm-3 col-sm-6 @else col-xl-{{ 12 / count($subColumns) }} @endif p-2">
-                        @switch(array_values(array_flip($key))[0])
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    @forelse($subColumns  as  $column => $key)
+                        <div class="@if(count($subColumns) == 1)offset-xl-3 col-xl-6 offset-sm-3 col-sm-6 @else col-xl-{{ 12 / count($subColumns) }} @endif p-2">
+                            @switch(array_values(array_flip($key))[0])
                                 @case('digital')
                                 <div class="row border-bottom pb-2 mb-2">
                                     @foreach($sub_elements->unique('device_id') as $sub_element)
@@ -110,16 +111,17 @@
 
                                 @break
                             @endswitch
-                    </div>
+                        </div>
 
 
-                @empty
+                    @empty
                         <div class="col-xl-12">
                             <div class="alert alert-info">
                                 No ha cargado controles para mostrar.
                             </div>
                         </div>
-                @endforelse
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>
