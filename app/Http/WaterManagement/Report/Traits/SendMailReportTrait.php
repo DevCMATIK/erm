@@ -15,7 +15,7 @@ trait SendMailReportTrait
         $sensor_list = $this->getTable($this->getValuesArray($reportMail));
         $users = $this->getUsersArray($reportMail);
         try {
-            LaravelMailer::to(['no-reply@cmatik.cl'])
+            LaravelMailer::to(['sys-erm@cmatik.app'])
                 ->bcc($users)
                 ->send(new SystemMail(
                     $reportMail->mail,
@@ -68,7 +68,7 @@ trait SendMailReportTrait
 
     protected function getTable($sensors_list)
     {
-        $html = '<table width="100%"  cellspacing="0" class="table table-striped"  style="margin: auto; text-align: center; border: none;" >';
+        $html = '<table width="100%"  cellspacing="0" class="table table-striped"  style="margin: auto; text-align: left; border: none;" >';
         $html = $html . '<thead>
                             <tr>
                                 <th width="30%">ZONA</th>
