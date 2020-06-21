@@ -27,7 +27,7 @@
 
     @hasSection('mail-header')
         <tr>
-            <td align="left" bgcolor="#ffffff" style=" border-bottom: 1px dotted #f1f1f1;">
+            <td align="left" bgcolor="#ffffff" style=" border-bottom: 1px">
                 @yield('mail-header')
             </td>
         </tr>
