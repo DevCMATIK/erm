@@ -13,7 +13,7 @@
         </b>
     </p>
     <p>Se han generado los archivos solicitados en {{ $reminder->creation_date }}</p>
-    <p>Haga click en los siguientes enlaces para descargarlos:</p>
+    <p>Haga click en los siguientes enlaces para descargar:</p>
     <p>
         @foreach($files as $file)
             <a href="https://erm.cmatik.app/download-file/{{ $file->id }}" target="_blank">{{ $file->display_name }}</a><br>
@@ -24,5 +24,5 @@
     </p>
     <p><br></p>
     <p>Saludos Cordiales</p>
-    <p>ERM - CMATIK</p>
+    <p>ERM® CMATIK</p>
 @endsection

@@ -25,7 +25,7 @@
         </div>
         <div class="row no-gutters">
             <div class="col-lg-12 pr-lg-1 my-2">
-                <button type="submit" class="btn btn-info btn-block btn-lg">Loguear</button>
+                <button type="submit" class="btn btn-info btn-block btn-lg">Ingresar</button>
             </div>
         </div>
     </form>
