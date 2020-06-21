@@ -39,7 +39,7 @@
         </td>
     </tr>
     <tr>
-        <td align="center" bgcolor="#ffffff" style="padding: 5px 5px 5px 5px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
+        <td align="center" bgcolor="#0960a5" style="padding: 5px 5px 5px 5px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
             <img src="{{ asset('images/logo-white.png') }}" alt="" width="30%"  style="margin-top: 7px;">
         </td>
     </tr>
@@ -49,7 +49,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="center" width="100%" style="color: #414141; font-family: Arial, sans-serif; font-size: 12px;">
-                        {{ \Carbon\Carbon::today()->year }}  ERM® CMATIK
+                        ERM® {{ \Carbon\Carbon::today()->year }} CMATIK 
                     </td>
                 </tr>
             </table>
