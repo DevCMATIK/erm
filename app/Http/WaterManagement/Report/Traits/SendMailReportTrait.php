@@ -15,8 +15,7 @@ trait SendMailReportTrait
         $sensor_list = $this->getTable($this->getValuesArray($reportMail));
         $users = $this->getUsersArray($reportMail);
         try {
-            LaravelMailer::to(['sys-erm@cmatik.app'])
-                ->bcc($users)
+            LaravelMailer::to($users)
                 ->send(new SystemMail(
                     $reportMail->mail,
                     Carbon::now()->toDateString(),
