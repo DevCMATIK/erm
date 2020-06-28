@@ -84,7 +84,7 @@ class CupLevelsController extends Controller
             ->leftJoin('check_point_labels','devices.id','=','check_point_labels.device_id')
             ->leftJoin('check_point_types','check_point_types.id','=','check_points.type_id')
             ->leftJoin('addresses','addresses.id','=','sensors.address_id')
-            ->where( "'sensors.type_id',1 or 'sensors.type_id',32")
+            ->where('sensors.type_id',1 or 32)
             ->whereNull('devices.deleted_at')
             ->whereNull('check_points.deleted_at')
             ->whereRaw("(check_point_types.slug = 'copas' or check_point_types.slug = 'relevadoras') and addresses.register_type_id = 11")
