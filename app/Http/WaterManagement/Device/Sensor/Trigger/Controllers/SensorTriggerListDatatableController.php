@@ -22,7 +22,7 @@ class SensorTriggerListDatatableController extends DataTableAbstract
         return [
             $record->user->first_name.' '.$record->user->last_name,
             $record->sensor->device->check_point->sub_zones->first()->name,
-            $record->receptor->device->name.' - '.$record->receptor->name,
+            optional(optional($record->receptor)->device)->name.' - '.optional($record->receptor)->name,
             $record->sensor->device->name.' - '.$record->sensor->name,
             $record->when_one,
             $record->when_zero,
