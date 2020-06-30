@@ -86,8 +86,8 @@ class CheckPointIndicatorsController extends Controller
                         break;
                     case 'hour-meter':
                         if($chronometer) {
-                            $value = $chronometer->trackings->sum('diff_in_hours');
-                            $value = number_format($value,0);
+                            $value = $chronometer->trackings->sum('diff_in_seconds');
+                            $value = number_format(($value/3600),0);
                         } else {
                             $value = 0;
                         }
