@@ -8,12 +8,12 @@ use App\App\Controllers\Controller;
 
 class TriggerActiveController extends Controller
 {
-    public function __invoke($trigger,$active)
+    public function __invoke(Request $request,$trigger,$active)
     {
         $t = SensorTrigger::find($trigger);
         $t->is_active = $active;
         $t->save();
 
-        return redirect(Request::url());
+        return redirect($request->url());
     }
 }

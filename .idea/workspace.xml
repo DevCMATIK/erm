@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Trigger/Controllers/SensorTriggerListDatatableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Trigger/Controllers/SensorTriggerListDatatableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Trigger/Controllers/TriggerActiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/WaterManagement/Device/Sensor/Trigger/Controllers/TriggerActiveController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -409,7 +409,9 @@
       <workItem from="1592849212844" duration="177000" />
       <workItem from="1592865466059" duration="1249000" />
       <workItem from="1593316073384" duration="1037000" />
-      <workItem from="1593550288957" duration="61000" />
+      <workItem from="1593550288957" duration="226000" />
+      <workItem from="1593614848865" duration="120000" />
+      <workItem from="1593627530780" duration="149000" />
     </task>
     <servers />
   </component>
