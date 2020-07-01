@@ -15,14 +15,17 @@ trait TriggersCommandTrait
     {
         foreach($triggers as $trigger) {
 
-            $receptorValue = $this->getReceptorValue($trigger);
-            if($trigger->sensor->address->configuration_type == 'scale' ){
-                $value = $this->getAnalogousValue($trigger);
-                $this->handleAnalogousCommand($trigger,$value,$receptorValue);
-            } else {
-                $value = $this->getValue($trigger);
-                $this->handleDigitalCommand($trigger,$value,$receptorValue);
+            if($trigger->receptor) {
+                $receptorValue = $this->getReceptorValue($trigger);
+                if($trigger->sensor->address->configuration_type == 'scale' ){
+                    $value = $this->getAnalogousValue($trigger);
+                    $this->handleAnalogousCommand($trigger,$value,$receptorValue);
+                } else {
+                    $value = $this->getValue($trigger);
+                    $this->handleDigitalCommand($trigger,$value,$receptorValue);
+                }
             }
+
 
         }
     }
