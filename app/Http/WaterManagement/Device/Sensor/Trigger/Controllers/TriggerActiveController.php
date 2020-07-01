@@ -13,7 +13,5 @@ class TriggerActiveController extends Controller
         $t = SensorTrigger::find($trigger);
         $t->is_active = $active;
         $t->save();
-
-        return redirect($request->url());
     }
 }
