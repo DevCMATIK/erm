@@ -27,6 +27,10 @@
             <label class="form-label">Valor máximo</label>
             <input type="text" class="form-control" id="max_value" name="max_value">
         </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input main-control" name="is_exportable" checked id="is_exportable" value="1">
+            <label class="custom-control-label" for="is_exportable">Exportable</label>
+        </div>
     </form>
 @endsection
 @section('modal-validation')

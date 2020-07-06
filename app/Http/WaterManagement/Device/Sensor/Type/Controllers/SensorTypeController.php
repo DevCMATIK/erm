@@ -32,6 +32,7 @@ class SensorTypeController extends Controller
                 'interval' => $request->interval,
                 'min_value' => $request->min_value,
                 'max_value' => $request->max_value,
+                'is_exportable' => ($request->has('is_exportable'))?1:0
             ])) {
                 addChangeLog('Tipo Sensor Creado','sensor_types',null,convertColumns($new));
 
@@ -61,6 +62,7 @@ class SensorTypeController extends Controller
                 'interval' => $request->interval,
                 'min_value' => $request->min_value,
                 'max_value' => $request->max_value,
+                'is_exportable' => ($request->has('is_exportable'))?1:0
             ])) {
 
                 if($request->has('apply_to_sensors')) {

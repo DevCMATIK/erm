@@ -27,15 +27,17 @@
             <ul class="nav nav-pills justify-content-end" role="tablist">
                 <li class="nav-item" id="sensor_list_dropdown"><a class="nav-link border-0" href="javascript:void(0);" data-toggle="dropdown">Agregar Sensores <i class="fal fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        @foreach($device->sensors as $s)
-                            @if($s->address->configuration_type == 'scale' && $sensor_id != $s->id)
-                                <li class="list-group-item">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input sensors" value="{{ $s->id }}" name="sensors[]">
-                                        <span class="custom-control-label">{{ $s->name }}</span>
-                                    </label>
-                                </li>
-                            @endif
+                        @foreach($devices as $dev)
+                            @foreach($dev->sensors as $s)
+                                @if($s->address->configuration_type == 'scale' && $sensor_id != $s->id)
+                                    <li class="list-group-item">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input sensors" value="{{ $s->id }}" name="sensors[]">
+                                            <span class="custom-control-label">{{ $s->name }}</span>
+                                        </label>
+                                    </li>
+                                @endif
+                            @endforeach
                         @endforeach
                     </ul>
                 </li>

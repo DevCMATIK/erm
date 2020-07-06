@@ -77,6 +77,10 @@
             <label class="form-label">Valor máximo</label>
             <input type="text" class="form-control" id="max_value" name="max_value" value="{{ $type->max_value }}">
         </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input main-control" name="is_exportable" @if($type->is_exportable === 1) checked @endif id="is_exportable" value="1">
+            <label class="custom-control-label" for="is_exportable">Exportable</label>
+        </div>
         <label class="custom-control custom-checkbox">
             <input type="checkbox"  class="custom-control-input" value="1" name="apply_to_sensors">
             <span class="custom-control-label">Aplicar los valores a todos los sensores</span>

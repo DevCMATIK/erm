@@ -15,13 +15,15 @@ class ChartController extends Controller
     {
         $sensor = Sensor::with('type.interpreters')->find($sensor_id);
         $device = Device::with('sensors.address')->find($device_id);
-        return view('water-management.dashboard.chart.index', compact('device_id','sensor_id','sensor','device'));
+        $devices = Device::with('sensors.address')->where('check_point_id'.$device->check_point_id)->get();
+        return view('water-management.dashboard.chart.index', compact('device_id','sensor_id','sensor','device','devices'));
     }
 
     public function indexExternal($device_id,$sensor_id)
     {
         $sensor = Sensor::with('type.interpreters','dispositions','selected_disposition')->find($sensor_id);
         $device = Device::with('sensors.address')->find($device_id);
-        return view('water-management.dashboard.chart.index-external', compact('device_id','sensor_id','sensor','device'));
+        $devices = Device::with('sensors.address')->where('check_point_id'.$device->check_point_id)->get();
+        return view('water-management.dashboard.chart.index-external', compact('device_id','sensor_id','sensor','device','devices'));
     }
 }
