@@ -28,12 +28,15 @@
                     <ul class="list-group">
                         @foreach($check_point->devices  as $key => $device)
                             @foreach($device->sensors->sortByDesc('address.configuration_type') as $sensor)
-                                <li class="list-group-item cursor-pointer" id="{{$check_point->id}}_{{ $sensor->id }}" data-remote="true" href="#collapsed_{{ $sensor->id }}" id="parent_{{$check_point->id}}" data-toggle="collapse" data-parent="#collapsed_{{ $check_point->id }}">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input sensors" value="{{ $sensor->id }}" name="sensors[]">
-                                        <span class="custom-control-label">{{ $sensor->name }}</span>
-                                    </label>
-                                </li>
+                                @if ($sensor->type->is_exportable === 1)
+                                    <li class="list-group-item cursor-pointer" id="{{$check_point->id}}_{{ $sensor->id }}" data-remote="true" href="#collapsed_{{ $sensor->id }}" id="parent_{{$check_point->id}}" data-toggle="collapse" data-parent="#collapsed_{{ $check_point->id }}">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input sensors" value="{{ $sensor->id }}" name="sensors[]">
+                                            <span class="custom-control-label">{{ $sensor->name }}</span>
+                                        </label>
+                                    </li>
+                                @endif
+
                             @endforeach
 
                         @endforeach
