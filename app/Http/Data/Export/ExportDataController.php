@@ -21,7 +21,7 @@ class ExportDataController extends Controller
 
     public function getCheckPoints(Request $request)
     {
-        $check_points = CheckPoint::whereHas('sensors.type',$filter = function($query){
+        $check_points = CheckPoint::whereHas('devices.sensors.type',$filter = function($query){
             $query->where('is_exportable',1);
         })
         ->with(['devices.sensors.address','sensors.type' => $filter])->whereHas('sub_zones', function ($q) use ($request){
