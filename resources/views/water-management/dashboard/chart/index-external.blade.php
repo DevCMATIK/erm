@@ -26,7 +26,7 @@
         <div class="col-xl-12 border-bottom">
             <ul class="nav nav-pills justify-content-end" role="tablist">
                 <li class="nav-item" id="sensor_list_dropdown"><a class="nav-link border-0" href="javascript:void(0);" data-toggle="dropdown">Agregar Sensores <i class="fal fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu " style="max-height: 300px; overflow-y: auto;">
                         @foreach($devices as $dev)
                             @foreach($dev->sensors as $s)
                                 @if($s->address->configuration_type == 'scale' && $sensor_id != $s->id)
