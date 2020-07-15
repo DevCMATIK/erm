@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/water-management/dashboard/chart/index-external.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/water-management/dashboard/chart/index-external.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/auth/forgot-password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/auth/forgot-password.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -413,7 +415,14 @@
       <workItem from="1593627530780" duration="209000" />
       <workItem from="1593628497316" duration="1388000" />
       <workItem from="1593708369228" duration="1826000" />
-      <workItem from="1594064793689" duration="2871000" />
+      <workItem from="1594064793689" duration="3470000" />
+      <workItem from="1594224653411" duration="678000" />
+      <workItem from="1594308278540" duration="392000" />
+      <workItem from="1594309328306" duration="37000" />
+      <workItem from="1594323624113" duration="138000" />
+      <workItem from="1594324291891" duration="895000" />
+      <workItem from="1594326330346" duration="544000" />
+      <workItem from="1594818961597" duration="807000" />
     </task>
     <servers />
   </component>

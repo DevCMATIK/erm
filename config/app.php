@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'ERM'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://erm.cmatik.app'),
+    'url' => env('APP_URL', 'https://erm.cmatik.app/'),
 
     'asset_url' => env('ASSET_URL', null),
 
