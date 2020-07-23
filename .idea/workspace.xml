@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/User/Settings/Controllers/ChangePasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/User/Settings/Controllers/ChangePasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/auth/forgot-password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/auth/forgot-password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/settings/account-general.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/settings/account-general.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -158,19 +158,19 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\devilbox\data\www\erm\resources\views\water-management\device\sensor\chronometer" />
-      <recent name="C:\devilbox\data\www\water-management\app\App\Controllers" />
-      <recent name="C:\devilbox\data\www\water-management\resources\views\water-management\device\sensor\type\interpreter" />
-      <recent name="C:\devilbox\data\www\water-management\public\plugins" />
-      <recent name="C:\devilbox\data\www\water-management\resources\views\auth\pages" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\devilbox\data\www\better-core\resources\views" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\layouts\partials\navs" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\water-management\dashboard\views" />
       <recent name="C:\devilbox\data\www\better-core\resources\views\water-management" />
       <recent name="C:\devilbox\data\www\better-core\app\Http\WaterManagement" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\devilbox\data\www\erm\resources\views\water-management\device\sensor\chronometer" />
+      <recent name="C:\devilbox\data\www\water-management\app\App\Controllers" />
+      <recent name="C:\devilbox\data\www\water-management\resources\views\water-management\device\sensor\type\interpreter" />
+      <recent name="C:\devilbox\data\www\water-management\public\plugins" />
+      <recent name="C:\devilbox\data\www\water-management\resources\views\auth\pages" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -422,7 +422,8 @@
       <workItem from="1594323624113" duration="138000" />
       <workItem from="1594324291891" duration="895000" />
       <workItem from="1594326330346" duration="544000" />
-      <workItem from="1594818961597" duration="807000" />
+      <workItem from="1594818961597" duration="1288000" />
+      <workItem from="1594916621394" duration="3953000" />
     </task>
     <servers />
   </component>

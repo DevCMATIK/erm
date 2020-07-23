@@ -23,7 +23,7 @@ class ChangePasswordController extends Controller
             'password' => $request->old_password
         ])) {
             if ($request->password  == $request->old_password) {
-                return response()->json(['error' => 'La nueva contraseña no debe ser igual a la anterior.'],401);
+                return response()->json(['error' => 'La nueva contraseña no debe ser igual a la anterior.'],422);
             }
             if (Sentinel::update($user,compact('password'))) {
                 return response()->json(['success' => 'Contraseña actualizada correctamente.']);
