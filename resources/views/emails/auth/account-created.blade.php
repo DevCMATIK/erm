@@ -17,7 +17,7 @@
             <table bgcolor="#0073AA" border="0" cellspacing="0" cellpadding="0" class="buttonwrapper">
                 <tr>
                     <td align="center" height="50" style=" padding: 0 25px 0 25px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;" class="button">
-                        <a href="{{ env('APP_URL') }}/reset/{{ $user->email }}/{{ $code }}" style="color: #ffffff; text-align: center; text-decoration: none;">Crear mi contraseña</a>
+                        <a href="https://erm.cmatik.app/reset/{{ $user->email }}/{{ $code }}" style="color: #ffffff; text-align: center; text-decoration: none;">Crear mi contraseña</a>
                     </td>
                 </tr>
             </table>
