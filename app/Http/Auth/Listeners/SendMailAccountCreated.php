@@ -38,7 +38,7 @@ class SendMailAccountCreated
             'user' => $user,
             'code' => $code
         ], function ($message) use ($user){
-            $message->from('no-reply@cmatik.cl', 'ERM - Cmatik');
+            $message->from('sys-erm@cmatik.app', 'ERM® CMATIK');
             $message->to($user->email, $user->first_name.' '.$user->last_name);
             $message->bcc('faraya@cmatik.cl','Felipe Araya');
             $message->subject("$user->first_name $user->last_name, Cuenta Creada.");
