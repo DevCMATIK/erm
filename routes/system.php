@@ -79,6 +79,8 @@ Route::namespace('System')->group(function () {
         Route::get('mail-logs/{id}','Mail\Controllers\MailLogController@receptors')->name('mail-logs.receptors');
         Route::get('mail-preview/{id}','Mail\Controllers\MailPreviewController');
 
+
+
     });
 });
 
