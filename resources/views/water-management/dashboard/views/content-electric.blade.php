@@ -279,7 +279,7 @@ $types = $subZone->elements->map(function($element){
                                                         <input type="radio" name="energyOptions" id="option1"  checked="checked"> > 7 días
                                                     </label>
                                                     <label class="btn btn-outline-secondary btn-xs" onclick="getEnergyChartContainer('thisMonth');">
-                                                        <input type="radio" name="energyOptions" id="option2" > 30 días
+                                                        <input type="radio" name="energyOptions" id="option2" > > 30 días
                                                     </label>
                                                 </div>
                                             </div>
