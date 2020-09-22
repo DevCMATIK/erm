@@ -276,10 +276,10 @@ $types = $subZone->elements->map(function($element){
                                             <div class="col-xl-12">
                                                 <div class="btn-group btn-group-xs btn-block mb-2 btn-group-toggle" data-toggle="buttons">
                                                     <label class="btn btn-outline-secondary btn-xs active" onclick="getEnergyChartContainer('thisWeek');">
-                                                        <input type="radio" name="energyOptions" id="option1"  checked="checked"> Esta semana
+                                                        <input type="radio" name="energyOptions" id="option1"  checked="checked"> > 7 días
                                                     </label>
                                                     <label class="btn btn-outline-secondary btn-xs" onclick="getEnergyChartContainer('thisMonth');">
-                                                        <input type="radio" name="energyOptions" id="option2" > Este Mes
+                                                        <input type="radio" name="energyOptions" id="option2" > 30 días
                                                     </label>
                                                 </div>
                                             </div>
