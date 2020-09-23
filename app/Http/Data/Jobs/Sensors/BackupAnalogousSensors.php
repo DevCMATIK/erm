@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\DB;
 
 class   BackupAnalogousSensors implements ShouldQueue
 {
@@ -42,7 +43,14 @@ class   BackupAnalogousSensors implements ShouldQueue
                 continue;
             }
             $address = $sensor->full_address;
-            $report_value = optional($sensor->device->report)->{$address};
+            if(optional($sensor->device)->from_bio === 1) {
+               $report_value =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($sensor->device)->internal_id)
+                    ->first()->{$address};
+            } else {
+                $report_value = optional($sensor->device->report)->{$address};
+            }
+
 
             if($sensor->fix_values === 1) {
                 if($report_value > $sensor->fix_max_value || $report_value < $sensor->fix_min_value) {

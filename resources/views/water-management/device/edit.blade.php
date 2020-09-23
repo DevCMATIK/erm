@@ -26,6 +26,10 @@
                 @endforeach
             </select>
         </div>
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox"  class="custom-control-input" value="1" @if($device->from_bio === 1) checked @endif name="from_bio">
+            <span class="custom-control-label">Dato desde bioseguridad</span>
+        </label>
     </form>
 
 @endsection

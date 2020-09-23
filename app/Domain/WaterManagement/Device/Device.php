@@ -29,7 +29,8 @@ class Device extends Model
         'device_type_id',
         'check_point_id',
         'internal_id',
-        'name'
+        'name',
+        'from_bio'
     ];
 
     public function type()

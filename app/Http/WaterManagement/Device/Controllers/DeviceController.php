@@ -62,7 +62,9 @@ class DeviceController extends Controller
 
     public function store(DeviceRequest $request)
     {
-        if ($device = Device::create($request->all())) {
+        if ($device = Device::create(array_merge($request->all(),[
+            'from_bio' => ($request->has('from_bio'))?1:0
+        ]))) {
             addChangeLog('dispositivo Creado','devices',null,convertColumns($device));
 
             return $this->getResponse('success.store');
@@ -83,7 +85,9 @@ class DeviceController extends Controller
     {
         $device = Device::findOrFail($id);
         $old = convertColumns($device);
-        if ($device->update($request->all())) {
+        if ($device->update(array_merge($request->all(),[
+            'from_bio' => ($request->has('from_bio'))?1:0
+        ]))) {
             addChangeLog('Dipositivo Modificado','devices',$old,convertColumns($device));
 
             return $this->getResponse('success.update');

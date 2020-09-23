@@ -6,7 +6,13 @@
         $disposition = $analogous->sensor->dispositions()->first();
     }
     if($disposition) {
-         $valorReport = $analogous->sensor->device->report->$address; // 0, 400
+         if($analogous->sensor->device->from_bio === 1) {
+                 $valorReport =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($analogous->sensor->device)->internal_id)
+                    ->first()->{$address};
+            } else {
+                $valorReport = $analogous->sensor->device->report->$address; // 0, 400
+            }
         $ingMin = $disposition->sensor_min;
         $ingMax = $disposition->sensor_max;
         $escalaMin = $disposition->scale_min;

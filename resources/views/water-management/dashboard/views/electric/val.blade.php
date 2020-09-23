@@ -11,7 +11,13 @@
                 }
                 if($disposition) {
 
-                $valorReport = $sensor->device->report->$address; // 0, 400
+                if($sensor->device->from_bio === 1) {
+                 $valorReport =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($sensor->device)->internal_id)
+                    ->first()->{$address};
+                 } else {
+                        $valorReport = $sensor->device->report->$address; // 0, 400
+                 }
                 if($sensor->fix_values_out_of_range === 1) {
 
                     if($valorReport < $disposition->scale_min) {
