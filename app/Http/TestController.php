@@ -19,9 +19,14 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
 
-     dd(DB::connection('bioseguridad')->table('reports')
+     dd(
+         DB::connection('bioseguridad')->table('reports')
          ->where('grd_id',1038)
-         ->first();
+         ->first(),
+         DB::connection('bioseguridad')->table('reports')
+         ->where('grd_id',1038)
+         ->first()->p2
+     );
 
     }
 
