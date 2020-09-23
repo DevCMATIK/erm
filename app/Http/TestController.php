@@ -21,7 +21,7 @@ class TestController extends Controller
 
      dd(DB::connection('bioseguridad')->table('reports')
          ->where('grd_id',1038)
-         ->first()->p2);
+         ->first();
 
     }
 
