@@ -52,6 +52,15 @@ return [
             'username' => 'gestionhidro',
             'password' => 'gestionhidro'
         ],
+        'bioseguridad' => [
+            'driver' => 'mysql',
+            'host' => '34.74.209.164',
+            //'host' => '34.66.170.27',
+            'port' => '3306',
+            'database' => 'grdxf',
+            'username' => 'devdbs',
+            'password' => 'Devdbs.'
+        ],
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
