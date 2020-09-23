@@ -19,12 +19,9 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
 
-     dd(DB::connection('bioseguridad')->table('historical')
+     dd(DB::connection('bioseguridad')->table('reports')
          ->where('grd_id',1038)
-         ->where('register_type',12)
-         ->where('address',2)
-         ->orderBy('historial_id','desc')
-         ->first());
+         ->first()->p2);
 
     }
 
