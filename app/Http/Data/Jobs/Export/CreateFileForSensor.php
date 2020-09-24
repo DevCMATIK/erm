@@ -74,16 +74,15 @@ class CreateFileForSensor implements ShouldQueue
         } else {
             return $rows->map(function ($item) {
                 if ($item->sensor->type->id === 1 && strtolower($item->unit) === 'mt') {
-                    $result = (float)number_format(((float)$item->sensor->max_value + (float)$item->result), 2);
                     $interpreter = " UBba {$item->sensor->max_value} MT";
                 } else {
-                    $result = $item->result;
                     $interpreter = $item->interpreter;
                 }
+
                 return WriterEntityFactory::createRow([
                     WriterEntityFactory::createCell($item->sensor->device->check_point->name),
                     WriterEntityFactory::createCell($item->sensor->name),
-                    WriterEntityFactory::createCell(number_format($result,2,',','')),
+                    WriterEntityFactory::createCell(number_format($item->result,2,',','')),
                     WriterEntityFactory::createCell($item->unit),
                     WriterEntityFactory::createCell(Carbon::parse($item->date)->toDateString()),
                     WriterEntityFactory::createCell(Carbon::parse($item->date)->toTimeString()),
