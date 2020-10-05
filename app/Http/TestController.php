@@ -61,7 +61,7 @@ class TestController extends Controller
             ->orderBy('sensor_alarm_logs.id','DESC')
             ->get();
 
-        dd($alarm_logs->toJson());
+        return $alarm_logs->toJson();
     }
 
 
