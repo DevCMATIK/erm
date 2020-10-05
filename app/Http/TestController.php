@@ -53,14 +53,16 @@ class TestController extends Controller
                 'sensor_alarm_logs.id as log_id',
                 'users.first_name as first_name',
                 'users.last_name as last_name',
+                'sensor_alarm_log.sensor_alarm_id as s_alarm_id'
             ])->whereIn('sensor_alarm_logs.id', function($q){
                     $q->select(DB::raw('MAX(id) FROM sensor_alarm_logs GROUP BY sensor_alarm_id'));
                 })
+                ->groupBy('s_alarm_id')
             ->take(50)
             ->orderBy('sensor_alarm_logs.id','DESC')
-            ->get()->unique('log_id');
+            ->get();
 
-        dd($alarm_logs);
+        dd($alarm_logs->toJson());
     }
 
 
