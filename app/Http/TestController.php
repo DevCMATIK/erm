@@ -24,9 +24,9 @@ class TestController extends Controller
 
         $zones = $this->getZones();
 
-        $alarm_logs =  SensorAlarmLog::join('sensor_alarms','sensor_alarms.id','=','sensor_alarm_logs.sensor_alarm_id')
+        $alarm_logs =
+            SensorAlarmLog::join('sensor_alarms','sensor_alarms.id','=','sensor_alarm_logs.sensor_alarm_id')
             ->join('sensors','sensors.id','=','sensor_alarms.sensor_id')
-            ->join('addresses','sensors.address_id','=','addresses.id')
             ->join('devices','devices.id','=','sensors.device_id')
             ->join('check_points','devices.check_point_id','=','check_points.id')
             ->leftJoin('sub_zone_sub_elements','sub_zone_sub_elements.device_id','=','devices.id')
@@ -56,7 +56,7 @@ class TestController extends Controller
             ])
             ->take(50)
             ->orderBy('sensor_alarm_logs.id','DESC')
-            ->get();
+            ->toSql();
 
         dd($alarm_logs);
     }
