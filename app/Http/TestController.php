@@ -57,7 +57,6 @@ class TestController extends Controller
             ])->whereIn('sensor_alarm_logs.id', function($q){
                     $q->select(DB::raw('MAX(id) FROM sensor_alarm_logs GROUP BY sensor_alarm_id'));
                 })
-                ->groupBy('s_alarm_id')
             ->take(50)
             ->orderBy('sensor_alarm_logs.id','DESC')
             ->get();
