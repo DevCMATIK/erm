@@ -54,9 +54,10 @@ class TestController extends Controller
                 'users.first_name as first_name',
                 'users.last_name as last_name',
             ])
+                ->groupBy('sensor_alarm_logs.sensor_alarm_id')
             ->take(50)
             ->orderBy('sensor_alarm_logs.id','DESC')
-            ->toSql();
+            ->get();
 
         dd($alarm_logs);
     }
