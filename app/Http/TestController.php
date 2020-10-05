@@ -56,7 +56,7 @@ class TestController extends Controller
             ])
             ->take(50)
             ->orderBy('sensor_alarm_logs.id','DESC')
-            ->get()->unique('log_id');
+            ->get();
 
         dd($alarm_logs);
     }
