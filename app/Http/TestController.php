@@ -12,6 +12,7 @@ use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Sentinel;
 
 
 class TestController extends Controller
