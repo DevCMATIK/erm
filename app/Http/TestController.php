@@ -39,6 +39,7 @@ class TestController extends Controller
             ->whereNull('sensor_alarms.deleted_at')
             ->whereNotNull('sensor_alarm_logs.end_date')
             ->select([
+                DB::raw('distinct(sensor_alarm_logs.id) as log_id'),
                 'zones.name as zone',
                 'sub_zones.name as sub_zone',
                 'check_points.name as device',
@@ -50,7 +51,7 @@ class TestController extends Controller
                 'sensor_alarm_logs.min_or_max as type',
                 'sensor_alarm_logs.accused as accused',
                 'sensor_alarm_logs.accused_at as accused_at',
-                'sensor_alarm_logs.id as log_id',
+
                 'users.first_name as first_name',
                 'users.last_name as last_name',
                 'sensor_alarm_logs.sensor_alarm_id as s_alarm_id'
