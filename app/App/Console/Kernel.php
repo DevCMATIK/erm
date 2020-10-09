@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
-        $schedule->job(new CheckAlarms())->everyMinute();
+        //$schedule->job(new CheckAlarms())->everyMinute();
 
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupAnalogousSensors(5),'long-running-queue')->everyFiveMinutes();
@@ -70,9 +70,9 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');
         $schedule->job(new BackupEnergy(),'long-running-queue-low')->dailyAt('01:20');
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
-        $schedule->job(new SendReminderMail())->everyThirtyMinutes();
-        $schedule->job(new NotifyDevicesOffline())->hourly();
-        $schedule->job(new TrackDeviceDisconnections())->everyMinute();
+        //$schedule->job(new SendReminderMail())->everyThirtyMinutes();
+        //$schedule->job(new NotifyDevicesOffline())->hourly();
+        //$schedule->job(new TrackDeviceDisconnections())->everyMinute();
 
         // Get all tasks from the database
         $mailReports = MailReport::active()->get();
