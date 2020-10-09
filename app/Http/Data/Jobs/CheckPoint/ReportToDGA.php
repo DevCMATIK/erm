@@ -38,7 +38,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
         foreach($checkPoints as $checkPoint) {
             $last_report = '';
             $last_report = CheckPointReport::where('check_point_id',$checkPoint->id)->orderBy('id','desc')->first();
-            if(Carbon::now()->diffInMinutes(Carbon::parse($last_report->report_date)) < 40) {
+            if(Carbon::now()->diffInMinutes(Carbon::parse($last_report->report_date)) > 40) {
                 $device = Device::with([
                     'sensors' => function ($q) {
                         return $q->sensorType('totalizador');
