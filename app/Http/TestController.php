@@ -3,13 +3,19 @@
 namespace App\Http;
 
 use App\App\Controllers\Controller;
+use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\Indicator\CheckPointIndicator;
+use App\Domain\Client\Zone\Sub\SubZone;
+use App\Domain\Client\Zone\Zone;
+use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Domain\WaterManagement\Device\Sensor\Chronometer\ChronometerTracking;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Sentinel;
 
 
 class TestController extends Controller
@@ -18,31 +24,34 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-
-     dd(
-         DB::connection('bioseguridad')->table('reports')
-             ->where('grd_id',1038)
-             ->first()->p2,
-         DB::connection('bioseguridad')->table('reports')
-         ->where('grd_id',1038)
-         ->first()
-     );
-
+        //ReportToDGA::dispatch(1)->onQueue('long-running-queue-low');
+        $subZones = SubZone::get();
+        foreach($subZones as $subZone) {
+            $subZone->check_points()->attach(CheckPoint::inRandomOrder()->take(3)->get()->pluck('id')->toArray());
+        }
     }
 
-    protected function getSensors($date)
+
+    protected function getZones()
     {
-        $first_date = Carbon::parse($date)->toDateString();
-        $second_date = Carbon::parse($date)->addDay()->toDateString();
-        return  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("analogous_reports.date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->get();
+        return Zone::whereHas('sub_zones', $filter =  function($query){
+            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
+        })->with( ['sub_zones' => $filter],'sub_zones.sub_elements')->get();
+    }
+
+    protected function getDevicesId($zones)
+    {
+        $ids = array();
+        foreach($zones as $zone) {
+            foreach($zone->sub_zones as $sub_zone) {
+                foreach($sub_zone->sub_elements as $sub_element) {
+                    if(Sentinel::getUser()->inSubZone($sub_zone->id)) {
+                        array_push($ids,$sub_element->device_id);
+                    }
+                }
+            }
+        }
+
+        return collect($ids)->unique()->toArray();
     }
 }

@@ -200,7 +200,9 @@ Route::middleware('auth')->group(function() {
     Route::get('export-commands-executed','Client\Command\Controllers\CommandsExecutedController@export');
     //export data
     Route::get('exportData','Data\Export\ExportDataController@index')->name('export.data');
+    Route::post('exportDataTest','Data\Export\TestExportController')->name('export.data-test');
     Route::get('getCheckPoints','Data\Export\ExportDataController@getCheckPoints');
+
 
     Route::get('clientOfflineDevices','Client\Devices\OfflineDevicesController@index')->name('client-offline-devices');
     Route::get('client-device-disconnections/{id}','Client\Devices\OfflineDevicesController@getLog');

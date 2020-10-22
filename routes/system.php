@@ -1,6 +1,6 @@
 <?php
 Route::middleware('auth')->group(function() {
-    Route::get('/', 'WaterManagement\Dashboard\Controllers\DashboardController@dashboardMain')->name('dashboard.home');
+    Route::get('/', 'WaterManagement\Dashboard\Controllers\DashboardController@dashboardMain')->name('home');
     //userProfile
     Route::get('profile', 'User\Profile\Controllers\UserProfileController@index')->name('user.profile');
     //userSettings
