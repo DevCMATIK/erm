@@ -36,26 +36,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/metaproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/metaproject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/App/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/App/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Data/Export/ExportDataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Export/ExportDataController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Data/Jobs/CheckPoint/ReportToDGA.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Jobs/CheckPoint/ReportToDGA.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/System/Menu/Controllers/MenuController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/System/Menu/Controllers/MenuController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/WaterManagement/Dashboard/Alarm/Controllers/LastAlarmsTableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/WaterManagement/Dashboard/Alarm/Controllers/LastAlarmsTableController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_21_140631_create_analogous_dispositions_reports_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_21_140631_create_analogous_dispositions_reports_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/htdocs" beforeDir="false" afterPath="$PROJECT_DIR$/htdocs" afterDir="true" />
-      <change beforePath="$PROJECT_DIR$/resources/views/data/exports/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/data/exports/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/system.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/system.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/ea1df380db209948743569c19dc98c1b4e86e54c.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/ea1df380db209948743569c19dc98c1b4e86e54c.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,7 +455,7 @@
       <workItem from="1602593285137" duration="23804000" />
       <workItem from="1602707165989" duration="5765000" />
       <workItem from="1602856674787" duration="15043000" />
-      <workItem from="1603054428687" duration="13727000" />
+      <workItem from="1603054428687" duration="15683000" />
     </task>
     <servers />
   </component>
@@ -508,12 +489,16 @@
       <screen x="0" y="23" width="1440" height="804" />
     </state>
     <state x="508" y="354" key="#com.jetbrains.php.lang.intentions.PhpImportClassDialog#/0.23.1440.804@0.23.1440.804" timestamp="1602701269359" />
-    <state x="404" y="164" width="670" height="662" key="search.everywhere.popup" timestamp="1603211137199">
-      <screen x="0" y="23" width="1440" height="804" />
+    <state x="100" y="123" width="1240" height="598" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603364779906">
+      <screen x="0" y="23" width="1440" height="801" />
+    </state>
+    <state x="100" y="123" width="1240" height="598" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.801@0.23.1440.801" timestamp="1603364779906" />
+    <state x="404" y="163" width="670" height="660" key="search.everywhere.popup" timestamp="1603364480116">
+      <screen x="0" y="23" width="1440" height="801" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1600987570143" />
     <state x="404" y="163" width="670" height="657" key="search.everywhere.popup/0.23.1440.798@0.23.1440.798" timestamp="1602712742164" />
-    <state x="404" y="163" width="670" height="660" key="search.everywhere.popup/0.23.1440.801@0.23.1440.801" timestamp="1602868949744" />
+    <state x="404" y="163" width="670" height="660" key="search.everywhere.popup/0.23.1440.801@0.23.1440.801" timestamp="1603364480116" />
     <state x="404" y="164" width="670" height="662" key="search.everywhere.popup/0.23.1440.804@0.23.1440.804" timestamp="1603211137199" />
     <state x="404" y="164" width="670" height="664" key="search.everywhere.popup/0.23.1440.806@0.23.1440.806" timestamp="1602872237278" />
     <state x="404" y="165" width="670" height="665" key="search.everywhere.popup/0.23.1440.808@0.23.1440.808" timestamp="1602582932563" />
