@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5e34d0b6-c7ba-4d95-9c97-c5e54c608fcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/app/Http/Data/Jobs/Export/CreateFileForSensor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Jobs/Export/CreateFileForSensor.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/app/Exports/ExportChartDataWithSheets.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/ExportChartDataWithSheets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Data/Export/TestExportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Data/Export/TestExportController.php" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -442,7 +447,30 @@
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1600987570143">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+<<<<<<< Updated upstream
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1600987570143" />
+=======
+    <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603725500123" />
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1603726889046">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1603726889046" />
+    <state x="732" y="157" width="709" height="669" key="search.everywhere.popup" timestamp="1603811033826">
+      <screen x="0" y="23" width="1440" height="811" />
+    </state>
+    <state x="694" y="120" width="672" height="600" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603741028664" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1600987570143" />
+    <state x="404" y="163" width="670" height="657" key="search.everywhere.popup/0.23.1440.798@0.23.1440.798" timestamp="1602712742164" />
+    <state x="404" y="163" width="670" height="660" key="search.everywhere.popup/0.23.1440.801@0.23.1440.801" timestamp="1602868949744" />
+    <state x="404" y="164" width="670" height="662" key="search.everywhere.popup/0.23.1440.804@0.23.1440.804" timestamp="1603211137199" />
+    <state x="404" y="164" width="670" height="664" key="search.everywhere.popup/0.23.1440.806@0.23.1440.806" timestamp="1602872237278" />
+    <state x="404" y="165" width="670" height="665" key="search.everywhere.popup/0.23.1440.808@0.23.1440.808" timestamp="1602582932563" />
+    <state x="732" y="157" width="709" height="669" key="search.everywhere.popup/0.23.1440.811@0.23.1440.811" timestamp="1603811033826" />
+    <state x="450" y="341" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1603211101956">
+      <screen x="0" y="23" width="1440" height="804" />
+    </state>
+    <state x="450" y="341" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.23.1440.804@0.23.1440.804" timestamp="1603211101956" />
+>>>>>>> Stashed changes
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
