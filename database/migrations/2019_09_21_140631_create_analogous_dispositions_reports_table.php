@@ -19,8 +19,8 @@ class CreateAnalogousDispositionsReportsTable extends Migration
             $table->string('scale');
             $table->float('scale_min');
             $table->float('scale_max');
-            $table->float('scale_min');
-            $table->float('scale_max');
+            $table->float('ing_min');
+            $table->float('ing_max');
             $table->string('unit');
             $table->float('value');
             $table->float('result');

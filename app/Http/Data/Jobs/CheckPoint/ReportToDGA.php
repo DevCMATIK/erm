@@ -5,6 +5,7 @@ namespace App\Http\Data\Jobs\CheckPoint;
 use App\App\Controllers\Soap\InstanceSoapClient;
 use App\App\Controllers\Soap\SoapController;
 use App\Domain\Client\CheckPoint\CheckPoint;
+use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\WaterManagement\Device\Device;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -35,51 +36,56 @@ class ReportToDGA extends SoapController implements ShouldQueue
         $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',$this->dga_report)->get();
 
         foreach($checkPoints as $checkPoint) {
-            $device = Device::with([
-                'sensors' => function ($q) {
+            $last_report = '';
+            $last_report = CheckPointReport::where('check_point_id',$checkPoint->id)->orderBy('id','desc')->first();
+            if(Carbon::now()->diffInMinutes(Carbon::parse($last_report->report_date)) > 40) {
+                $device = Device::with([
+                    'sensors' => function ($q) {
+                        return $q->sensorType('totalizador');
+                    },
+                    'sensors.type',
+                    'sensors.analogous_reports' => function($q)
+                    {
+                        $q->orderBy('id', 'desc')->take(1);
+                    }
+                ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('totalizador');
-                },
-                'sensors.type',
-                'sensors.analogous_reports' => function($q)
-                {
-                    $q->orderBy('id', 'desc')->take(1);
-                }
-            ])->whereHas('sensors', function ($q) {
-                return $q->sensorType('totalizador');
-            })->where('check_point_id',$checkPoint->id)->first();
-            $totalizador = $device->sensors->first()->analogous_reports->first()->result;
+                })->where('check_point_id',$checkPoint->id)->first();
+                $totalizador = $device->sensors->first()->analogous_reports->first()->result;
 
-            $flow = Device::with([
-                'sensors' => function ($q) {
+                $flow = Device::with([
+                    'sensors' => function ($q) {
+                        return $q->sensorType('tx-caudal');
+                    },
+                    'sensors.type',
+                    'sensors.analogous_reports' => function($q)
+                    {
+                        $q->orderBy('id', 'desc')->take(1);
+                    }
+                ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('tx-caudal');
-                },
-                'sensors.type',
-                'sensors.analogous_reports' => function($q)
-                {
-                    $q->orderBy('id', 'desc')->take(1);
-                }
-            ])->whereHas('sensors', function ($q) {
-                return $q->sensorType('tx-caudal');
-            })->where('check_point_id',$checkPoint->id)->first();
-            $caudal = $flow->sensors->first()->analogous_reports->first()->result;
+                })->where('check_point_id',$checkPoint->id)->first();
+                $caudal = $flow->sensors->first()->analogous_reports->first()->result;
 
 
 
-            $device = Device::with([
-                'sensors' => function ($q) {
+                $device = Device::with([
+                    'sensors' => function ($q) {
+                        return $q->sensorType('tx-nivel');
+                    },
+                    'sensors.type',
+                    'sensors.analogous_reports' => function($q)
+                    {
+                        $q->orderBy('id', 'desc')->take(1);
+                    }
+                ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('tx-nivel');
-                },
-                'sensors.type',
-                'sensors.analogous_reports' => function($q)
-                {
-                    $q->orderBy('id', 'desc')->take(1);
-                }
-            ])->whereHas('sensors', function ($q) {
-                return $q->sensorType('tx-nivel');
-            })->where('check_point_id',$checkPoint->id)->first();
-            $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
+                })->where('check_point_id',$checkPoint->id)->first();
+                $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
 
-            $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
+                $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
+            }
+
         }
     }
 
