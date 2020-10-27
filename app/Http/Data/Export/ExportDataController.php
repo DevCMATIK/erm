@@ -14,7 +14,7 @@ class ExportDataController extends Controller
     public function index()
     {
         $zones = Zone::whereHas('sub_zones', $filter =  function($query){
-            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds());
+            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
         })->with( ['sub_zones' => $filter])->get();
         return view('data.exports.index',compact('zones'));
     }
