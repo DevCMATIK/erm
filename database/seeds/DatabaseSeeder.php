@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Data\Analogous\AnalogousReport;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-	        MenuRolesTableSeeder::class
+	        //RolesTableSeeder::class,
+            //PermissionsTableSeeder::class,
+            //UsersTableSeeder::class,
+            //UserRolesTableSeeder::class,
+            MenuRolesTableSeeder::class
         ]);
     }
 }

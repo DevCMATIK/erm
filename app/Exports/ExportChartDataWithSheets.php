@@ -23,7 +23,7 @@ class ExportChartDataWithSheets implements WithMultipleSheets
      * @return array
      */
     public function sheets(): array
-    {
+    {e
         $sheets = [];
 
         foreach($this->sensors as $sensor) {

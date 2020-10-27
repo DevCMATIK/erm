@@ -3,7 +3,9 @@
 namespace App\Http;
 
 use App\App\Controllers\Controller;
+use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\Indicator\CheckPointIndicator;
+use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Domain\WaterManagement\Device\Sensor\Chronometer\ChronometerTracking;
@@ -22,7 +24,11 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        ReportToDGA::dispatch(1)->onQueue('long-running-queue-low');
+        //ReportToDGA::dispatch(1)->onQueue('long-running-queue-low');
+        $subZones = SubZone::get();
+        foreach($subZones as $subZone) {
+            $subZone->check_points()->attach(CheckPoint::inRandomOrder()->take(3)->get()->pluck('id')->toArray());
+        }
     }
 
 
