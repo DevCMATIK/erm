@@ -4,26 +4,36 @@ namespace App\Http\Data\Export;
 
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Exports\ExportVariablesData;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Carbon\Carbon;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Rap2hpoutre\FastExcel\SheetCollection;
 
 class TestExportController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $dates = $this ->resolveDates($request->dates);
-        $sensors  = $this-> getSensors($request->sensors);
-        $sensor = $sensors -> first();//deberia ser un foreach por cada sensor y guardarlo en hojas distintas
+        $dates = $this->resolveDates($request->dates);
+       //  $sensors = $this->getSensors($request->sensors);
+      //  $sensor = $sensors->first();//deberia ser un foreach por cada sensor y guardarlo en hojas distintas
 
-        return (new FastExcel($this->query($sensor,$dates)->get()))
-                ->download('descarga-del-sensor.xlsx',
-                        function($row) {
-                            return array_combine($this->getHeaders(),$this->resolveRow($row));
-                        }
-                );
-        //dd($request,$dates,$sensors);
+        $data =array();
+        $sheetsName =array();
+
+        foreach ($this->getSensors($request->sensors) as $sensor ){
+            array_push($sheetsName,$sensor->name );
+            array_push($data,$this->mapQuery($sensor,$dates));
+
+        }
+
+        $sheets = new SheetCollection(array_combine($sheetsName,$data));
+       // dd($data,['arr1' => ['items','items2'],'arr2'=>['items2','items3']]);
+
+        return (new FastExcel($sheets))->download('file.xlsx');
+
+
     }
 
     protected function getSensors($sensors)
@@ -59,6 +69,13 @@ class TestExportController extends Controller
         )->orderBy('date');
     }
 
+    protected function mapQuery($sensor,$dates)
+    {
+        return $this->query($sensor,$dates)-> get()->map(function($item){
+           return array_combine($this->getHeaders(),$this->resolveRow($item));
+        });
+    }
+
     protected function getHeaders(): array
     {
         return [
@@ -89,6 +106,7 @@ class TestExportController extends Controller
             Carbon::parse($row->date)->toDateString(),
             Carbon::parse($row->date)->format('H:i'),
             $interpreter,
+
         ];
     }
 

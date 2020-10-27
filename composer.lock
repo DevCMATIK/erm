@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f9bb62565c8e74a808f74bd3e41dfd8",
+    "content-hash": "3cb07ff40da7415965fc4b25c3ddc9ed",
     "packages": [
         {
             "name": "box/spout",
@@ -2652,6 +2652,65 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "rap2hpoutre/fast-excel",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rap2hpoutre/fast-excel.git",
+                "reference": "9ab558d30ceb10996663eff7cbfc81b4724c8378"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rap2hpoutre/fast-excel/zipball/9ab558d30ceb10996663eff7cbfc81b4724c8378",
+                "reference": "9ab558d30ceb10996663eff7cbfc81b4724c8378",
+                "shasum": ""
+            },
+            "require": {
+                "box/spout": "^2.7",
+                "illuminate/support": "5.3.* || 5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "illuminate/database": "5.3.* || 5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "phpunit/phpunit": "^6.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rap2hpoutre\\FastExcel\\": "src/"
+                },
+                "files": [
+                    "src/functions/fastexcel.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rap2h",
+                    "email": "raphaelht@gmail.com"
+                }
+            ],
+            "description": "Fast Excel import/export for Laravel",
+            "keywords": [
+                "csv",
+                "excel",
+                "laravel",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2020-09-08T12:39:58+00:00"
         },
         {
             "name": "staudenmeir/eloquent-eager-limit",
@@ -6707,11 +6766,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3",
-        "ext-zip": "*"
+        "php": "^7.1.3"
     },
-    "platform-dev": {
-        "ext-zip": "*"
-    },
+    "platform-dev": [],
     "plugin-api-version": "1.1.0"
 }

@@ -2,7 +2,7 @@
 <?php $__env->startSection('page-icon','file-excel'); ?>
 <?php $__env->startSection('page-content'); ?>
 
-    <form method="post" action="/exportDataTest" id="data-form">
+    <form method = "post" id="data-form">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -91,13 +91,31 @@
 
 
     <script>
-        $('#download-data-test').click(function(e){
+
+        $('#download-data-test').click
+        (function(e){
             let form = $('#data-form');
             var sensors  = $('.sensors').serialize();
             if(sensors === '') {
                 toastr.error('No ha seleccionado sensores');
             } else {
-                form.submit();
+                    form.submit(function( event ) {
+                    form.attr('action', '/exportDataTest');
+                });
+
+            }
+
+        }
+        );
+        $('#download-data').click(function(e){
+            let form = $('#data-form');
+            var sensors  = $('.sensors').serialize();
+            if(sensors === '') {
+                toastr.error('No ha seleccionado sensores');
+            } else {
+                form.submit(function( event ) {
+                    form.attr('action', '/downloadDataFromChartTotal');
+                });
             }
 
         });
