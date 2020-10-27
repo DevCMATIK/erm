@@ -25,6 +25,7 @@ class TestExportController extends Controller
         foreach ($this->getSensors($request->sensors) as $sensor ){
             array_push($sheetsName,$sensor->name );
             array_push($data,$this->mapQuery($sensor,$dates));
+
         }
         $sheets = new SheetCollection(array_combine($sheetsName,$data));
         return (new FastExcel($sheets))->download('file.xlsx');
