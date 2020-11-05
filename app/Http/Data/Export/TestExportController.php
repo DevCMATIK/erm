@@ -16,8 +16,8 @@ class TestExportController extends Controller
     public function __invoke(Request $request)
     {
         $dates = $this->resolveDates($request->dates);
-       //  $sensors = $this->getSensors($request->sensors);
-      //  $sensor = $sensors->first();//deberia ser un foreach por cada sensor y guardarlo en hojas distintas
+        //$sensors = $this->getSensors($request->sensors);
+        //$sensor = $sensors->first();//deberia ser un foreach por cada sensor y guardarlo en hojas distintas
 
         $data =array();
         $sheetsName =array();

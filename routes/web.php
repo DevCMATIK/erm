@@ -238,3 +238,8 @@ Route::get('/view-clear', function() {
     $exitCode = Artisan::call('view:clear');
     return 'View cache cleared';
 });
+
+// Entorno de Test:
+Route::get('TestView', function() {
+    return view('test.view');
+});
