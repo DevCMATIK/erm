@@ -5,7 +5,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Domain\WaterManagement\Device\Sensor\Sensor::class, function (Faker $faker) {
+$factory->define(App\Domain\WaterManagement\Device\Sensor::class, function (Faker $faker) {
     return [
         'type_id'=>App\Domain\WaterManagement\Device\Sensor\Type\SensorType::inRandomOrder()->first()->id,
         'device_id'=>App\Domain\WaterManagement\Device\Device::inRandomOrder()->first()->id,
