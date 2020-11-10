@@ -60,7 +60,7 @@ class SystemMail extends Mailable
      */
     public function build()
     {
-        return $this->from('sys-erm@cmatik.app', 'ERM® CMATIK')
+        return $this->from('soporte@cmatik.cl', 'ERM® CMATIK')
                     ->subject($this->replaceSubjectAttachables($this->mail->subject))
                     ->view('emails.dynamic')
                     ->with(['body' => $this->replaceAttachables(),

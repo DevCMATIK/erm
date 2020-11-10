@@ -111,7 +111,7 @@ trait CheckAlarmsTrait
                             }
                         }
                         try{
-                            LaravelMailer::to(['sys-erm@cmatik.app'])
+                            LaravelMailer::to(['soporte@cmatik.cl'])
                                 ->bcc($users)
                                 ->send(new SystemMail(
                                     $notification->mail,

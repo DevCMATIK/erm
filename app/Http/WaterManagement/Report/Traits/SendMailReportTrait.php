@@ -15,7 +15,7 @@ trait SendMailReportTrait
         $sensor_list = $this->getTable($this->getValuesArray($reportMail));
         $users = $this->getUsersArray($reportMail);
         try {
-            LaravelMailer::to(['sys-erm@cmatik.app'])
+            LaravelMailer::to(['soporte@cmatik.cl'])
                 ->bcc($users)
                 ->send(new SystemMail(
                     $reportMail->mail,
@@ -75,7 +75,7 @@ trait SendMailReportTrait
                                 <th width="30%">SECTOR</th>
                                 <th width="20%">VARIABLE</th>
                                 <th width="20%">VALOR</th>
-                            </tr>                
+                            </tr>
                         </thead>';
         $html = $html . '<tbody>';
         foreach(collect($sensors_list)->sortBy('position') as $sensor) {
