@@ -79,9 +79,9 @@ class Kernel extends ConsoleKernel
         // Go through each task to dynamically set them up.
         foreach ($mailReports as $task) {
             // Use the scheduler to add the task at its desired frequency
-            $schedule->call(function() use ($task) {
+            /*$schedule->call(function() use ($task) {
                    SendReportMail::dispatch($task->id);
-            })->cron($task->generateCron());
+            })->cron($task->generateCron());*/
         }
 
         //chronometers
