@@ -32,7 +32,7 @@ class SendMailPasswordRecovery
             'user' => $user,
             'code' => $code
         ], function ($message) use ($user){
-            $message->from('soporte@cmatik.cl', 'ERM® CMATIK');
+            $message->from('sys-erm@cmatik.app', 'ERM® CMATIK');
             $message->to($user->email, $user->first_name.' '.$user->last_name);
             $message->subject("Hola $user->first_name $user->last_name, Reestablece tu contraseña.");
         });

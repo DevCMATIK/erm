@@ -30,7 +30,7 @@ class SendEmailAccountCreated
             'user' => $user,
             'code' => $code
         ], function ($message) use ($user){
-            $message->from('soporte@cmatik.cl', 'ERM® CMATIK');
+            $message->from('sys-erm@cmatik.app', 'ERM® CMATIK');
             $message->to($user->email, $user->first_name.' '.$user->last_name);
             $message->subject("Acceso a nuestro sistema.");
         });
