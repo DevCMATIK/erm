@@ -14,6 +14,5 @@ class IsActiveController extends Controller
         $report->save();
 
         return redirect('/mail-reports');
-
     }
 }

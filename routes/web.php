@@ -193,7 +193,7 @@ Route::middleware('auth')->group(function() {
 
     //MailReport
     Route::resource('mail-reports','WaterManagement\Report\Controllers\MailReportController');
-    Route::get('mail-reportActive/{report_id}/{is_active}','WaterManagement\Report\Controllers\isActiveController@index');
+    Route::get('mail-reportActive/{report_id}/{is_active}','WaterManagement\Report\Controllers\IsActiveController@index');
     Route::get('report/filterSensors','WaterManagement\Report\Controllers\Partial\FilterSensorsController');
     //commands executed
     Route::get('commands-executed','Client\Command\Controllers\CommandsExecutedController@index')->name('commands-executed');
