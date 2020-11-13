@@ -30,8 +30,8 @@ class TestController extends Controller
 
         $value = $this->getAnalogousValue($trigger);
 
-
-        dd($trigger,$value);
+        $receptorValue = $this->getReceptorValue($trigger);
+        dd($trigger,$value,$receptorValue);
     }
 
     protected function getAnalogousValue($trigger)
@@ -71,6 +71,15 @@ class TestController extends Controller
         return false;
 
 
+    }
+
+    protected function getReceptorValue($trigger)
+    {
+        $sensor_address = $trigger->receptor->full_address;
+        $sensor_grd_id = $trigger->receptor->device->internal_id;
+
+        $report = Report::where('grd_id',$sensor_grd_id)->first();
+        return  $report->$sensor_address;
     }
 
 }

@@ -34,5 +34,6 @@ class ExecuteCommandTriggered implements ShouldQueue
     {
         $triggers = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',$this->minutes)->get();
         $this->handleTriggers($triggers);
+
     }
 }
