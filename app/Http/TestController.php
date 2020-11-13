@@ -11,6 +11,7 @@ use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Domain\WaterManagement\Device\Sensor\Chronometer\ChronometerTracking;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Domain\WaterManagement\Device\Sensor\Trigger\SensorTrigger;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,34 +25,10 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        //ReportToDGA::dispatch(1)->onQueue('long-running-queue-low');
-        $subZones = SubZone::get();
-        foreach($subZones as $subZone) {
-            $subZone->check_points()->attach(CheckPoint::inRandomOrder()->take(3)->get()->pluck('id')->toArray());
-        }
+        $triggers = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->get();
+
     }
 
 
-    protected function getZones()
-    {
-        return Zone::whereHas('sub_zones', $filter =  function($query){
-            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
-        })->with( ['sub_zones' => $filter],'sub_zones.sub_elements')->get();
-    }
 
-    protected function getDevicesId($zones)
-    {
-        $ids = array();
-        foreach($zones as $zone) {
-            foreach($zone->sub_zones as $sub_zone) {
-                foreach($sub_zone->sub_elements as $sub_element) {
-                    if(Sentinel::getUser()->inSubZone($sub_zone->id)) {
-                        array_push($ids,$sub_element->device_id);
-                    }
-                }
-            }
-        }
-
-        return collect($ids)->unique()->toArray();
-    }
 }
