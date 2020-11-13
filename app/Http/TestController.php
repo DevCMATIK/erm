@@ -12,6 +12,7 @@ use App\Domain\WaterManagement\Device\Sensor\Chronometer\ChronometerTracking;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Device\Sensor\Trigger\SensorTrigger;
+use App\Domain\WaterManagement\Main\Report;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,10 +26,51 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $triggers = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->get();
-        dd($triggers);
+        $trigger = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->where('id',32)->first();
+
+        $value = $this->getAnalogousValue($trigger);
+
+
+        dd($trigger,$value);
     }
 
+    protected function getAnalogousValue($trigger)
+    {
+        $sensor_address = $trigger->sensor->full_address;
+        $sensor_grd_id = $trigger->sensor->device->internal_id;
+        $disposition = $trigger->sensor->dispositions()->where('id',$trigger->sensor->default_disposition)->first();
+        if(!$disposition) {
+            $disposition = $trigger->sensor->dispositions()->first();
+        }
+        if($disposition) {
+            $valorReport = Report::where('grd_id',$sensor_grd_id)->first()->$sensor_address;
+            if($valorReport){
+                $ingMin = $disposition->sensor_min;
+                $ingMax = $disposition->sensor_max;
+                $escalaMin = $disposition->scale_min;
+                $escalaMax = $disposition->scale_max;
+                if($escalaMin == null && $escalaMax == null) {
+                    $data = ($ingMin * $valorReport) + $ingMax;
+                } else {
+                    $f1 = $ingMax - $ingMin;
+                    $f2 = $escalaMax - $escalaMin;
+                    $f3 = $valorReport - $escalaMin;
+                    if($f2 == 0) {
+                        $data = ((0)*($f3)) + $ingMin ;
+                    } else {
+                        $data = (($f1/$f2)*($f3)) + $ingMin ;
+                    }
+                }
 
+            }
+            if(isset($data)) {
+                return $data;
+            }
+        }
+
+        return false;
+
+
+    }
 
 }
