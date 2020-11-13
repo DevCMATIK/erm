@@ -51,7 +51,11 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('totalizador');
                 })->where('check_point_id',$checkPoint->id)->first();
-                $totalizador = $device->sensors->first()->analogous_reports->first()->result;
+                if(!$device->sensors->first()) {
+                    continue;
+                } else {
+                    $totalizador = $device->sensors->first()->analogous_reports->first()->result;
+                }
 
                 $flow = Device::with([
                     'sensors' => function ($q) {
