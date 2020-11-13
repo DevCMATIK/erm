@@ -65,7 +65,7 @@ trait CheckAlarmsTrait
         }
         if($last_log->accused !== 1) {
             if(isset($alarm->last_log->first()->last_email)){
-                if(Carbon::parse($alarm->last_log->first()->last_email)->diffInMinutes(Carbon::now()) >= 15) {
+                if(Carbon::parse($alarm->last_log->first()->last_email)->diffInMinutes(Carbon::now()) >= 30) {
                     $this->handleEmails($alarm,$value);
                 }
             } else {
