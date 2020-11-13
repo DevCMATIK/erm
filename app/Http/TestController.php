@@ -31,7 +31,31 @@ class TestController extends Controller
         $value = $this->getAnalogousValue($trigger);
 
         $receptorValue = $this->getReceptorValue($trigger);
-        dd($trigger,$value,$receptorValue);
+
+        $result = 'Rango normal';
+        $ejecutar = 'No';
+        if ($trigger->range_max !== null && $value >= $trigger->range_max) {
+            $result = 'Sobre el rango';
+            if($trigger->in_range != $receptorValue ) {
+                $ejecutar = 'Si, Max.';
+            }
+        } else {
+            if ($trigger->range_min !== null && $value <= $trigger->range_min) {
+                $result = 'Bajo el rango';
+                $val = ($trigger->in_range === 1)?0:1;
+                if($val != $receptorValue ) {
+                    $ejecutar = 'Si, Min.';
+                }
+            }
+        }
+        dd([
+            'valor_leido' => $value,
+            'Valor_actual_receptor' => $receptorValue,
+            'rango_min' => $trigger->range_min,
+            'rango_max' => $trigger->range_max,
+            'resultado_rango' => $result,
+            'ejecutar_comando' => $ejecutar
+        ],$trigger);
     }
 
     protected function getAnalogousValue($trigger)
