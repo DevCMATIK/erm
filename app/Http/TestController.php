@@ -26,7 +26,7 @@ class TestController extends Controller
     public function __invoke(Request $request)
     {
         $triggers = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->get();
-
+        dd($triggers);
     }
 
 
