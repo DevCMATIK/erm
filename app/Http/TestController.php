@@ -26,7 +26,7 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $trigger = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->where('id',32)->first();
+        $trigger = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->where('id',37)->first();
 
         $value = $this->getAnalogousValue($trigger);
 
