@@ -47,7 +47,7 @@ class CreateFileForSensor implements ShouldQueue
 
 
 
-        $fileName = 'Data-'.md5(rand(0,10000000)).'.csv';
+        $fileName = 'Data-'.md5(rand(0,10000000)).'.xlsx';
 
 
         (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {

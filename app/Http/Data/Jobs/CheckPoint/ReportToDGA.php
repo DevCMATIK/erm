@@ -95,7 +95,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 } else {
                     $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
                 }
-               
+
 
                 $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
             }
