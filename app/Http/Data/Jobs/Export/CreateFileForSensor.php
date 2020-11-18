@@ -51,7 +51,7 @@ class CreateFileForSensor implements ShouldQueue
 
 
         (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {
-            return array_merge($this->getHeader(),$this->mapRows($row));
+            return array_combine($this->getHeader(),$this->mapRows($row));
         });
 
         $this->reminder->files()->create([
