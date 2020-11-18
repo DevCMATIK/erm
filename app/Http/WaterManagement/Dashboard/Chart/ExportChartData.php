@@ -38,7 +38,7 @@ class ExportChartData extends Controller
         $from = Carbon::parse($from)->startOfDay();  //2016-09-29 00:00:00.000000
         $to = Carbon::parse($to)->endOfDay();
 
-        if($to->diffInDays($from) > 60 || count($sensors) >= 15) {
+        if($to->diffInDays($from) > 30 || count($sensors) >= 5) {
             $reminder = ExportReminder::create([
                 'user_id' => Sentinel::getUser()->id,
                 'sensors' => $sensors->pluck('id')->implode(','),
