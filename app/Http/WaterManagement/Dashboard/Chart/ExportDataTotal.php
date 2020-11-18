@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Sentinel;
 
+use Rap2hpoutre\FastExcel\FastExcel;
+use Rap2hpoutre\FastExcel\SheetCollection;
+
 class ExportDataTotal extends Controller
 {
     public function __invoke(Request $request)

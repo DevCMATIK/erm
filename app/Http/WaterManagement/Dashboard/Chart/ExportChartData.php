@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Sentinel;
 
+use Rap2hpoutre\FastExcel\FastExcel;
+use Rap2hpoutre\FastExcel\SheetCollection;
+
 class ExportChartData extends Controller
 {
     public function __invoke(Request $request,$device_id,$sensor_id)
