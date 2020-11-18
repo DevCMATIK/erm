@@ -6,7 +6,7 @@ use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\Data\Export\ExportReminderFile;
 use App\Domain\System\File\File;
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Writer\Common\Creator\WriterFactory;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -43,12 +43,12 @@ class CreateFileForSensor implements ShouldQueue
     public function handle()
     {
         ini_set('memory_limit','2048M');
-        $writer = WriterEntityFactory::createCSVWriter();
+        $writer = WriterFactory::create(Type::CSV);
         $writer->setFieldDelimiter(';');
         $fileName = 'Data-'.md5(rand(0,10000000)).'.csv';
         $writer->openToFile(storage_path('app/public/'.$fileName));
         $rows  = $this->getData();
-        $writer->addRow(WriterEntityFactory::createRowFromArray($this->getHeader()));
+        $writer->addRow($this->getHeader());
         $writer->addRows($this->mapRows($rows));
         $writer->close();
         $this->reminder->files()->create([
@@ -62,14 +62,14 @@ class CreateFileForSensor implements ShouldQueue
     {
         if ($this->is_digital) {
             return $rows->map(function($item){
-                return WriterEntityFactory::createRow([
-                    WriterEntityFactory::createCell($item->sensor->device->check_point->name),
-                    WriterEntityFactory::createCell($item->sensor->name),
-                    WriterEntityFactory::createCell((string)$item->value),
-                    WriterEntityFactory::createCell($item->label),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toDateString()),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toTimeString()),
-                ]);
+                return [
+                    $item->sensor->device->check_point->name,
+                    $item->sensor->name,
+                    (string)$item->value,
+                    $item->label,
+                    Carbon::parse($item->date)->toDateString(),
+                    Carbon::parse($item->date)->toTimeString(),
+                ];
             })->toArray();
         } else {
             return $rows->map(function ($item) {
@@ -79,15 +79,15 @@ class CreateFileForSensor implements ShouldQueue
                     $interpreter = $item->interpreter;
                 }
 
-                return WriterEntityFactory::createRow([
-                    WriterEntityFactory::createCell($item->sensor->device->check_point->name),
-                    WriterEntityFactory::createCell($item->sensor->name),
-                    WriterEntityFactory::createCell(number_format($item->result,2,',','')),
-                    WriterEntityFactory::createCell($item->unit),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toDateString()),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toTimeString()),
-                    WriterEntityFactory::createCell($interpreter),
-                ]);
+                return [
+                    $item->sensor->device->check_point->name,
+                    $item->sensor->name,
+                    number_format($item->result,2,',',''),
+                    $item->unit,
+                    Carbon::parse($item->date)->toDateString(),
+                    Carbon::parse($item->date)->toTimeString(),
+                    $interpreter,
+                ];
             })->toArray();
         }
     }
