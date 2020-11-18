@@ -11,7 +11,6 @@
         <div class="form-group">
             <label class="form-label" for="password">Contraseña</label>
             <input type="password" name="password" class="form-control form-control-lg" placeholder="******" value="">
-
         </div>
         <div class="form-group text-left">
             <div class="custom-control custom-checkbox">

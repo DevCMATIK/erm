@@ -11,11 +11,6 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-12" id="cupLevelsContainer">
-
-                </div>
-            </div>
         </div>
     </div>
 

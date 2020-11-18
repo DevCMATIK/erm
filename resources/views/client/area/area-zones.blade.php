@@ -4,10 +4,10 @@
     <form class="" role="form"  id="area-zones-form">
         @csrf
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-8">
+            <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-label">Zonas </label>
-                    <div class="col-xs-12 col-sm-6 col-md-8">
+                    <div class="col-sm-12 ">
                         <div class="form-group">
                             @foreach($zones as $zone)
                                 @if($area->inZone($zone->id))
