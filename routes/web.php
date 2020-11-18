@@ -218,7 +218,7 @@ Route::get('/test2',function(){
 
 Route::get('download-file/{id}',function($id){
     $file = \App\Domain\Data\Export\ExportReminderFile::find($id);
-    return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.csv');
+    return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.xlsx');
 });
 
 Route::get('/route-cache', function() {

@@ -109,4 +109,9 @@ class TestExportController extends Controller
     {
         return $query->whereRaw ("`date` between '{$dates['from']}' and '{$dates['to']}'");
     }
+
+    public function download()
+    {
+
+    }
 }
