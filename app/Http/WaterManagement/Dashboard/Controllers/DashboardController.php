@@ -72,7 +72,7 @@ class DashboardController extends Controller
         $last_month_consumption  = ElectricityConsumption::whereIn('sub_zone_id',$sub_zones_id)->where('sensor_type','ee-e-activa')->lastMonth('date')->get()->unique('date')->sum('consumption');
         $last_month_sub_zone  = ElectricityConsumption::where('sub_zone_id',$sub_zone_id)->where('sensor_type','ee-e-activa')->lastMonth('date')->get()->unique('date')->sum('consumption');
         $this_month_sub_zone  = ElectricityConsumption::where('sub_zone_id',$sub_zone_id)->where('sensor_type','ee-e-activa')->thisMonth('date')->get()->unique('date')->sum('consumption');
-        $this_month_consumption  = ElectricityConsumption::whereIn('sub_zone_id',$sub_zones_id)->where('sensor_type','ee-e-activa')->thisMonth('date')->unique('date')->get()->sum('consumption');
+        $this_month_consumption  = ElectricityConsumption::whereIn('sub_zone_id',$sub_zones_id)->where('sensor_type','ee-e-activa')->thisMonth('date')->get()->unique('date')->sum('consumption');
 
         return view('water-management.dashboard.views.content-electric',compact('subZone', 'columns','subColumns','check_point_kpis','last_month_consumption','this_month_consumption','last_month_sub_zone','this_month_sub_zone'));
 
