@@ -37,9 +37,9 @@ class TestController extends Controller
             'device.check_point.sub_zones',
             'analogous_reports' => $reportsFilter,
             'consumptions'
-        ])->get();
+        ])->toSql();
 
-        return $sensors->toJson();
+        return $sensors;
     }
 
     protected function getAnalogousValue($trigger)

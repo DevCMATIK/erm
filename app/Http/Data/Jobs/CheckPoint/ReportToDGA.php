@@ -51,7 +51,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('totalizador');
                 })->where('check_point_id',$checkPoint->id)->first();
-                if(!$device->sensors->first()) {
+                if(!$device || !$device->sensors->first()) {
                     continue;
                 } else {
                     $totalizador = $device->sensors->first()->analogous_reports->first()->result;
@@ -69,7 +69,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('tx-caudal');
                 })->where('check_point_id',$checkPoint->id)->first();
-                if(!$flow->sensors->first()) {
+                if(!$flow || !$flow->sensors->first()) {
                     continue;
                 } else {
                     $caudal = $flow->sensors->first()->analogous_reports->first()->result;
@@ -90,7 +90,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 ])->whereHas('sensors', function ($q) {
                     return $q->sensorType('tx-nivel');
                 })->where('check_point_id',$checkPoint->id)->first();
-                if(!$device->sensors->first()->first()) {
+                if(!$device || !$device->sensors->first()->first()) {
                     continue;
                 } else {
                     $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
