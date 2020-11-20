@@ -26,20 +26,51 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $first_date = Carbon::yesterday()->toDateString();
-        $second_date = Carbon::today()->toDateString();
-        $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->toSql();
+        $time_start = microtime(true);
+        for($i=$request->from;$i<($request->max_days+1);$i++){
+            $toInsert = array();
+            $month = str_pad($request->month, 2, '0', STR_PAD_LEFT);
+            $day = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $sensors = $this->getSensors("2020-{$month}-{$day}");
+            foreach($sensors as $sensor) {
+                if(!$sensor->consumptions()->whereDate('date',"2020-{$month}-{$day}")->first()) {
+                    if(count($sensor->consumptions) > 0) {
+                        $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
+                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
+                    } else {
+                        $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
+                        $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
+                    }
 
-        dd($sensors);
+                    if($first_read != '' && $last_read != '') {
+                        $consumption = $last_read - $first_read;
+
+                        array_push($toInsert,[
+                            'sensor_id' => $sensor->id,
+                            'first_read' => $first_read,
+                            'last_read' => $last_read,
+                            'consumption' => $consumption,
+                            'sensor_type' => $sensor->type->slug,
+                            'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
+                            'date' => "2020-{$month}-{$day}"
+                        ]);
+                    }
+
+
+                }
+
+
+            }
+            if(count($toInsert) > 0) {
+                ElectricityConsumption::insert($toInsert);
+            }
+
+        }
+        $time_end = microtime(true);
+
+
+        $execution_time = ($time_end - $time_start);
+        dd($execution_time,ElectricityConsumption::count());
     }
 
     protected function getAnalogousValue($trigger)
