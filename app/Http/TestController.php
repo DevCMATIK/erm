@@ -26,36 +26,20 @@ class TestController extends Controller
 
     public function __invoke(Request $request)
     {
-        $trigger = SensorTrigger::with(['sensor.device','sensor.address','receptor.device','receptor.address','sensor.dispositions'])->where('minutes',1)->where('id',37)->first();
+        $first_date = Carbon::yesterday()->toDateString();
+        $second_date = Carbon::today()->toDateString();
+        $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
+            return $q->where('slug','ee-e-activa')->orWhere('slug','ee-e-reactiva')->orWhere('slug','ee-e-aparente');
+        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
+            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
+        })->with([
+            'type' => $typeFilter,
+            'device.check_point.sub_zones',
+            'analogous_reports' => $reportsFilter,
+            'consumptions'
+        ])->get();
 
-        $value = $this->getAnalogousValue($trigger);
-
-        $receptorValue = $this->getReceptorValue($trigger);
-
-        $result = 'Rango normal';
-        $ejecutar = 'No';
-        if ($trigger->range_max !== null && $value >= $trigger->range_max) {
-            $result = 'Sobre el rango';
-            if($trigger->in_range != $receptorValue ) {
-                $ejecutar = 'Si, Max.';
-            }
-        } else {
-            if ($trigger->range_min !== null && $value <= $trigger->range_min) {
-                $result = 'Bajo el rango';
-                $val = ($trigger->in_range === 1)?0:1;
-                if($val != $receptorValue ) {
-                    $ejecutar = 'Si, Min.';
-                }
-            }
-        }
-        dd([
-            'valor_leido' => $value,
-            'Valor_actual_receptor' => $receptorValue,
-            'rango_min' => $trigger->range_min,
-            'rango_max' => $trigger->range_max,
-            'resultado_rango' => $result,
-            'ejecutar_comando' => $ejecutar
-        ],$trigger);
+        return $sensors->toJson();
     }
 
     protected function getAnalogousValue($trigger)

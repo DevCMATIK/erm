@@ -58,6 +58,7 @@ class BackupEnergy implements ShouldQueue
             }
             if($first_read && $last_read) {
                 $consumption = $last_read - $first_read;
+
                 array_push($toInsert,[
                     'sensor_id' => $sensor->id,
                     'first_read' => $first_read,
