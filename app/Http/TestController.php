@@ -39,7 +39,7 @@ class TestController extends Controller
             'consumptions'
         ])->toSql();
 
-        return $sensors;
+        dd($sensors);
     }
 
     protected function getAnalogousValue($trigger)
