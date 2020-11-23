@@ -27,6 +27,7 @@ class ExportChartData extends Controller
         } else {
             $ss = $s;
         }
+
         $sensors  = Sensor::with([
             'type',
             'device.check_point'
@@ -64,12 +65,12 @@ class ExportChartData extends Controller
             if(strlen($fileName) > 31) {
                 $fileName = substr($sensors->first()->device->check_point->name,'0','20').'.xlsx';
             }
-            return $this->download($request);
+            return $this->download($request,$sensors);
         }
 
     }
 
-    public function download(Request $request)
+    public function download(Request $request,$sensors)
     {
         $dates = $this->resolveDates($request->dates);
         //$sensors = $this->getSensors($request->sensors);
@@ -78,10 +79,9 @@ class ExportChartData extends Controller
         $data =array();
         $sheetsName =array();
 
-        foreach ($this->getSensors($request->sensors) as $sensor ){
+        foreach ($sensors $sensor ){
             array_push($sheetsName,$sensor->name );
             array_push($data,$this->mapQuery($sensor,$dates));
-
         }
         $sheets = new SheetCollection(array_combine($sheetsName,$data));
         return (new FastExcel($sheets))->download('Data-'.Carbon::today()->toDateString().'.xlsx');
