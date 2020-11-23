@@ -79,7 +79,7 @@ class ExportChartData extends Controller
         $data =array();
         $sheetsName =array();
 
-        foreach ($sensors $sensor ){
+        foreach ($sensors as $sensor ){
             array_push($sheetsName,$sensor->name );
             array_push($data,$this->mapQuery($sensor,$dates));
         }
