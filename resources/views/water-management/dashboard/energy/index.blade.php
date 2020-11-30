@@ -67,7 +67,7 @@
             if(end != false) {
                 end_date = start;
             } else {
-                end_date = $('#consumption-filter').val().split(' ')[1];
+                end_date = $('#consumption-filter').val().split(' ')[2];
             }
 
 
@@ -102,7 +102,7 @@
             if(end != false) {
                 end_date = start;
             } else {
-                end_date = $('#consumption-filter').val().split(' ')[1];
+                end_date = $('#consumption-filter').val().split(' ')[2];
             }
 
             $.ajax({
