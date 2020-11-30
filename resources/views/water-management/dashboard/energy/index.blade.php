@@ -132,6 +132,7 @@
                 {
                     opens: 'right',
                     templates: controls,
+                    maxDate : moment(),
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
@@ -164,6 +165,7 @@
                 {
                     opens: 'right',
                     templates: controls,
+                    maxDate : moment(),
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
@@ -205,6 +207,8 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
+                    getConsumption();
+                    getZoneConsumption();
                 }
             );
 
