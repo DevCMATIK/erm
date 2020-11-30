@@ -14,9 +14,9 @@ class EnergyController extends Controller
         if(!Sentinel::getUser()->inSubZone($subZone)) {
             abort(404);
         }
-
+        $subZone = $this->getData($subZone);
         return view('water-management.dashboard.energy.index',[
-            'subZone' => $this->getData($subZone),
+            'subZone' => $subZone,
             'types' =>   $subZone->elements->map(function($element){
                 return $element->sub_elements->map(function($sub_element){
                     return $sub_element->analogous_sensors->map(function($item){
