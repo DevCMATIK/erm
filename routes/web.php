@@ -4,6 +4,7 @@ use App\Domain\WaterManagement\Main\Report;
 use Carbon\Carbon;
 
 Route::middleware('auth')->group(function() {
+
     Route::resource('groups','User\Group\Controllers\GroupController');
     //Client
     Route::get('getSubZones/{zone_id}/{check_point_id?}','Client\CheckPoint\Controllers\GetSubZonesController@getSubZones');
@@ -123,6 +124,10 @@ Route::middleware('auth')->group(function() {
             Route::get('dashboard/detail/{check_point}','DashboardController@deviceDashboard');
 
 
+        });
+
+        Route::namespace('Energy\Controllers')->group(function(){
+            Route::get('/dashboard-energy/{subZone}','EnergyController@index')->name('dashboard-energy');
         });
         //electricity values
         Route::get('getEnergyValues','Electricity\EnergyValuesController');
