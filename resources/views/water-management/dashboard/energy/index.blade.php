@@ -171,7 +171,7 @@
                 {
                     opens: 'right',
                     templates: controls,
-                    maxDate : moment(),
+                    maxDate : moment().subtract(1, 'days'),
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
@@ -186,7 +186,6 @@
                     endDate: moment().endOf('month'),
                     ranges:
                         {
-                            'Hoy': [moment(), moment()],
                             'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                             'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
                             'Esta Semana': [moment().startOf('week'), moment().endOf('week')],
@@ -202,13 +201,15 @@
                     if(moment().startOf('month').isSame(start) && moment().endOf('month').isSame(end)) {
                         $('.consumption-box').removeClass('col-xl-6 col-lg-6 col-md-6',200).addClass('col-xl-3 col-lg-3 col-md-3',200);
                         setTimeout(function(){
-                            $('.hide-on-date').show('slideDown');
-                        },400)
+                            $('#last-month-consumption').show('slideDown');
+                            $('#last-month-zone-consumption').show('slideDown');
+                        },400);
 
                         $('#consumption .box-label').html('Consumo mes actual');
                         $('#zone-consumption .box-label').html('Consumo Pocillas mes actual');
                     } else {
-                        $('.hide-on-date').hide();
+                        $('#last-month-consumption').hide();
+                        $('#last-month-zone-consumption').hide();
                         $('.consumption-box').removeClass('col-xl-3 col-lg-3 col-md-3',200).addClass('col-xl-6 col-lg-6 col-md-6',200);
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
