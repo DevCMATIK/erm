@@ -12,7 +12,7 @@ class EnergyController extends Controller
     public function index($subZone)
     {
         if(!Sentinel::getUser()->inSubZone($subZone)) {
-            abort(404);
+            dd($subZone,Sentinel::getUser()->sub_zones);
         }
         $subZone = $this->getData($subZone);
         $check_point_kpis = app(CheckPointCostKpiController::class)->getCostKpi($subZone->check_points->implode('id',','));
