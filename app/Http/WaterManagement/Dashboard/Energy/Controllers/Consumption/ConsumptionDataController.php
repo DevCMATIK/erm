@@ -13,7 +13,7 @@ class ConsumptionDataController extends Controller
     {
         return ElectricityConsumption::where('sub_zone_id',$request->sub_zone)
             ->where('sensor_type','ee-e-activa')
-            ->whereRaw("date between {$request->start_date} && {$request->end_date}")
+            ->whereRaw("date between '{$request->start_date}' and '{$request->end_date}'")
             ->sum('consumption') ?? 0;
     }
 
@@ -24,7 +24,7 @@ class ConsumptionDataController extends Controller
                     ->from('sub_zones')
                     ->where('zone_id',$request->zone);
             })->where('sensor_type','ee-e-activa')
-                ->whereRaw("date between {$request->start_date} && {$request->end_date}")
+                ->whereRaw("date between '{$request->start_date}' and '{$request->end_date}'")
                 ->sum('consumption') ?? 0;
     }
 }
