@@ -61,13 +61,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = $('#consumption-filter').val().split(' ')[0];
+                start_date = moment().startOf('month').format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = end;
             } else {
-                end_date = $('#consumption-filter').val().split(' ')[2];
+                end_date = moment().endOf('month').format('YYYY-MM-DD');
             }
 
 
@@ -95,13 +95,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = $('#consumption-filter').val().split(' ')[0];
+                start_date = moment().startOf('month').format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = end;
             } else {
-                end_date = $('#consumption-filter').val().split(' ')[2];
+                end_date = moment().endOf('month').format('YYYY-MM-DD');
             }
 
             $.ajax({
@@ -122,6 +122,12 @@
                 }
             });
         }
+
+        getConsumption();
+        getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
+        getZoneConsumption();
+        getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
+
         $(document).ready(function(){
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
@@ -212,10 +218,7 @@
                 }
             );
 
-            getConsumption();
-            getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
-            getZoneConsumption();
-            getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
+
         });
 
         Highcharts.chart('consumptionChartContainer', {
