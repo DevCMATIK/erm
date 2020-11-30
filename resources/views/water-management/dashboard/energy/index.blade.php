@@ -211,6 +211,9 @@
                     }
                 }
             );
+
+            getConsumption();
+            getZoneConsumption();
         });
 
         Highcharts.chart('consumptionChartContainer', {
