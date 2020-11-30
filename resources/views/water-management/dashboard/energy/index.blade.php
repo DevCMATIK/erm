@@ -57,75 +57,6 @@
     <script>
         $('.btn-alarm').hide();
 
-        function getConsumption(start = false, end = false) {
-            var start_date,end_date;
-            if(start != false) {
-                start_date = start;
-            } else {
-                start_date = $('#consumption-filter').startDate.format('YYYY-MM-DD');
-            }
-
-            if(end != false) {
-                end_date = start;
-            } else {
-                end_date = $('#consumption-filter').endDate.format('YYYY-MM-DD');
-            }
-
-
-            $.ajax({
-                url     : 'energy/get-consumption-data',
-                type    : 'GET',
-                data    : {
-                    sub_zone : $('#sub_zone').val(),
-                    start_date : start_date,
-                    end_date : end_date,
-                },
-                dataType: "json",
-                success : function ( json )
-                {
-                    $('#consumption .main-box-value').html(json);
-                },
-                error   : function ( response )
-                {
-                   console.log(response);
-                }
-            });
-        }
-
-        function getZoneConsumption(start = false, end = false) {
-            var start_date,end_date;
-            if(start != false) {
-                start_date = start;
-            } else {
-                start_date = $('#consumption-filter').startDate.format('YYYY-MM-DD');
-            }
-
-            if(end != false) {
-                end_date = start;
-            } else {
-                end_date = $('#consumption-filter').endDate.format('YYYY-MM-DD');
-            }
-
-            $.ajax({
-                url     : 'energy/get-zone-consumption-data',
-                type    : 'GET',
-                data    : {
-                    zone : $('#zone').val(),
-                    start_date : start_date,
-                    end_date : end_date,
-                },
-                dataType: "json",
-                success : function ( json )
-                {
-                    $('#consumption .main-box-value').html(json);
-                },
-                error   : function ( response )
-                {
-                    console.log(response);
-                }
-            });
-        }
-
         $(document).ready(function(){
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
@@ -211,6 +142,75 @@
                     }
                 }
             );
+
+            function getConsumption(start = false, end = false) {
+                var start_date,end_date;
+                if(start != false) {
+                    start_date = start;
+                } else {
+                    start_date = $('#consumption-filter').startDate.format('YYYY-MM-DD');
+                }
+
+                if(end != false) {
+                    end_date = start;
+                } else {
+                    end_date = $('#consumption-filter').endDate.format('YYYY-MM-DD');
+                }
+
+
+                $.ajax({
+                    url     : 'energy/get-consumption-data',
+                    type    : 'GET',
+                    data    : {
+                        sub_zone : $('#sub_zone').val(),
+                        start_date : start_date,
+                        end_date : end_date,
+                    },
+                    dataType: "json",
+                    success : function ( json )
+                    {
+                        $('#consumption .main-box-value').html(json);
+                    },
+                    error   : function ( response )
+                    {
+                        console.log(response);
+                    }
+                });
+            }
+
+            function getZoneConsumption(start = false, end = false) {
+                var start_date,end_date;
+                if(start != false) {
+                    start_date = start;
+                } else {
+                    start_date = $('#consumption-filter').startDate.format('YYYY-MM-DD');
+                }
+
+                if(end != false) {
+                    end_date = start;
+                } else {
+                    end_date = $('#consumption-filter').endDate.format('YYYY-MM-DD');
+                }
+
+                $.ajax({
+                    url     : 'energy/get-zone-consumption-data',
+                    type    : 'GET',
+                    data    : {
+                        zone : $('#zone').val(),
+                        start_date : start_date,
+                        end_date : end_date,
+                    },
+                    dataType: "json",
+                    success : function ( json )
+                    {
+                        $('#consumption .main-box-value').html(json);
+                    },
+                    error   : function ( response )
+                    {
+                        console.log(response);
+                    }
+                });
+            }
 
             getConsumption();
             getZoneConsumption();
