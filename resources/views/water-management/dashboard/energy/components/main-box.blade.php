@@ -2,7 +2,7 @@
     <div class="">
         <h3 class="display-4 d-block l-h-n m-0 fw-500 main-box-number" @if(strlen($value) > 8 && strlen($value) < 10) style="font-size:2.5em;" @endif @if(strlen($value) >= 10) style="font-size:2.1em;" @endif>
             <div class="main-box-value" style="margin: 0; float: left; margin-right:3px;">
-                @if($value < 0) 0 @else {{ number_format($value,0,',','.') }} @endif
+                @if($value < 0) C/D @else {{ number_format($value,0,',','.') }} @endif
             </div>
             <span class="fs-nano main-box-measure" >
                     {{ $measure }}
