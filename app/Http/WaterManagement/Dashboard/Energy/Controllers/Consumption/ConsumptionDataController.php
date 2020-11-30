@@ -53,7 +53,7 @@ class ConsumptionDataController extends Controller
             } else {
                 if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
                     $box['label'] = "Consumo {$zone->name} mes pasado";
-                    $box['bg'] = 'bg-primary-600';
+                    $box['bg'] = 'bg-primary-300';
                 } else {
                     $box['label'] = "Consumo {$zone->name}";
                 }
@@ -64,7 +64,7 @@ class ConsumptionDataController extends Controller
             } else {
                 if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
                     $box['label'] = "Consumo mes pasado";
-                    $box['bg'] = 'bg-primary-600';
+                    $box['bg'] = 'bg-primary-300';
                 } else {
                     $box['label'] = "Consumo total";
                 }
