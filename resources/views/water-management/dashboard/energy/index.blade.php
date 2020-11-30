@@ -57,7 +57,7 @@
     <script>
         $('.btn-alarm').hide();
         function getConsumption(start = false, end = false,container = 'consumption') {
-            var start_date,end_date;
+            let start_date,end_date;
             if(start != false) {
                 start_date = start;
             } else {
@@ -91,7 +91,7 @@
         }
 
         function getZoneConsumption(start = false, end = false,container = 'zone-consumption') {
-            var start_date,end_date;
+            let start_date,end_date;
             if(start != false) {
                 start_date = start;
             } else {
