@@ -12,12 +12,21 @@ class EnergyController extends Controller
     public function index($subZone)
     {
         if(!Sentinel::getUser()->inSubZone($subZone)) {
-            dd($subZone,Sentinel::getUser()->sub_zones);
+            abort(404);
         }
-        $subZone = $this->getData($subZone);
-        $check_point_kpis = app(CheckPointCostKpiController::class)->getCostKpi($subZone->check_points->implode('id',','));
 
-        return view('water-management.dashboard.energy.index',compact('subZone', 'check_point_kpis'));
+        return view('water-management.dashboard.energy.index',[
+            'subZone' => $this->getData($subZone),
+            'types' =>   $subZone->elements->map(function($element){
+                return $element->sub_elements->map(function($sub_element){
+                    return $sub_element->analogous_sensors->map(function($item){
+                        return $item;
+                    });
+                });
+            })->collapse()->collapse()->groupBy('sensor.type.slug')->map(function($item,$key){
+                return $item->groupBy('sensor.name');
+            })
+        ]);
     }
 
     protected function getData($id)

@@ -4,6 +4,8 @@
 @endsection
 @section('page-icon','bolt')
 @section('page-content')
+    <input type="hidden" id="sub_zone" value="{{ $subZone->id }}">
+    <input type="hidden" id="zone" value="{{ $subZone->zone_id }}">
     {!! includeCss('plugins/bootstrap-daterangepicker/daterangepicker.css') !!}
     <style>
         @media (max-width: 576px) {
@@ -54,6 +56,75 @@
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
     <script>
         $('.btn-alarm').hide();
+
+        function getConsumption(start = false, end = false) {
+            var start_date,end_date;
+            if(start != false) {
+                start_date = start;
+            } else {
+                start_date = $('.consumption-date').startDate().format('YYYY-MM-DD');
+            }
+
+            if(end != false) {
+                end_date = start;
+            } else {
+                end_date = $('.consumption-date').endDate().format('YYYY-MM-DD');
+            }
+
+
+            $.ajax({
+                url     : 'energy/get-consumption-data',
+                type    : 'GET',
+                data    : {
+                    sub_zone : $('#sub_zone').val(),
+                    start_date : start_date,
+                    end_date : end_date,
+                },
+                dataType: "json",
+                success : function ( json )
+                {
+                    $('#consumption .main-box-value').html(json);
+                },
+                error   : function ( response )
+                {
+                   console.log(response);
+                }
+            });
+        }
+
+        function getZoneConsumption(start = false, end = false) {
+            var start_date,end_date;
+            if(start != false) {
+                start_date = start;
+            } else {
+                start_date = $('.consumption-date').startDate().format('YYYY-MM-DD');
+            }
+
+            if(end != false) {
+                end_date = start;
+            } else {
+                end_date = $('.consumption-date').endDate().format('YYYY-MM-DD');
+            }
+
+            $.ajax({
+                url     : 'energy/get-zone-consumption-data',
+                type    : 'GET',
+                data    : {
+                    zone : $('#zone').val(),
+                    start_date : start_date,
+                    end_date : end_date,
+                },
+                dataType: "json",
+                success : function ( json )
+                {
+                    $('#consumption .main-box-value').html(json);
+                },
+                error   : function ( response )
+                {
+                    console.log(response);
+                }
+            });
+        }
 
         $(document).ready(function(){
             let controls = {
