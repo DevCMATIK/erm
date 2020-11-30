@@ -62,13 +62,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = $('.consumption-date').startDate().format('YYYY-MM-DD');
+                start_date = $('.consumption-date').startDate.format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = start;
             } else {
-                end_date = $('.consumption-date').endDate().format('YYYY-MM-DD');
+                end_date = $('.consumption-date').endDate.format('YYYY-MM-DD');
             }
 
 
@@ -97,13 +97,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = $('.consumption-date').startDate().format('YYYY-MM-DD');
+                start_date = $('.consumption-date').startDate.format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = start;
             } else {
-                end_date = $('.consumption-date').endDate().format('YYYY-MM-DD');
+                end_date = $('.consumption-date').endDate.format('YYYY-MM-DD');
             }
 
             $.ajax({
