@@ -79,10 +79,9 @@
                     start_date : start_date,
                     end_date : end_date,
                 },
-                dataType: "json",
-                success : function ( json )
+                success : function ( data )
                 {
-                    $('#'+container+' .main-box-value').html(json);
+                    $('#'+container).html(data);
                 },
                 error   : function ( response )
                 {
@@ -113,10 +112,9 @@
                     start_date : start_date,
                     end_date : end_date,
                 },
-                dataType: "json",
-                success : function ( json )
+                success : function ( data )
                 {
-                    $('#'+container+' .main-box-value').html(json);
+                    $('#'+container).html(data);
                 },
                 error   : function ( response )
                 {
