@@ -33,38 +33,44 @@ class ConsumptionDataController extends Controller
     protected function getMainBox(Request $request,$value)
     {
         $value = ($value < 0)?0:$value;
+        $box = $this->resolveBox($request);
         return view('water-management.dashboard.energy.components.main-box',[
-            'bg' => 'bg-primary',
+            'bg' => $box['bg'] ?? 'bg-primary',
             'value' =>  $value,
             'measure' => 'kWh',
-            'title' => $this->resolveLabel($request),
+            'title' => $box['label'],
             'icon' => 'fa-calendar'
         ]);
     }
 
-    protected function resolveLabel(Request $request)
+    protected function resolveBox(Request $request)
     {
+        $box = array();
         if($request->has('zone')) {
             $zone = Zone::find($request->zone);
             if($request->start_date == now()->startOfMonth()->toDateString() && $request->end_date == now()->endOfMonth()->toDateString()) {
-                return "Consumo {$zone->name} mes actual";
+                $box['label'] = "Consumo {$zone->name} mes actual";
             } else {
                 if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
-                    return "Consumo {$zone->name} mes pasado";
+                    $box['label'] = "Consumo {$zone->name} mes pasado";
+                    $box['bg'] = 'bg-primary-600';
                 } else {
-                    return "Consumo {$zone->name}";
+                    $box['label'] = "Consumo {$zone->name}";
                 }
             }
         } else {
             if($request->start_date == now()->startOfMonth()->toDateString() && $request->end_date == now()->endOfMonth()->toDateString()) {
-                return "Consumo mes actual";
+                $box['label'] = "Consumo mes actual";
             } else {
                 if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
-                    return "Consumo mes pasado";
+                    $box['label'] = "Consumo mes pasado";
+                    $box['bg'] = 'bg-primary-600';
                 } else {
-                    return "Consumo total";
+                    $box['label'] = "Consumo total";
                 }
             }
         }
+
+        return $box;
     }
 }
