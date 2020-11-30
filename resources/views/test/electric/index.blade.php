@@ -139,6 +139,8 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
+                    console.log(start.format('YYYY-MM-DD'));
+                    console.log(end);
                 }
             );
         });

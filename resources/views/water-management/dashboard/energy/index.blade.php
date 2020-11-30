@@ -207,8 +207,8 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
-                    getConsumption();
-                    getZoneConsumption();
+                    getConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+                    getZoneConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                 }
             );
 
