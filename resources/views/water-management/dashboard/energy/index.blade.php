@@ -72,7 +72,7 @@
 
 
             $.ajax({
-                url     : 'energy/get-consumption-data',
+                url     : '/energy/get-consumption-data',
                 type    : 'GET',
                 data    : {
                     sub_zone : $('#sub_zone').val(),
@@ -106,7 +106,7 @@
             }
 
             $.ajax({
-                url     : 'energy/get-zone-consumption-data',
+                url     : '/energy/get-zone-consumption-data',
                 type    : 'GET',
                 data    : {
                     zone : $('#zone').val(),
@@ -211,7 +211,9 @@
             );
 
             getConsumption();
+            getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
             getZoneConsumption();
+            getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
         });
 
         Highcharts.chart('consumptionChartContainer', {
