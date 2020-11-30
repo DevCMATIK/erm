@@ -11,20 +11,20 @@ class ConsumptionDataController extends Controller
 {
     public function getConsumptionData(Request $request)
     {
-        return number_format(ElectricityConsumption::where('sub_zone_id',$request->sub_zone)
+        return json_encode((string) number_format(ElectricityConsumption::where('sub_zone_id',$request->sub_zone)
                 ->where('sensor_type','ee-e-activa')
                 ->whereRaw("date between '{$request->start_date}' and '{$request->end_date}'")
-                ->sum('consumption') ?? 0,0,',','.');
+                ->sum('consumption') ?? 0,0,',','.'));
     }
 
     public function getZoneConsumptionData(Request $request)
     {
-        return number_format(ElectricityConsumption::whereIn('sub_zone_id',function($query) use ($request){
+        return json_encode((string) number_format(ElectricityConsumption::whereIn('sub_zone_id',function($query) use ($request){
                 $query->select('id')
                     ->from('sub_zones')
                     ->where('zone_id',$request->zone);
             })->where('sensor_type','ee-e-activa')
                 ->whereRaw("date between '{$request->start_date}' and '{$request->end_date}'")
-                ->sum('consumption') ?? 0,0,',','.');
+                ->sum('consumption') ?? 0,0,',','.'));
     }
 }

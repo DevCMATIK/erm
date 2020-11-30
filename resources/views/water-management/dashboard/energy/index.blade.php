@@ -82,7 +82,7 @@
                 dataType: "json",
                 success : function ( json )
                 {
-                    $('#consumption .main-box-value').html(json);
+                    $('#'+container+' .main-box-value').html(json);
                 },
                 error   : function ( response )
                 {
