@@ -171,7 +171,7 @@
                 {
                     opens: 'right',
                     templates: controls,
-                    maxDate : moment().subtract(1, 'days'),
+                    maxDate : moment(),
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
@@ -186,6 +186,7 @@
                     endDate: moment().endOf('month'),
                     ranges:
                         {
+                            'Hoy': [moment(), moment()],
                             'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                             'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
                             'Esta Semana': [moment().startOf('week'), moment().endOf('week')],
