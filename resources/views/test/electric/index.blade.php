@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title')
-    {{ 'Dashboard : '.$subZone->name }} <a href="/dashboard-alarms" class="btn-warning btn btn-sm btn-alarm"><i class="fas fa-exclamation-triangle"></i></a>
+    Dashboard TEST
 @endsection
 @section('page-icon','bolt')
 @section('page-content')

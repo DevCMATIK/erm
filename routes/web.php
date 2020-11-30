@@ -4,7 +4,7 @@ use App\Domain\WaterManagement\Main\Report;
 use Carbon\Carbon;
 
 Route::middleware('auth')->group(function() {
-
+    Route::view('d-electric','test.electric.index');
     Route::resource('groups','User\Group\Controllers\GroupController');
     //Client
     Route::get('getSubZones/{zone_id}/{check_point_id?}','Client\CheckPoint\Controllers\GetSubZonesController@getSubZones');

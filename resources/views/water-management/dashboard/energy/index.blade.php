@@ -18,10 +18,6 @@
             .main-box-icon {
                 visibility: hidden;
             }
-            .main-box-value {
-                float: left;
-                margin: 0;
-            }
         }
     </style>
     <div class="card border">
@@ -69,7 +65,7 @@
             }
 
             if(end != false) {
-                end_date = start;
+                end_date = end;
             } else {
                 end_date = $('#consumption-filter').val().split(' ')[2];
             }
@@ -104,7 +100,7 @@
             }
 
             if(end != false) {
-                end_date = start;
+                end_date = end;
             } else {
                 end_date = $('#consumption-filter').val().split(' ')[2];
             }

@@ -1,6 +1,5 @@
 <?php $__env->startSection('page-title'); ?>
-    <?php echo e('Dashboard : TEST'); ?>
-
+    Dashboard TEST
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-icon','bolt'); ?>
 <?php $__env->startSection('page-content'); ?>
@@ -57,6 +56,8 @@
     <?php echo includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
 
     <script>
+        $('.btn-alarm').hide();
+
         $(document).ready(function(){
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
