@@ -18,6 +18,10 @@
             .main-box-icon {
                 visibility: hidden;
             }
+            .main-box-value {
+                float: left;
+                margin: 0;
+            }
         }
     </style>
     <div class="card border">
