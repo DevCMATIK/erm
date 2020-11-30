@@ -56,7 +56,7 @@
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
     <script>
         $('.btn-alarm').hide();
-        function getConsumption(start = false, end = false) {
+        function getConsumption(start = false, end = false,container = 'consumption') {
             var start_date,end_date;
             if(start != false) {
                 start_date = start;
@@ -91,7 +91,7 @@
             });
         }
 
-        function getZoneConsumption(start = false, end = false) {
+        function getZoneConsumption(start = false, end = false,container = 'zone-consumption') {
             var start_date,end_date;
             if(start != false) {
                 start_date = start;
@@ -116,7 +116,7 @@
                 dataType: "json",
                 success : function ( json )
                 {
-                    $('#consumption .main-box-value').html(json);
+                    $('#'+container+' .main-box-value').html(json);
                 },
                 error   : function ( response )
                 {
@@ -211,9 +211,9 @@
             );
 
             getConsumption();
-            getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
+            getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
             getZoneConsumption();
-            getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
+            getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
         });
 
         Highcharts.chart('consumptionChartContainer', {
