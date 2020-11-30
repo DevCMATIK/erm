@@ -42,7 +42,7 @@
     <div class="col-xl-3 col-md-3 col-lg-3 col-sm-12">
         <div class="form-group">
             <label class="form-label">Seleccione un rango de fechas</label>
-            <input type="text" class="form-control consumption-date" name="date_filter" id="date_filter">
+            <input type="text" class="form-control consumption-date" name="date_filter" id="consumption-filter">
         </div>
 
         @include('water-management.dashboard.energy.components.data-box',[
