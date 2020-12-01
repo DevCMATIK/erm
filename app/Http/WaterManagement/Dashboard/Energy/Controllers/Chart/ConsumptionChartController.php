@@ -72,9 +72,8 @@ class ConsumptionChartController extends Controller
 
             return json_encode($data,JSON_NUMERIC_CHECK);
         } else {
-            return null;
+            return false;
         }
-
     }
 
     protected function transformData($rows){
