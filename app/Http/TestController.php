@@ -28,7 +28,7 @@ class TestController extends Controller
 
     public function __invoke()
     {
-        dd($this->getSensorsBySubZoneAndType(56,'ee-corriente'));
+        dd($this->getSensorsBySubZoneAndName(56,'ee-corriente','L1'));
     }
 
 

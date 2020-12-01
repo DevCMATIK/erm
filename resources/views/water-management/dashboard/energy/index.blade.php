@@ -91,9 +91,9 @@
 
         function getStreamData()
         {
-            getVarData('ee-corriente','avg','L1','bg-warning-600');
-            getVarData('ee-corriente','avg','L2','bg-warning-600');
-            getVarData('ee-corriente','avg','L3','bg-warning-600');
+            getVarData('ee-corriente','avg','L1','bg-warning-600','mb-1');
+            getVarData('ee-corriente','avg','L2','bg-warning-600','mb-1');
+            getVarData('ee-corriente','avg','L3','bg-warning-600','mb-1');
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {
