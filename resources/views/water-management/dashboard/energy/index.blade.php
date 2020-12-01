@@ -280,7 +280,7 @@
         function tensionOptions(options)
         {
             $('#tension-options').val(options);
-            getTensionChartContainer($('.date-filter').val().split()[0],$('.date-filter').val().split()[2]);
+            getTensionChartContainer($('.date-filter').val().split(' ')[0],$('.date-filter').val().split(' ')[2]);
         }
 
         function tensionType(type){
@@ -292,7 +292,7 @@
                 $('.tension-ll').hide();
                 $('.tension-ln').show();
             }
-            getTensionChartContainer($('.date-filter').val().split()[0],$('.date-filter').val().split()[2]);
+            getTensionChartContainer($('.date-filter').val().split(' ')[0],$('.date-filter').val().split(' ')[2]);
         }
 
         function streamOptions(options)
