@@ -62,70 +62,73 @@
             $.getJSON(
                 '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
                 function (data) {
-                    var options = {
-                        chart: {
-                            renderTo: 'consumptionChartContainer',
-                            zoomType: 'x',
-                            height: $('#consumption-options-col').height() ,
-                            animation : false
-                        },
+                    if(data) {
+                        var options = {
+                            chart: {
+                                renderTo: 'consumptionChartContainer',
+                                zoomType: 'x',
+                                height: $('#consumption-options-col').height(),
+                                animation: false
+                            },
 
-                        boost: {
-                            useGPUTranslations: true
-                        },
-                        legend : {
-                            enabled : true,
-                            align: 'right',
-                            verticalAlign: 'top',
-                            x: -10,
-                            y: 50,
-                            floating: true
-                        },
-                        title: {
-                            text:  data.title
-                        },
-                        xAxis: {
-                            type: 'datetime',
-                            dateTimeLabelFormats: {
-                                second: '%H:%M:%S',
-                                minute: '%H:%M',
-                                hour: '%H:%M',
-                                day: '%Y<br/>%m-%d',
-                                week: '%Y<br/>%m-%d',
-                                month: '%Y-%m',
-                                year: '%Y'
-                            }
-                        },
-                        yAxis: data.yAxis,
-                        plotOptions: {
-                            column: {
-                                dataLabels: {
-                                    enabled: false,
-                                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-                                },
-                                pointWidth: data.pointWidth,
-                                animation : false
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: {point.y} '+data.unit+'<br>',
-                            shared: true
-                        },
-
-                        credits: {
-                            enabled: false
-                        },
-                        exporting: {
-                            buttons: {
-                                contextButton: {
-                                    symbolStroke: '#0960a5'
+                            boost: {
+                                useGPUTranslations: true
+                            },
+                            legend: {
+                                enabled: true,
+                                align: 'right',
+                                verticalAlign: 'top',
+                                x: -10,
+                                y: 50,
+                                floating: true
+                            },
+                            title: {
+                                text: data.title
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                dateTimeLabelFormats: {
+                                    second: '%H:%M:%S',
+                                    minute: '%H:%M',
+                                    hour: '%H:%M',
+                                    day: '%Y<br/>%m-%d',
+                                    week: '%Y<br/>%m-%d',
+                                    month: '%Y-%m',
+                                    year: '%Y'
                                 }
-                            }
-                        },
-                        series : data.series
-                    };
-                    var chartData = new Highcharts.Chart(options);
+                            },
+                            yAxis: data.yAxis,
+                            plotOptions: {
+                                column: {
+                                    dataLabels: {
+                                        enabled: false,
+                                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                                    },
+                                    pointWidth: data.pointWidth,
+                                    animation: false
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: {point.y} ' + data.unit + '<br>',
+                                shared: true
+                            },
 
+                            credits: {
+                                enabled: false
+                            },
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        symbolStroke: '#0960a5'
+                                    }
+                                }
+                            },
+                            series: data.series
+                        };
+                        var chartData = new Highcharts.Chart(options);
+                    } else {
+                        $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
+                    }
                 });
         }
 
@@ -313,7 +316,9 @@
 
         $('#last-month-consumption').hide();
         $('#last-month-zone-consumption').hide();
-        
+        $('.consumption-box').removeClass('col-xl-3 col-lg-3 col-md-3',200).addClass('col-xl-6 col-lg-6 col-md-6',200);
+
+
         $(document).ready(function(){
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
