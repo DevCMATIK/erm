@@ -104,13 +104,13 @@
         function getTensionData()
         {
             getVarData('ee-tension-l-l','avg','L1-L2','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-l','avg','L2-L3','bg-warning-300','mb-1');
-            getVarData('ee-tension-l-l','avg','L3-L1','bg-warning-300','mb-1');
+            getVarData('ee-tension-l-l','avg','L2-L3','bg-primary-300','mb-1');
+            getVarData('ee-tension-l-l','avg','L3-L1','bg-primary-300','mb-1');
 
 
             getVarData('ee-tension-l-n','avg','L1-N','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-n','avg','L2-N','bg-warning-300','mb-1');
-            getVarData('ee-tension-l-n','avg','L3-N','bg-warning-300','mb-1');
+            getVarData('ee-tension-l-n','avg','L2-N','bg-primary-300','mb-1');
+            getVarData('ee-tension-l-n','avg','L3-N','bg-primary-300','mb-1');
         }
 
         function getPowerData()
@@ -200,6 +200,7 @@
         getConsumptionData();
         getStreamData();
         getTensionData();
+        getPowerData();
 
         $(document).ready(function(){
             let controls = {
