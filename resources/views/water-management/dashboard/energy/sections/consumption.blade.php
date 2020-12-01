@@ -32,7 +32,7 @@
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
             'value' => 0,
-            'measure' => 'kWh',
+            'unit' => 'kWh',
             'title' => 'Consumo Pocillas mes anterior',
             'icon' => 'fa-industry',
             'extraClasses' => ['hide-on-date']
