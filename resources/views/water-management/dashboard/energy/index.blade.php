@@ -353,7 +353,6 @@
                 {
                     opens: 'right',
                     templates: controls,
-                    maxDate : moment(),
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
