@@ -48,8 +48,8 @@
         @include('test.electric.components.data-box',[
             'bg' => 'bg-success-300',
             'value' => 794328.4,
-            'measure' => 'KWH',
-            'title' => 'Activa',
+            'measure' => '###',
+            'title' => '####',
         ])
         @include('test.electric.components.data-box',[
            'bg' => 'bg-success-300',
@@ -68,9 +68,5 @@
 
     </div>
 </div>
-
-<script>
-
-</script>
 
 

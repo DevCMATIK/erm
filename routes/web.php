@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function() {
             Route::get('dashboard-energy/{subZone}','EnergyController@index')->name('dashboard-energy');
             Route::get('energy/get-consumption-data','Consumption\ConsumptionDataController@getConsumptionData');
             Route::get('energy/get-zone-consumption-data','Consumption\ConsumptionDataController@getZoneConsumptionData');
+            Route::get('energy/get-var-data','Data\VarDataController');
         });
         //electricity values
         Route::get('getEnergyValues','Electricity\EnergyValuesController');

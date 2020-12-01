@@ -34,7 +34,7 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="consumption-container" role="tabpanel">
                 <div class="card-body">
-                    @include('water-management.dashboard.energy.sections.consumption',['types' => $types])
+                    @include('water-management.dashboard.energy.sections.consumption')
                 </div>
             </div>
             <div class="tab-pane fade" id="energy-container" role="tabpanel">
@@ -56,6 +56,36 @@
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
     <script>
         $('.btn-alarm').hide();
+
+
+
+        function getVarData(name,fn,bg = 'bg-primary'){
+            $.ajax({
+                url     : '/energy/get-var-data',
+                type    : 'GET',
+                data    : {
+                    sub_zone : $('#sub_zone').val(),
+                    func : fn,
+                    bg : bg,
+                },
+                success : function ( data )
+                {
+                    $('#'+name+'-container').html(data);
+                },
+                error   : function ( response )
+                {
+                    console.log(response);
+                }
+            });
+        }
+
+        function getConsumptionData()
+        {
+            getVarData('ee-e-activa','sum','bg-success-300');
+            getVarData('ee-e-reactiva','sum','bg-success-300');
+            getVarData('ee-e-aparente','sum','bg-success-300');
+        }
+
         function getConsumption(start = false, end = false,container = 'consumption') {
             let start_date,end_date;
             if(start != false) {
@@ -127,6 +157,8 @@
         getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
         getZoneConsumption();
         getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
+
+        getConsumptionData();
 
         $(document).ready(function(){
             let controls = {

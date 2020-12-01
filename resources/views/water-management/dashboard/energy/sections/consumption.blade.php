@@ -45,29 +45,35 @@
             <label class="form-label">Seleccione un rango de fechas</label>
             <input type="text" class="form-control consumption-date" name="date_filter" id="consumption-filter">
         </div>
-        @dd($types)
-        @include('water-management.dashboard.energy.components.data-box',[
-            'bg' => 'bg-success-300',
-            'value' => 794328.4,
-            'measure' => 'KWH',
-            'title' => 'Activa',
-        ])
-        @include('water-management.dashboard.energy.components.data-box',[
-           'bg' => 'bg-success-300',
-           'value' => 262047.8,
-           'measure' => 'KVARH',
-           'title' => 'Reactiva',
-        ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-success-300',
-          'value' => 855896.2,
-          'measure' => 'KVAH',
-          'title' => 'Aparente',
-        ])
+        <div id="ee-e-activa-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-success-300',
+               'value' => 0,
+               'measure' => '###',
+               'title' => '######',
+            ])
+        </div>
+        <div id="ee-e-reactiva-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+                  'bg' => 'bg-success-300',
+                  'value' => 0,
+                  'measure' => '###',
+                  'title' => '######',
+            ])
+        </div>
+        <div id="ee-e-aparente-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+                'bg' => 'bg-success-300',
+                'value' => 0,
+                'measure' => '###',
+                'title' => '######',
+            ])
+        </div>
     </div>
     <div class="col-xl-9 col-md-9 col-lg-9 col-sm-12" id="consumptionChartContainer">
 
     </div>
 </div>
+
 
 
