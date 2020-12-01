@@ -131,6 +131,8 @@ Route::middleware('auth')->group(function() {
             Route::get('energy/get-consumption-data','Consumption\ConsumptionDataController@getConsumptionData');
             Route::get('energy/get-zone-consumption-data','Consumption\ConsumptionDataController@getZoneConsumptionData');
             Route::get('energy/get-var-data','Data\VarDataController');
+            //charts
+            Route::get('energy/charts/consumption/{sub_zone}','Chart\ConsumptionChartController');
         });
         //electricity values
         Route::get('getEnergyValues','Electricity\EnergyValuesController');
