@@ -25,7 +25,7 @@ class TensionChartController extends Controller
             }
 
         } else {
-            $type = 'ee-tension-ln';
+            $type = 'ee-tension-l-n';
             if($request->options == 'average') {
                 $names = ['L-N Avr'];
             } else {
@@ -48,7 +48,7 @@ class TensionChartController extends Controller
         $query = $query->whereRaw("`date` between '{$start}' and '{$end}'");
 
 
-        if(Carbon::parse($start)->diffInDays(Carbon::parse($end)) == 1) {
+        if(Carbon::parse($end)->diffInDays(Carbon::parse($start)) == 1) {
             $data['tick'] = 1000 * 60 * 60;
         } else {
             $data['tick'] = 1000 * 60 * 60 * 24;
