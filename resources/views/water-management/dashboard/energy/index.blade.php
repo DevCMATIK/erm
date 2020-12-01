@@ -138,7 +138,7 @@
             var type = $('#tension-type').val();
             var options = $('#tension-options').val();
 
-            $.getJSON('/energy/charts/tension/{{ $subZone->id }}?start='+start+'&end='+end+'&type='+type+'&options'+options,
+            $.getJSON('/energy/charts/tension/{{ $subZone->id }}?start='+start+'&end='+end+'&type='+type+'&options='+options,
                 function (data) {
                     if(data.length === 0) {
                         $('#tensionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
