@@ -55,7 +55,7 @@ class StreamChartController extends Controller
             if(!$disposition = $row->sensor->selected_disposition->first()) {
                 $disposition = $row->sensor->dispositions()->first();
             }
-            $data['title'] = "";
+            $data['title'] = "Corriente";
 
             if($request->type == 'average') {
                 $titl = $row->sensor->name.' ('.$disposition->unit->name.')';
