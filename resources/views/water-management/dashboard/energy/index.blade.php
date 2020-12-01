@@ -428,6 +428,13 @@
             getVarData('ee-p-aparente','avg',null,'bg-danger-300','mb-1');
         }
 
+        setInterval(function(){
+            getConsumptionData();
+            getPowerData();
+            getTensionData();
+            getStreamData();
+        },10000);
+
         function tensionOptions(options)
         {
             $('#tension-options').val(options);

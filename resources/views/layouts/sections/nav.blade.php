@@ -68,7 +68,7 @@
                             <ul>
                                 @foreach($zone->sub_zones->sortBy('position') as $sub_zone)
                                     <li>
-                                        <a class="nav-link-text text-white-50" id="sub_zone_a_{{ $sub_zone->id }}" href="/dashboard/{{ $sub_zone->id }}">
+                                        <a class="nav-link-text text-white-50" id="sub_zone_a_{{ $sub_zone->id }}" href="@if($area->name == 'Energía') /dashboard-energy/{{ $sub_zone->id }} @else /dashboard/{{ $sub_zone->id }} @endif">
                                             <span class="nav-link-text text-white-50">{{ $sub_zone->name}}</span></a>
                                     </li>
                                 @endforeach
