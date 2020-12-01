@@ -75,7 +75,7 @@
                             chart: {
                                 renderTo: 'consumptionChartContainer',
                                 zoomType: 'x',
-                                height: '300px',
+                                height: $('#consumption-options-col').height(),
                                 animation: false
                             },
 
