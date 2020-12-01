@@ -42,10 +42,13 @@ class TensionChartController extends Controller
         ])->whereIn('sensor_id',$sensors->pluck('id')->toArray())
             ->orderBy('date');
 
-        $query = $query->whereRaw("`date` between '{$request->start} 00:00:00' and '{$request->end} 23:59:59'");
+        $start = Carbon::parse($request->start)->startOfDay()->toDateTimeString();
+        $end = Carbon::parse($request->end)->endOfDay()->toDateTimeString();
+
+        $query = $query->whereRaw("`date` between '{$start}' and '{$end}'");
 
 
-        if(Carbon::parse($request->end)->diffInDays(Carbon::parse($request->start)) == 1) {
+        if(Carbon::parse($start)->diffInDays(Carbon::parse($end)) == 1) {
             $data['tick'] = 1000 * 60 * 60;
         } else {
             $data['tick'] = 1000 * 60 * 60 * 24;
