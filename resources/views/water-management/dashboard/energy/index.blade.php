@@ -310,6 +310,10 @@
         getTensionData();
         getPowerData();
 
+
+        $('#last-month-consumption').hide();
+        $('#last-month-zone-consumption').hide();
+        
         $(document).ready(function(){
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
