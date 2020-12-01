@@ -49,7 +49,7 @@ class TensionChartController extends Controller
 
 
         if(Carbon::parse($end)->diffInDays(Carbon::parse($start)) == 1) {
-            $data['tick'] = 1000 * 60 * 60;
+            $data['tick'] = 1000 * 60 * 60*24;
         } else {
             $data['tick'] = 1000 * 60 * 60 * 24;
         }
