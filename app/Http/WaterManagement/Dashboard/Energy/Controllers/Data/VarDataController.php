@@ -25,7 +25,7 @@ class VarDataController extends Controller
             'bg' => $request->bg,
             'value' => $value,
             'unit' => $sensor['unit'],
-            'title' => ($request->name == 'ee-e-corriente')?'Energía '.$sensor['name']:$sensor['name'],
+            'title' => (collect(['ee-e-activa','ee-e-reactiva','ee-e-aparente'])->contains($request->name))?'Energía '.$sensor['name']:$sensor['name'],
             'mb' => $request->mb
         ]);
     }
