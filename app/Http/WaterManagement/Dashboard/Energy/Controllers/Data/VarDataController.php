@@ -12,14 +12,21 @@ class VarDataController extends Controller
 
     public function __invoke(Request $request)
     {
-        foreach($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name) as $sensor) {
-            dd($this->getAnalogousValue($sensor));
+        $sensors = collect($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name));
+        $sensor_data = $sensors->first();
+
+        if($request->func === 'sum') {
+            $value = number_format($sensors->sum('value'),$sensor_data['disposition']->precision,',','');
+        } else {
+            $value = number_format($sensors->avg('value'),$sensor_data['disposition'],',','');
         }
+
         return view('water-management.dashboard.energy.components.data-box',[
-            'bg' => 'bg-success-300',
-            'value' => 0,
-            'measure' => 'KWH',
-            'title' => 'TITULO',
+            'bg' => $request->bg,
+            'value' => $value,
+            'measure' => $sensor_data['unit'],
+            'title' => $sensor_data['name'],
+            'mb' => $request->mb
         ]);
     }
 }
