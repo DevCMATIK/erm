@@ -18,10 +18,19 @@ class TensionChartController extends Controller
 
         if($request->type == 'LL') {
             $type = 'ee-tension-l-l';
-            $names = ['L1-L2','L2-L3','L3-L1'];
+            if($request->options == 'average') {
+                $names = ['L-L Avr'];
+            } else {
+                $names = ['L1-L2','L2-L3','L3-L1'];
+            }
+
         } else {
             $type = 'ee-tension-ln';
-            $names = ['L1-N','L2-N','L3-N'];
+            if($request->options == 'average') {
+                $names = ['L-N Avr'];
+            } else {
+                $names = ['L1-N','L2-N','L3-N'];
+            }
         }
 
         $sensors = $this->getSensorsBySubZoneAndNames($sub_zone,$type,$names);
