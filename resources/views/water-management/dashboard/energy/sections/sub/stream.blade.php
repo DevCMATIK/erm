@@ -1,5 +1,5 @@
 <div class="row my-3">
-    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12" id="stream-data-container">
         <div class="btn-group btn-group-xs btn-block mb-2 btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-outline-secondary btn-xs active" onclick="streamOptions('average');" data-toggle="tooltip" data-original-title="Promedio">
                 <input type="radio" name="streamOptions" value="average" checked="checked"> <i class="fas fa-chart-line"></i>

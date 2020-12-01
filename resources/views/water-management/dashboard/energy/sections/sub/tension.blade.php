@@ -1,5 +1,5 @@
 <div class="row my-3">
-    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
+    <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12" id="tension-data-container">
         <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                 <div class="btn-group btn-group-xs btn-block mb-2 btn-group-toggle" data-toggle="buttons">

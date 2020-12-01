@@ -47,6 +47,7 @@
     <input type="hidden" id="tension-options" value="average">
     <input type="hidden" id="tension-type" value="LL">
     <input type="hidden" id="power-options" value="PL">
+    <input type="hidden" id="stream-options" value="average">
 @endsection
 @section('more-scripts')
     {!! includeScript([
@@ -130,6 +131,80 @@
                         var chartData = new Highcharts.Chart(options);
                     }
                 });
+        }
+
+        function getTensionChartContainer(start,end){
+
+            var type = $('#tension-type').val();
+            var options = $('#tension-options').val();
+
+            $.getJSON('/energy/charts/tension/{{ $subZone->id }}?start='+start+'&end='+end+'&type='+type+'&options'+options,
+                function (data) {
+                    if(data.length === 0) {
+                        $('#tensionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
+                    } else {
+                        var options = {
+                            chart: {
+                                renderTo: 'tensionChartContainer',
+                                zoomType: 'x',
+                                height: $('#tension-data-container').height(),
+                                animation : false
+                            },
+
+                            boost: {
+                                useGPUTranslations: true
+                            },
+                            legend : {
+                                enabled : true,
+                                align: 'right',
+                                verticalAlign: 'top',
+                                x: -10,
+                                y: 20,
+                                floating: true
+                            },
+                            title: {
+                                text:  data.title
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                dateTimeLabelFormats: {
+                                    second: '%H:%M:%S',
+                                    minute: '%H:%M',
+                                    hour: '%H:%M',
+                                    day: '%Y<br/>%m-%d',
+                                    week: '%Y<br/>%m-%d',
+                                    month: '%Y-%m',
+                                    year: '%Y'
+                                }
+                            },
+                            yAxis: data.yAxis,
+                            plotOptions: {
+                                spline : {
+                                    animation : false
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: {point.y} '+data.unit+'<br>',
+                                shared: true
+                            },
+
+                            credits: {
+                                enabled: false
+                            },
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        symbolStroke: '#0960a5'
+                                    }
+                                }
+                            },
+                            series : data.series
+                        };
+                        var chartData1 = new Highcharts.Chart(options);
+                    }
+
+
+            });
         }
 
         $('.btn-alarm').hide();
@@ -313,6 +388,7 @@
         getTensionData();
         getPowerData();
 
+        getTensionChartContainer(moment().format('YYYY-MM-DD'),moment().format('YYYY-MM-DD'));
 
         $('#last-month-consumption').hide();
         $('#last-month-zone-consumption').hide();
@@ -333,6 +409,8 @@
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
+                    startDate: moment(),
+                    endDate: moment(),
                     "showDropdowns": true,
                     "showWeekNumbers": true,
                     "showISOWeekNumbers": true,
@@ -355,7 +433,7 @@
                     "cancelClass": "btn-success shadow-0"
                 }, function(start, end, label)
                 {
-                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+                    getTensionChartContainer(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                 });
 
             $('.consumption-date').daterangepicker(
