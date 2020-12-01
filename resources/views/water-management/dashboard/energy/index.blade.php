@@ -59,14 +59,16 @@
 
 
 
-        function getVarData(name,fn,bg = 'bg-primary'){
+        function getVarData(name,fn,bg = 'bg-primary',mb = ''){
             $.ajax({
                 url     : '/energy/get-var-data',
                 type    : 'GET',
                 data    : {
+                    name : name,
                     sub_zone : $('#sub_zone').val(),
                     func : fn,
                     bg : bg,
+                    mb : mb
                 },
                 success : function ( data )
                 {

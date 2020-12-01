@@ -29,20 +29,19 @@ trait HasAnalogousData
         });
     }
 
-    protected function getData($id)
+    protected function getData($id,$type)
     {
         return SubZone::with([
             'configuration',
-            'elements.sub_elements.digital_sensors.sensor.label',
-            'elements.sub_elements.digital_sensors.sensor.device.report',
-            'elements.sub_elements.analogous_sensors.sensor',
-            'elements.sub_elements.analogous_sensors.sensor.type.interpreters',
+            'elements.sub_elements.analogous_sensors.sensor.type',
             'elements.sub_elements.analogous_sensors.sensor.dispositions.unit',
-            'elements.sub_elements.analogous_sensors.sensor.ranges',
             'elements.sub_elements.analogous_sensors.sensor.device.report',
-            'elements.sub_elements.active_alarm',
-            'elements.sub_elements.active_and_not_accused_alarm',
-            'elements.sub_elements.check_point'
-        ])->has('configuration')->findOrFail($id);
+        ])->leftJoin('sub_zone_elements','sub_zone_elements.sub_zone_id','=','sub_zones.id')
+            ->leftJoin('sub_zone_sub_elements','sub_zone_sub_elements.sub_zone_element_id','=','sub_zone_elements.id')
+            ->leftJoin('sub_element_sensors','sub_element_sensors.sub_element_id','=','sub_zone_sub_elements.id')
+            ->leftJoin('sensors','sub_element_sensors.sensor_id','=','sensors.id')
+            ->join('sensor_types','sensors.type_id','=','sensor_types.id')
+            ->whereIn('sensor_types.slug',$type)
+            ->has('configuration')->findOrFail($id)->get();
     }
 }

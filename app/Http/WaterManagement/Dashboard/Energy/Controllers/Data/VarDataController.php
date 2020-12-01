@@ -12,6 +12,7 @@ class VarDataController extends Controller
 
     public function __invoke(Request $request)
     {
+        dd($this->getData($request->sub_zone,$request->name));
         return view('water-management.dashboard.energy.components.data-box',[
             'bg' => 'bg-success-300',
             'value' => 0,
