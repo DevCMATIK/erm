@@ -12,22 +12,30 @@ class VarDataController extends Controller
 
     public function __invoke(Request $request)
     {
-        $sensors = collect($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name));
-        $sensor_data = $sensors->first();
+        $sensors = $this->getSensorsData($request->sub_zone,$request->name);
+        $sensor = $sensors->first();
 
-        dd($sensor_data,$sensor_data['disposition']);
         if($request->func === 'sum') {
-            $value = number_format($sensors->sum('value'),$sensor_data['disposition']->precision,',','');
+            $value = number_format($sensors->sum('value'),$sensor['disposition']->precision,',','');
         } else {
-            $value = number_format($sensors->avg('value'),$sensor_data['disposition'],',','');
+            $value = number_format($sensors->avg('value'),$sensor['disposition']->precision,',','');
         }
 
         return view('water-management.dashboard.energy.components.data-box',[
             'bg' => $request->bg,
             'value' => $value,
-            'measure' => $sensor_data['unit'],
-            'title' => $sensor_data['name'],
+            'measure' => $sensor['unit'],
+            'title' => $sensor['name'],
             'mb' => $request->mb
         ]);
+    }
+
+    protected function getSensorsData($sub_zone,$name)
+    {
+        $sensors = array();
+        foreach ($this->getSensorsBySubZoneAndType($sub_zone,$name) as $sensor) {
+            array_push($sensors,$this->getAnalogousValue($sensor));
+        }
+        return collect($sensors);
     }
 }
