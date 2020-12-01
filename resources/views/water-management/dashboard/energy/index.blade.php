@@ -57,7 +57,7 @@
     <script>
         $('.btn-alarm').hide();
 
-
+        $('.tension-ln').hide();
 
         function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = ''){
             $.ajax({
@@ -74,7 +74,7 @@
                 success : function ( data )
                 {
                     if(sensor_name != null) {
-                        $('#'+name+sensor_name+'-container').html(data);
+                        $('#'+name+'-'+sensor_name+'-container').html(data);
                     } else {
                         $('#'+name+'-container').html(data);
                     }
@@ -98,6 +98,18 @@
             getVarData('ee-corriente','avg','L1','bg-warning-600','mb-1');
             getVarData('ee-corriente','avg','L2','bg-warning-600','mb-1');
             getVarData('ee-corriente','avg','L3','bg-warning-600','mb-1');
+        }
+
+        function getTensionData()
+        {
+            getVarData('ee-tension-ll','avg','L1-L2','bg-primary-300','mb-1');
+            getVarData('ee-tension-ll','avg','L2-L3','bg-warning-300','mb-1');
+            getVarData('ee-tension-ll','avg','L3-L1','bg-warning-300','mb-1');
+
+
+            getVarData('ee-tension-ln','avg','L1-N','bg-primary-300','mb-1');
+            getVarData('ee-tension-ln','avg','L2-N','bg-warning-300','mb-1');
+            getVarData('ee-tension-ln','avg','L3-N','bg-warning-300','mb-1');
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {
@@ -174,6 +186,7 @@
 
         getConsumptionData();
         getStreamData();
+        getTensionData();
 
         $(document).ready(function(){
             let controls = {

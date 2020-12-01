@@ -23,28 +23,58 @@
             </div>
         </div>
 
+        <div id="ee-tension-ll-L1-L2-container" class="tension-ll">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
 
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-primary-300',
-          'value' => 387.4,
-          'unit' => 'V',
-          'title' => 'L1-L2',
-          'mb' => 'mb-1'
-      ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-primary-300',
-          'value' => 384.4,
-          'unit' => 'V',
-          'title' => 'L2-L3',
-          'mb' => 'mb-1'
-      ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-primary-300',
-          'value' => 379.4,
-          'unit' => 'V',
-          'title' => 'L3-L1',
-          'mb' => 'mb-1'
-      ])
+        <div id="ee-tension-ll-L2-L3-container" class="tension-ll">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+
+        <div id="ee-tension-ll-L3-L1-container" class="tension-ll">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+
+        <div id="ee-tension-ln-L1-N-container" class="tension-ln">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+        <div id="ee-tension-ln-L2-N-container" class="tension-ln">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+        <div id="ee-tension-ln-L3-N-container" class="tension-ln">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-primary-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+
     </div>
     <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12" id="tensionChartContainer">
 

@@ -9,7 +9,7 @@
             </label>
         </div>
 
-        <div id="ee-corrienteL1-container">
+        <div id="ee-corriente-L1-container">
             @include('water-management.dashboard.energy.components.data-box',[
                'bg' => 'bg-warning-300',
                'value' => 0,
@@ -18,7 +18,7 @@
             ])
         </div>
 
-        <div id="ee-corrienteL2-container">
+        <div id="ee-corriente-L2-container">
             @include('water-management.dashboard.energy.components.data-box',[
                'bg' => 'bg-warning-300',
                'value' => 0,
@@ -27,7 +27,7 @@
             ])
         </div>
 
-        <div id="ee-corrienteL3-container">
+        <div id="ee-corriente-L3-container">
             @include('water-management.dashboard.energy.components.data-box',[
                'bg' => 'bg-warning-300',
                'value' => 0,
