@@ -122,9 +122,9 @@
             getVarData('ee-p-act-u','avg','P3','bg-danger-300','mb-1');
 
 
-            getVarData('ee-p-activa','avg','bg-primary-300','mb-1');
-            getVarData('ee-p-reactiva','avg','bg-primary-300','mb-1');
-            getVarData('ee-p-aparente','avg','bg-primary-300','mb-1');
+            getVarData('ee-p-activa','avg',null,'bg-primary-300','mb-1');
+            getVarData('ee-p-reactiva','avg',null,'bg-primary-300','mb-1');
+            getVarData('ee-p-aparente','avg',null,'bg-primary-300','mb-1');
         }
 
         function tensionOptions(options)
