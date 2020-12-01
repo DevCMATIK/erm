@@ -67,6 +67,9 @@
                         $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     } else {
                         var options = {
+                            global: {
+                                useUTC: false
+                            },
                             chart: {
                                 renderTo: 'consumptionChartContainer',
                                 zoomType: 'x',
@@ -141,9 +144,13 @@
             $.getJSON('/energy/charts/tension/{{ $subZone->id }}?start='+start+'&end='+end+'&type='+type+'&options='+options,
                 function (data) {
                     if(data.length === 0) {
+
                         $('#tensionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     } else {
                         var options = {
+                            global: {
+                                useUTC: false
+                            },
                             chart: {
                                 renderTo: 'tensionChartContainer',
                                 zoomType: 'x',
