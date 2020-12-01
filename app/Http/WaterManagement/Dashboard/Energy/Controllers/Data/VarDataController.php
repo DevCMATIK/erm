@@ -12,7 +12,7 @@ class VarDataController extends Controller
 
     public function __invoke(Request $request)
     {
-        $sensors = $this->getSensorsData($request->sub_zone,$request->name);
+        $sensors = $this->getSensorsData($request);
         $sensor = $sensors->first();
 
         if($request->func === 'sum') {
@@ -30,10 +30,15 @@ class VarDataController extends Controller
         ]);
     }
 
-    protected function getSensorsData($sub_zone,$name)
+    protected function getSensorsData(Request $request)
     {
         $sensors = array();
-        foreach ($this->getSensorsBySubZoneAndType($sub_zone,$name) as $sensor) {
+        if($request->has('sensor_name') && $request->sensor_name != null) {
+            $rows = $this->getSensorsBySubZoneAndName($request->sub_zone,$request->name,$request->sensor_name);
+        } else {
+            $rows = $this->getSensorsBySubZoneAndType($request->sub_zone,$request->name);
+        }
+        foreach ($rows as $sensor) {
             array_push($sensors,$this->getAnalogousValue($sensor));
         }
         return collect($sensors);

@@ -59,7 +59,7 @@
 
 
 
-        function getVarData(name,fn,bg = 'bg-primary',mb = ''){
+        function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = ''){
             $.ajax({
                 url     : '/energy/get-var-data',
                 type    : 'GET',
@@ -68,7 +68,8 @@
                     sub_zone : $('#sub_zone').val(),
                     func : fn,
                     bg : bg,
-                    mb : mb
+                    mb : mb,
+                    sensor_name : sensor_name
                 },
                 success : function ( data )
                 {
@@ -83,9 +84,16 @@
 
         function getConsumptionData()
         {
-            getVarData('ee-e-activa','sum','bg-success-300');
-            getVarData('ee-e-reactiva','sum','bg-success-300');
-            getVarData('ee-e-aparente','sum','bg-success-300');
+            getVarData('ee-e-activa','sum',null,'bg-success-300');
+            getVarData('ee-e-reactiva','sum',null,'bg-success-300');
+            getVarData('ee-e-aparente','sum',null,'bg-success-300');
+        }
+
+        function getStreamData()
+        {
+            getVarData('ee-corriente','avg','L1','bg-warning-600');
+            getVarData('ee-corriente','avg','L2','bg-warning-600');
+            getVarData('ee-corriente','avg','L3','bg-warning-600');
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {
@@ -161,6 +169,7 @@
         getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
 
         getConsumptionData();
+        getStreamData();
 
         $(document).ready(function(){
             let controls = {

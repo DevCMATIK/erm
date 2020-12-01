@@ -119,7 +119,18 @@ trait HasAnalogousData
 
     protected function getSensorsBySubZoneAndType($sub_zone_id,$type)
     {
-        return Sensor::with([
+        return $this->getQueryForSensorBySubZoneAndType($sub_zone_id,$type)->get();
+    }
+
+    protected function getSensorsBySubZoneAndName($sub_zone_id,$type,$name)
+    {
+        return $this->getQueryForSensorBySubZoneAndType($sub_zone_id,$type)
+            ->where('name',$name)->orWhere('name',strtolower($name))->get();
+    }
+
+    protected function getQueryForSensorBySubZoneAndType($sub_zone_id,$type)
+    {
+        return Sensor::query()->with([
             'type.interpreters',
             'dispositions.unit',
             'device.report',
@@ -129,10 +140,10 @@ trait HasAnalogousData
                 ->where('slug',$type);
         })->whereIn('id',function($query)  use($sub_zone_id){
             $query->select('sensor_id')
-                    ->from('sub_element_sensors')
+                ->from('sub_element_sensors')
                 ->leftJoin('sub_zone_sub_elements','sub_element_sensors.sub_element_id','=','sub_zone_sub_elements.id')
                 ->leftJoin('sub_zone_elements','sub_zone_elements.id','=','sub_zone_sub_elements.sub_zone_element_id')
                 ->where('sub_zone_elements.sub_zone_id',$sub_zone_id);
-        })->get();
+        });
     }
 }
