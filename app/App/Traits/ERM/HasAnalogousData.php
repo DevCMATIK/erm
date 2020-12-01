@@ -42,11 +42,11 @@ trait HasAnalogousData
         })->whereIn('id',function($query)  use($sub_zone_id){
             $query->select('sensor_id')
                     ->from('sub_element_sensors')
-                ->leftJoin('sub_zone_sub_elements','sub_elements_sensors.sub_element_id','=','sub_zone_sub_elements.id')
+                ->leftJoin('sub_zone_sub_elements','sub_element_sensors.sub_element_id','=','sub_zone_sub_elements.id')
                 ->leftJoin('sub_zone_elements','sub_zone_elements.id','=','sub_zone_sub_elements.sub_zone_element_id')
                 ->where('sub_zone_elements.sub_zone_id',$sub_zone_id);
 
         })->get();
-       
+
     }
 }
