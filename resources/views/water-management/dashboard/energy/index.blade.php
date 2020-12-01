@@ -75,7 +75,7 @@
                             chart: {
                                 renderTo: 'consumptionChartContainer',
                                 zoomType: 'x',
-                                height: $('#consumption-options-col').height(),
+                                height: '300px',
                                 animation: false
                             },
 
@@ -153,7 +153,7 @@
                             chart: {
                                 renderTo: 'tensionChartContainer',
                                 zoomType: 'x',
-                                height: $('#tension-data-container').height(),
+                                height: '300px',
                                 animation : false
                             },
 
@@ -227,7 +227,7 @@
                             chart: {
                                 renderTo: 'streamChartContainer',
                                 zoomType: 'x',
-                                height: $('#stream-data-container').height(),
+                                height: '300px',
                                 animation : false
                             },
 
@@ -299,7 +299,7 @@
                             chart: {
                                 renderTo: 'powerChartContainer',
                                 zoomType: 'x',
-                                height: $('#power-data-container').height(),
+                                height: '300px',
                                 animation: false
                             },
 
