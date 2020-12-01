@@ -58,9 +58,9 @@
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
 
     <script>
-        function getConsumptionChart(){
+        function getConsumptionChart(start,end){
             $.getJSON(
-                '/energy/charts/consumption/{{ $subZone->id }}?start'+$('.consumption-date').val().split('')[0]+'&end='+$('.consumption-date').val().split('')[2],
+                '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
                 function (data) {
                     var options = {
                         chart: {
@@ -236,13 +236,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = moment().startOf('month').format('YYYY-MM-DD');
+                start_date = moment().subtract(30,'days').format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = end;
             } else {
-                end_date = moment().endOf('month').format('YYYY-MM-DD');
+                end_date = moment().format('YYYY-MM-DD');
             }
 
 
@@ -270,13 +270,13 @@
             if(start != false) {
                 start_date = start;
             } else {
-                start_date = moment().startOf('month').format('YYYY-MM-DD');
+                start_date = moment().subtract(30,'days').format('YYYY-MM-DD');
             }
 
             if(end != false) {
                 end_date = end;
             } else {
-                end_date = moment().endOf('month').format('YYYY-MM-DD');
+                end_date = moment().format('YYYY-MM-DD');
             }
 
             $.ajax({
@@ -299,10 +299,10 @@
         }
 
         getConsumption();
-        getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
+        getConsumption(moment().subtract(1, 'month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
         getZoneConsumption();
         getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
-        getConsumptionChart();
+        getConsumptionChart(moment().subtract(30, 'days').format('YYYY-MM-DD'),moment().format('YYYY-MM-DD'));
 
 
         getConsumptionData();
@@ -365,7 +365,7 @@
                     "timePickerSeconds": false,
                     "autoApply": false,
                     startDate : moment().subtract(30,'days'),
-                    endDate: moment().endOf('month'),
+                    endDate: moment(),
                     ranges:
                         {
                             'Hoy': [moment(), moment()],
@@ -399,7 +399,7 @@
                     }
                     getConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                     getZoneConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-                    getConsumptionChart();
+                    getConsumptionChart(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                 }
             );
 
