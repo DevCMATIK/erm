@@ -62,7 +62,7 @@
             $.getJSON(
                 '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
                 function (data) {
-                    if(jQuery.isEmptyObject(data)) {
+                    if(data.length === 0) {
                         $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     } else {
                         var options = {

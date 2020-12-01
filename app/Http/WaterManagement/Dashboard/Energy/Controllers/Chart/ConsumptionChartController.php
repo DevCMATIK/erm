@@ -72,7 +72,7 @@ class ConsumptionChartController extends Controller
 
             return json_encode($data,JSON_NUMERIC_CHECK);
         } else {
-            return false;
+            return [];
         }
     }
 
