@@ -63,6 +63,8 @@
                 '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
                 function (data) {
                     if(data.length == 0) {
+                        $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
+                    } else {
                         var options = {
                             chart: {
                                 renderTo: 'consumptionChartContainer',
@@ -126,8 +128,6 @@
                             series: data.series
                         };
                         var chartData = new Highcharts.Chart(options);
-                    } else {
-                        $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     }
                 });
         }
