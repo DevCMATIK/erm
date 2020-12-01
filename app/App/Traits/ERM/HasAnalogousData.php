@@ -125,7 +125,7 @@ trait HasAnalogousData
     protected function getSensorsBySubZoneAndName($sub_zone_id,$type,$name)
     {
         return $this->getQueryForSensorBySubZoneAndType($sub_zone_id,$type)
-            ->where('name',$name)->orWhere('name',strtolower($name))->get();
+            ->where('name',$name)->get();
     }
 
     protected function getQueryForSensorBySubZoneAndType($sub_zone_id,$type)
