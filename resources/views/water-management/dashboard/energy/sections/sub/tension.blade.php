@@ -27,21 +27,21 @@
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-primary-300',
           'value' => 387.4,
-          'measure' => 'V',
+          'unit' => 'V',
           'title' => 'L1-L2',
           'mb' => 'mb-1'
       ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-primary-300',
           'value' => 384.4,
-          'measure' => 'V',
+          'unit' => 'V',
           'title' => 'L2-L3',
           'mb' => 'mb-1'
       ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-primary-300',
           'value' => 379.4,
-          'measure' => 'V',
+          'unit' => 'V',
           'title' => 'L3-L1',
           'mb' => 'mb-1'
       ])

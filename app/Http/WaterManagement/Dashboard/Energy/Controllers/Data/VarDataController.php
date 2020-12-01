@@ -24,7 +24,7 @@ class VarDataController extends Controller
         return view('water-management.dashboard.energy.components.data-box',[
             'bg' => $request->bg,
             'value' => $value,
-            'measure' => $sensor['unit'],
+            'unit' => $sensor['unit'],
             'title' => $sensor['name'],
             'mb' => $request->mb
         ]);

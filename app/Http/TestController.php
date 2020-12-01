@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\App\Controllers\Controller;
+use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\Indicator\CheckPointIndicator;
 use App\Domain\Client\Zone\Sub\SubZone;
@@ -23,9 +24,11 @@ use Sentinel;
 
 class TestController extends Controller
 {
+    use HasAnalogousData;
+
     public function __invoke()
     {
-
+        dd($this->getSensorsBySubZoneAndType(56,'ee-corriente'));
     }
 
 

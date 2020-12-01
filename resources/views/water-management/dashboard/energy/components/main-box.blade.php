@@ -5,7 +5,7 @@
                 {{ number_format($value,0,',','.') }}
             </div>
             <span class="fs-nano main-box-measure" >
-                    {{ $measure }}
+                    {{ $unit }}
                 </span>
             <small class="m-0 l-h-n box-label" >{{ $title }}</small>
         </h3>

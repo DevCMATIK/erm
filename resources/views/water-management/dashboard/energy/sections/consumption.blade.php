@@ -3,7 +3,7 @@
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary',
             'value' => 0,
-            'measure' => 'kWh',
+            'unit' => 'kWh',
             'title' => 'Consumo mes actual',
             'icon' => 'fa-calendar'
         ])
@@ -12,7 +12,7 @@
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
             'value' => 0,
-            'measure' => 'kWh',
+            'unit' => 'kWh',
             'title' => 'Consumo Mes anterior',
             'icon' => 'fa-bolt',
             'extraClasses' => ['hide-on-date']
@@ -22,7 +22,7 @@
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary',
             'value' => 0,
-            'measure' => 'kWh',
+            'unit' => 'kWh',
             'title' => 'Consumo Pocillas mes actual',
             'icon' => 'fa-industry'
         ])
@@ -49,7 +49,7 @@
             @include('water-management.dashboard.energy.components.data-box',[
                'bg' => 'bg-success-300',
                'value' => 0,
-               'measure' => '###',
+               'unit' => '###',
                'title' => '######',
             ])
         </div>
@@ -57,7 +57,7 @@
             @include('water-management.dashboard.energy.components.data-box',[
                   'bg' => 'bg-success-300',
                   'value' => 0,
-                  'measure' => '###',
+                  'unit' => '###',
                   'title' => '######',
             ])
         </div>
@@ -65,7 +65,7 @@
             @include('water-management.dashboard.energy.components.data-box',[
                 'bg' => 'bg-success-300',
                 'value' => 0,
-                'measure' => '###',
+                'unit' => '###',
                 'title' => '######',
             ])
         </div>

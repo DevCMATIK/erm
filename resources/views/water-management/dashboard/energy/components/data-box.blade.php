@@ -5,7 +5,7 @@
                 @if($value < 0) # @else {{ $value }} @endif
             </div>
             <span class="fs-nano">
-                    {{ $measure }}
+                    {{ $unit }}
                 </span>
             <small class="m-0 l-h-n fw-700">{{ $title }}</small>
         </h3>

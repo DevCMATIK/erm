@@ -12,21 +12,21 @@
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-warning-600',
           'value' => 284.4,
-          'measure' => 'A',
+          'unit' => 'A',
           'title' => 'L1',
           'mb' => 'mb-1'
       ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-warning-600',
           'value' => 254.4,
-          'measure' => 'A',
+          'unit' => 'A',
           'title' => 'L2',
           'mb' => 'mb-1'
       ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-warning-600',
           'value' => 295.4,
-          'measure' => 'A',
+          'unit' => 'A',
           'title' => 'L3',
           'mb' => 'mb-1'
       ])

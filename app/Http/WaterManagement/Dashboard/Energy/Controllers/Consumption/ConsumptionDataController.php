@@ -37,7 +37,7 @@ class ConsumptionDataController extends Controller
         return view('water-management.dashboard.energy.components.main-box',[
             'bg' => $box['bg'] ?? 'bg-primary',
             'value' =>  $value,
-            'measure' => 'kWh',
+            'unit' => 'kWh',
             'title' => $box['label'],
             'icon' => 'fa-calendar'
         ]);

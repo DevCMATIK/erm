@@ -18,21 +18,21 @@
         @include('water-management.dashboard.energy.components.data-box',[
         'bg' => 'bg-danger-300',
         'value' => 52.4,
-        'measure' => 'KW',
+        'unit' => 'KW',
         'title' => 'P1',
         'mb' => 'mb-1'
     ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-danger-300',
           'value' => 54.4,
-          'measure' => 'KW',
+          'unit' => 'KW',
           'title' => 'P2',
           'mb' => 'mb-1'
       ])
         @include('water-management.dashboard.energy.components.data-box',[
           'bg' => 'bg-danger-300',
           'value' => 60.4,
-          'measure' => 'KW',
+          'unit' => 'KW',
           'title' => 'P3',
           'mb' => 'mb-1'
       ])
