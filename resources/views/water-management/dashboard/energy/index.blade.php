@@ -59,6 +59,11 @@
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
 
     <script>
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
         function getConsumptionChart(start,end){
             $.getJSON(
                 '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
@@ -67,9 +72,6 @@
                         $('#consumptionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     } else {
                         var options = {
-                            global: {
-                                useUTC: false
-                            },
                             chart: {
                                 renderTo: 'consumptionChartContainer',
                                 zoomType: 'x',
@@ -148,9 +150,6 @@
                         $('#tensionChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
                     } else {
                         var options = {
-                            global: {
-                                useUTC: false
-                            },
                             chart: {
                                 renderTo: 'tensionChartContainer',
                                 zoomType: 'x',
