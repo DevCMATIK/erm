@@ -73,6 +73,7 @@
                 },
                 success : function ( data )
                 {
+                    alert('#'+name+sensor_name+'-container');
                     $('#'+name+sensor_name+'-container').html(data);
                 },
                 error   : function ( response )
