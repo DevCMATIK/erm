@@ -44,7 +44,9 @@
             </div>
         </div>
     </div>
-
+    <input type="hidden" id="tension-options" value="average">
+    <input type="hidden" id="tension-type" value="LL">
+    <input type="hidden" id="power-options" value="PL">
 @endsection
 @section('more-scripts')
     {!! includeScript([
@@ -123,6 +125,38 @@
             getVarData('ee-p-activa','avg','bg-primary-300','mb-1');
             getVarData('ee-p-reactiva','avg','bg-primary-300','mb-1');
             getVarData('ee-p-aparente','avg','bg-primary-300','mb-1');
+        }
+
+        function tensionOptions(options)
+        {
+            $('#tension-options').val(options);
+        }
+
+        function tensionType(type){
+            $('#tension-type').val(type);
+            if(type == 'LL') {
+                $('.tension-ll').show();
+                $('.tension-ln').hide();
+            } else {
+                $('.tension-ll').hide();
+                $('.tension-ln').show();
+            }
+        }
+
+        function streamOptions(options)
+        {
+            $('#stream-options').val(options);
+        }
+
+        function powerOptions(type){
+            $('#power-options').val(type);
+            if(type == 'PL') {
+                $('.opt-pl').show();
+                $('.power-data').hide();
+            } else {
+                $('.opt-pl').hide();
+                $('.power-data').show();
+            }
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {

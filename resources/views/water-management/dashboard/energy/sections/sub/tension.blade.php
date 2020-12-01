@@ -13,10 +13,10 @@
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                 <div class="btn-group btn-group-xs btn-block mb-2 btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-secondary btn-xs active fs-nano" onclick="handleTension('LL');">
+                    <label class="btn btn-outline-secondary btn-xs active fs-nano" onclick="tensionType('LL');">
                         <input type="radio" name="TensionType" value="LL"  checked="checked"> LL
                     </label>
-                    <label class="btn btn-outline-secondary btn-xs fs-nano" onclick="handleTension('LN');">
+                    <label class="btn btn-outline-secondary btn-xs fs-nano" onclick="tensionType('LN');">
                         <input type="radio" name="TensionType" value="LN" > LN
                     </label>
                 </div>
