@@ -231,6 +231,8 @@
         getConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
         getZoneConsumption();
         getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
+        getConsumptionChart();
+
 
         getConsumptionData();
         getStreamData();
@@ -291,7 +293,7 @@
                     "timePicker24Hour": false,
                     "timePickerSeconds": false,
                     "autoApply": false,
-                    startDate : moment().startOf('month'),
+                    startDate : moment().subtract(30,'days'),
                     endDate: moment().endOf('month'),
                     ranges:
                         {
