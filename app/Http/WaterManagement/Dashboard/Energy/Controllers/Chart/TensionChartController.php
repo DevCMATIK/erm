@@ -42,7 +42,7 @@ class TensionChartController extends Controller
         ])->whereIn('sensor_id',$sensors->pluck('id')->toArray())
             ->orderBy('date');
 
-        $query = $query->between('date',$request->start,$request->end);
+        $query = $query->whereRaw("`date` between '{$request->start}' and '{$request->end}'");
 
 
         if(Carbon::parse($request->end)->diffInDays(Carbon::parse($request->start)) == 1) {
