@@ -15,6 +15,7 @@ class VarDataController extends Controller
         $sensors = collect($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name));
         $sensor_data = $sensors->first();
 
+        dd($sensor_data,$sensor_data['disposition']);
         if($request->func === 'sum') {
             $value = number_format($sensors->sum('value'),$sensor_data['disposition']->precision,',','');
         } else {
