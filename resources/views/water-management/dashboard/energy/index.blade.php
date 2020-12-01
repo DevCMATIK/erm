@@ -60,12 +60,8 @@
     <script>
         function getConsumptionChart(){
             $.getJSON(
-                '/energy/charts/consumption/{{ $subZone->id }}',
-                {
-                    start : $('#consumption-filter').val().split('')[0],
-                    end : $('#consumption-filter').val().split('')[2],
-                }
-                , function (data) {
+                '/energy/charts/consumption/{{ $subZone->id }}?start'+$('.consumption-date').val().split('')[0]+'&end='+$('.consumption-date').val().split('')[2],
+                function (data) {
                     var options = {
                         chart: {
                             renderTo: 'consumptionChartContainer',
