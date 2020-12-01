@@ -9,27 +9,32 @@
             </label>
         </div>
 
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-warning-600',
-          'value' => 284.4,
-          'unit' => 'A',
-          'title' => 'L1',
-          'mb' => 'mb-1'
-      ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-warning-600',
-          'value' => 254.4,
-          'unit' => 'A',
-          'title' => 'L2',
-          'mb' => 'mb-1'
-      ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-warning-600',
-          'value' => 295.4,
-          'unit' => 'A',
-          'title' => 'L3',
-          'mb' => 'mb-1'
-      ])
+        <div id="ee-corrienteL1-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-warning-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+
+        <div id="ee-corrienteL2-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-warning-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
+
+        <div id="ee-corrienteL2-container">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-warning-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+            ])
+        </div>
     </div>
     <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12" id="streamChartContainer">
 

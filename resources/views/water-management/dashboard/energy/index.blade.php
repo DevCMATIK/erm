@@ -73,7 +73,7 @@
                 },
                 success : function ( data )
                 {
-                    $('#'+name+'-container').html(data);
+                    $('#'+name+sensor_name+'-container').html(data);
                 },
                 error   : function ( response )
                 {
