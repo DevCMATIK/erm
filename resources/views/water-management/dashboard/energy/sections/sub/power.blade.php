@@ -15,27 +15,44 @@
             </label>
         </div>
 
-        @include('water-management.dashboard.energy.components.data-box',[
-        'bg' => 'bg-danger-300',
-        'value' => 52.4,
-        'unit' => 'KW',
-        'title' => 'P1',
-        'mb' => 'mb-1'
-    ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-danger-300',
-          'value' => 54.4,
-          'unit' => 'KW',
-          'title' => 'P2',
-          'mb' => 'mb-1'
-      ])
-        @include('water-management.dashboard.energy.components.data-box',[
-          'bg' => 'bg-danger-300',
-          'value' => 60.4,
-          'unit' => 'KW',
-          'title' => 'P3',
-          'mb' => 'mb-1'
-      ])
+        <div id="ee-p-act-u-P1-container" class="p-avr">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-danger-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+               'mb' => 'mb-1'
+            ])
+        </div>
+        <div id="ee-p-act-u-P2-container" class="p-avr">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-danger-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+               'mb' => 'mb-1'
+            ])
+        </div>
+        <div id="ee-p-act-u-P3-container" class="p-avr">
+            @include('water-management.dashboard.energy.components.data-box',[
+               'bg' => 'bg-danger-300',
+               'value' => 0,
+               'unit' => '###',
+               'title' => '######',
+               'mb' => 'mb-1'
+            ])
+        </div>
+
+        <div id="ee-p-activa-container" class="power-data">
+
+        </div>
+        <div id="ee-p-reactiva-container" class="power-data">
+
+        </div>
+        <div id="ee-p-aparente-container" class="power-data">
+
+        </div>
+
     </div>
     <div class="col-lg-9 col-xl-9 col-md-9 col-sm-12" id="powerChartContainer">
 

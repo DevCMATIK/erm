@@ -58,6 +58,7 @@
         $('.btn-alarm').hide();
 
         $('.tension-ln').hide();
+        $('.power-data').hide();
 
         function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = ''){
             $.ajax({
@@ -110,6 +111,18 @@
             getVarData('ee-tension-ln','avg','L1-N','bg-primary-300','mb-1');
             getVarData('ee-tension-ln','avg','L2-N','bg-warning-300','mb-1');
             getVarData('ee-tension-ln','avg','L3-N','bg-warning-300','mb-1');
+        }
+
+        function getPowerData()
+        {
+            getVarData('ee-p-act-u','avg','P1','bg-danger-300','mb-1');
+            getVarData('ee-p-act-u','avg','P2','bg-danger-300','mb-1');
+            getVarData('ee-p-act-u','avg','P3','bg-danger-300','mb-1');
+
+
+            getVarData('ee-p-activa','avg','bg-primary-300','mb-1');
+            getVarData('ee-p-reactiva','avg','bg-primary-300','mb-1');
+            getVarData('ee-p-aparente','avg','bg-primary-300','mb-1');
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {
