@@ -62,7 +62,7 @@
             $.getJSON(
                 '/energy/charts/consumption/{{ $subZone->id }}?start='+start+'&end='+end,
                 function (data) {
-                    if(data) {
+                    if(data.length == 0) {
                         var options = {
                             chart: {
                                 renderTo: 'consumptionChartContainer',
