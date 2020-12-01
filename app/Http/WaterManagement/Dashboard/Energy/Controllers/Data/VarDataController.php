@@ -12,7 +12,9 @@ class VarDataController extends Controller
 
     public function __invoke(Request $request)
     {
-        dd($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name));
+        foreach($this->getSensorsBySubZoneAndType($request->sub_zone,$request->name) as $sensor) {
+            dd($this->getAnalogousValue($sensor));
+        }
         return view('water-management.dashboard.energy.components.data-box',[
             'bg' => 'bg-success-300',
             'value' => 0,
