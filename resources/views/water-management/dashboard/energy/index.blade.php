@@ -73,8 +73,11 @@
                 },
                 success : function ( data )
                 {
-                    alert('#'+name+sensor_name+'-container');
-                    $('#'+name+sensor_name+'-container').html(data);
+                    if(sensor_name != null) {
+                        $('#'+name+sensor_name+'-container').html(data);
+                    } else {
+                        $('#'+name+'-container').html(data);
+                    }
                 },
                 error   : function ( response )
                 {

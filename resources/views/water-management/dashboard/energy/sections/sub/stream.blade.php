@@ -27,7 +27,7 @@
             ])
         </div>
 
-        <div id="ee-corrienteL2-container">
+        <div id="ee-corrienteL3-container">
             @include('water-management.dashboard.energy.components.data-box',[
                'bg' => 'bg-warning-300',
                'value' => 0,
