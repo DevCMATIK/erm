@@ -34,12 +34,9 @@ class EnergyController extends Controller
         return SubZone::with([
                 'configuration',
                 'elements.sub_elements.digital_sensors.sensor.label',
-                'elements.sub_elements.digital_sensors.sensor.device.report',
                 'elements.sub_elements.analogous_sensors.sensor',
                 'elements.sub_elements.analogous_sensors.sensor.type.interpreters',
                 'elements.sub_elements.analogous_sensors.sensor.dispositions.unit',
-                'elements.sub_elements.analogous_sensors.sensor.ranges',
-                'elements.sub_elements.analogous_sensors.sensor.device.report',
                 'elements.sub_elements.active_alarm',
                 'elements.sub_elements.active_and_not_accused_alarm',
                 'elements.sub_elements.check_point'

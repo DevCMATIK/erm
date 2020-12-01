@@ -24,17 +24,17 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#consumption-container">Consumo</a>
+                    <a class="nav-link active" data-toggle="tab" href="#consumption-container">Energía</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#energy-container">Energía</a>
+                    <a class="nav-link" data-toggle="tab" href="#energy-container">Variables eléctricas</a>
                 </li>
             </ul>
         </div>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="consumption-container" role="tabpanel">
                 <div class="card-body">
-                    @include('water-management.dashboard.energy.sections.consumption')
+                    @include('water-management.dashboard.energy.sections.consumption',['types' => $types])
                 </div>
             </div>
             <div class="tab-pane fade" id="energy-container" role="tabpanel">
@@ -219,7 +219,6 @@
                     getZoneConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                 }
             );
-
 
         });
 

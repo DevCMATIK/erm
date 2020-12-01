@@ -8,15 +8,6 @@
             'icon' => 'fa-calendar'
         ])
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" >
-        @include('water-management.dashboard.energy.components.main-box', [
-            'bg' => 'bg-primary',
-            'value' => 0,
-            'measure' => 'kWh',
-            'title' => 'Consumo Pocillas mes actual',
-            'icon' => 'fa-industry'
-        ])
-    </div>
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-consumption" >
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
@@ -27,6 +18,16 @@
             'extraClasses' => ['hide-on-date']
         ])
     </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" >
+        @include('water-management.dashboard.energy.components.main-box', [
+            'bg' => 'bg-primary',
+            'value' => 0,
+            'measure' => 'kWh',
+            'title' => 'Consumo Pocillas mes actual',
+            'icon' => 'fa-industry'
+        ])
+    </div>
+
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-zone-consumption" >
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
@@ -44,7 +45,7 @@
             <label class="form-label">Seleccione un rango de fechas</label>
             <input type="text" class="form-control consumption-date" name="date_filter" id="consumption-filter">
         </div>
-
+        @dd($types)
         @include('water-management.dashboard.energy.components.data-box',[
             'bg' => 'bg-success-300',
             'value' => 794328.4,
