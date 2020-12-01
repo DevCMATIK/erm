@@ -4,13 +4,13 @@
             <label class="btn btn-outline-secondary btn-xs active" onclick="powerOptions('PL');" data-toggle="tooltip" data-original-title="Potencia Líneas">
                 <input type="radio" name="tensionOptions" value="average" checked="checked"> P. Líneas
             </label>
-            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('NOPL');" data-toggle="tooltip" data-original-title="Activa">
+            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('ee-p-activa');" data-toggle="tooltip" data-original-title="Activa">
                 <input type="radio" name="tensionOptions" value="detail" > Act
             </label>
-            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('NOPL');" data-toggle="tooltip" data-original-title="Reactiva">
+            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('ee-p-reactiva');" data-toggle="tooltip" data-original-title="Reactiva">
                 <input type="radio" name="tensionOptions" value="detail" > Reac
             </label>
-            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('NOPL');" data-toggle="tooltip" data-original-title="Aparente">
+            <label class="btn btn-outline-secondary btn-xs"  onclick="powerOptions('ee-p-aparente');" data-toggle="tooltip" data-original-title="Aparente">
                 <input type="radio" name="tensionOptions" value="detail" > Apa
             </label>
         </div>

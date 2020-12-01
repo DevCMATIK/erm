@@ -213,6 +213,77 @@
             });
         }
 
+        function getPowerChartContainer(start,end){
+            var type = $('#power-options').val();
+            $.getJSON('/energy/charts/power/{{ $subZone->id }}?start='+start+'&end='+end+'&type='+type,
+                function (data) {
+                    if(data.length === 0) {
+
+                        $('#powerChartContainer').html('<div class="alert alert-info">No hay data para los días seleccionados.</div>');
+                    } else {
+                        var options = {
+                            chart: {
+                                renderTo: 'powerChartContainer',
+                                zoomType: 'x',
+                                height: $('#power-data-container').height(),
+                                animation: false
+                            },
+
+                            boost: {
+                                useGPUTranslations: true
+                            },
+                            legend: {
+                                enabled: true,
+                                align: 'right',
+                                verticalAlign: 'top',
+                                x: -10,
+                                y: 20,
+                                floating: true
+                            },
+                            title: {
+                                text: data.title
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                dateTimeLabelFormats: {
+                                    second: '%H:%M:%S',
+                                    minute: '%H:%M',
+                                    hour: '%H:%M',
+                                    day: '%Y<br/>%m-%d',
+                                    week: '%Y<br/>%m-%d',
+                                    month: '%Y-%m',
+                                    year: '%Y'
+                                }
+                            },
+                            yAxis: data.yAxis,
+                            plotOptions: {
+                                spline: {
+                                    animation: false
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: {point.y} ' + data.unit + '<br>',
+                                shared: true,
+                                valueDecimals: 2,
+                            },
+
+                            credits: {
+                                enabled: false
+                            },
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        symbolStroke: '#0960a5'
+                                    }
+                                }
+                            },
+                            series: data.series
+                        };
+                        var chartData3 = new Highcharts.Chart(options);
+                    }
+            });
+        }
+
         $('.btn-alarm').hide();
 
         $('.tension-ln').hide();
@@ -315,6 +386,8 @@
                 $('.opt-pl').hide();
                 $('.power-data').show();
             }
+            getPowerChartContainer($('.date-filter').val().split(' ')[0],$('.date-filter').val().split(' ')[2]);
+
         }
 
         function getConsumption(start = false, end = false,container = 'consumption') {
@@ -397,6 +470,7 @@
         getPowerData();
 
         getTensionChartContainer(moment().format('YYYY-MM-DD'),moment().format('YYYY-MM-DD'));
+        getPowerChartContainer(moment().format('YYYY-MM-DD'),moment().format('YYYY-MM-DD'));
 
         $('#last-month-consumption').hide();
         $('#last-month-zone-consumption').hide();
@@ -442,6 +516,7 @@
                 }, function(start, end, label)
                 {
                     getTensionChartContainer(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+                    getPowerChartContainer(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
                 });
 
             $('.consumption-date').daterangepicker(
