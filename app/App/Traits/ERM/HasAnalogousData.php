@@ -42,6 +42,6 @@ trait HasAnalogousData
             ->leftJoin('sensors','sub_element_sensors.sensor_id','=','sensors.id')
             ->join('sensor_types','sensors.type_id','=','sensor_types.id')
             ->where('sensor_types.slug',$type)
-            ->has('configuration')->findOrFail($id)->get();
+            ->has('configuration')->findOrFail($id);
     }
 }
