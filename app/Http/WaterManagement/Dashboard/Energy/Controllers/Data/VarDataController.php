@@ -16,9 +16,9 @@ class VarDataController extends Controller
         $sensor = $sensors->first();
 
         if($request->func === 'sum') {
-            $value = number_format($sensors->sum('value'),$sensor['disposition']->precision,',','');
+            $value = number_format($sensors->sum('value'),$sensor['disposition']->precision ?? 1,',','');
         } else {
-            $value = number_format($sensors->avg('value'),$sensor['disposition']->precision,',','');
+            $value = number_format($sensors->avg('value'),$sensor['disposition']->precision ?? 1,',','');
         }
 
         return view('water-management.dashboard.energy.components.data-box',[

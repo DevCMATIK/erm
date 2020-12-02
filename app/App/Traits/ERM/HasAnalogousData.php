@@ -16,8 +16,8 @@ trait HasAnalogousData
                 return [
                     'value' => $data,
                     'name' => $sensor->name,
-                    'unit' => $disposition->unit->name,
-                    'disposition' => $disposition,
+                    'unit' => $disposition->unit->name ?? '?',
+                    'disposition' => $disposition ?? null,
                     'type' => $sensor->type->slug,
                     'color' => $this->getRange($sensor,$data)
                 ];
