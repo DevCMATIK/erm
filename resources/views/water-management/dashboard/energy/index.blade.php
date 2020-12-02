@@ -394,9 +394,9 @@
 
         function getConsumptionData()
         {
-            getVarData('ee-e-activa','sum',null,'bg-success-300');
-            getVarData('ee-e-reactiva','sum',null,'bg-success-300');
-            getVarData('ee-e-aparente','sum',null,'bg-success-300');
+            getVarData('ee-e-activa','sum',null,'bg-success-300','kWh','Energía Activa');
+            getVarData('ee-e-reactiva','sum',null,'bg-success-300','kVARh','Energía Reactiva');
+            getVarData('ee-e-aparente','sum',null,'bg-success-300','kVAh','Energía Aparente');
         }
 
         function getStreamData()
