@@ -24,8 +24,8 @@ class VarDataController extends Controller
         return view('water-management.dashboard.energy.components.data-box',[
             'bg' => $request->bg,
             'value' => $value,
-            'unit' => $sensor['unit'],
-            'title' => (collect(['ee-e-activa','ee-e-reactiva','ee-e-aparente'])->contains($request->name))?'Energía '.$sensor['name']:$sensor['name'],
+            'unit' => $sensor['unit'] ?? $request->opt_unit ?? '?',
+            'title' => (collect(['ee-e-activa','ee-e-reactiva','ee-e-aparente'])->contains($request->name))?'Energía '.$sensor['name'] ?? $request->sensor_opt ?? 'Desconectado':$sensor['name'] ?? $request->sensor_opt ?? 'Desconectado',
             'mb' => $request->mb
         ]);
     }

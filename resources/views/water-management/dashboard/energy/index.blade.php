@@ -363,7 +363,7 @@
         $('.tension-ln').hide();
         $('.power-data').hide();
 
-        function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = ''){
+        function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = '',opt_unit = '??',sensor_opt = 'Desconectado'){
             $.ajax({
                 url     : '/energy/get-var-data',
                 type    : 'GET',
@@ -373,7 +373,9 @@
                     func : fn,
                     bg : bg,
                     mb : mb,
-                    sensor_name : sensor_name
+                    sensor_name : sensor_name,
+                    opt_unit : opt_unit,
+                    sensor_opt : sensor_opt
                 },
                 success : function ( data )
                 {
@@ -399,33 +401,33 @@
 
         function getStreamData()
         {
-            getVarData('ee-corriente','avg','L1','bg-warning-600','mb-1');
-            getVarData('ee-corriente','avg','L2','bg-warning-600','mb-1');
-            getVarData('ee-corriente','avg','L3','bg-warning-600','mb-1');
+            getVarData('ee-corriente','avg','L1','bg-warning-600','mb-1','A','L1');
+            getVarData('ee-corriente','avg','L2','bg-warning-600','mb-1','A','L2');
+            getVarData('ee-corriente','avg','L3','bg-warning-600','mb-1','A','L3');
         }
 
         function getTensionData()
         {
-            getVarData('ee-tension-l-l','avg','L1-L2','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-l','avg','L2-L3','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-l','avg','L3-L1','bg-primary-300','mb-1');
+            getVarData('ee-tension-l-l','avg','L1-L2','bg-primary-300','mb-1','V','L1-L2');
+            getVarData('ee-tension-l-l','avg','L2-L3','bg-primary-300','mb-1','V','L2-L3');
+            getVarData('ee-tension-l-l','avg','L3-L1','bg-primary-300','mb-1','V','L3-L1');
 
 
-            getVarData('ee-tension-l-n','avg','L1-N','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-n','avg','L2-N','bg-primary-300','mb-1');
-            getVarData('ee-tension-l-n','avg','L3-N','bg-primary-300','mb-1');
+            getVarData('ee-tension-l-n','avg','L1-N','bg-primary-300','mb-1','V','L1-N');
+            getVarData('ee-tension-l-n','avg','L2-N','bg-primary-300','mb-1','V','L1-N');
+            getVarData('ee-tension-l-n','avg','L3-N','bg-primary-300','mb-1','V','L1-N');
         }
 
         function getPowerData()
         {
-            getVarData('ee-p-act-u','avg','P1','bg-danger-300','mb-1');
-            getVarData('ee-p-act-u','avg','P2','bg-danger-300','mb-1');
-            getVarData('ee-p-act-u','avg','P3','bg-danger-300','mb-1');
+            getVarData('ee-p-act-u','avg','P1','bg-danger-300','mb-1','kW','P1');
+            getVarData('ee-p-act-u','avg','P2','bg-danger-300','mb-1','kW','P2');
+            getVarData('ee-p-act-u','avg','P3','bg-danger-300','mb-1','kW','P3');
 
 
-            getVarData('ee-p-activa','avg',null,'bg-danger-300','mb-1');
-            getVarData('ee-p-reactiva','avg',null,'bg-danger-300','mb-1');
-            getVarData('ee-p-aparente','avg',null,'bg-danger-300','mb-1');
+            getVarData('ee-p-activa','avg',null,'bg-danger-300','mb-1','kW','Activa');
+            getVarData('ee-p-reactiva','avg',null,'bg-danger-300','mb-1','kVAR','Reactiva');
+            getVarData('ee-p-aparente','avg',null,'bg-danger-300','mb-1','kVA','Aparente');
         }
 
         setInterval(function(){
