@@ -27,6 +27,7 @@ class DownloadVarDataController extends Controller
             $sensors = $this->getSensorsBySubZoneAndType($sub_zone_id,$request->name);
 
         } else {
+            dd('here');
             $sensors = $this->getSensorsBySubZoneAndName($sub_zone_id,$request->name,$request->sensor_name);
 
         }
