@@ -5,6 +5,7 @@ namespace App\Http\WaterManagement\Dashboard\Energy\Controllers\Consumption;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 
@@ -46,30 +47,33 @@ class ConsumptionDataController extends Controller
     protected function resolveBox(Request $request)
     {
         $box = array();
-        if($request->has('zone')) {
-            $zone = Zone::find($request->zone);
-            if($request->start_date == now()->startOfMonth()->toDateString() && $request->end_date == now()->endOfMonth()->toDateString()) {
-                $box['label'] = "Consumo {$zone->name} mes actual";
+        if(
+            $request->start_date == Carbon::parse($request->start_date)->startOfMonth()->toDateString()
+            &&
+            $request->end_date == Carbon::parse($request->end_date)->endOfMonth()->toDateString()
+            &&
+            Carbon::parse($request->start_date)->format('Y-m') == Carbon::parse($request->end_date)->format('Y-m')
+        ) {
+            if($request->has('zone')) {
+                $zone = Zone::find($request->zone);
+                $box['label'] = "Consumo {$zone->name} ".Carbon::parse($request->start_date)->format('Y-m');
             } else {
-                if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
-                    $box['label'] = "Consumo {$zone->name} mes pasado";
-                    $box['bg'] = 'bg-primary-300';
-                } else {
-                    $box['label'] = "Consumo {$zone->name}";
-                }
+                $box['label'] = "Consumo ".Carbon::parse($request->start_date)->format('Y-m');
             }
+
         } else {
-            if($request->start_date == now()->startOfMonth()->toDateString() && $request->end_date == now()->endOfMonth()->toDateString()) {
-                $box['label'] = "Consumo mes actual";
+            if($request->has('zone')) {
+                $zone = Zone::find($request->zone);
+                $box['label'] = "Consumo {$zone->name}";
             } else {
-                if($request->start_date == now()->subMonth()->startOfMonth()->toDateString() && $request->end_date == now()->subMonth()->endOfMonth()->toDateString()) {
-                    $box['label'] = "Consumo mes pasado";
-                    $box['bg'] = 'bg-primary-300';
-                } else {
-                    $box['label'] = "Consumo total";
-                }
+                $box['label'] = "Consumo Total";
             }
         }
+
+        if($request->container != 'consumption' || $request->container != 'zone-consumption') {
+            $box['bg'] = 'bg-primary-300';
+        }
+
 
         return $box;
     }

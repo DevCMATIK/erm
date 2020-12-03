@@ -496,6 +496,7 @@
                     sub_zone : $('#sub_zone').val(),
                     start_date : start_date,
                     end_date : end_date,
+                    container : container,
                 },
                 success : function ( data )
                 {
@@ -529,6 +530,7 @@
                     zone : $('#zone').val(),
                     start_date : start_date,
                     end_date : end_date,
+                    container : container,
                 },
                 success : function ( data )
                 {
@@ -542,9 +544,7 @@
         }
 
         getConsumption();
-        getConsumption(moment().subtract(1, 'month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-consumption');
         getZoneConsumption();
-        getZoneConsumption(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
         getConsumptionChart(moment().subtract(30, 'days').format('YYYY-MM-DD'),moment().format('YYYY-MM-DD'));
 
 
@@ -639,7 +639,7 @@
                     var start_date = start.format('YYYY-MM-DD');
                     var end_date = end.format('YYYY-MM-DD');
 
-                    if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day')) {
+                    if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day') && moment(start_date).isSame(moment(end_date),'month')) {
                         $('.consumption-box').removeClass('col-xl-6 col-lg-6 col-md-6',200).addClass('col-xl-3 col-lg-3 col-md-3',200);
                         setTimeout(function(){
                             $('#last-month-consumption').show('slideDown');
@@ -655,9 +655,15 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
-                    getConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-                    getZoneConsumption(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+                    getConsumption(start_date,end_date);
+                    getZoneConsumption(start_date,start_date);
+                    if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day') && moment(start_date).isSame(moment(end_date),'month')) {
+                        getConsumption(moment(start_date).subtract(1, 'month').format('YYYY-MM-DD'),moment(end_date).subtract(1, 'month').format('YYYY-MM-DD'),'last-month-consumption');
+                        getZoneConsumption(moment(start_date).subtract(1, 'month').format('YYYY-MM-DD'),moment(end_date).subtract(1, 'month').format('YYYY-MM-DD'),'last-month-zone-consumption');
+                    }
+
                     getConsumptionChart(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+
                 }
             );
 
