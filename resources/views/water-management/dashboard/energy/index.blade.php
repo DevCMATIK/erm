@@ -678,7 +678,7 @@
                         getZoneConsumption(moment(start_date).subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),moment(end_date).subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),'last-month-zone-consumption');
                     }
 
-                    getConsumptionChart(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+                    getConsumptionChart(start_date,end_date);
 
                 }
             );
