@@ -533,10 +533,10 @@
             location.href = '/downloadConsumptions/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date;
         }
 
-        function downloadVarData(name,sensor_name)
+        function downloadVarData(name,sensor_name,from)
         {
-            var start_date = $('.consumption-date').val().split(' ')[0];
-            var end_date = $('.consumption-date').val().split(' ')[2];
+            var start_date = $('.'+from).val().split(' ')[0];
+            var end_date = $('.'+from).val().split(' ')[2];
             location.href = '/downloadVarData/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date+'&name='+name+'&sensor_name='+sensor_name;
         }
 
