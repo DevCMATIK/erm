@@ -23,13 +23,11 @@ class DownloadVarDataController extends Controller
 
     public function __invoke(Request $request,$sub_zone_id)
     {
-        if(isset($request->sensor_name) && $request->sensor_name != null ){
+        if(isset($request->sensor_name) && $request->sensor_name == 'null' ){
             $sensors = $this->getSensorsBySubZoneAndType($sub_zone_id,$request->name);
 
         } else {
-            dd('here');
             $sensors = $this->getSensorsBySubZoneAndName($sub_zone_id,$request->name,$request->sensor_name);
-
         }
 
         $from = Carbon::parse($request->start_date)->startOfDay();  //2016-09-29 00:00:00.000000
