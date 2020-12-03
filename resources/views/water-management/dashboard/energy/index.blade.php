@@ -521,7 +521,7 @@
 
         function downloadConsumptions() {
             var start_date = $('.consumption-date').val().split(' ')[0];
-            var end_date = $('.consumption-date').val().split(' ')[0];
+            var end_date = $('.consumption-date').val().split(' ')[2];
             location.href = '/downloadConsumptions/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date;
         }
 
