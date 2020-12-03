@@ -656,7 +656,7 @@
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
                     getConsumption(start_date,end_date);
-                    getZoneConsumption(start_date,start_date);
+                    getZoneConsumption(start_date,end_date);
                     if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day') && moment(start_date).isSame(moment(end_date),'month')) {
                         getConsumption(moment(start_date).subtract(1, 'month').format('YYYY-MM-DD'),moment(end_date).subtract(1, 'month').format('YYYY-MM-DD'),'last-month-consumption');
                         getZoneConsumption(moment(start_date).subtract(1, 'month').format('YYYY-MM-DD'),moment(end_date).subtract(1, 'month').format('YYYY-MM-DD'),'last-month-zone-consumption');

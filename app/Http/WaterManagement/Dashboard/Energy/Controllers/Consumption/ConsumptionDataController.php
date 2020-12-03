@@ -70,8 +70,10 @@ class ConsumptionDataController extends Controller
             }
         }
 
-        if($request->container != 'consumption' || $request->container != 'zone-consumption') {
+        if($request->container == 'last-month-consumption' || $request->container == 'last-month-zone-consumption') {
             $box['bg'] = 'bg-primary-300';
+        } else {
+            $box['bg'] = 'bg-primary';
         }
 
 
