@@ -55,12 +55,12 @@ class DownloadVarDataController extends Controller
                 ->allOnQueue('exports-queue');
             return back()->withSuccess('Export started!');
         } else {
-            return $this->download($request,$sensors);
+            return $this->download($request,$sensors,$from,$to);
         }
 
     }
 
-    public function download(Request $request,$sensors)
+    public function download(Request $request,$sensors,$start_date,$end_date)
     {
 
 
@@ -69,7 +69,7 @@ class DownloadVarDataController extends Controller
 
         foreach ($sensors as $sensor ){
             array_push($sheetsName,$sensor->name );
-            array_push($data,$this->mapQuery($sensor,$request->start_date,$request->end_date));
+            array_push($data,$this->mapQuery($sensor,$start_date,$end_date));
 
         }
         $sheets = new SheetCollection(array_combine($sheetsName,$data));
@@ -92,7 +92,7 @@ class DownloadVarDataController extends Controller
 
     protected function mapQuery($sensor,$start_date,$end_date)
     {
-        return $this->query($sensor,$start_date,$end_date)-> get()->map(function($item){
+        return $this->query($sensor,$start_date,$end_date)->get()->map(function($item){
             return array_combine($this->getHeaders(),$this->resolveRow($item));
         });
     }
