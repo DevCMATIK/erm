@@ -15,10 +15,12 @@ class ExportConsumptionsDetail implements  FromQuery, WithMapping, WithHeadings,
     use Exportable;
 
     public $sub_zone;
+    public $request;
 
-    public function __construct($sub_zone)
+    public function __construct($sub_zone,$request)
     {
         $this->sub_zone = $sub_zone;
+        $this->request = $request;
     }
 
     public function map($rows): array
@@ -35,7 +37,8 @@ class ExportConsumptionsDetail implements  FromQuery, WithMapping, WithHeadings,
 
     public function query()
     {
-        return ElectricityConsumption::query()->where('sub_zone_id',$this->sub_zone->id)->orderBy('date');
+        return ElectricityConsumption::query()->where('sub_zone_id',$this->sub_zone->id)
+            ->whereRaw("date between '{$this->request->start_date}' and '{$this->request->end_date}'")->orderBy('date');
     }
 
     public function headings(): array

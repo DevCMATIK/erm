@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="consumption" >
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="consumption" onclick="downloadConsumptions();">
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary',
             'value' => 0,
@@ -8,7 +8,7 @@
             'icon' => 'fa-calendar'
         ])
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-consumption" >
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-consumption" onclick="downloadConsumptions();" >
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
             'value' => 0,
@@ -18,7 +18,7 @@
             'extraClasses' => ['hide-on-date']
         ])
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" >
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" onclick="downloadConsumptions();" >
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary',
             'value' => 0,
@@ -28,7 +28,7 @@
         ])
     </div>
 
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-zone-consumption" >
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-zone-consumption"  onclick="downloadConsumptions();">
         @include('water-management.dashboard.energy.components.main-box', [
             'bg' => 'bg-primary-300',
             'value' => 0,

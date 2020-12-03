@@ -133,11 +133,17 @@
                             },
                             series: data.series
                         };
-                        var chartData = new Highcharts.Chart(options);
+                        let chartData = new Highcharts.Chart(options);
                     }
                 });
-        }
 
+        }
+        chartData.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: 'Exportar en excel',
+            onclick: function () {
+                downloadConsumptions();
+            }
+        });
         function getTensionChartContainer(start,end){
 
             var type = $('#tension-type').val();
@@ -507,6 +513,12 @@
                     console.log(response);
                 }
             });
+        }
+
+        function downloadConsumptions() {
+            var start_date = $('.consumption-date').val().split(' ')[0];
+            var end_date = $('.consumption-date').val().split(' ')[0];
+            location.href = '/downloadConsumptions/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date;
         }
 
         function getZoneConsumption(start = false, end = false,container = 'zone-consumption') {
