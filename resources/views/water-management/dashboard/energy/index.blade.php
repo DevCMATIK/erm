@@ -128,18 +128,21 @@
                                 buttons: {
                                     contextButton: {
                                         symbolStroke: '#0960a5'
+                                    },
+                                    exportButton: {
+                                        menuItems: [{
+                                            text: 'Exportar como Excel',
+                                            onclick:function() {
+                                                downloadConsumptions()
+                                            }
+                                        }]
                                     }
                                 }
                             },
                             series: data.series
                         };
                         let chartData = new Highcharts.Chart(options);
-                        chartData.getOptions().exporting.buttons.contextButton.menuItems.push({
-                            text: 'Exportar en excel',
-                            onclick: function () {
-                                downloadConsumptions();
-                            }
-                        });
+
                     }
                 });
 
