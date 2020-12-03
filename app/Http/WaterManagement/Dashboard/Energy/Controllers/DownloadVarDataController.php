@@ -30,7 +30,6 @@ class DownloadVarDataController extends Controller
             $sensors = $this->getSensorsBySubZoneAndName($sub_zone_id,$request->name,$request->sensor_name);
         }
 
-        dd($sensors);
 
         $from = Carbon::parse($request->start_date)->startOfDay();  //2016-09-29 00:00:00.000000
         $to = Carbon::parse($request->end_date)->endOfDay();
