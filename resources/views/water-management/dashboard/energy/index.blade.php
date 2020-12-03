@@ -134,16 +134,17 @@
                             series: data.series
                         };
                         let chartData = new Highcharts.Chart(options);
+                        chartData.getOptions().exporting.buttons.contextButton.menuItems.push({
+                            text: 'Exportar en excel',
+                            onclick: function () {
+                                downloadConsumptions();
+                            }
+                        });
                     }
                 });
 
         }
-        chartData.getOptions().exporting.buttons.contextButton.menuItems.push({
-            text: 'Exportar en excel',
-            onclick: function () {
-                downloadConsumptions();
-            }
-        });
+
         function getTensionChartContainer(start,end){
 
             var type = $('#tension-type').val();
