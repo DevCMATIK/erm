@@ -20,6 +20,12 @@
             }
         }
     </style>
+    @if ($message = \Illuminate\Support\Facades\Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="card border">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -373,6 +379,8 @@
         $('.tension-ln').hide();
         $('.power-data').hide();
 
+
+
         function getVarData(name,fn,sensor_name = null,bg = 'bg-primary',mb = '',opt_unit = '??',sensor_opt = 'Desconectado'){
             $.ajax({
                 url     : '/energy/get-var-data',
@@ -523,6 +531,13 @@
             var start_date = $('.consumption-date').val().split(' ')[0];
             var end_date = $('.consumption-date').val().split(' ')[2];
             location.href = '/downloadConsumptions/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date;
+        }
+
+        function downloadVarData(name,sensor_name)
+        {
+            var start_date = $('.consumption-date').val().split(' ')[0];
+            var end_date = $('.consumption-date').val().split(' ')[2];
+            location.href = '/downloadVarData/{{ $subZone->id }}?start_date='+start_date+'&end_date='+end_date+'&name='+name+'&sensor_name='+sensor_name;
         }
 
         function getZoneConsumption(start = false, end = false,container = 'zone-consumption') {

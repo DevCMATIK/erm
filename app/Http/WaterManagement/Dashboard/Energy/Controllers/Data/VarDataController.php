@@ -26,7 +26,9 @@ class VarDataController extends Controller
             'value' => $value,
             'unit' => $sensor['unit'] ?? $request->opt_unit ?? '?',
             'title' => (collect(['ee-e-activa','ee-e-reactiva','ee-e-aparente'])->contains($request->name))?'Energía '.$sensor['name'] ?? $request->sensor_opt ?? 'Desconectado':$sensor['name'] ?? $request->sensor_opt ?? 'Desconectado',
-            'mb' => $request->mb
+            'mb' => $request->mb,
+            'name' => $request->name,
+            'sensor_name' => $request->sensor_name
         ]);
     }
 
