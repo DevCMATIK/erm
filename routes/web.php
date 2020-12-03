@@ -137,7 +137,7 @@ Route::middleware('auth')->group(function() {
             Route::get('energy/charts/power/{sub_zone}','Chart\PowerChartController');
             Route::get('energy/charts/stream/{sub_zone}','Chart\StreamChartController');
             //varData
-            Route::get('downloadVarData//{sub_zone}', 'DownloadVarDataController');
+            Route::get('downloadVarData/{sub_zone}', 'DownloadVarDataController');
         });
         //electricity values
         Route::get('getEnergyValues','Electricity\EnergyValuesController');
