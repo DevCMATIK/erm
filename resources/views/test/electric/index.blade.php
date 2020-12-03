@@ -108,8 +108,8 @@
                     "timePicker24Hour": false,
                     "timePickerSeconds": false,
                     "autoApply": false,
-                    startDate : moment().startOf('month'),
-                    endDate: moment().endOf('month'),
+                    startDate : moment().subtract(30,'days'),
+                    endDate: moment(),
                     ranges:
                         {
                             'Hoy': [moment(), moment()],
@@ -125,7 +125,10 @@
                     "cancelClass": "btn-success shadow-0"
                 }, function(start, end, label)
                 {
-                    if(moment().startOf('month').isSame(start) && moment().endOf('month').isSame(end)) {
+                    var start_date = start.format('YYYY-MM-DD');
+                    var end_date = end.format('YYYY-MM-DD');
+
+                    if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day')) {
                         $('.consumption-box').removeClass('col-xl-6 col-lg-6 col-md-6',200).addClass('col-xl-3 col-lg-3 col-md-3',200);
                         setTimeout(function(){
                             $('.hide-on-date').show('slideDown');
@@ -139,8 +142,6 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
-                    console.log(start.format('YYYY-MM-DD'));
-                    console.log(end);
                 }
             );
         });

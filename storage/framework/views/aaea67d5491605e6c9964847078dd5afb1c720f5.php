@@ -110,8 +110,8 @@
                     "timePicker24Hour": false,
                     "timePickerSeconds": false,
                     "autoApply": false,
-                    startDate : moment().startOf('month'),
-                    endDate: moment().endOf('month'),
+                    startDate : moment().subtract(30,'days'),
+                    endDate: moment(),
                     ranges:
                         {
                             'Hoy': [moment(), moment()],
@@ -127,7 +127,10 @@
                     "cancelClass": "btn-success shadow-0"
                 }, function(start, end, label)
                 {
-                    if(moment().startOf('month').isSame(start) && moment().endOf('month').isSame(end)) {
+                    var start_date = start.format('YYYY-MM-DD');
+                    var end_date = end.format('YYYY-MM-DD');
+
+                    if(start.startOf('month').isSame(start_date,'day') && end.endOf('month').isSame(end_date,'day')) {
                         $('.consumption-box').removeClass('col-xl-6 col-lg-6 col-md-6',200).addClass('col-xl-3 col-lg-3 col-md-3',200);
                         setTimeout(function(){
                             $('.hide-on-date').show('slideDown');
@@ -141,187 +144,11 @@
                         $('#consumption .box-label').html('Consumo total');
                         $('#zone-consumption .box-label').html('Pocillas consumo total');
                     }
-                    console.log(start.format('YYYY-MM-DD'));
-                    console.log(end);
                 }
             );
         });
 
-        Highcharts.chart('consumptionChartContainer', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'World\'s largest cities per 2017'
-            },
-            subtitle: {
-                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
-            },
-            xAxis: {
-                type: 'category',
-                labels: {
-                    rotation: -45,
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
-                    }
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Population (millions)'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            tooltip: {
-                pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
-            },
-            series: [{
-                name: 'Population',
-                data: [
-                    ['Shanghai', 24.2],
-                    ['Beijing', 20.8],
-                    ['Karachi', 14.9],
-                    ['Shenzhen', 13.7],
-                    ['Guangzhou', 13.1],
-                    ['Istanbul', 12.7],
-                    ['Mumbai', 12.4],
-                    ['Moscow', 12.2],
-                    ['São Paulo', 12.0],
-                    ['Delhi', 11.7],
-                    ['Kinshasa', 11.5],
-                    ['Tianjin', 11.2],
-                    ['Lahore', 11.1],
-                    ['Jakarta', 10.6],
-                    ['Dongguan', 10.6],
-                    ['Lagos', 10.6],
-                    ['Bengaluru', 10.3],
-                    ['Seoul', 9.8],
-                    ['Foshan', 9.3],
-                    ['Tokyo', 9.3]
-                ],
-                dataLabels: {
-                    enabled: true,
-                    rotation: -90,
-                    color: '#FFFFFF',
-                    align: 'right',
-                    format: '{point.y:.1f}', // one decimal
-                    y: 10, // 10 pixels down from the top
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
-                    }
-                }
-            }]
-        });
 
-        Highcharts.chart('powerChartContainer', {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Monthly Average Temperature'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
-
-        Highcharts.chart('tensionChartContainer', {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Monthly Average Temperature'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
-
-        Highcharts.chart('streamChartContainer', {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Monthly Average Temperature'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
     </script>
 <?php $__env->stopSection(); ?>
 

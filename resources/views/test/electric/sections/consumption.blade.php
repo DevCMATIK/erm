@@ -8,15 +8,7 @@
             'icon' => 'fa-calendar'
         ])
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" >
-        @include('test.electric.components.main-box', [
-            'bg' => 'bg-primary',
-            'value' => 1250360,
-            'measure' => 'kWh',
-            'title' => 'Consumo Pocillas mes actual',
-            'icon' => 'fa-industry'
-        ])
-    </div>
+
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-consumption" >
         @include('test.electric.components.main-box', [
             'bg' => 'bg-primary-300',
@@ -25,6 +17,15 @@
             'title' => 'Consumo Mes anterior',
             'icon' => 'fa-bolt',
             'extraClasses' => ['hide-on-date']
+        ])
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer consumption-box mb-1" id="zone-consumption" >
+        @include('test.electric.components.main-box', [
+            'bg' => 'bg-primary',
+            'value' => 1250360,
+            'measure' => 'kWh',
+            'title' => 'Consumo Pocillas mes actual',
+            'icon' => 'fa-industry'
         ])
     </div>
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 cursor-pointer mb-1" id="last-month-zone-consumption" >
