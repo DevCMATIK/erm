@@ -16,7 +16,7 @@ class ExportConsumptions implements WithMultipleSheets
 
     public function __construct($sub_zone,$request)
     {
-        $this->sub_zone = SubZone::with('zone')->find($sub_zone);
+        $this->sub_zone = $sub_zone;
         $this->request = $request;
     }
 

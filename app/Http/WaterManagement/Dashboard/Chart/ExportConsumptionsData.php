@@ -18,7 +18,7 @@ class ExportConsumptionsData extends Controller
         if(strlen($fileName) > 31) {
             $fileName = substr($sub_zone->zone->name.'-'.$sub_zone->name,'0','20').'-Consumos.xlsx';
         }
-        return (new ExportConsumptions($request,$sub_zone_id))
+        return (new ExportConsumptions($request,$sub_zone))
             ->download($fileName);
     }
 }
