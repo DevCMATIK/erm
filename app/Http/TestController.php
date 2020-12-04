@@ -7,6 +7,7 @@ use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
+use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +27,14 @@ class TestController extends Controller
 
         foreach($zone->sub_zones as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
+            $yesterday = $this->getYesterdayConsumption($sub_zone);
             array_push($consumptions,[
                 $sub_zone->name => [
                     'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
                     'monthly' => $monthly->toArray(),
                     'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
-                    'yesterday' => $this->getYesterdayConsumption($sub_zone),
-                    'today' => $this->getTodayConsumption($sub_zone)
+                    'yesterday' => $yesterday->consumption,
+                    'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read)
                 ]
             ]);
         }
@@ -47,17 +49,27 @@ class TestController extends Controller
         );
     }
 
-    protected function getTodayConsumption($sub_zone)
+    protected function getTodayConsumption($sub_zone,$last_read)
     {
+        $sensor = Sensor::
+                        with(['device.reports','dispositions.unit'])
+                        ->find($sub_zone->consumptions
+                                    ->where('sensor_type')
+                                    ->first()
+                                    ->sensor_id
+                        );
+        $value = $this->getAnalogousValue($sensor);
 
+        return (float) $value['value'] - $last_read;
     }
 
     protected function getYesterdayConsumption($sub_zone)
     {
-        return $sub_zone->consumptions->where('sensor_type','ee-e-activa')->where('date',now()->subDay()->toDateString())->first()->consumption;
-      /* return ElectricityConsumption::where('sensor_type','ee-e-activa')
-           ->where('sub_zone_id',$sub_zone->id)
-           ->where('date',now()->subDay()->toDateString())->first()->consumption;*/
+        return $sub_zone->consumptions
+            ->where('sensor_type','ee-e-activa')
+            ->where('date',now()->subDay()
+                ->toDateString())->first();
+
     }
 
     protected function getMonthlyTotal($sub_zone)
