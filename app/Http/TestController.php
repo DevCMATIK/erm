@@ -19,6 +19,8 @@ class TestController extends Controller
 
     public function __invoke()
     {
+        $time_start = microtime(true);
+
         $consumptions = array();
         $zone = Zone::with('sub_zones')->find(11);
 
@@ -30,8 +32,15 @@ class TestController extends Controller
             ]);
         }
 
+        $time_end = microtime(true);
+
+        $execution_time = ($time_end - $time_start);
+
+
+
         dd(
-            $consumptions
+            $consumptions,
+            $execution_time
         );
     }
 
