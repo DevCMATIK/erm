@@ -6,6 +6,7 @@ use App\App\Controllers\Controller;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
+use App\Domain\System\User\User;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
