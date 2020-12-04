@@ -76,15 +76,7 @@
                     <th>Ayer</th>
                     <th>Este mes</th>
                     <th>Este año</th>
-                    @foreach($consumptions->map(function($item,$key){
-                                return collect($item)->map(function($item,$key){
-                                    return collect($item['monthly'])->map(function($item){
-                                        return $item['month'];
-                                    });
-                                });
-                            })->collapse()->collapse()->unique() as $month)
-                        <th>{{ $month }}</th>
-                    @endforeach
+                    
                 </tr>
                 </thead>
                 <tbody>
@@ -95,9 +87,7 @@
                             <td>{{ $consumption[key($consumption)]['yesterday'] }}</td>
                             <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }}</td>
                             <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }}</td>
-                            @foreach($consumption[key($consumption)]['monthly'] as $month)
-                                <td>{{ $month['consumption'] }}</td>
-                            @endforeach
+
                         </tr>
                     @endforeach
                 </tbody>
