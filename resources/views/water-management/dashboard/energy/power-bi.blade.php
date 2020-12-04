@@ -6,8 +6,7 @@
 @section('page-content')
     <div class="alert alert-info">
         Copie la siguiente URL en Power BI
-
-        <h5>{{ env('APP_URL').'/zone-resume-table/'.$zone->id }}</h5>
+        <h1><strong>https://erm.cmatik.app/zone-resume-table/{{ $zone->id }}</strong></h1>
     </div>
     <div class="row my-4">
         <div class="col-12">
