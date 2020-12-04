@@ -90,7 +90,7 @@
                 <tbody>
                     @foreach($consumptions as $consumption)
                         <tr>
-                            <td>{{ $consumption[key($consumption)] }}</td>
+                            <td>{{ key($consumption) }}</td>
                             <td>{{ $consumption[key($consumption)]['today'] }}</td>
                             <td>{{ $consumption[key($consumption)]['yesterday'] }}</td>
                             <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }}</td>
