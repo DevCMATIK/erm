@@ -1,29 +1,23 @@
 <?php
 
-namespace App\Http;
+namespace App\Http\WaterManagement\Dashboard\Energy\Controllers;
 
-use App\App\Controllers\Controller;
 use App\App\Traits\ERM\HasAnalogousData;
-use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\App\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Sentinel;
 
-
-class TestController extends Controller
+class ResumeController extends Controller
 {
     use HasAnalogousData;
 
-    public function __invoke()
+    public function __invoke($zone_id)
     {
-        $time_start = microtime(true);
-
+        $zone = Zone::with('sub_zones.consumptions')->find($zone_id);
         $consumptions = array();
-        $zone = Zone::with('sub_zones.consumptions')->find(11);
 
         foreach($zone->sub_zones as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
@@ -38,29 +32,18 @@ class TestController extends Controller
                 ]
             ]);
         }
-
-        $time_end = microtime(true);
-
-        $execution_time = ($time_end - $time_start);
-
-        dd(
-            $consumptions,
-            $execution_time,
-            collect($consumptions)->reduce(function($carry,$sub_zone){
-                return $carry + $sub_zone['this-year']['consumption'];
-            })
-        );
+        return view('water-management.dashboard.energy.resume', compact('zone','consumptions'));
     }
 
     protected function getTodayConsumption($sub_zone,$last_read)
     {
         $sensor = Sensor::
-                        with(['device.report','dispositions.unit'])
-                        ->find($sub_zone->consumptions
-                                    ->where('sensor_type')
-                                    ->first()
-                                    ->sensor_id
-                        );
+        with(['device.report','dispositions.unit'])
+            ->find($sub_zone->consumptions
+                ->where('sensor_type')
+                ->first()
+                ->sensor_id
+            );
         $value = $this->getAnalogousValue($sensor);
 
         return number_format( ($value['value'] - $last_read),2);
@@ -101,6 +84,4 @@ class TestController extends Controller
             ->groupBy('year')
             ->get();
     }
-
-
 }
