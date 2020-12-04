@@ -83,10 +83,10 @@
                     @foreach($consumptions as $consumption)
                         <tr>
                             <td>{{ key($consumption) }}</td>
-                            <td>{{ $consumption[key($consumption)]['today'] }} kWh</td>
-                            <td>{{ $consumption[key($consumption)]['yesterday'] }} kWh</td>
-                            <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }} kWh</td>
-                            <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }} kWh</td>
+                            <td><strong>{{ number_format($consumption[key($consumption)]['today'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ number_format($consumption[key($consumption)]['yesterday'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ number_format($consumption[key($consumption)]['this-month']['consumption'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ number_format($consumption[key($consumption)]['this-year']['consumption'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
 
                         </tr>
                     @endforeach
