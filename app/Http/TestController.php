@@ -56,9 +56,8 @@ class TestController extends Controller
             DB::raw("DATE_FORMAT(date,'%Y') as years")
         )->where('sensor_type','ee-e-activa')
             ->where('sub_zone_id',$sub_zone->id)
-            ->where('years',$year)
             ->groupBy('years')
-            ->get();
+            ->get()->where('years',$year);
     }
 
 
