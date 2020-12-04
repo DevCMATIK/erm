@@ -32,7 +32,10 @@ class ResumeController extends Controller
                 ]
             ]);
         }
-        return view('water-management.dashboard.energy.resume', compact('zone','consumptions'));
+        return view('water-management.dashboard.energy.resume', [
+            'zone' => $zone,
+            'consumptions' => collect($consumptions)
+        ]);
     }
 
     protected function getTodayConsumption($sub_zone,$last_read)
