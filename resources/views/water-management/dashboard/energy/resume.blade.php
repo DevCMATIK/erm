@@ -57,7 +57,7 @@
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
                 'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + ($item[key($item)]['today'] ?? 0);
+                                return $carry + (is_numeric($item[key($item)]['today'])?$item[key($item)]['today']:0);
                            }),
                 'unit' => 'kWh',
                 'title' => 'Consumo Hoy',
