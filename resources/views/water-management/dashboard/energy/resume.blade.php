@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('page-title')
     {{ 'Resumen Energía: '.$zone->name }}
+    <a href="/zone-resume-table/{{ $zone->id }}" class="btn btn-primary btn-xs pull-right" target="_blank">Vista PowerBI</a>
 @endsection
 @section('page-icon','bolt')
 @section('page-content')
