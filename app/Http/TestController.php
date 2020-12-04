@@ -27,9 +27,8 @@ class TestController extends Controller
 
         foreach($consumptions as $consumption)
         {
-            foreach($consumption[key($consumption)]['monthly'] as $month) {
-                dd($month);
-            }
+            dd(collect($consumption[key($consumption)]['monthly'])->where('month','2020-06')->first()['consumption']);
+
         }
 
 

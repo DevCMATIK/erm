@@ -45,7 +45,7 @@
                                    });
                                });
                            })->collapse()->collapse()->unique() as $month)
-                            <td><strong>{{ (is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ (is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
                         @endforeach
                     </tr>
                 @endforeach
