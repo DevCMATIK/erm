@@ -72,8 +72,8 @@
                 <thead>
                 <tr>
                     <th>Sub Zona</th>
-                    <th>Ayer</th>
                     <th>Hoy</th>
+                    <th>Ayer</th>
                     <th>Este mes</th>
                     <th>Este año</th>
                     @foreach($consumptions->map(function($item,$key){
@@ -87,6 +87,20 @@
                     @endforeach
                 </tr>
                 </thead>
+                <tbody>
+                    @foreach($consumptions as $consumption)
+                        <tr>
+                            <td>{{ $consumption[key($consumption)] }}</td>
+                            <td>{{ $consumption[key($consumption)]['today'] }}</td>
+                            <td>{{ $consumption[key($consumption)]['yesterday'] }}</td>
+                            <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }}</td>
+                            <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }}</td>
+                            @foreach($consumption[key($consumption)]['monthly'] as $month)
+                                <td>{{ $month }}</td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
