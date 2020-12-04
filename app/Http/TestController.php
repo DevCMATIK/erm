@@ -22,7 +22,7 @@ class TestController extends Controller
         $time_start = microtime(true);
 
         $consumptions = array();
-        $zone = Zone::with('sub_zones')->find(11);
+        $zone = Zone::with('sub_zones.consumptions')->find(11);
 
         foreach($zone->sub_zones as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
@@ -32,7 +32,7 @@ class TestController extends Controller
                     'monthly' => $monthly->toArray(),
                     'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
                     'yesterday' => $this->getYesterdayConsumption($sub_zone),
-                    
+                    'today' => $this->getTodayConsumption($sub_zone)
                 ]
             ]);
         }
@@ -47,11 +47,17 @@ class TestController extends Controller
         );
     }
 
+    protected function getTodayConsumption($sub_zone)
+    {
+
+    }
+
     protected function getYesterdayConsumption($sub_zone)
     {
-       return ElectricityConsumption::where('sensor_type','ee-e-activa')
+        return $sub_zone->consumption->where('sensor_type','ee-e-activa')->where('date',now()->subDay()->toDateString())->first()->consumption;
+      /* return ElectricityConsumption::where('sensor_type','ee-e-activa')
            ->where('sub_zone_id',$sub_zone->id)
-           ->where('date',now()->subDay()->toDateString())->first()->consumption;
+           ->where('date',now()->subDay()->toDateString())->first()->consumption;*/
     }
 
     protected function getMonthlyTotal($sub_zone)
