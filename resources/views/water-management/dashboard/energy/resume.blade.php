@@ -83,10 +83,10 @@
                     @foreach($consumptions as $consumption)
                         <tr>
                             <td>{{ key($consumption) }}</td>
-                            <td><strong>{{ number_format($consumption[key($consumption)]['today'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ number_format($consumption[key($consumption)]['yesterday'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ number_format($consumption[key($consumption)]['this-month']['consumption'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ number_format($consumption[key($consumption)]['this-year']['consumption'],1,',','.') }}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
 
                         </tr>
                     @endforeach
