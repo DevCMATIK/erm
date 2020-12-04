@@ -47,7 +47,7 @@ class TestController extends Controller
             $consumptions,
             $execution_time,
             collect($consumptions)->reduce(function($carry,$sub_zone){
-                return $carry + $sub_zone['this-year']['consumption'];
+                dd($sub_zone);
             })
         );
     }
