@@ -24,8 +24,6 @@ class TestController extends Controller
 
         $consumptions = collect(json_decode($this->getJson(),true));
 
-        $for
-        dd();
 
 
         $time_end = microtime(true);
