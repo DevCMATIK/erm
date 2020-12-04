@@ -54,7 +54,7 @@ class TestController extends Controller
 
     protected function getYesterdayConsumption($sub_zone)
     {
-        return $sub_zone->consumption->where('sensor_type','ee-e-activa')->where('date',now()->subDay()->toDateString())->first()->consumption;
+        return $sub_zone->consumptions->where('sensor_type','ee-e-activa')->where('date',now()->subDay()->toDateString())->first()->consumption;
       /* return ElectricityConsumption::where('sensor_type','ee-e-activa')
            ->where('sub_zone_id',$sub_zone->id)
            ->where('date',now()->subDay()->toDateString())->first()->consumption;*/
