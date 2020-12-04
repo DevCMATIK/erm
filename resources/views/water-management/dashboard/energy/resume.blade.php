@@ -21,7 +21,9 @@
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary',
-                'value' => 1000,
+                'value' => $consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['this-year']['consumption'];
+                           }),
                 'unit' => 'kWh',
                 'title' => 'Consumo este año',
                 'icon' => 'fa-calendar'
@@ -30,7 +32,9 @@
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary',
-                'value' => 1000,
+                'value' => $consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['this-month']['consumption'];
+                           }),
                 'unit' => 'kWh',
                 'title' => 'Consumo este mes',
                 'icon' => 'fa-calendar'
@@ -40,7 +44,9 @@
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
-                'value' => 150,
+                'value' => $consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['yesterday'];
+                           }),
                 'unit' => 'kWh',
                 'title' => 'Consumo Ayer',
                 'icon' => 'fa-bolt'
@@ -50,7 +56,9 @@
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
-                'value' => 150,
+                'value' => $consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['today'];
+                           }),
                 'unit' => 'kWh',
                 'title' => 'Consumo Hoy',
                 'icon' => 'fa-bolt'
@@ -68,11 +76,15 @@
                     <th>Hoy</th>
                     <th>Este mes</th>
                     <th>Este año</th>
-                    <th>2020-01</th>
-                    <th>2020-02</th>
-                    <th>2020-03</th>
-                    <th>2020-04</th>
-                    <th>2020-05</th>
+                    @foreach($consumptions->map(function($item,$key){
+                                return collect($item)->map(function($item,$key){
+                                    return collect($item['monthly'])->map(function($item){
+                                        return $item['month'];
+                                    });
+                                });
+                            })->collapse()->collapse()->unique() as $month)
+                        <th>{{ $month }}</th>
+                    @endforeach
                 </tr>
                 </thead>
             </table>
