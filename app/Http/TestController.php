@@ -52,7 +52,7 @@ class TestController extends Controller
     protected function getTodayConsumption($sub_zone,$last_read)
     {
         $sensor = Sensor::
-                        with(['device.reports','dispositions.unit'])
+                        with(['device.report','dispositions.unit'])
                         ->find($sub_zone->consumptions
                                     ->where('sensor_type')
                                     ->first()
