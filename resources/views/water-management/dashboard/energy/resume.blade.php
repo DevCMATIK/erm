@@ -96,7 +96,7 @@
                             <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }}</td>
                             <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }}</td>
                             @foreach($consumption[key($consumption)]['monthly'] as $month)
-                                <td>{{ $month }}</td>
+                                <td>{{ $month['consumption'] }}</td>
                             @endforeach
                         </tr>
                     @endforeach

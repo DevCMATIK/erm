@@ -27,7 +27,9 @@ class TestController extends Controller
 
         foreach($consumptions as $consumption)
         {
-            dd(key($consumption));
+            foreach($consumption[key($consumption)]['monthly'] as $month) {
+                dd($month);
+            }
         }
 
 
