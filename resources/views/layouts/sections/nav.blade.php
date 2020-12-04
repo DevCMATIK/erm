@@ -69,7 +69,7 @@
                                 @if($area->name == 'Energía')
                                 <li>
                                     <a class="nav-link-text text-white-50" id="energy_zone{{ $zone->id }}" href="/zone-resume/{{$zone->id}}">
-                                        <span class="nav-link-text text-white-50">Resumen de energia</span></a>
+                                        <span class="nav-link-text text-white-50">Resumen Energía</span></a>
                                 </li>
                                 @endif
                                 @foreach($zone->sub_zones->sortBy('position') as $sub_zone)
