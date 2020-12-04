@@ -46,7 +46,7 @@ class TestController extends Controller
         dd(
             $consumptions,
             $execution_time,
-            collect($consumptions)->reduce(function($carry,$sub_zone,$key){
+            collect($consumptions)->reduce(function($carry,$sub_zone){
                 return $carry + collect($sub_zone)->map(function ($item){
                     return $item['this-year']['consumption'];
                     });
