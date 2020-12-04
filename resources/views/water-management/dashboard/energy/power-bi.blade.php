@@ -107,7 +107,7 @@
             <!-- END Page Header -->
             <!-- BEGIN Page Content -->
             <!-- the #js-page-content id is needed for some plugins to initialize -->
-            <main id="js-page-content" role="main" class="page-content">
+            <main id="js-page-content" role="main" class="page-content bg-white">
 
                 <div class="subheader " >
                     <h1 class="subheader-title">
