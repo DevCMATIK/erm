@@ -122,7 +122,7 @@
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
-                        <table class="table m-0 table-bordered table-light">
+                        <table class="table m-0 table-bordered">
                             <thead>
                             <tr>
                                 <th>Sub Zona</th>
