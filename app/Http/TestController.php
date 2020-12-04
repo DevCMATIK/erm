@@ -27,7 +27,8 @@ class TestController extends Controller
         foreach($zone->sub_zones as $sub_zone) {
             array_push($consumptions,[
                 $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray()
+                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
+                    'monthly' => $this->getMonthlyTotal($sub_zone)->toArray(),
                 ]
             ]);
         }
@@ -42,6 +43,17 @@ class TestController extends Controller
             $consumptions,
             $execution_time
         );
+    }
+
+    protected function getMonthlyTotal($sub_zone)
+    {
+        return ElectricityConsumption::select(
+            DB::raw('sum(consumption) as consumption'),
+            DB::raw("DATE_FORMAT(date,'%Y-%m') as months")
+        )->where('sensor_type','ee-e-activa')
+            ->where('sub_zone_id',$sub_zone->id)
+            ->groupBy('months')
+            ->get();
     }
 
     protected function getThisYearTotal($sub_zone)
