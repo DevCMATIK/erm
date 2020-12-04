@@ -76,17 +76,17 @@
                     <th>Ayer</th>
                     <th>Este mes</th>
                     <th>Este año</th>
-                    
+
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($consumptions as $consumption)
                         <tr>
                             <td>{{ key($consumption) }}</td>
-                            <td>{{ $consumption[key($consumption)]['today'] }}</td>
-                            <td>{{ $consumption[key($consumption)]['yesterday'] }}</td>
-                            <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }}</td>
-                            <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }}</td>
+                            <td>{{ $consumption[key($consumption)]['today'] }} kWh</td>
+                            <td>{{ $consumption[key($consumption)]['yesterday'] }} kWh</td>
+                            <td>{{ $consumption[key($consumption)]['this-month']['consumption'] }} kWh</td>
+                            <td>{{ $consumption[key($consumption)]['this-year']['consumption'] }} kWh</td>
 
                         </tr>
                     @endforeach
