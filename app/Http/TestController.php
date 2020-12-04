@@ -46,10 +46,10 @@ class TestController extends Controller
 
     protected function getThisYearTotal($sub_zone)
     {
-        return $this->getByYearTotal($sub_zone,now()->year);
+        return $this->getByYearTotal($sub_zone)->where('years',now()->year);
     }
 
-    protected function getByYearTotal($sub_zone,$year)
+    protected function getByYearTotal($sub_zone)
     {
         return ElectricityConsumption::select(
             DB::raw('sum(consumption) as consumption'),
@@ -57,7 +57,7 @@ class TestController extends Controller
         )->where('sensor_type','ee-e-activa')
             ->where('sub_zone_id',$sub_zone->id)
             ->groupBy('years')
-            ->get()->where('years',$year);
+            ->get();
     }
 
 
