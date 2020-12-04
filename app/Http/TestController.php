@@ -43,15 +43,8 @@ class TestController extends Controller
 
         $execution_time = ($time_end - $time_start);
 
-        dd(
-            $consumptions,
-            $execution_time,
-            collect($consumptions)->reduce(function($carry,$sub_zone){
-                return $carry + collect($sub_zone)->map(function ($item){
-                    return $item['this-year']['consumption'];
-                    });
-            })
-        );
+        echo json_encode($consumptions,JSON_NUMERIC_CHECK);
+       
     }
 
     protected function getTodayConsumption($sub_zone,$last_read)
