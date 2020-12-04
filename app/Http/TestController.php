@@ -27,7 +27,7 @@ class TestController extends Controller
         foreach($zone->sub_zones as $sub_zone) {
             array_push($consumptions,[
                 $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)
+                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray()
                 ]
             ]);
         }
@@ -46,7 +46,7 @@ class TestController extends Controller
 
     protected function getThisYearTotal($sub_zone)
     {
-        return $this->getByYearTotal($sub_zone)->where('years',now()->year);
+        return $this->getByYearTotal($sub_zone)->where('years',now()->year)->first();
     }
 
     protected function getByYearTotal($sub_zone)
