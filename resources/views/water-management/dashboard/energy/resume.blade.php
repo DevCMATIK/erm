@@ -21,27 +21,15 @@
    <div class="row">
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary',
+                'bg' => 'bg-primary-300',
                 'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['this-year']['consumption'];
+                                return $carry + (is_numeric($item[key($item)]['today'])?$item[key($item)]['today']:0);
                            }),
                 'unit' => 'kWh',
-                'title' => 'Consumo este año',
-                'icon' => 'fa-calendar'
+                'title' => 'Consumo Hoy',
+                'icon' => 'fa-bolt'
             ])
        </div>
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
-           @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary',
-                'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['this-month']['consumption'];
-                           }),
-                'unit' => 'kWh',
-                'title' => 'Consumo este mes',
-                'icon' => 'fa-calendar'
-            ])
-       </div>
-
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
@@ -56,13 +44,24 @@
 
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
            @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary-300',
+                'bg' => 'bg-primary',
                 'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + (is_numeric($item[key($item)]['today'])?$item[key($item)]['today']:0);
+                                return $carry + $item[key($item)]['this-month']['consumption'];
                            }),
                 'unit' => 'kWh',
-                'title' => 'Consumo Hoy',
-                'icon' => 'fa-bolt'
+                'title' => 'Consumo este mes',
+                'icon' => 'fa-calendar'
+            ])
+       </div>
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
+           @include('water-management.dashboard.energy.components.main-box', [
+                'bg' => 'bg-primary',
+                'value' => $consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['this-year']['consumption'];
+                           }),
+                'unit' => 'kWh',
+                'title' => 'Consumo este año',
+                'icon' => 'fa-calendar'
             ])
        </div>
    </div>

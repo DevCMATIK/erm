@@ -68,6 +68,10 @@
         Highcharts.setOptions({
             global: {
                 useUTC: false
+            },
+            lang: {
+                decimalPoint: ',',
+                thousandsSep: ''
             }
         });
         function getConsumptionChart(start,end){
@@ -123,7 +127,7 @@
                                 }
                             },
                             tooltip: {
-                                pointFormat: '{series.name}: {point.y} ' + data.unit + '<br>',
+                                pointFormat: '{series.name}: {point.y:,.2f} ' + data.unit + '<br>',
                                 shared: true
                             },
 
@@ -206,7 +210,7 @@
                                 }
                             },
                             tooltip: {
-                                pointFormat: '{series.name}: {point.y} '+data.unit+'<br>',
+                                pointFormat: '{series.name}: {point.y:,.2f} '+data.unit+'<br>',
                                 shared: true
                             },
 
@@ -280,7 +284,7 @@
                                 }
                             },
                             tooltip: {
-                                pointFormat: '{series.name}: {point.y} '+data.unit+'<br>',
+                                pointFormat: '{series.name}: {point.y:,.2f} '+data.unit+'<br>',
                                 shared: true
                             },
 
@@ -352,7 +356,7 @@
                                 }
                             },
                             tooltip: {
-                                pointFormat: '{series.name}: {point.y} ' + data.unit + '<br>',
+                                pointFormat: '{series.name}: {point.y:,.2f} ' + data.unit + '<br>',
                                 shared: true,
                                 valueDecimals: 2,
                             },
