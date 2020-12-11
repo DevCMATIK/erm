@@ -10,6 +10,7 @@ use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use Carbon\Carbon;
 use Sentinel;
+use SoapHeader;
 
 
 class TestController extends SoapController
