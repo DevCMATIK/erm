@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Login'); ?>
 
 <?php $__env->startSection('auth-content'); ?>

@@ -10,7 +10,7 @@
         </div>
         <div class="form-group">
             <label class="form-label">Zonas</label>
-            <select class="form-control m-b" name="zone_id" id="zone_id" onchange="getSubZones()">
+            <select multiple class="form-control m-b" name="zone_id" id="zone_id" onchange="getSubZones()">
                 <option value="" disabled="" selected="" >Seleccione...</option>
                 @foreach($zones as $z)
                     <option value="{{ $z->id }}">{{ $z->name }}</option>

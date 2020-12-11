@@ -134,6 +134,15 @@ Route::middleware('auth')->group(function() {
         Route::get('dashboard-alarms','Alarm\Controllers\AlarmDashboardController@index');
         Route::get('dashboard-alarms/getActiveAlarmsTable','Alarm\Controllers\ActiveAlarmsTableController@index');
         Route::get('dashboard-alarms/getLastAlarmsTable','Alarm\Controllers\LastAlarmsTableController@index');
+
+        //Alarms (Llenado de Select SubZones
+        Route::get('getSubZones','Alarm\Controllers\LastAlarmsTableController@getSubZones');
+
+        //Alarms Paginacion Tiempo Real
+        Route::get('getSearch','Alarm\Controllers\LastAlarmsTableController@getSearch');
+
+        Route::get('dashboard-alarm','Alarm\Controllers\LastAlarmsTableController@index')->name('enviar');
+
         Route::get('remindMeAlarm','Alarm\Controllers\ActiveAlarmsTableController@remindMeAlarm');
 
         //CHART
@@ -204,6 +213,17 @@ Route::middleware('auth')->group(function() {
     Route::get('getCheckPoints','Data\Export\ExportDataController@getCheckPoints');
 
 
+     // Export Alarm
+    Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
+    Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
+    //Route::get('dashboard-alarms/getLastAlarmsTable','WaterManagement\Dashboard\Alarm\Controllers\LastAlarmsTableController@index')->name('enviar');
+
+
+    //Export Alarm Form
+    Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
+    Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
+
+
     Route::get('clientOfflineDevices','Client\Devices\OfflineDevicesController@index')->name('client-offline-devices');
     Route::get('client-device-disconnections/{id}','Client\Devices\OfflineDevicesController@getLog');
 });
@@ -213,7 +233,7 @@ Route::get('/clear-cache', function() {
 });
 Route::get('/test','TestController');
 Route::get('/test2',function(){
-   dd(\App\Domain\Client\CheckPoint\DGA\CheckPointReport::get());
+   (\App\Domain\Client\CheckPoint\DGA\CheckPointReport::get());
 });
 
 Route::get('download-file/{id}',function($id){

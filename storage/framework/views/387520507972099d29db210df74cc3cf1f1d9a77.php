@@ -19,8 +19,11 @@
     <!-- base css -->
     <?php echo $__env->make('components.html-helpers.core-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- Place favicon.ico in the root directory -->
+    <!-- Include the default stylesheet -->
+    <!-- Include Twitter Bootstrap and jQuery: -->
 
-    <link rel="mask-icon" href="" color="#5bbad5">
+
+
 </head>
 <body class="mod-bg-1">
 <!-- DOC: script to save and load page settings -->
@@ -143,6 +146,7 @@
 <?php echo $__env->make('components.html-helpers.core-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php if (! empty(trim($__env->yieldContent('page-extra-scripts')))): ?>
     <?php echo $__env->yieldContent('page-extra-scripts'); ?>
+    <?php echo $__env->yieldContent('select-scripts'); ?>
 <?php endif; ?>
 <script>
     $(document).ready(function() {

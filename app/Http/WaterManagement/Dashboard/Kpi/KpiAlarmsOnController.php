@@ -2,52 +2,33 @@
 
 namespace App\Http\WaterManagement\Dashboard\Kpi;
 
+use App\App\Traits\Alarms\HasSearchScopes;
+use App\App\Traits\Dates\DateUtilitiesTrait;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
+use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
+use App\Http\WaterManagement\Dashboard\Alarm\Controllers\ActiveAlarmsTableController;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
+use MongoDB\Driver\Query;
 use Sentinel;
 
 
 class KpiAlarmsOnController extends Controller
 {
-    public function __invoke()
+    use HasAlarmTrait, DateUtilitiesTrait;
+
+    public function __invoke(Request $request)
     {
-        $zones = $this->getZones();
-
-        return SensorAlarmLog::join('sensor_alarms','sensor_alarms.id','=','sensor_alarm_logs.sensor_alarm_id')
-            ->join('sensors','sensors.id','=','sensor_alarms.sensor_id')
-            ->join('devices','devices.id','=','sensors.device_id')
-            ->whereNull('sensor_alarms.deleted_at')
-            ->whereIn('devices.id',$this->getDevicesId($zones))
-            ->active()
-            ->count();
-
-    }
-
-    protected function getZones()
-    {
-        return Zone::whereHas('sub_zones', $filter =  function($query){
-            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
-        })->with( ['sub_zones' => $filter,'sub_zones.sub_elements'])->get();
-    }
-
-    protected function getDevicesId($zones)
-    {
-        $ids = array();
-        $zones = Zone::whereHas('sub_zones', $filter =  function($query){
-            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
-        })->with( ['sub_zones' => $filter,'sub_zones.sub_elements'])->get();
-        foreach($zones as $zone) {
-            foreach($zone->sub_zones as $sub_zone) {
-                foreach($sub_zone->sub_elements as $sub_element) {
-                    if(Sentinel::getUser()->inSubZone($sub_zone->id)) {
-                        array_push($ids,$sub_element->device_id);
-                    }
-                }
-            }
+        $queryString = explode('?',$request->fullUrl())[1]??false;
+        if ($queryString != false)
+        {
+            return $this->getActiveAlarmsWithParameters($request)->count()
+                .'/'
+                .$this->activeAlarmQuery()->count();
+        }else
+        {
+            return $this->activeAlarmQuery()->count();
         }
-
-        return $ids;
     }
 }

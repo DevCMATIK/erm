@@ -9,10 +9,11 @@ use Sentinel;
 
 class AlarmDashboardController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        $queryString = explode('?',$request->fullUrl())[1]??false;
         $zones = Zone::whereHas('sub_zones', $filter =  function($query){
             $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
-        })->with( ['sub_zones' => $filter])->get();
-        return view('water-management.dashboard.alarm.index',compact('zones'));
+            })->with( ['sub_zones' => $filter])->get();
+        return view('water-management.dashboard.alarm.index',compact('zones','queryString'));
     }
 }

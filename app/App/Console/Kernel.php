@@ -44,6 +44,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
         $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();

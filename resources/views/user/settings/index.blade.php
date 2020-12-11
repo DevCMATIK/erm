@@ -4,7 +4,7 @@
 @section('page-content')
     <div class="card overflow-hidden">
         <div class="row no-gutters row-bordered row-border-light">
-            <div class="col-md-2 pt-0">
+            <div class="col-md-8 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
                     <a class="list-group-item list-group-item-action active" data-toggle="list" id="first-item" href="{{ route('userSettings.general') }}">
                         General

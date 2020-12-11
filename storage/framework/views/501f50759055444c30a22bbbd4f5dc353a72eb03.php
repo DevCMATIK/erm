@@ -10,6 +10,7 @@
             <i class="fas fa-exclamation-triangle position-absolute pos-right pos-bottom opacity-15 mb-2 mr-1" style="font-size:5rem"></i>
         </div>
     </div>
+
     <div class="col-sm-4 col-xl-4">
         <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g cursor-pointer" onclick="redirectToAlarms()">
             <div class="">

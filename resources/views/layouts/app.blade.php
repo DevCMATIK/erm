@@ -18,8 +18,11 @@
     <!-- base css -->
     @include('components.html-helpers.core-css')
     <!-- Place favicon.ico in the root directory -->
+    <!-- Include the default stylesheet -->
+    <!-- Include Twitter Bootstrap and jQuery: -->
 
-    <link rel="mask-icon" href="" color="#5bbad5">
+
+
 </head>
 <body class="mod-bg-1">
 <!-- DOC: script to save and load page settings -->
@@ -142,6 +145,7 @@
 @include('components.html-helpers.core-scripts')
 @hasSection('page-extra-scripts')
     @yield('page-extra-scripts')
+    @yield('select-scripts')
 @endif
 <script>
     $(document).ready(function() {

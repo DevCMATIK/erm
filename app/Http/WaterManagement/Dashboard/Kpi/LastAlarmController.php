@@ -17,7 +17,7 @@ class LastAlarmController extends Controller
         return optional(SensorAlarmLog::join('sensor_alarms','sensor_alarms.id','=','sensor_alarm_logs.sensor_alarm_id')
             ->join('sensors','sensors.id','=','sensor_alarms.sensor_id')
             ->join('devices','devices.id','=','sensors.device_id')
-            ->whereIn('devices.id',$this->getDevicesId($zones))
+            //->whereIn('devices.id',$this->getDevicesId($zones))
             ->whereNull('sensor_alarms.deleted_at')
             ->orderBy('sensor_alarm_logs.id','DESC')
             ->first())->start_date ?? 'N/A';

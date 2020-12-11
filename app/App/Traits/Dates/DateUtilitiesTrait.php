@@ -17,4 +17,19 @@ trait DateUtilitiesTrait
 
         return $months;
     }
+
+    protected function handleDates($query, $dates, $field='date')
+    {
+        if($dates != '')
+        {
+            $dates = explode(' ',$dates);
+            $from = date($dates[0]);
+            $to = date($dates[2]);
+            $from = Carbon::parse($from)->startOfDay()->toDateTimeString();
+            $to = Carbon::parse($to)->endOfDay()->toDateTimeString();
+            $query = $query->between($field,$from,$to);
+        }
+
+        return $query;
+    }
 }

@@ -20,7 +20,7 @@ class Historical extends Model
 
 
 
-    public $timestamps = false;
+    public $timestamp = false;
 
     public function device()
     {
