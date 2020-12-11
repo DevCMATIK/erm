@@ -116,4 +116,9 @@ class CheckPoint extends Model
     {
         return $this->hasMany(CheckPointIndicator::class,'check_point_id','id');
     }
+
+    public function last_report()
+    {
+        return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('id')->first();
+    }
 }
