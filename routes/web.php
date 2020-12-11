@@ -4,6 +4,7 @@ use App\Domain\WaterManagement\Main\Report;
 use Carbon\Carbon;
 
 Route::middleware('auth')->group(function() {
+    Route::view('d-electric','test.electric.index');
     Route::resource('groups','User\Group\Controllers\GroupController');
     //Client
     Route::get('getSubZones/{zone_id}/{check_point_id?}','Client\CheckPoint\Controllers\GetSubZonesController@getSubZones');
@@ -124,6 +125,23 @@ Route::middleware('auth')->group(function() {
 
 
         });
+
+        Route::namespace('Energy\Controllers')->group(function(){
+            Route::get('dashboard-energy/{subZone}','EnergyController@index')->name('dashboard-energy');
+            Route::get('energy/get-consumption-data','Consumption\ConsumptionDataController@getConsumptionData');
+            Route::get('energy/get-zone-consumption-data','Consumption\ConsumptionDataController@getZoneConsumptionData');
+            Route::get('energy/get-var-data','Data\VarDataController');
+            //charts
+            Route::get('energy/charts/consumption/{sub_zone}','Chart\ConsumptionChartController');
+            Route::get('energy/charts/tension/{sub_zone}','Chart\TensionChartController');
+            Route::get('energy/charts/power/{sub_zone}','Chart\PowerChartController');
+            Route::get('energy/charts/stream/{sub_zone}','Chart\StreamChartController');
+            //varData
+            Route::get('downloadVarData/{sub_zone}', 'DownloadVarDataController');
+            Route::get('zone-resume/{zone_id}', 'ResumeController');
+
+
+        });
         //electricity values
         Route::get('getEnergyValues','Electricity\EnergyValuesController');
         Route::get('getPowerValues','Electricity\PowerValuesController');
@@ -202,7 +220,7 @@ Route::middleware('auth')->group(function() {
 
     //MailReport
     Route::resource('mail-reports','WaterManagement\Report\Controllers\MailReportController');
-    Route::get('mail-reportActive/{report_id}/{is_active}','WaterManagement\Report\Controllers\isActiveController@index');
+    Route::get('mail-reportActive/{report_id}/{is_active}','WaterManagement\Report\Controllers\IsActiveController@index');
     Route::get('report/filterSensors','WaterManagement\Report\Controllers\Partial\FilterSensorsController');
     //commands executed
     Route::get('commands-executed','Client\Command\Controllers\CommandsExecutedController@index')->name('commands-executed');
@@ -238,7 +256,7 @@ Route::get('/test2',function(){
 
 Route::get('download-file/{id}',function($id){
     $file = \App\Domain\Data\Export\ExportReminderFile::find($id);
-    return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.csv');
+    return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.xlsx');
 });
 
 Route::get('/route-cache', function() {
@@ -252,9 +270,14 @@ Route::get('/config-cache', function() {
     return 'Config cache cleared';
 });
 
-
+Route::get('zone-resume-table/{zone_id}', 'WaterManagement\Dashboard\Energy\Controllers\ResumePowerBIController');
 // Clear view cache:
 Route::get('/view-clear', function() {
     $exitCode = Artisan::call('view:clear');
     return 'View cache cleared';
+});
+
+// Entorno de Test:
+Route::get('TestView', function() {
+    return view('test.view');
 });

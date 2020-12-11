@@ -6,6 +6,7 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Device;
 use App\Http\System\DataTable\DataTableAbstract;
 use Carbon\Carbon;
+use Sentinel;
 use Illuminate\Http\Request;
 
 class OfflineDevicesDatatableController extends DataTableAbstract

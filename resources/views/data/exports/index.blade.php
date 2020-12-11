@@ -21,7 +21,6 @@
                             <div class="form-group pull-right text-right">
                                 <label class="form-label">Presione para </label><br>
                                 <button class="btn btn-success" id="download-data"><i class="fas fa-file-excel"></i> Descargar</button>
-                                <button class="btn btn-success" id="download-data-test"><i class="fas fa-file-excel"></i> Test Donwloader</button>
                             </div>
                         </div>
                     </div>

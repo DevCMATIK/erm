@@ -68,7 +68,7 @@
                             <ul>
                                 <?php $__currentLoopData = $zone->sub_zones->sortBy('position'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub_zone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li>
-                                        <a class="nav-link-text text-white-50" id="sub_zone_a_<?php echo e($sub_zone->id); ?>" href="/dashboard/<?php echo e($sub_zone->id); ?>">
+                                        <a class="nav-link-text text-white-50" id="sub_zone_a_<?php echo e($sub_zone->id); ?>" href="<?php if($area->name == 'Energía'): ?> /dashboard-energy/<?php echo e($sub_zone->id); ?> <?php else: ?> /dashboard/<?php echo e($sub_zone->id); ?> <?php endif; ?>">
                                             <span class="nav-link-text text-white-50"><?php echo e($sub_zone->name); ?></span></a>
                                     </li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

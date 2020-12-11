@@ -16,6 +16,8 @@ class TestExportController extends Controller
     public function __invoke(Request $request)
     {
         $dates = $this->resolveDates($request->dates);
+        //$sensors = $this->getSensors($request->sensors);
+        //$sensor = $sensors->first();//deberia ser un foreach por cada sensor y guardarlo en hojas distintas
 
         $data =array();
         $sheetsName =array();
@@ -23,8 +25,8 @@ class TestExportController extends Controller
         foreach ($this->getSensors($request->sensors) as $sensor ){
             array_push($sheetsName,$sensor->name );
             array_push($data,$this->mapQuery($sensor,$dates));
-        }
 
+        }
         $sheets = new SheetCollection(array_combine($sheetsName,$data));
         return (new FastExcel($sheets))->download('file.xlsx');
     }
@@ -106,5 +108,10 @@ class TestExportController extends Controller
     protected function resolveDatesQuery($query,$dates)
     {
         return $query->whereRaw ("`date` between '{$dates['from']}' and '{$dates['to']}'");
+    }
+
+    public function download()
+    {
+
     }
 }

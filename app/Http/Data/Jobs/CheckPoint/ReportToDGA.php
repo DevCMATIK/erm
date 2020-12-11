@@ -4,6 +4,7 @@ namespace App\Http\Data\Jobs\CheckPoint;
 
 use App\App\Controllers\Soap\InstanceSoapClient;
 use App\App\Controllers\Soap\SoapController;
+use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\WaterManagement\Device\Device;
@@ -17,7 +18,7 @@ use SoapHeader;
 
 class ReportToDGA extends SoapController implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasAnalogousData;
 
     public $dga_report;
 
@@ -33,59 +34,23 @@ class ReportToDGA extends SoapController implements ShouldQueue
      */
     public function handle()
     {
-        $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',$this->dga_report)->get();
-
-        foreach($checkPoints as $checkPoint) {
-            $last_report = '';
-            $last_report = CheckPointReport::where('check_point_id',$checkPoint->id)->orderBy('id','desc')->first();
-            if(Carbon::now()->diffInMinutes(Carbon::parse($last_report->report_date)) > 40) {
-                $device = Device::with([
-                    'sensors' => function ($q) {
-                        return $q->sensorType('totalizador');
-                    },
-                    'sensors.type',
-                    'sensors.analogous_reports' => function($q)
-                    {
-                        $q->orderBy('id', 'desc')->take(1);
-                    }
-                ])->whereHas('sensors', function ($q) {
-                    return $q->sensorType('totalizador');
-                })->where('check_point_id',$checkPoint->id)->first();
-                $totalizador = $device->sensors->first()->analogous_reports->first()->result;
-
-                $flow = Device::with([
-                    'sensors' => function ($q) {
-                        return $q->sensorType('tx-caudal');
-                    },
-                    'sensors.type',
-                    'sensors.analogous_reports' => function($q)
-                    {
-                        $q->orderBy('id', 'desc')->take(1);
-                    }
-                ])->whereHas('sensors', function ($q) {
-                    return $q->sensorType('tx-caudal');
-                })->where('check_point_id',$checkPoint->id)->first();
-                $caudal = $flow->sensors->first()->analogous_reports->first()->result;
-
-
-
-                $device = Device::with([
-                    'sensors' => function ($q) {
-                        return $q->sensorType('tx-nivel');
-                    },
-                    'sensors.type',
-                    'sensors.analogous_reports' => function($q)
-                    {
-                        $q->orderBy('id', 'desc')->take(1);
-                    }
-                ])->whereHas('sensors', function ($q) {
-                    return $q->sensorType('tx-nivel');
-                })->where('check_point_id',$checkPoint->id)->first();
-                $nivel = $device->sensors->first()->analogous_reports->first()->result * -1;
-
-                $this->ReportToDGA($totalizador,$caudal,$nivel,$checkPoint->work_code,$checkPoint);
+        $checkPoints = $this->getCheckPoints();
+        foreach($checkPoints as $checkPoint)
+        {
+            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
+                $sensors = $this->getSensors($checkPoint);
+                if(count($sensors) == 3) {
+                    $this->ReportToDGA(
+                        $this->getAnalogousValue($sensors->where('name','Aporte')->first(),true),
+                        $this->getAnalogousValue($sensors->where('name','Caudal')->first(),true),
+                        ($this->getAnalogousValue($sensors->where('name','Nivel')->first(),true) * -1),
+                        $checkPoint->work_code,
+                        $checkPoint
+                    );
+                } else {
+                    continue;
+                }
             }
-
         }
     }
 
@@ -136,5 +101,25 @@ class ReportToDGA extends SoapController implements ShouldQueue
         } catch(\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    protected function getCheckPoints()
+    {
+        return  CheckPoint::with('last_report')
+            ->whereNotNull('work_code')
+            ->where('dga_report',$this->dga_report)
+            ->get();
+    }
+
+    protected function calculateTimeSinceLastReport($check_point)
+    {
+        return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));
+    }
+
+    protected function getSensors($checkPoint)
+    {
+        return $this->getSensorsByCheckPoint($checkPoint->id)
+            ->whereIn('name',['Nivel','Aporte','Caudal'])
+            ->get();
     }
 }

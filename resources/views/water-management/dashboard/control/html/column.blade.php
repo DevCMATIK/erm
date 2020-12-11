@@ -60,12 +60,21 @@
                            if($f2 == 0) {
                                $dat = ((0)*($f3)) + $ingMin ;
                            } else {
-                               $dat = (($f1/$f2)*($f3)) + $ingMin ;
+                               if($f1 === 0 || $f2 === 0) {
+                                    $dat = ((0)*($f3)) + $ingMin ;
+                               } else {
+                                    $dat = (($f1/$f2)*($f3)) + $ingMin ;
+                               }
                            }
                        }
 
                         if($dis->unit->name == 'm3') {
-                            $max_vol = $dat * 100 / $data;
+                            if($data === 0 || $dat === 0) {
+                                $max_vol = 0;
+                            } else {
+                                $max_vol = $dat * 100 / $data;
+                            }
+
                         }
                 @endphp
                     {{ number_format((float)$dat,$dis->precision).' '.strtoupper($dis->unit->name) }} <br>

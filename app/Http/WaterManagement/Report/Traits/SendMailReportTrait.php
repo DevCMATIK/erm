@@ -75,7 +75,7 @@ trait SendMailReportTrait
                                 <th width="30%">SECTOR</th>
                                 <th width="20%">VARIABLE</th>
                                 <th width="20%">VALOR</th>
-                            </tr>                
+                            </tr>
                         </thead>';
         $html = $html . '<tbody>';
         foreach(collect($sensors_list)->sortBy('position') as $sensor) {

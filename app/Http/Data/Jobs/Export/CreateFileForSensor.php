@@ -6,7 +6,8 @@ use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\Data\Export\ExportReminderFile;
 use App\Domain\System\File\File;
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Common\Type;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -43,14 +44,16 @@ class CreateFileForSensor implements ShouldQueue
     public function handle()
     {
         ini_set('memory_limit','2048M');
-        $writer = WriterEntityFactory::createCSVWriter();
-        $writer->setFieldDelimiter(';');
-        $fileName = 'Data-'.md5(rand(0,10000000)).'.csv';
-        $writer->openToFile(storage_path('app/public/'.$fileName));
-        $rows  = $this->getData();
-        $writer->addRow(WriterEntityFactory::createRowFromArray($this->getHeader()));
-        $writer->addRows($this->mapRows($rows));
-        $writer->close();
+
+
+
+        $fileName = 'Data-'.md5(rand(0,10000000)).'.xlsx';
+
+
+        (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {
+            return array_combine($this->getHeader(),$this->mapRows($row));
+        });
+
         $this->reminder->files()->create([
             'file' => $fileName,
             'display_name' => $this->sensor->device->check_point->sub_zones()->first()->name.'_'.$this->sensor->device->check_point->name.'_'.$this->sensor->name,
@@ -58,37 +61,34 @@ class CreateFileForSensor implements ShouldQueue
         freeMemory();
     }
 
-    protected function mapRows($rows)
+    protected function mapRows($row)
     {
         if ($this->is_digital) {
-            return $rows->map(function($item){
-                return WriterEntityFactory::createRow([
-                    WriterEntityFactory::createCell($item->sensor->device->check_point->name),
-                    WriterEntityFactory::createCell($item->sensor->name),
-                    WriterEntityFactory::createCell((string)$item->value),
-                    WriterEntityFactory::createCell($item->label),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toDateString()),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toTimeString()),
-                ]);
-            })->toArray();
+            return  [
+                $row->sensor->device->check_point->name,
+                $row->sensor->name,
+                    (string)$row->value,
+                $row->label,
+                    Carbon::parse($row->date)->toDateString(),
+                    Carbon::parse($row->date)->toTimeString(),
+                ];
         } else {
-            return $rows->map(function ($item) {
-                if ($item->sensor->type->id === 1 && strtolower($item->unit) === 'mt') {
-                    $interpreter = " UBba {$item->sensor->max_value} MT";
+
+                if ($row->sensor->type->id === 1 && strtolower($row->unit) === 'mt') {
+                    $interpreter = " UBba {$row->sensor->max_value} MT";
                 } else {
-                    $interpreter = $item->interpreter;
+                    $interpreter = $row->interpreter;
                 }
 
-                return WriterEntityFactory::createRow([
-                    WriterEntityFactory::createCell($item->sensor->device->check_point->name),
-                    WriterEntityFactory::createCell($item->sensor->name),
-                    WriterEntityFactory::createCell(number_format($item->result,2,',','')),
-                    WriterEntityFactory::createCell($item->unit),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toDateString()),
-                    WriterEntityFactory::createCell(Carbon::parse($item->date)->toTimeString()),
-                    WriterEntityFactory::createCell($interpreter),
-                ]);
-            })->toArray();
+                return [
+                    $row->sensor->device->check_point->name,
+                    $row->sensor->name,
+                    number_format($row->result,2,',',''),
+                    $row->unit,
+                    Carbon::parse($row->date)->toDateString(),
+                    Carbon::parse($row->date)->toTimeString(),
+                    $interpreter,
+                ];
         }
     }
 
