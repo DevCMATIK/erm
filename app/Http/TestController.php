@@ -22,7 +22,6 @@ class TestController extends Controller
         $checkPoints = $this->getCheckPoints(1);
         foreach($checkPoints as $checkPoint)
         {
-            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors = $this->getSensors($checkPoint);
                 if(count($sensors) == 3) {
                     $this->ReportToDGA(
@@ -35,7 +34,6 @@ class TestController extends Controller
                 } else {
                     continue;
                 }
-            }
         }
 
         $time_end = microtime(true);
