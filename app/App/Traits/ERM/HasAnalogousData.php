@@ -109,12 +109,7 @@ trait HasAnalogousData
 
     protected function getSensorById($sensor_id)
     {
-        return Sensor::with([
-            'type.interpreters',
-            'dispositions.unit',
-            'device.report',
-            'ranges'
-        ])->find($sensor_id);
+        return $this->sensorBaseQuery()->find($sensor_id);
     }
 
     protected function getSensorsBySubZoneAndType($sub_zone_id,$type)
@@ -134,14 +129,21 @@ trait HasAnalogousData
             ->whereIn('name',$name)->get();
     }
 
+    protected function getSensorsByCheckPointAndName($check_point,$types)
+    {
+        return $this->sensorBaseQuery()->whereIn('type_id',function($query) use($types){
+            $query->select('id')->from('sensor_types')
+                ->whereIn('slug',$types);
+        })->whereIn('device_id',function($query)  use($check_point){
+            $query->select('id')
+                ->from('devices')
+                ->where('check_point_id',$check_point);
+        })->get();
+    }
+
     protected function getQueryForSensorBySubZoneAndType($sub_zone_id,$type)
     {
-        return Sensor::query()->with([
-            'type.interpreters',
-            'dispositions.unit',
-            'device.report',
-            'ranges'
-        ])->whereIn('type_id',function($query) use($type){
+        return $this->sensorBaseQuery()->whereIn('type_id',function($query) use($type){
             $query->select('id')->from('sensor_types')
                 ->where('slug',$type);
         })->whereIn('id',function($query)  use($sub_zone_id){
@@ -151,5 +153,15 @@ trait HasAnalogousData
                 ->leftJoin('sub_zone_elements','sub_zone_elements.id','=','sub_zone_sub_elements.sub_zone_element_id')
                 ->where('sub_zone_elements.sub_zone_id',$sub_zone_id);
         });
+    }
+
+    protected function sensorBaseQuery()
+    {
+        return Sensor::query()->with([
+            'type.interpreters',
+            'dispositions.unit',
+            'device.report',
+            'ranges'
+        ]);
     }
 }
