@@ -129,12 +129,10 @@ trait HasAnalogousData
             ->whereIn('name',$name)->get();
     }
 
-    protected function getSensorsByCheckPointAndName($check_point,$types)
+    protected function getSensorsByCheckPoint($check_point)
     {
-        return $this->sensorBaseQuery()->whereIn('type_id',function($query) use($types){
-            $query->select('id')->from('sensor_types')
-                ->whereIn('slug',$types);
-        })->whereIn('address_id', function($query){
+        return $this->sensorBaseQuery()
+            ->whereIn('address_id', function($query){
             $query->select('id')
                 ->from('addresses')
                 ->where('configuration_type','scale');
@@ -142,7 +140,7 @@ trait HasAnalogousData
             $query->select('id')
                 ->from('devices')
                 ->where('check_point_id',$check_point);
-        })->get();
+        });
     }
 
     protected function getQueryForSensorBySubZoneAndType($sub_zone_id,$type)

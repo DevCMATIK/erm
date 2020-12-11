@@ -23,7 +23,7 @@ class TestController extends Controller
         foreach($checkPoints as $checkPoint)
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
-                $sensors[] = $this->getSensorsByCheckPointAndName($checkPoint->id,['totalizador','tx-caudal','tx-nivel'])->toArray();
+                $sensors[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->toArray();
             }
         }
 
