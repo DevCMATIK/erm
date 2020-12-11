@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\App\Controllers\Controller;
 use App\App\Controllers\Soap\InstanceSoapClient;
+use App\App\Controllers\Soap\SoapController;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
@@ -11,7 +12,7 @@ use Carbon\Carbon;
 use Sentinel;
 
 
-class TestController extends Controller
+class TestController extends SoapController
 {
     use HasAnalogousData;
 
