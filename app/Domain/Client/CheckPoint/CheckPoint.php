@@ -119,6 +119,6 @@ class CheckPoint extends Model
 
     public function last_report()
     {
-        return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('report_date')->first();
+        return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('report_date')->take(1);
     }
 }
