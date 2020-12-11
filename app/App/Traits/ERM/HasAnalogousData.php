@@ -14,7 +14,7 @@ trait HasAnalogousData
             if($report_value = $this->fixValues($sensor,$disposition,$this->getReportValue($sensor))) {
                 $data = $this->lookForInterpreters($sensor,$disposition,$this->getCalculatedData($disposition,$report_value));
                if($value_only) {
-                   return $data;
+                   return $data ?? 0;
                } else {
                    return [
                        'value' => $data,
