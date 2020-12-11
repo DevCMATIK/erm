@@ -36,7 +36,7 @@ class TestController extends Controller
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$checkPoints,$sensors, array_diff($chk,$checkPoints->pluck('id')->toArray()));
+        dd($execution_time,$checkPoints,$sensors, $chk,$checkPoints->pluck('id')->toArray());
 
     }
 
