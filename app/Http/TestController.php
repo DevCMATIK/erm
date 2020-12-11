@@ -20,13 +20,20 @@ class TestController extends Controller
 
         $checkPoints = $this->getCheckPoints(1);
         $sensors = array();
-        $chk = array();
+        $tote = array();
+        $flow = array();
+        $level = array();
         foreach($checkPoints as $checkPoint)
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
-                $sensors[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->toArray();
-
-                $chk[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->first()->device->check_point_id;
+                $sensors = $this->getSensors($checkPoint);
+                if(count($sensors) == 3) {
+                    $tote[] = $this->getAnalogousValue($sensors->where('name','Aporte')->first(),true);
+                    $flow[] = $this->getAnalogousValue($sensors->where('name','Caudal')->first(),true);
+                    $level[] = $this->getAnalogousValue($sensors->where('name','Nivel')->first(),true);
+                } else {
+                    continue;
+                }
             }
         }
 
@@ -36,7 +43,7 @@ class TestController extends Controller
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$checkPoints,$sensors, $chk,$checkPoints->pluck('id')->toArray());
+        dd($execution_time,$tote,$flow,$level);
 
     }
 
@@ -53,19 +60,11 @@ class TestController extends Controller
         return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));
     }
 
-    protected function getDevice($check_point)
+    protected function getSensors($checkPoint)
     {
-        return Device::with([
-            'sensors' => function ($q) {
-                return $q->sensorType('totalizador');
-            },
-            'sensors.address',
-            'sensors.type',
-            'sensors.dispositions',
-
-        ])->whereHas('sensors', function ($q) {
-            return $q->sensorType('totalizador');
-        })->where('check_point_id',$check_point->id)->first();
+        return $this->getSensorsByCheckPoint($checkPoint->id)
+            ->whereIn('name',['Nivel','Aporte','Caudal'])
+            ->get();
     }
 
 

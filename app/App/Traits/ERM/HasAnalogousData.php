@@ -8,19 +8,23 @@ use Illuminate\Support\Facades\DB;
 
 trait HasAnalogousData
 {
-    protected function getAnalogousValue($sensor)
+    protected function getAnalogousValue($sensor,$value_only = false)
     {
         if($disposition = $this->getDisposition($sensor)) {
             if($report_value = $this->fixValues($sensor,$disposition,$this->getReportValue($sensor))) {
-                $data = $this->lookForInterpreters($sensor,$this->getCalculatedData($disposition,$report_value));
-                return [
-                    'value' => $data,
-                    'name' => $sensor->name,
-                    'unit' => $disposition->unit->name ?? '?',
-                    'disposition' => $disposition ?? null,
-                    'type' => $sensor->type->slug,
-                    'color' => $this->getRange($sensor,$data)
-                ];
+                $data = $this->lookForInterpreters($sensor,$disposition,$this->getCalculatedData($disposition,$report_value));
+               if($value_only) {
+                   return $data;
+               } else {
+                   return [
+                       'value' => $data,
+                       'name' => $sensor->name,
+                       'unit' => $disposition->unit->name ?? '?',
+                       'disposition' => $disposition ?? null,
+                       'type' => $sensor->type->slug,
+                       'color' => $this->getRange($sensor,$data)
+                   ];
+               }
             }
         }
 
@@ -40,11 +44,15 @@ trait HasAnalogousData
         return 'success';
     }
 
-    protected function lookForInterpreters($sensor,$value)
+    protected function lookForInterpreters($sensor,$disposition,$value)
     {
-        if(count($sensor->type->interpreters) > 0) {
-            if($interpreter = $sensor->type->interpreters->where('value',(int) $value)->first()) {
-                return $interpreter->name;
+        if($sensor->type->id == 1 && optional($disposition->unit)->name == 'mt') {
+            return  (float) $sensor->max_value + (float)$value;
+        } else {
+            if(count($sensor->type->interpreters) > 0) {
+                if($interpreter = $sensor->type->interpreters->where('value',(int) $value)->first()) {
+                    return $interpreter->name;
+                }
             }
         }
 
