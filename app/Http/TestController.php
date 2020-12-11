@@ -20,10 +20,13 @@ class TestController extends Controller
 
         $checkPoints = $this->getCheckPoints(1);
         $sensors = array();
+        $chk = array();
         foreach($checkPoints as $checkPoint)
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->toArray();
+
+                $chk[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->device->check_point_id;
             }
         }
 
@@ -33,7 +36,7 @@ class TestController extends Controller
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$checkPoints,$sensors);
+        dd($execution_time,$checkPoints,$sensors, array_diff($chk,$checkPoints->pluck('id')->toArray()));
 
     }
 
