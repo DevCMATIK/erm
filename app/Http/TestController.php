@@ -26,7 +26,7 @@ class TestController extends Controller
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->toArray();
 
-                $chk[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->get()->device->check_point_id;
+                $chk[] = $this->getSensorsByCheckPoint($checkPoint->id)->whereIn('name',['Nivel','Aporte','Caudal'])->first()->device->check_point_id;
             }
         }
 
