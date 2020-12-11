@@ -27,6 +27,11 @@ class TestController extends Controller
         $time_start = microtime(true);
 
         $checkPoints = CheckPoint::whereNotNull('work_code')->where('dga_report',1)->get();
+        foreach($checkPoints as $checkPoint) {
+            $last_report = CheckPointReport::where('check_point_id',$checkPoint->id)->orderBy('id','desc')->first();
+
+        }
+
 
 
         $time_end = microtime(true);
