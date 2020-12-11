@@ -28,7 +28,7 @@ trait HasAnalogousData
             }
         }
 
-        return false;
+        return 0;
     }
 
     protected function getRange($sensor,$value)
