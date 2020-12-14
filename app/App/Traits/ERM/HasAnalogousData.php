@@ -110,9 +110,12 @@ trait HasAnalogousData
 
     protected function getDisposition($sensor)
     {
-        return  $sensor->dispositions->where('id',$sensor->default_disposition)->first()
+        if($sensor && count($sensor->dispositions) > 0) {
+            return  $sensor->dispositions->where('id',$sensor->default_disposition)->first()
                 ??
                 $sensor->dispositions->first();
+        }
+        return false;
     }
 
     protected function getSensorById($sensor_id)
