@@ -13,15 +13,13 @@
                     <a class="navbar-brand">Busqueda Avanzada</a>
                     <?php echo csrf_field(); ?>
 
-                        <form class="form-inline col-12 my-sm-8">
+                        <form class=" col-12 my-sm-8">
 
                             <div class="form-group col-12">
                                     <!--FECHAS -->
                                     <div class="form-group col-lg-4 col-sm-4">
-                                        <div>
-                                            <label class="form-label">Seleccione un rango de fechas</label>
-                                            <input type="text" style="width: 270px" class="form-control col-12 datepicker mr-sm-3 my-sm-3" id="date" name="dates">
-                                        </div>
+                                        <label class="form-label">Seleccione un rango de fechas</label>
+                                        <input type="text"  class="form-control datepicker my-sm-3" id="date" name="dates">
                                     </div>
 
                                     <div class="form-group col-lg-4 col-sm-4">

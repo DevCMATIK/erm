@@ -13,7 +13,7 @@
     <div class="col-sm-4 col-xl-4">
         <div class="p-3 bg-danger rounded overflow-hidden position-relative text-white mb-g cursor-pointer" onclick="redirectToAlarms()">
             <div class="">
-                <h3 class="display-4 d-block l-h-n m-0 fw-500" >
+                <h3 class="display-4 d-block l-h-n m-0 fw-500">
                     <span id="alarms-on" ></span>
                     <small class="m-0 l-h-n">Alarmas Activas</small>
                 </h3>
