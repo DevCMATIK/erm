@@ -6,111 +6,162 @@
 <?php $typeSensor = app('App\Services\Zones'); ?>
 <?php $typeCheckPoints = app('App\Services\Zones'); ?>
 <?php $typeAlarms = app('App\Services\Zones'); ?>
+
+
   <div class="row">
         <div class="col-12">
             <div id="panel-alarms-table" class="panel">
                 <nav class="col-md-12 navbar navbar-light bg-light align-content-center">
                     <a class="navbar-brand">Busqueda Avanzada</a>
                     <?php echo csrf_field(); ?>
+                    <form class=" col-12 my-sm-8">
+                        <div class="row my-2">
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-label">Seleccione un rango de fechas</label>
+                                    <input type="text"  class="form-control datepicker" id="date" name="dates">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group fix-selectpicker">
+                                    <!--Combo Zonas -->
+                                    <label class="form-label">Zonas</label>
+                                    <select id="zone_id" name="zone[]" multiple
+                                            data-live-search="true"
+                                            data-actions-box="true"
+                                            data-deselect-all-text="Quitar Selección"
+                                            data-none-selected-text="Seleccione..."
+                                            data-none-results-text="Sin resultados"
+                                            data-select-all-text="Seleccionar todo"
+                                            class="form-control text-dark selectpicker">
+                                        <?php $__currentLoopData = $zones->getZones(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $zone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e((collect($request->zone)->contains($index)) ? 'selected' : ''); ?>>
+                                                <?php echo e($zone); ?>
 
-                        <form class=" col-12 my-sm-8">
-
-                            <div class="form-group col-12">
-                                    <!--FECHAS -->
-                                    <div class="form-group col-lg-4 col-sm-4">
-                                        <label class="form-label">Seleccione un rango de fechas</label>
-                                        <input type="text"  class="form-control datepicker my-sm-3" id="date" name="dates">
-                                    </div>
-
-                                    <div class="form-group col-lg-4 col-sm-4">
-                                        <!--Combo Zonas -->
-                                        <label class="form-label">Seleccione Zonas a Filtrar</label>
-                                        <select id="zone_id" name="zone[]" multiple class="form-control col-12 m-b mr-sm-3 my-2<?php echo e($errors->has('zone_id') ? ' is-invalid' : ''); ?>">
-                                            <?php $__currentLoopData = $zones->getZones(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $zone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($index); ?>" <?php echo e(old('zone_id') == $index ? 'selected' : ''); ?>>
-                                                    <?php echo e($zone); ?>
-
-                                                </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                        <?php if($errors->has('zone_id')): ?>
-                                                <span class="invalid-feedback" role="alert">
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php if($errors->has('zone_id')): ?>
+                                        <span class="invalid-feedback" role="alert">
                                                     <strong><?php echo e($errors->first('zone_id')); ?></strong>
                                                 </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group fix-selectpicker">
+                                    <!--Combo Sub-Zonas -->
+                                    <label class="form-label">Sub Zonas</label>
+                                    <select id="sub_zone_id" name="sub_zones[]"
+                                            data-live-search="true"
+                                            data-actions-box="true"
+                                            data-deselect-all-text="Quitar Selección"
+                                            data-none-selected-text="Seleccione..."
+                                            data-none-results-text="Sin resultados"
+                                            data-select-all-text="Seleccionar todo"
+                                            multiple class="form-control selectpicker  <?php echo e($errors->has('sub_zone_id') ? ' is-invalid' : ''); ?>" data-old="<?php echo e(old('sub-zone_id')); ?>">
+                                        <?php if($sub_zones): ?>
+                                            <?php $__currentLoopData = $sub_zones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub_zone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($sub_zone->id); ?>" selected><?php echo e($sub_zone->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
-                                    </div>
-
-                                    <div class="form-group col-lg-4 col-sm-4">
-                                        <!--Combo Sub-Zonas -->
-                                        <label class="form-label">Seleccione SubZonas a Filtrar</label>
-                                        <select id="sub_zone_id" name="sub_zones[]" multiple class="form-control col-12 m-b mr-sm-3 my-2<?php echo e($errors->has('sub_zone_id') ? ' is-invalid' : ''); ?>" data-old="<?php echo e(old('sub-zone_id')); ?>"></select>
-                                        <?php if($errors->has('sub_zone_id')): ?>
-                                            <span class="invalid-feedback" role="alert">
+                                    </select>
+                                    <?php if($errors->has('sub_zone_id')): ?>
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong><?php echo e($errors->first('sub_zone_id')); ?></strong>
                                             </span>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <div class="form-group col-12">
-                                    <div class="form-group col-lg-3 col-sm-3">
-                                            <!--Combo Tipos de Sensor -->
-                                            <label class="form-label">Seleccione Tipo de Sensor</label>
-                                            <select id="type_sensor_id" name="type_sensor[]" multiple class="form-control col-12 m-b mr-sm-3 my-2<?php echo e($errors->has('type_sensor_id') ? ' is-invalid' : ''); ?>">
-                                                <?php $__currentLoopData = $typeSensor->getTypeSensors(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $sensor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($index); ?>" <?php echo e(old('type_sensor_id') == $index ? 'selected' : ''); ?>>
-                                                        <?php echo e($sensor); ?>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group fix-selectpicker">
+                                    <!--Combo Tipos de Sensor -->
+                                    <label class="form-label">Tipo de variable</label>
+                                    <select id="type_sensor_id" name="type_sensor[]"
+                                            data-live-search="true"
+                                            data-actions-box="true"
+                                            data-deselect-all-text="Quitar Selección"
+                                            data-none-selected-text="Seleccione..."
+                                            data-none-results-text="Sin resultados"
+                                            data-select-all-text="Seleccionar todo"
+                                            multiple class="form-control selectpicker <?php echo e($errors->has('type_sensor_id') ? ' is-invalid' : ''); ?>" >
+                                        <?php $__currentLoopData = $typeSensor->getTypeSensors(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $sensor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e(old('type_sensor_id') == $index ? 'selected' : ''); ?>>
+                                                <?php echo e($sensor); ?>
 
-                                                    </option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </select>
-                                            <?php if($errors->has('type_sensor_id')): ?>
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong><?php echo e($errors->first('type_sensor_id')); ?></strong>
-                                                </span>
-                                            <?php endif; ?>
-                                    </div>
-                                    <div class="form-group col-lg-3 col-sm-3">
-                                            <!--Combo Tipos de Puntos de Control -->
-                                            <label class="form-label">Seleccione Puntos de Control a Filtrar</label>
-                                            <select id="type_checkPoint_id" name="type_checkPoint[]"  multiple class="form-control col-12 m-b mr-sm-3 my-2<?php echo e($errors->has('type_checkPoint_id') ? ' is-invalid' : ''); ?>">
-                                                <?php $__currentLoopData = $typeCheckPoints->getTypeCheckPoints(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $checkPoint): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($index); ?>" <?php echo e(old('type_checkPoint_id') == $index ? 'selected' : ''); ?>>
-                                                        <?php echo e($checkPoint); ?>
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php if($errors->has('type_sensor_id')): ?>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong><?php echo e($errors->first('type_sensor_id')); ?></strong>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group fix-selectpicker">
+                                    <!--Combo Tipos de Puntos de Control -->
+                                    <label class="form-label">Punto de control</label>
+                                    <select id="type_checkPoint_id" name="type_checkPoint[]"
+                                            data-live-search="true"
+                                            data-actions-box="true"
+                                            data-deselect-all-text="Quitar Selección"
+                                            data-none-selected-text="Seleccione..."
+                                            data-none-results-text="Sin resultados"
+                                            data-select-all-text="Seleccionar todo"
+                                            multiple class="form-control selectpicker <?php echo e($errors->has('type_checkPoint_id') ? ' is-invalid' : ''); ?>">
 
-                                                    </option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </select>
-                                            <?php if($errors->has('type_checkPoint_id')): ?>
-                                                <span class="invalid-feedback" role="alert">
+                                        <?php $__currentLoopData = $typeCheckPoints->getTypeCheckPoints(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $checkPoint): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e(old('type_checkPoint_id') == $index ? 'selected' : ''); ?>>
+                                                <?php echo e($checkPoint); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php if($errors->has('type_checkPoint_id')): ?>
+                                        <span class="invalid-feedback" role="alert">
                                                     <strong><?php echo e($errors->first('type_checkPoint_id')); ?></strong>
                                                 </span>
-                                            <?php endif; ?>
-                                    </div>
-                                     <div class="form-group col-lg-3 col-sm-3">
-                                            <!--Combo Tipos de Alarmas -->
-                                            <label class="form-label">Seleccione Tipo de Alarmas</label>
-                                            <select id="type_alarms_id" name="type_alarms[]"  multiple class="form-control col-12 m-b mr-sm-3 my-2<?php echo e($errors->has('type_alarms_id') ? ' is-invalid' : ''); ?>">
-                                                <!-- <option value="" style='color: #51a351'>Tipos de Alarmas: </option> -->
-                                                <?php $__currentLoopData = $typeAlarms->getTypeAlarms(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $typeAlarm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($index); ?>" <?php echo e(old('type_alarms_id') == $index ? 'selected' : ''); ?>>
-                                                        <?php echo e($typeAlarm); ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
+                                <div class="form-group fix-selectpicker">
+                                    <!--Combo Tipos de Alarmas -->
+                                    <label class="form-label">Seleccione Tipo de Alarmas</label>
+                                    <select id="type_alarms_id" name="type_alarms[]"
+                                            data-live-search="true"
+                                            data-actions-box="true"
+                                            data-deselect-all-text="Quitar Selección"
+                                            data-none-selected-text="Seleccione..."
+                                            data-none-results-text="Sin resultados"
+                                            data-select-all-text="Seleccionar todo"
+                                            multiple class="form-control selectpicker <?php echo e($errors->has('type_alarms_id') ? ' is-invalid' : ''); ?>">
+                                        <!-- <option value="" style='color: #51a351'>Tipos de Alarmas: </option> -->
+                                        <?php $__currentLoopData = $typeAlarms->getTypeAlarms(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $typeAlarm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e(old('type_alarms_id') == $index ? 'selected' : ''); ?>>
+                                                <?php echo e($typeAlarm); ?>
 
-                                                    </option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </select>
-                                            <?php if($errors->has('type_alarms_id')): ?>
-                                                <span class="invalid-feedback" role="alert">
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php if($errors->has('type_alarms_id')): ?>
+                                        <span class="invalid-feedback" role="alert">
                                                     <strong><?php echo e($errors->first('type_alarms_id')); ?></strong>
                                                 </span>
-                                            <?php endif; ?>
-                                    </div>
-                                    <div class="form-group col-lg-3 col-sm-3">
-                                        <!-- Button Aplicar Filtros -->
-                                        <button id="applyFilters" class="btn btn-success col-12 mr-sm-3 my-2" type="submit">Aplicar Filtros</button>
-                                    </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </form>
-
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-xl-2 col-md-2 col-sm-4">
+                                <button id="applyFilters" class="btn btn-success col-12 mr-sm-3 my-2 pull-right" type="submit">Aplicar Filtros</button>
+                            </div>
+                        </div>
+                    </form>
                 </nav>
             </div>
         </div>
@@ -163,13 +214,12 @@
         'plugins/highcharts/highcharts.js',
         'plugins/highcharts/modules/boost.js',
         'plugins/highcharts/modules/exporting.js',
-
+        'plugins/selectpicker/js/bootstrap-select.min.js'
     ]); ?>
 
     <?php echo includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
 
 <?php $__env->stopSection(); ?>
-
 <?php $__env->startSection('select-scripts'); ?>
 
     <script>
@@ -183,50 +233,37 @@
 
     <script>
         $(document).ready(function (){
-            $('#sub_zone_id').append();
             function loadSubzone(){
                 var zone_id= $('#zone_id').val();
                  if($.trim(zone_id) !=''){
                     $.get('getSubZones', {zone_id: zone_id}, function (subzones){
-                        $('#sub_zone_id').empty();
-                        $('#sub_zone_id').append();
+                        removeItems('sub_zone_id');
                         $.each(subzones, function (index,value){
                             $('#sub_zone_id').append("<option value='"+ index + "'>" + value + "</option>")
                         });
+                        $('#sub_zone_id').selectpicker('refresh');
                     });
                 }
             }
-            loadSubzone();
             $('#zone_id').on('change', loadSubzone);
         });
+
+        function removeItems(select) {
+            $('#'+select+' option').each(function(index,element){
+                element.remove();
+            });
+
+            $('#'+select).selectpicker('refresh');
+        }
     </script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-extra-styles'); ?>
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-extra-scripts'); ?>
 
     <script>
-        $(document).ready(function () {
-            // inicializamos el plugin
-            $('#tags').select2({
-                // Activamos la opcion "Tags" del plugin
-                tags: true,
-                tokenSeparators: [','],
-                ajax: {
-                    dataType: 'json',
-                    url: '<?php echo e(url("tags")); ?>',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            term: params.term
-                        }
-                    },
-                    processResults: function (data, page) {
-                        return {
-                            results: data
-                        };
-                    },
-                }
-            });
-        });
+
 
         $('#download-active-alarm').click
         (function(e){
@@ -244,7 +281,7 @@
 
         initApp.listFilter($('#js_list_accordion_sub_zones'), $('#js_list_accordion_filter_sub_zones'));
         $(document).ready(function(){
-
+            $('.selectpicker').selectpicker('refresh');
             let controls = {
                 leftArrow: '<i class="fal fa-angle-left" style="font-size: 1rem"></i>',
                 rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
@@ -285,6 +322,7 @@
         });
 
         $(document).ready(function(){
+
             getAlarmsTotal();
             getAlarmsOn();
             getLastAlarm();
@@ -330,7 +368,19 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('more-css'); ?>
-    <?php echo includeCss('plugins/bootstrap-daterangepicker/daterangepicker.css'); ?>
+    <?php echo includeCss([
+        'plugins/bootstrap-daterangepicker/daterangepicker.css',
+        'plugins/selectpicker/css/bootstrap-select.min.css'
+    ]); ?>
+
+
+    <style>
+        .fix-selectpicker  .dropdown-menu.show {
+            transform: scale(1) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
 
 <?php $__env->stopSection(); ?>
 

@@ -45,7 +45,7 @@
            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
         })->with( ['zones.sub_zones' => $filter])->get();
     ?>
-    <?php $__currentLoopData = $areas->sortByDesc('id'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php $__currentLoopData = $areas->sortBy('name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <?php
 
             $mainZones = $area->zones;

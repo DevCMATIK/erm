@@ -6,7 +6,6 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use Sentinel;
 
 
@@ -28,7 +27,7 @@ trait HasAlarmTrait
             ->leftJoin('sub_zones','sub_zones.id','=','sub_zone_elements.sub_zone_id')
             ->leftJoin('zones','zones.id','=','sub_zones.zone_id')
             ->leftJoin('alarm_notifications','sensor_alarms.id','=','alarm_notifications.alarm_id')
-            //->whereIn('devices.id',$this->getDevicesId()) //CRUD Alarmas Activas
+            ->whereIn('devices.id',$this->getDevicesId()) //CRUD Alarmas Activas
             ->whereNull('sensor_alarms.deleted_at');
     }
 
