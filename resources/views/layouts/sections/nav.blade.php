@@ -45,7 +45,7 @@
            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
         })->with( ['zones.sub_zones' => $filter])->get();
     @endphp
-    @foreach($areas->sortByDesc('id') as $area)
+    @foreach($areas->sortBy('name') as $area)
         @php
 
             $mainZones = $area->zones;
