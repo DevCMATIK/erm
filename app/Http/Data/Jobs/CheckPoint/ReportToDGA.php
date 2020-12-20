@@ -119,7 +119,19 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getSensors($checkPoint)
     {
         return $this->getSensorsByCheckPoint($checkPoint->id)
-            ->whereIn('name',['Nivel','Aporte','Caudal'])
-            ->get();
+            ->whereIn('type_id',function($query){
+                $query->select('id')->from('sensor_types')
+                    ->whereIn('slug',[
+                        'tx-nivel',
+                        'caudal-dga-arkon-modbus',
+                        'caudal-dga-siemens-modbus',
+                        'caudal-dga-wellford-corriente',
+                        'caudal-dga-wellford-modbus',
+                        'totalizador-dga-arkon-modbus',
+                        'totalizador-dga-siemens-modbus',
+                        'totalizador-dga-wellford-modbus',
+                        'totalizador-dga-wellford-pulsos'
+                    ]);
+            })->get();
     }
 }
