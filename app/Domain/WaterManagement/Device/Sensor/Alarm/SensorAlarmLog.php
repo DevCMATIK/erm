@@ -12,7 +12,7 @@ class SensorAlarmLog extends Model
 {
     use HasDateScopes, HasSearchScopes;
 
-    public $timestamp = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'sensor_alarm_id',
