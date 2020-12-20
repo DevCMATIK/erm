@@ -25,11 +25,8 @@ class TestController extends SoapController
         $chks = array();
         foreach($checkPoints as $checkPoint)
         {
-            $chks[] = [
-                'water-level' => $this->getWaterLevelSensor($checkPoint)->toArray(),
-                'tote' => $this->getToteSensor($checkPoint)->toArray(),
-                'flow' => $this->getFlowSensor($checkPoint)->toArray()
-            ];
+            $sensors = $this->getSensors($checkPoint);
+            dd($sensors);
 
         }
 
@@ -41,6 +38,24 @@ class TestController extends SoapController
 
     }
 
+    protected function getSensors($checkPoint)
+    {
+        return $this->getSensorsByCheckPoint($checkPoint->id)
+            ->whereIn('type_id',function($query){
+                $query->select('id')->from('sensor_types')
+                    ->whereIn('slug',[
+                        'tx-nivel',
+                        'caudal-dga-arkon-modbus',
+                        'caudal-dga-siemens-modbus',
+                        'caudal-dga-wellford-corriente',
+                        'caudal-dga-wellford-modbus',
+                        'totalizador-dga-arkon-modbus',
+                        'totalizador-dga-siemens-modbus',
+                        'totalizador-dga-wellford-modbus',
+                        'totalizador-dga-wellford-pulsos'
+                    ]);
+            })->get();
+    }
 
 
     protected function getCheckPoints($dga_report)
@@ -56,44 +71,30 @@ class TestController extends SoapController
         return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));
     }
 
-    protected function getWaterLevelSensor($checkPoint)
+    protected function getWaterLevelSensor()
     {
-        return $this->getSensorsByCheckPoint($checkPoint->id)
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'tx-nivel'
-                    ]);
-            })->first();
+        return ['tx-nivel'];
     }
 
-    protected function getToteSensor($checkPoint)
+    protected function getToteSensor()
     {
-        return $this->getSensorsByCheckPoint($checkPoint->id)
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'totalizador-dga-arkon-modbus',
-                        'totalizador-dga-siemens-modbus',
-                        'totalizador-dga-wellford-modbus',
-                        'totalizador-dga-wellford-pulsos'
-                    ]);
-            })->first();
+        return [
+            'totalizador-dga-arkon-modbus',
+            'totalizador-dga-siemens-modbus',
+            'totalizador-dga-wellford-modbus',
+            'totalizador-dga-wellford-pulsos'
+        ];
     }
 
 
-    protected function getFlowSensor($checkPoint)
+    protected function getFlowSensor()
     {
-        return $this->getSensorsByCheckPoint($checkPoint->id)
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'caudal-dga-arkon-modbus',
-                        'caudal-dga-siemens-modbus',
-                        'caudal-dga-wellford-corriente',
-                        'caudal-dga-wellford-modbus',
-                    ]);
-            })->first();
+        return [
+            'caudal-dga-arkon-modbus',
+            'caudal-dga-siemens-modbus',
+            'caudal-dga-wellford-corriente',
+            'caudal-dga-wellford-modbus',
+        ];
     }
 
 
