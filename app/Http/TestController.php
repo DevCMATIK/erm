@@ -26,6 +26,13 @@ class TestController extends SoapController
         foreach($checkPoints as $checkPoint)
         {
             $sensors = $this->getSensors($checkPoint);
+            $level = $sensors->where('name','Nivel')->first();
+            $tote = $sensors->where('name','Aporte')->first();
+            $flow = $sensors->where('name','Caudal')->first();
+
+            if($level == null || $tote == null || $flow == null) {
+                dd($sensors);
+            }
             $chks[] = [
                 'level' => $sensors->where('name','Nivel')->first() ?? $sensors,
                 'tote' => $sensors->where('name','Aporte')->first() ?? $sensors,
