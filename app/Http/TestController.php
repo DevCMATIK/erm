@@ -25,18 +25,12 @@ class TestController extends SoapController
         $chks = array();
         foreach($checkPoints as $checkPoint)
         {
-            $sensors = $this->getSensors($checkPoint);
-            $level = $sensors->where('name','Nivel')->first();
-            $tote = $sensors->where('name','Aporte')->first();
-            $flow = $sensors->where('name','Caudal')->first();
+           $sensors = $this->getSensors($checkPoint);
 
-            if($level == null || $tote == null || $flow == null) {
-                dd($sensors);
-            }
             $chks[] = [
-                'level' => $sensors->where('name','Nivel')->first() ?? $sensors,
-                'tote' => $sensors->where('name','Aporte')->first() ?? $sensors,
-                'flow' => $sensors->where('name','Caudal')->first() ?? $sensors,
+                'level' => $this->getLevelSensor($sensors),
+                'tote' => $this->getToteSensor($sensors),
+                'flow' => $this->getFlowSensor($sensors),
             ];
 
         }
@@ -66,6 +60,45 @@ class TestController extends SoapController
                         'totalizador-dga-wellford-pulsos'
                     ]);
             })->get();
+    }
+
+    protected function getLevelSensor($sensors)
+    {
+        return $sensors
+            ->whereIn('type_id',function($query){
+                $query->select('id')->from('sensor_types')
+                    ->whereIn('slug',[
+                        'tx-nivel'
+                    ]);
+            })->first();
+    }
+
+    protected function getToteSensor($sensors)
+    {
+        return $sensors
+            ->whereIn('type_id',function($query){
+                $query->select('id')->from('sensor_types')
+                    ->whereIn('slug',[
+                        'totalizador-dga-arkon-modbus',
+                        'totalizador-dga-siemens-modbus',
+                        'totalizador-dga-wellford-modbus',
+                        'totalizador-dga-wellford-pulsos'
+                    ]);
+            })->first();
+    }
+
+    protected function getFlowSensor($sensors)
+    {
+        return $sensors
+            ->whereIn('type_id',function($query){
+                $query->select('id')->from('sensor_types')
+                    ->whereIn('slug',[
+                        'caudal-dga-arkon-modbus',
+                        'caudal-dga-siemens-modbus',
+                        'caudal-dga-wellford-corriente',
+                        'caudal-dga-wellford-modbus'
+                    ]);
+            })->first();
     }
 
 
