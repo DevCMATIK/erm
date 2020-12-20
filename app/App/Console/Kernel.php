@@ -17,6 +17,7 @@ use App\Http\Data\Jobs\Device\TrackDeviceDisconnections;
 use App\Http\Data\Jobs\ProcessData;
 use App\Http\Data\Jobs\Sensors\BackupAnalogousSensors;
 use App\Http\Data\Jobs\Sensors\BackupDigitalSensors;
+use App\Http\Data\Water\BackupWater;
 use App\Http\WaterManagement\Device\Sensor\Alarm\Jobs\CheckAlarms;
 use App\Http\WaterManagement\Device\Sensor\Alarm\Jobs\SendReminderMail;
 use App\Http\WaterManagement\Device\Sensor\Trigger\Jobs\ExecuteCommandTriggered;
@@ -72,6 +73,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('01:20');
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('01:30');
         $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('01:40');
+        $schedule->job(new BackupWater())->dailyAt('02:20');
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
         $schedule->job(new NotifyDevicesOffline())->hourly();
