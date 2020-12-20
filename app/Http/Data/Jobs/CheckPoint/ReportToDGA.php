@@ -39,11 +39,11 @@ class ReportToDGA extends SoapController implements ShouldQueue
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors = $this->getSensors($checkPoint);
-                if(count($sensors) == 3) {
+                if($tote = $this->getToteSensor($sensors) && $level = $this->getLevelSensor($sensors) && $flow = $this->getFlowSensor($sensors)) {
                     $this->ReportToDGA(
-                        $this->getAnalogousValue($sensors->where('name','Aporte')->first(),true),
-                        $this->getAnalogousValue($sensors->where('name','Caudal')->first(),true),
-                        ($this->getAnalogousValue($sensors->where('name','Nivel')->first(),true) * -1),
+                        $this->getAnalogousValue($tote,true),
+                        $this->getAnalogousValue($flow,true),
+                        ($this->getAnalogousValue($level,true) * -1),
                         $checkPoint->work_code,
                         $checkPoint
                     );
@@ -133,5 +133,38 @@ class ReportToDGA extends SoapController implements ShouldQueue
                         'totalizador-dga-wellford-pulsos'
                     ]);
             })->get();
+    }
+
+    protected function getLevelSensor($sensors)
+    {
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->whereIn('slug',['tx-nivel']);
+        })->first();
+    }
+
+    protected function getToteSensor($sensors)
+    {
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->whereIn('slug',[
+                'totalizador-dga-arkon-modbus',
+                'totalizador-dga-siemens-modbus',
+                'totalizador-dga-wellford-modbus',
+                'totalizador-dga-wellford-pulsos'
+            ]);
+        })->first();
+
+    }
+
+    protected function getFlowSensor($sensors)
+    {
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->whereIn('slug',[
+                'caudal-dga-arkon-modbus',
+                'caudal-dga-siemens-modbus',
+                'caudal-dga-wellford-corriente',
+                'caudal-dga-wellford-modbus'
+            ]);
+        })->first();
+
     }
 }
