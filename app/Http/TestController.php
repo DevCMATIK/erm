@@ -65,14 +65,14 @@ class TestController extends SoapController
     protected function getLevelSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->contains('slug',['tx-nivel']);
+            return $sensor->contains(['tx-nivel']);
         })->first();
     }
 
     protected function getToteSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->contains('slug',[
+            return $sensor->contains([
                 'totalizador-dga-arkon-modbus',
                 'totalizador-dga-siemens-modbus',
                 'totalizador-dga-wellford-modbus',
@@ -85,14 +85,14 @@ class TestController extends SoapController
     protected function getFlowSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->contains('slug',[
+            return $sensor->contains([
                 'caudal-dga-arkon-modbus',
                 'caudal-dga-siemens-modbus',
                 'caudal-dga-wellford-corriente',
                 'caudal-dga-wellford-modbus'
             ]);
         })->first();
-      
+
     }
 
 
