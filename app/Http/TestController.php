@@ -26,7 +26,11 @@ class TestController extends SoapController
         foreach($checkPoints as $checkPoint)
         {
             $sensors = $this->getSensors($checkPoint);
-            dd($sensors);
+            $chks[] = [
+                'level' => $sensors->where('name','Nivel')->first(),
+                'tote' => $sensors->where('name','Aporte')->first(),
+                'flow' => $sensors->where('name','Caudal')->first(),
+            ];
 
         }
 
@@ -71,31 +75,7 @@ class TestController extends SoapController
         return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));
     }
 
-    protected function getWaterLevelSensor()
-    {
-        return ['tx-nivel'];
-    }
 
-    protected function getToteSensor()
-    {
-        return [
-            'totalizador-dga-arkon-modbus',
-            'totalizador-dga-siemens-modbus',
-            'totalizador-dga-wellford-modbus',
-            'totalizador-dga-wellford-pulsos'
-        ];
-    }
-
-
-    protected function getFlowSensor()
-    {
-        return [
-            'caudal-dga-arkon-modbus',
-            'caudal-dga-siemens-modbus',
-            'caudal-dga-wellford-corriente',
-            'caudal-dga-wellford-modbus',
-        ];
-    }
 
 
 
