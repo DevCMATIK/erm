@@ -25,9 +25,11 @@ class TestController extends SoapController
         $chks = array();
         foreach($checkPoints as $checkPoint)
         {
-            $chks[]['water-level'] = $this->getWaterLevelSensor($checkPoint)->toArray();
-            $chks[]['tote'] = $this->getToteSensor($checkPoint)->toArray();
-            $chks[]['flow'] = $this->getFlowSensor($checkPoint)->toArray();
+            $chks[] = [
+                'water-level' => $this->getWaterLevelSensor($checkPoint)->toArray(),
+                'tote' => $this->getToteSensor($checkPoint)->toArray(),
+                'flow' => $this->getFlowSensor($checkPoint)->toArray()
+            ];
 
         }
 
@@ -93,7 +95,7 @@ class TestController extends SoapController
                     ]);
             })->first();
     }
-   
+
 
 
 
