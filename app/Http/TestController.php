@@ -8,6 +8,7 @@ use App\App\Controllers\Soap\SoapController;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
+use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Sentinel;
 use SoapHeader;
@@ -21,25 +22,24 @@ class TestController extends SoapController
     {
         $time_start = microtime(true);
 
-        $checkPoints = $this->getCheckPoints(1);
-        $chks = array();
-        foreach($checkPoints as $checkPoint)
-        {
-           $sensors = $this->getSensors($checkPoint);
-
-            $chks[] = [
-                'level' => $this->getLevelSensor($sensors),
-                'tote' => $this->getToteSensor($sensors),
-                'flow' => $this->getFlowSensor($sensors),
-            ];
-
-        }
+        $first_date = now()->subDay()->toDateString();
+        $second_date = now()->toDateString();
+        $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
+            return $q->where('slug','like','totalizador%');
+        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
+            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
+        })->with([
+            'type' => $typeFilter,
+            'device.check_point.sub_zones',
+            'analogous_reports' => $reportsFilter,
+            'consumptions'
+        ])->get();
 
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$chks);
+        dd($execution_time,$sensors);
 
     }
 

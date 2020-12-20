@@ -4,6 +4,7 @@ namespace App\Http\Data\Water;
 
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Domain\WaterManagement\Sensor\Consumption\WaterConsumption;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -36,7 +37,7 @@ class BackupWater implements ShouldQueue
         $first_date = Carbon::yesterday()->toDateString();
         $second_date = Carbon::today()->toDateString();
         $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','totalizador');
+            return $q->where('slug','like','totalizador%');
         })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
             return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
         })->with([
@@ -72,6 +73,6 @@ class BackupWater implements ShouldQueue
             }
         }
 
-        ElectricityConsumption::insert($toInsert);
+        WaterConsumption::insert($toInsert);
     }
 }
