@@ -64,41 +64,35 @@ class TestController extends SoapController
 
     protected function getLevelSensor($sensors)
     {
-        return $sensors
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'tx-nivel'
-                    ]);
-            })->first();
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->contains('slug',['tx-nivel']);
+        })->first();
     }
 
     protected function getToteSensor($sensors)
     {
-        return $sensors
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'totalizador-dga-arkon-modbus',
-                        'totalizador-dga-siemens-modbus',
-                        'totalizador-dga-wellford-modbus',
-                        'totalizador-dga-wellford-pulsos'
-                    ]);
-            })->first();
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->contains('slug',[
+                'totalizador-dga-arkon-modbus',
+                'totalizador-dga-siemens-modbus',
+                'totalizador-dga-wellford-modbus',
+                'totalizador-dga-wellford-pulsos'
+            ]);
+        })->first();
+
     }
 
     protected function getFlowSensor($sensors)
     {
-        return $sensors
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'caudal-dga-arkon-modbus',
-                        'caudal-dga-siemens-modbus',
-                        'caudal-dga-wellford-corriente',
-                        'caudal-dga-wellford-modbus'
-                    ]);
-            })->first();
+        return $sensors->filter(function($sensor) {
+            return $sensor->type->contains('slug',[
+                'caudal-dga-arkon-modbus',
+                'caudal-dga-siemens-modbus',
+                'caudal-dga-wellford-corriente',
+                'caudal-dga-wellford-modbus'
+            ]);
+        })->first();
+      
     }
 
 
