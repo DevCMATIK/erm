@@ -17,7 +17,7 @@ use SoapHeader;
 
 class TestController extends SoapController
 {
-    use HasAlarmTrait;
+    use HasAnalogousData;
 
     public function __invoke()
     {
