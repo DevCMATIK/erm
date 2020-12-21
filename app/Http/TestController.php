@@ -25,7 +25,7 @@ class TestController extends SoapController
 
         $first_date = now()->subDay()->toDateString();
         $second_date = now()->toDateString();
-        $alarms = $this->activeAlarmQuery()->get();
+        $alarms = $this->activeAlarmQuery()->get()->unique('log_id');
 
         $time_end = microtime(true);
 
