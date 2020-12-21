@@ -30,11 +30,11 @@ class TestController extends SoapController
         foreach($checkPoints as $checkPoint)
         {
             $sensors = $this->getSensors($checkPoint);
-                $chks[] = [
-                    'tote' =>$this->getToteSensor($sensors),
-                    'flow' =>$this->getFlowSensor($sensors),
-                    'level' =>$this->getLevelSensor($sensors),
-                ];
+
+                   $tote = $this->getToteSensor($sensors);
+                   $flow = $this->getFlowSensor($sensors);
+                    $level = $this->getLevelSensor($sensors);
+
                 /*if($tote = $this->getToteSensor($sensors) && $level = $this->getLevelSensor($sensors) && $flow = $this->getFlowSensor($sensors)) {
 
                 } else {

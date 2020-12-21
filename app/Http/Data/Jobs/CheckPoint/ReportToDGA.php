@@ -39,14 +39,19 @@ class ReportToDGA extends SoapController implements ShouldQueue
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors = $this->getSensors($checkPoint);
-                if($tote = $this->getToteSensor($sensors) && $level = $this->getLevelSensor($sensors) && $flow = $this->getFlowSensor($sensors)) {
-                    $this->ReportToDGA(
-                        $this->getAnalogousValue($tote,true),
-                        $this->getAnalogousValue($flow,true),
-                        ($this->getAnalogousValue($level,true) * -1),
-                        $checkPoint->work_code,
-                        $checkPoint
-                    );
+                $tote = $this->getToteSensor($sensors);
+                $flow = $this->getFlowSensor($sensors);
+                $level = $this->getLevelSensor($sensors);
+                if($tote && $flow && $level) {
+                    if(optional($tote->dispositions)->first() && optional($flow->dispositions)->first() && optional($level->dipositions)->first) {
+                        $this->ReportToDGA(
+                            $this->getAnalogousValue($tote,true),
+                            $this->getAnalogousValue($flow,true),
+                            ($this->getAnalogousValue($level,true) * -1),
+                            $checkPoint->work_code,
+                            $checkPoint
+                        );
+                    }
                 } else {
                     continue;
                 }
