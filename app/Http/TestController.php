@@ -25,13 +25,28 @@ class TestController extends SoapController
 
         $first_date = now()->subDay()->toDateString();
         $second_date = now()->toDateString();
-        $alarms = $this->activeAlarmQuery()->get()->unique('log_id');
+        $checkPoints = $this->getCheckPoints(1);
+        $chks = array();
+        foreach($checkPoints as $checkPoint)
+        {
+            $sensors = $this->getSensors($checkPoint);
+                $chks[] = [
+                    'tote' =>$this->getToteSensor($sensors),
+                    'flow' =>$this->getFlowSensor($sensors),
+                    'level' =>$this->getLevelSensor($sensors),
+                ];
+                /*if($tote = $this->getToteSensor($sensors) && $level = $this->getLevelSensor($sensors) && $flow = $this->getFlowSensor($sensors)) {
+
+                } else {
+                    continue;
+                }*/
+        }
 
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$alarms);
+        dd($execution_time,$chks);
 
     }
 
