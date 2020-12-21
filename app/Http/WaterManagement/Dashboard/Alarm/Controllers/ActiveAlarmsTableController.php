@@ -16,7 +16,7 @@ class ActiveAlarmsTableController extends Controller
 
     public function index(Request $request)
     {
-        $alarm_logs=$this->getActiveAlarmsWithParameters($request)->get();
+        $alarm_logs=$this->getActiveAlarmsWithParameters($request)->get()->unique('log_id');
         return view('water-management.dashboard.alarm.active-table',compact('alarm_logs'));
     }
 

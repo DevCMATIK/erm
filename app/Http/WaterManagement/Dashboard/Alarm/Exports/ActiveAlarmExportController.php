@@ -13,7 +13,7 @@ class ActiveAlarmExportController extends Controller
 
     public function __invoke(Request $request)
     {
-        return (new FastExcel($this->getActiveAlarmsWithParameters($request)))->download("Alarmas Activas-".now()->toDateString().".xlsx", function ($row) {
+        return (new FastExcel($this->getActiveAlarmsWithParameters($request)->get()->unique('log_id')))->download("Alarmas Activas-".now()->toDateString().".xlsx", function ($row) {
             return array_combine($this->headers(),$this->map($row));
         });
     }
