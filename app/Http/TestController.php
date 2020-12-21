@@ -9,6 +9,7 @@ use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
 use Carbon\Carbon;
 use Sentinel;
 use SoapHeader;
@@ -16,7 +17,7 @@ use SoapHeader;
 
 class TestController extends SoapController
 {
-    use HasAnalogousData;
+    use HasAlarmTrait;
 
     public function __invoke()
     {
@@ -24,22 +25,13 @@ class TestController extends SoapController
 
         $first_date = now()->subDay()->toDateString();
         $second_date = now()->toDateString();
-        $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug','like','totalizador%');
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->get();
+        $alarms = $this->activeAlarmQuery()->get();
 
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$sensors);
+        dd($execution_time,$alarms);
 
     }
 

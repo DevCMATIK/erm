@@ -34,7 +34,6 @@ trait HasAlarmTrait
     protected function activeAlarmQuery()
     {
         return $this->query()
-
             ->active()
             ->select([
                 'zones.name as zone',
