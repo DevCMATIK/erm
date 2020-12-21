@@ -23,12 +23,12 @@ class KpiAlarmsOnController extends Controller
         $queryString = explode('?',$request->fullUrl())[1]??false;
         if ($queryString != false)
         {
-            return $this->getActiveAlarmsWithParameters($request)->get()->unqiue('log_id')->count()
+            return $this->getActiveAlarmsWithParameters($request)->get()->unique('log_id')->count()
                 .'/'
-                .$this->activeAlarmQuery()->get()->unqiue('log_id')->count();
+                .$this->activeAlarmQuery()->get()->unique('log_id')->count();
         }else
         {
-            return $this->activeAlarmQuery()->get()->unqiue('log_id')->count();
+            return $this->activeAlarmQuery()->get()->unique('log_id')->count();
         }
     }
 }
