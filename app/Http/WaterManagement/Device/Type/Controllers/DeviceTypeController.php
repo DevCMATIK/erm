@@ -30,8 +30,6 @@ class DeviceTypeController extends Controller
                 'model' => $request->model,
                 'brand' => $request->brand
             ])) {
-                //addChangeLog('Tipo Dispositivo Modificado','device_type',null,convertColumns($new));
-
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');
@@ -47,19 +45,16 @@ class DeviceTypeController extends Controller
 
     public function update(DeviceTypeRequest $request,$id)
     {
-        $type = DeviceType::findOrFail($id);
-        //$old = convertColumns($type);
+        $record = DeviceType::findOrFail($id);
         if(DeviceType::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
-            if ($type->update([
+            if ($record->update([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'model' => $request->model,
                 'brand' => $request->brand
             ])) {
-                //addChangeLog('Tipo Dispositivo Modificado','device_types',$old,convertColumns($type));
-
                 return $this->getResponse('success.update');
             } else {
                 return $this->getResponse('error.update');
@@ -69,10 +64,8 @@ class DeviceTypeController extends Controller
 
     public function destroy($id)
     {
-        $type = DeviceType::findOrFail($id);
-        if ($type->delete()) {
-            //addChangeLog('Tipo Dispositivo Eliminado','device_types',$type);
-
+        $record = DeviceType::findOrFail($id);
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

@@ -5,10 +5,11 @@ namespace App\Domain\Client\Area;
 use App\App\Traits\Model\Sluggable;
 use App\Domain\Client\Zone\Zone;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Area extends Model
+class Area extends Model implements Auditable
 {
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

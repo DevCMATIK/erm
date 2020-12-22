@@ -34,8 +34,6 @@ class SensorTypeController extends Controller
                 'max_value' => $request->max_value,
                 'is_exportable' => ($request->has('is_exportable'))?1:0
             ])) {
-                //addChangeLog('Tipo Sensor Creado','sensor_types',null,convertColumns($new));
-
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');
@@ -51,12 +49,11 @@ class SensorTypeController extends Controller
 
     public function update(SensorTypeRequest $request,$id)
     {
-        $type = SensorType::findOrFail($id);
-        //$old = convertColumns($type);
+        $record = SensorType::findOrFail($id);
         if(SensorType::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
-            if ($type->update([
+            if ($record->update([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'interval' => $request->interval,
@@ -66,7 +63,7 @@ class SensorTypeController extends Controller
             ])) {
 
                 if($request->has('apply_to_sensors')) {
-                    $sensors = Sensor::where('type_id',$type->id)->get();
+                    $sensors = Sensor::where('type_id',$record->id)->get();
 
                     foreach ($sensors as $sensor) {
                         $sensor->fix_min_value = $request->min_value;
@@ -75,9 +72,6 @@ class SensorTypeController extends Controller
                         $sensor->save();
                     }
                 }
-
-                //addChangeLog('Tipo sensor Modificado','sensor_types',$old,convertColumns($type));
-
                 return $this->getResponse('success.update');
             } else {
                 return $this->getResponse('error.update');
@@ -87,10 +81,8 @@ class SensorTypeController extends Controller
 
     public function destroy($id)
     {
-        $type = SensorType::findOrFail($id);
-        if ($type->delete()) {
-            //addChangeLog('Tipo Sensor Eliminado','sensor_types',convertColumns($type));
-
+        $record = SensorType::findOrFail($id);
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');
