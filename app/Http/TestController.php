@@ -29,17 +29,21 @@ class TestController extends SoapController
         $chks = array();
         foreach($checkPoints as $checkPoint)
         {
-            $sensors = $this->getSensors($checkPoint);
-
-                   $tote = $this->getToteSensor($sensors);
-                   $flow = $this->getFlowSensor($sensors);
-                    $level = $this->getLevelSensor($sensors);
-
-                /*if($tote = $this->getToteSensor($sensors) && $level = $this->getLevelSensor($sensors) && $flow = $this->getFlowSensor($sensors)) {
-
+            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
+                $sensors = $this->getSensors($checkPoint);
+                $tote = $this->getToteSensor($sensors);
+                $flow = $this->getFlowSensor($sensors);
+                $level = $this->getLevelSensor($sensors);
+                if($tote && $flow && $level) {
+                   $chks[] = [
+                       'tote' => $tote,
+                       'flow' => $flow,
+                       'level' => $level
+                   ];
                 } else {
                     continue;
-                }*/
+                }
+            }
         }
 
         $time_end = microtime(true);
