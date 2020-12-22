@@ -36,6 +36,9 @@ class TestController extends SoapController
                 $level = $this->getLevelSensor($sensors);
                 if($tote && $flow && $level) {
                     $chks[] = [
+                        $tote->toArray(),
+                        $flow->toArray(),
+                        $level->toArray(),
                         $this->getAnalogousValue($tote,true),
                         $this->getAnalogousValue($flow,true),
                         ($this->getAnalogousValue($level,true) * -1),
