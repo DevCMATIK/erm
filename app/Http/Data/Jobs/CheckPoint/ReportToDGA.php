@@ -43,15 +43,13 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 $flow = $this->getFlowSensor($sensors);
                 $level = $this->getLevelSensor($sensors);
                 if($tote && $flow && $level) {
-                    if(optional($tote->dispositions)->first() && optional($flow->dispositions)->first() && optional($level->dipositions)->first) {
-                        $this->ReportToDGA(
-                            $this->getAnalogousValue($tote,true),
-                            $this->getAnalogousValue($flow,true),
-                            ($this->getAnalogousValue($level,true) * -1),
-                            $checkPoint->work_code,
-                            $checkPoint
-                        );
-                    }
+                    $this->ReportToDGA(
+                        $this->getAnalogousValue($tote,true),
+                        $this->getAnalogousValue($flow,true),
+                        ($this->getAnalogousValue($level,true) * -1),
+                        $checkPoint->work_code,
+                        $checkPoint
+                    );
                 } else {
                     continue;
                 }
@@ -143,19 +141,19 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getLevelSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->whereIn('slug',['tx-nivel']);
+            return collect(['tx-nivel'])->contains($sensor->type->slug);
         })->first();
     }
 
     protected function getToteSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->whereIn('slug',[
+            return collect([
                 'totalizador-dga-arkon-modbus',
                 'totalizador-dga-siemens-modbus',
                 'totalizador-dga-wellford-modbus',
                 'totalizador-dga-wellford-pulsos'
-            ]);
+            ])->contains($sensor->type->slug);
         })->first();
 
     }
@@ -163,12 +161,12 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getFlowSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return $sensor->type->whereIn('slug',[
+            return collect([
                 'caudal-dga-arkon-modbus',
                 'caudal-dga-siemens-modbus',
                 'caudal-dga-wellford-corriente',
                 'caudal-dga-wellford-modbus'
-            ]);
+            ])->contains($sensor->type->slug);
         })->first();
 
     }

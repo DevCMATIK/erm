@@ -46,7 +46,7 @@ class TestController extends SoapController
                             $checkPoint->work_code,
                             $checkPoint
                         ];
-                    
+
                 } else {
                     continue;
                 }
