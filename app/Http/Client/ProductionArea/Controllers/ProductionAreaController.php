@@ -20,8 +20,8 @@ class ProductionAreaController extends Controller
 
     public function store(ProductionAreaRequest $request)
     {
-        if ($new = ProductionArea::create($request->all())) {
-            addChangeLog('Area de Producción Creada','production_areas',null,convertColumns($new));
+        if (ProductionArea::create($request->all())) {
+            //addChangeLog('Area de Producción Creada','production_areas',null,convertColumns($new));
 
             return $this->getResponse('success.store');
         } else {
@@ -38,9 +38,9 @@ class ProductionAreaController extends Controller
     public function update(ProductionAreaRequest $request, $id)
     {
         $productionArea = ProductionArea::findOrFail($id);
-        $old = convertColumns($productionArea);
+        //$old = convertColumns($productionArea);
         if ($productionArea->update($request->all())) {
-            addChangeLog('Area de Producción Modificada','production_areas',$old,convertColumns($productionArea));
+            //addChangeLog('Area de Producción Modificada','production_areas',$old,convertColumns($productionArea));
 
             return $this->getResponse('success.update');
         } else {
@@ -52,7 +52,7 @@ class ProductionAreaController extends Controller
     {
         $productionArea = ProductionArea::findOrFail($id);
         if ($productionArea->delete()) {
-            addChangeLog('Area de Producción eliminada','production_areas',$productionArea);
+            //addChangeLog('Area de Producción eliminada','production_areas',$productionArea);
 
             return $this->getResponse('success.destroy');
         } else {

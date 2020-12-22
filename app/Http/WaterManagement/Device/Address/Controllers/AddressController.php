@@ -24,13 +24,13 @@ class AddressController extends Controller
         if (Address::findBySlug(Str::slug($request->name))) {
             return $this->slugError();
         } else {
-            if ($new = Address::create([
+            if (Address::create([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'register_type_id' => $request->register_type_id,
                 'configuration_type' => $request->configuration_type
             ])) {
-                addChangeLog('Direccion Creada','addresses',convertColumns($new));
+                //addChangeLog('Direccion Creada','addresses',convertColumns($new));
 
                 return $this->getResponse('success.store');
             } else {
@@ -48,7 +48,7 @@ class AddressController extends Controller
     public function update(AddressRequest $request,$id)
     {
         $address = Address::findOrFail($id);
-        $old = convertColumns($address);
+        //$old = convertColumns($address);
         if(Address::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
@@ -58,7 +58,7 @@ class AddressController extends Controller
                 'register_type_id' => $request->register_type_id,
                 'configuration_type' => $request->configuration_type
             ])) {
-                addChangeLog('Direccion Modificada','addresses',$old,convertColumns($address));
+                //addChangeLog('Direccion Modificada','addresses',$old,convertColumns($address));
 
                 return $this->getResponse('success.update');
             } else {
@@ -71,7 +71,7 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
         if ($address->delete()) {
-            addChangeLog('Direccion Eliminada','addresses',convertColumns($address));
+            //addChangeLog('Direccion Eliminada','addresses',convertColumns($address));
 
             return $this->getResponse('success.destroy');
         } else {

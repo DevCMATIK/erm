@@ -26,12 +26,12 @@ class PermissionController extends Controller
 
     public function store(StorePermissionRequest $request)
     {
-        if ($permission = Permission::create($request->all())) {
+        if (Permission::create($request->all())) {
             $roles = Role::get();
             foreach ($roles as $role) {
                 $role->handlePermissions($request->slug);
             }
-            addChangeLog('Permiso creado','permissions',null,convertColumns($permission));
+            //addChangeLog('Permiso creado','permissions',null,convertColumns($permission));
 
             return $this->getResponse('success.store');
         } else {
@@ -49,13 +49,13 @@ class PermissionController extends Controller
     {
         if (!Permission::slugExists($request->slug,$id)) {
             if ($permission = Permission::find($id)) {
-                $old = convertColumns($permission);
+                //$old = convertColumns($permission);
                 if ($permission->update($request->all())) {
                     $roles = Role::get();
                     foreach ($roles as $role) {
                         $role->handlePermissions($request->slug);
                     }
-                    addChangeLog('Permiso Modificado','permissions',$old,convertColumns($permission));
+                    //addChangeLog('Permiso Modificado','permissions',$old,convertColumns($permission));
 
                     return $this->getResponse('success.update');
                 } else {
@@ -72,9 +72,9 @@ class PermissionController extends Controller
 
     public function destroy($id)
     {
-        $permission = Permission::find($id);
+        Permission::find($id);
         if ( Permission::destroy($id)) {
-            addChangeLog('Permiso Eliminado','permissions',convertColumns($permission));
+            //addChangeLog('Permiso Eliminado','permissions',convertColumns($permission));
 
             return $this->getResponse('success.destroy');
         } else {

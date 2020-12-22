@@ -7,10 +7,11 @@ use App\App\Traits\Permissions\Permissible;
 use App\Domain\System\Menu\Menu;
 use App\Domain\System\User\User;
 use Cartalyst\Sentinel\Roles\EloquentRole;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Role extends EloquentRole
+class Role extends EloquentRole implements Auditable
 {
-    use Sluggable,Permissible;
+    use Sluggable,Permissible, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'name','slug','permissions'

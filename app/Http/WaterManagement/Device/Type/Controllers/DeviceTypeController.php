@@ -21,7 +21,7 @@ class DeviceTypeController extends Controller
 
     public function store(DeviceTypeRequest $request)
     {
-        if ($new = DeviceType::findBySlug(Str::slug($request->name))) {
+        if (DeviceType::findBySlug(Str::slug($request->name))) {
             return $this->slugError();
         } else {
             if (DeviceType::create([
@@ -30,7 +30,7 @@ class DeviceTypeController extends Controller
                 'model' => $request->model,
                 'brand' => $request->brand
             ])) {
-                addChangeLog('Tipo Dispositivo Modificado','device_type',null,convertColumns($new));
+                //addChangeLog('Tipo Dispositivo Modificado','device_type',null,convertColumns($new));
 
                 return $this->getResponse('success.store');
             } else {
@@ -48,7 +48,7 @@ class DeviceTypeController extends Controller
     public function update(DeviceTypeRequest $request,$id)
     {
         $type = DeviceType::findOrFail($id);
-        $old = convertColumns($type);
+        //$old = convertColumns($type);
         if(DeviceType::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
@@ -58,7 +58,7 @@ class DeviceTypeController extends Controller
                 'model' => $request->model,
                 'brand' => $request->brand
             ])) {
-                addChangeLog('Tipo Dispositivo Modificado','device_types',$old,convertColumns($type));
+                //addChangeLog('Tipo Dispositivo Modificado','device_types',$old,convertColumns($type));
 
                 return $this->getResponse('success.update');
             } else {
@@ -71,7 +71,7 @@ class DeviceTypeController extends Controller
     {
         $type = DeviceType::findOrFail($id);
         if ($type->delete()) {
-            addChangeLog('Tipo Dispositivo Eliminado','device_types',$type);
+            //addChangeLog('Tipo Dispositivo Eliminado','device_types',$type);
 
             return $this->getResponse('success.destroy');
         } else {

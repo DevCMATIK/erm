@@ -76,7 +76,7 @@ class SensorController extends Controller
                         'color' => 'success'
                     ]);
                 }
-            addChangeLog('Sensor Creado','sensors',null,convertColumns($sensor));
+            //addChangeLog('Sensor Creado','sensors',null,convertColumns($sensor));
 
             return $this->getResponse('success.store');
         } else {
@@ -95,9 +95,9 @@ class SensorController extends Controller
     public function update(SensorRequest $request,$id)
     {
         $sensor = Sensor::findOrFail($id);
-        $old = convertColumns($sensor);
+        //$old = convertColumns($sensor);
         if ($sensor->update($request->all())) {
-            addChangeLog('Sensor Modificado','sensors',convertColumns($sensor));
+            //addChangeLog('Sensor Modificado','sensors',convertColumns($sensor));
 
             return $this->getResponse('success.update');
         } else {
@@ -120,7 +120,7 @@ class SensorController extends Controller
         $sensor->behaviors()->delete();
         $sensor->daily_averages()->delete();
         if ($sensor->delete()) {
-            addChangeLog('Sensor eliminado','sensors',convertColumns($sensor));
+            //addChangeLog('Sensor eliminado','sensors',convertColumns($sensor));
 
             return $this->getResponse('success.destroy');
         } else {

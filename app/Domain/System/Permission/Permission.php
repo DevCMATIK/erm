@@ -5,10 +5,11 @@ namespace App\Domain\System\Permission;
 
 use App\App\Traits\Model\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Permission extends Model
+class Permission extends Model implements Auditable
 {
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

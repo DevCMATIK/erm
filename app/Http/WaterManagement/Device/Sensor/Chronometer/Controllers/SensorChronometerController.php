@@ -23,12 +23,12 @@ class SensorChronometerController extends Controller
 
     public function store(Request $request)
     {
-        if ($new = SensorChronometer::create([
+        if (SensorChronometer::create([
             'sensor_id' => $request->sensor_id,
             'name' => $request->name,
             'equals_to' => $request->equals_to
         ])) {
-            addChangeLog('Cronometro creado','sensor_chronometers',convertColumns($new));
+            //addChangeLog('Cronometro creado','sensor_chronometers',convertColumns($new));
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -44,12 +44,12 @@ class SensorChronometerController extends Controller
     public function update(Request $request,$id)
     {
         $chronometer = SensorChronometer::findOrFail($id);
-        $old = convertColumns($chronometer);
+        //$old = convertColumns($chronometer);
             if ($chronometer->update([
                 'name' => $request->name,
                 'equals_to' => $request->equals_to,
             ])) {
-                addChangeLog('Cronometro Modificado','sensor_chronometers',$old,convertColumns($chronometer));
+                //addChangeLog('Cronometro Modificado','sensor_chronometers',$old,convertColumns($chronometer));
 
                 return $this->getResponse('success.update');
             } else {
@@ -61,9 +61,8 @@ class SensorChronometerController extends Controller
     public function destroy($id)
     {
         $chronometer = SensorChronometer::findOrFail($id);
-
         if ($chronometer->delete()) {
-            addChangeLog('Cronometro Eliminado','sensor_chronometers',convertColumns($chronometer));
+            //addChangeLog('Cronometro Eliminado','sensor_chronometers',convertColumns($chronometer));
 
             return $this->getResponse('success.destroy');
         } else {

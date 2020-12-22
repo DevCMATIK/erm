@@ -40,7 +40,7 @@ class MenuController extends Controller
                 'position' => (isset($lastMenu))?$lastMenu->position +1:0
             ]))) {
                 $menu->attachRoles($roles);
-                addChangeLog('Menu Creado','menus',null,convertColumns($menu));
+                //addChangeLog('Menu Creado','menus',null,convertColumns($menu));
 
                 return $this->getResponse('success.store');
             } else {
@@ -62,7 +62,7 @@ class MenuController extends Controller
     {
         $roles = $request->roles;
         $menu = Menu::find($id);
-        $old = convertColumns($menu);
+        //$old = convertColumns($menu);
         if(!$roles) {
             return response()->json(['Error' => 'Debe seleccionar almenos 1 Role'],401);
         } else {
@@ -71,7 +71,7 @@ class MenuController extends Controller
             ]))) {
                 $menu->roles()->detach();
                 $menu->attachRoles($roles);
-                addChangeLog('Menu Modificado','menus',$old,convertColumns($menu));
+                //addChangeLog('Menu Modificado','menus',$old,convertColumns($menu));
 
                 return $this->getResponse('success.update');
             } else {
@@ -86,7 +86,7 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         if($menu->roles()->detach()) {
             if (Menu::destroy($id)) {
-                addChangeLog('Menu Eliminado','menus',convertColumns($menu));
+                //addChangeLog('Menu Eliminado','menus',convertColumns($menu));
 
                 return $this->getResponse('success.destroy');
             } else {

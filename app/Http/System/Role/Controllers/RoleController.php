@@ -26,8 +26,8 @@ class RoleController extends Controller
 
 	public function store(StoreRoleRequest $request)
 	{
-		if ( $new = Role::create($request->all())) {
-            addChangeLog('Role Creado','roles',convertColumns($new));
+		if (Role::create($request->all())) {
+            //addChangeLog('Role Creado','roles',convertColumns($new));
 
             return $this->getResponse('success.store');
 		}else {
@@ -49,9 +49,9 @@ class RoleController extends Controller
 		if (Role::slugExists($request->slug,$id)) {
 			return response()->json(['errors' => ['slug' => 'Ya Existe un Role con ese Slug.']],422);
 		} else {
-		    $old = convertColumns(Role::find($id));
-			if ($new = Role::find($id)->update($request->all())) {
-                addChangeLog('Role Modificado','roles',$old,convertColumns($new));
+		    //$old = convertColumns(Role::find($id));
+			if (Role::find($id)->update($request->all())) {
+                //addChangeLog('Role Modificado','roles',$old,convertColumns($new));
 
                 return $this->getResponse('success.update');
 			} else {
@@ -66,7 +66,7 @@ class RoleController extends Controller
 		$role = Role::find($id);
 		if ($role->destroyRelationships()) {
 			if (Role::destroy($id)) {
-                addChangeLog('Role Eliminado','roles',convertColumns($role));
+                //addChangeLog('Role Eliminado','roles',convertColumns($role));
 
                 return $this->getResponse('success.destroy');
 			} else {

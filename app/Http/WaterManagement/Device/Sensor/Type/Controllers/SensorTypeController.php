@@ -26,7 +26,7 @@ class SensorTypeController extends Controller
         if (SensorType::findBySlug(Str::slug($request->name))) {
             return $this->slugError();
         } else {
-            if ($new = SensorType::create([
+            if (SensorType::create([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'interval' => $request->interval,
@@ -34,7 +34,7 @@ class SensorTypeController extends Controller
                 'max_value' => $request->max_value,
                 'is_exportable' => ($request->has('is_exportable'))?1:0
             ])) {
-                addChangeLog('Tipo Sensor Creado','sensor_types',null,convertColumns($new));
+                //addChangeLog('Tipo Sensor Creado','sensor_types',null,convertColumns($new));
 
                 return $this->getResponse('success.store');
             } else {
@@ -52,7 +52,7 @@ class SensorTypeController extends Controller
     public function update(SensorTypeRequest $request,$id)
     {
         $type = SensorType::findOrFail($id);
-        $old = convertColumns($type);
+        //$old = convertColumns($type);
         if(SensorType::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
@@ -76,7 +76,7 @@ class SensorTypeController extends Controller
                     }
                 }
 
-                addChangeLog('Tipo sensor Modificado','sensor_types',$old,convertColumns($type));
+                //addChangeLog('Tipo sensor Modificado','sensor_types',$old,convertColumns($type));
 
                 return $this->getResponse('success.update');
             } else {
@@ -89,7 +89,7 @@ class SensorTypeController extends Controller
     {
         $type = SensorType::findOrFail($id);
         if ($type->delete()) {
-            addChangeLog('Tipo Sensor Eliminado','sensor_types',convertColumns($type));
+            //addChangeLog('Tipo Sensor Eliminado','sensor_types',convertColumns($type));
 
             return $this->getResponse('success.destroy');
         } else {

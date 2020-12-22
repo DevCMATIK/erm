@@ -38,7 +38,7 @@ class MailController extends Controller
                     $mail->attachables()->attach($attachable->id);
                 }
             }
-            addChangeLog('Email creado','mails',null,convertColumns($mail));
+            //addChangeLog('Email creado','mails',null,convertColumns($mail));
 
             return $this->getResponse('success.store');
         } else {
@@ -56,7 +56,7 @@ class MailController extends Controller
     public function update(MailRequest $request,$id)
     {
         $mail = Mail::findOrFail($id);
-        $old = convertColumns($mail);
+        //$old = convertColumns($mail);
         if($mail->update([
             'name' => $request->name,
             'subject' => $request->subject,
@@ -71,7 +71,7 @@ class MailController extends Controller
                     $mail->attachables()->attach($attachable->id);
                 }
             }
-            addChangeLog('Mail modificado','mails',$old,convertColumns($mail));
+            //addChangeLog('Mail modificado','mails',$old,convertColumns($mail));
 
             return $this->getResponse('success.update');
         } else {
@@ -87,7 +87,7 @@ class MailController extends Controller
         $mail->reminders()->delete();
         $mail->mail_reports()->forceDelete();
         if($mail->delete()) {
-            addChangeLog('Mail Eliminado','mails',convertColumns($mail));
+            //addChangeLog('Mail Eliminado','mails',convertColumns($mail));
 
             return $this->getResponse('success.destroy');
         } else {

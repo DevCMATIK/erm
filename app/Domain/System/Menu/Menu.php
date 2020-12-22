@@ -7,10 +7,11 @@ use App\App\Traits\Roles\RoleableEntity;
 use App\Domain\System\Menu\Traits\NestableMenu;
 use App\Domain\System\Role\Role;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
 
-class Menu extends Model
+class Menu extends Model implements
 {
-    use Sluggable,RoleableEntity, NestableMenu;
+    use Sluggable,RoleableEntity, NestableMenu, Auditable;
 
     protected $fillable = [
         'name',

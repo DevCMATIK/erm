@@ -50,7 +50,7 @@ class SensorAlarmController extends Controller
                     ]);
                 }
             }
-            addChangeLog('Alarma creada','sensor_alarms',null,convertColumns($alarm));
+            //addChangeLog('Alarma creada','sensor_alarms',null,convertColumns($alarm));
 
             return $this->getResponse('success.store');
         } else {
@@ -70,7 +70,7 @@ class SensorAlarmController extends Controller
     public function update(Request $request, $id)
     {
         $alarm = SensorAlarm::findOrFail($id);
-        $old = convertColumns($alarm);
+        //$old = convertColumns($alarm);
         if($alarm->update([
             'range_min' => $request->range_min,
             'range_max' => $request->range_max,
@@ -90,7 +90,7 @@ class SensorAlarmController extends Controller
                     ]);
                 }
             }
-            addChangeLog('Alarma Modificada','sensor_alarms',$old,convertColumns($alarm));
+            //addChangeLog('Alarma Modificada','sensor_alarms',$old,convertColumns($alarm));
 
             return $this->getResponse('success.update');
         } else {
@@ -100,8 +100,8 @@ class SensorAlarmController extends Controller
 
     public function destroy($id)
     {
-        if ($old = SensorAlarm::destroy($id)) {
-            addChangeLog('Alarma eliminada','users',convertColumns($old));
+        if (SensorAlarm::destroy($id)) {
+            //addChangeLog('Alarma eliminada','users',convertColumns($old));
 
             return $this->getResponse('success.destroy');
         } else {

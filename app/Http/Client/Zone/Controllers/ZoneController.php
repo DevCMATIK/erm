@@ -29,7 +29,7 @@ class ZoneController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name
             ])) {
-                addChangeLog('Zona Creada','zones',null,convertColumns($new));
+                //addChangeLog('Zona Creada','zones',null,convertColumns($new));
 
                 return $this->getResponse('success.store');
             } else {
@@ -47,7 +47,7 @@ class ZoneController extends Controller
     public function update(ZoneRequest $request,$id)
     {
         $zone = Zone::findOrFail($id);
-        $old = convertColumns($zone);
+        //$old = convertColumns($zone);
         if(Zone::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
@@ -56,7 +56,7 @@ class ZoneController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name
             ])) {
-                addChangeLog('Zona Modificada','zones',$old,convertColumns($zone));
+                //addChangeLog('Zona Modificada','zones',$old,convertColumns($zone));
 
                 return $this->getResponse('success.update');
             } else {
@@ -69,7 +69,7 @@ class ZoneController extends Controller
     {
         $zone = Zone::findOrFail($id);
         if ($zone->delete()) {
-            addChangeLog('Zona Eliminada','zones',convertColumns($zone));
+            //addChangeLog('Zona Eliminada','zones',convertColumns($zone));
 
             return $this->getResponse('success.destroy');
         } else {
