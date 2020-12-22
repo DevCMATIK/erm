@@ -31,7 +31,6 @@ class TestController extends SoapController
         {
             if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
                 $sensors = $this->getSensors($checkPoint);
-                dd($sensors->toJson());
                 $tote = $this->getToteSensor($sensors);
                 $flow = $this->getFlowSensor($sensors);
                 $level = $this->getLevelSensor($sensors);
