@@ -97,7 +97,7 @@ class TestController extends SoapController
                 'totalizador-dga-wellford-modbus',
                 'totalizador-dga-wellford-pulsos'
             ])->contains($sensor->type->slug);
-        });
+        })->first();
 
     }
 
@@ -110,7 +110,7 @@ class TestController extends SoapController
                 'caudal-dga-wellford-corriente',
                 'caudal-dga-wellford-modbus'
             ])->contains($sensor->type->slug);
-        });
+        })->first();
 
     }
 
