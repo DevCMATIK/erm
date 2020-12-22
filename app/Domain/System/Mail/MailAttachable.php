@@ -3,9 +3,12 @@
 namespace App\Domain\System\Mail;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MailAttachable extends Model
+class MailAttachable extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

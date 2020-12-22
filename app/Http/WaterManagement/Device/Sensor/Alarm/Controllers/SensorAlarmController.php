@@ -30,7 +30,7 @@ class SensorAlarmController extends Controller
 
     public function store(Request $request)
     {
-        if($alarm = SensorAlarm::create([
+        if($record = SensorAlarm::create([
             'user_id' => Sentinel::getUser()->id,
             'sensor_id' => $request->sensor_id,
             'range_min' => $request->range_min,
@@ -43,15 +43,13 @@ class SensorAlarmController extends Controller
                 for($i = 0;$i<count($request->group_id);$i++) {
                     $mail = "{$request->group_id[$i]}_mail_id";
                     $reminder = "{$request->group_id[$i]}_reminder_id";
-                    $alarm->notifications()->create([
+                    $record->notifications()->create([
                         'group_id' => $request->group_id[$i],
                         'mail_id' => (isset($request->{$mail}) && $request->{$mail} != '')? $request->{$mail}: null,
                         'reminder_id' => (isset($request->{$reminder}) && $request->{$reminder} != '')? $request->{$reminder}: null
                     ]);
                 }
             }
-            //addChangeLog('Alarma creada','sensor_alarms',null,convertColumns($alarm));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -69,29 +67,26 @@ class SensorAlarmController extends Controller
 
     public function update(Request $request, $id)
     {
-        $alarm = SensorAlarm::findOrFail($id);
-        //$old = convertColumns($alarm);
-        if($alarm->update([
+        $record = SensorAlarm::findOrFail($id);
+        if($record->update([
             'range_min' => $request->range_min,
             'range_max' => $request->range_max,
             'is_active' => ($request->has('is_active'))?1:0,
             'send_email' => ($request->has('send_email'))?1:0
         ])) {
-            $alarm->notifications()->delete();
+            $record->notifications()->delete();
             if($request->has('group_id')) {
                 $i=0;
                 for($i = 0;$i<count($request->group_id);$i++) {
                     $mail = "{$request->group_id[$i]}_mail_id";
                     $reminder = "{$request->group_id[$i]}_reminder_id";
-                    $alarm->notifications()->create([
+                    $record->notifications()->create([
                         'group_id' => $request->group_id[$i],
                         'mail_id' => (isset($request->{$mail}) && $request->{$mail} != '')? $request->{$mail}: null,
                         'reminder_id' => (isset($request->{$reminder}) && $request->{$reminder} != '')? $request->{$reminder}: null
                     ]);
                 }
             }
-            //addChangeLog('Alarma Modificada','sensor_alarms',$old,convertColumns($alarm));
-
             return $this->getResponse('success.update');
         } else {
             return $this->getResponse('error.update');
@@ -101,8 +96,6 @@ class SensorAlarmController extends Controller
     public function destroy($id)
     {
         if (SensorAlarm::destroy($id)) {
-            //addChangeLog('Alarma eliminada','users',convertColumns($old));
-
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

@@ -4,9 +4,12 @@ namespace App\Domain\Client\CheckPoint\Label;
 
 use App\Domain\Client\CheckPoint\CheckPoint;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckPointLabel extends Model
+class CheckPointLabel extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

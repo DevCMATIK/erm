@@ -3,9 +3,12 @@
 namespace App\Domain\System\Import;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ImportTemp extends Model
+class ImportTemp extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

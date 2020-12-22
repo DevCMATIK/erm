@@ -38,24 +38,18 @@ class SensorTriggerController extends Controller
         if (SensorTrigger::create(array_merge($request->all(),[
             'user_id' => Sentinel::getUser()->id
         ]))) {
-            //addChangeLog('Trigger Creado','sensor_triggers',convertColumns($new));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
         }
-
     }
 
     public function update(SensorTriggerRequest $request,$id)
     {
-        $sensor = SensorTrigger::find($id);
-        //$old = convertColumns($sensor);
-        if ($sensor->update(array_merge($request->all(),[
+        $record = SensorTrigger::find($id);
+        if ($record->update(array_merge($request->all(),[
             'user_id' => Sentinel::getUser()->id
         ]))) {
-            //addChangeLog('Trigger Modificado','sensor_triggers',$old,convertColumns($sensor));
-
             return $this->getResponse('success.update');
         } else {
             return $this->getResponse('error.update');
@@ -75,11 +69,9 @@ class SensorTriggerController extends Controller
 
     public function destroy($id)
     {
-        $sensorTrigger = SensorTrigger::findOrFail($id);
-        $sensorTrigger->logs()->delete();
-        if ($sensorTrigger->delete()) {
-            //addChangeLog('Trigger Eliminado','sensor_triggers',$sensorTrigger);
-
+        $record = SensorTrigger::findOrFail($id);
+        $record->logs()->delete();
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');
