@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Control de Alarmas'); ?>
 <?php $__env->startSection('page-icon','exclamation-triangle'); ?>
 <?php $__env->startSection('page-content'); ?>
