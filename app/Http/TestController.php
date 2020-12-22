@@ -36,8 +36,8 @@ class TestController extends SoapController
                 $level = $this->getLevelSensor($sensors);
                 if($tote && $flow && $level) {
                     if(optional($tote->dispositions)->first() && optional($flow->dispositions)->first() && optional($level->dipositions)->first) {
-
-                        $chks[] = [
+                        dd($flow,$tote);
+                       /* $chks[] = [
                             $tote->toArray(),
                             $flow->toArray(),
                             $level->toArray(),
@@ -46,7 +46,7 @@ class TestController extends SoapController
                             ($this->getAnalogousValue($level, true) * -1),
                             $checkPoint->work_code,
                             $checkPoint
-                        ];
+                        ];*/
                     }
                 } else {
                     continue;
