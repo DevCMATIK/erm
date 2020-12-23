@@ -63,21 +63,19 @@ class SensorController extends Controller
 
     public function store(SensorRequest $request)
     {
-        if ($sensor = Sensor::create($request->all()))
+        if ($record = Sensor::create($request->all()))
         {
-                if($sensor->address->configuration_type == 'scale') {
-                    $sensor->ranges()->create([
+                if($record->address->configuration_type == 'scale') {
+                    $record->ranges()->create([
                         'color' => 'danger'
                     ]);
-                    $sensor->ranges()->create([
+                    $record->ranges()->create([
                         'color' => 'warning'
                     ]);
-                    $sensor->ranges()->create([
+                    $record->ranges()->create([
                         'color' => 'success'
                     ]);
                 }
-            //addChangeLog('Sensor Creado','sensors',null,convertColumns($sensor));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -94,11 +92,8 @@ class SensorController extends Controller
 
     public function update(SensorRequest $request,$id)
     {
-        $sensor = Sensor::findOrFail($id);
-        //$old = convertColumns($sensor);
-        if ($sensor->update($request->all())) {
-            //addChangeLog('Sensor Modificado','sensors',convertColumns($sensor));
-
+        $record = Sensor::findOrFail($id);
+        if ($record->update($request->all())) {
             return $this->getResponse('success.update');
         } else {
             return $this->getResponse('error,update');
@@ -107,21 +102,19 @@ class SensorController extends Controller
 
     public function destroy($id)
     {
-        $sensor = Sensor::findOrFail($id);
-        $sensor->dispositions()->delete();
-        $sensor->label()->delete();
-        $sensor->ranges()->delete();
-        $sensor->analogous_reports()->delete();
-        $sensor->digital_reports()->delete();
-        $sensor->triggers()->delete();
-        $sensor->alarms()->delete();
-        $sensor->mail_reports()->detach();
-        $sensor->average()->delete();
-        $sensor->behaviors()->delete();
-        $sensor->daily_averages()->delete();
-        if ($sensor->delete()) {
-            //addChangeLog('Sensor eliminado','sensors',convertColumns($sensor));
-
+        $record = Sensor::findOrFail($id);
+        $record->dispositions()->delete();
+        $record->label()->delete();
+        $record->ranges()->delete();
+        $record->analogous_reports()->delete();
+        $record->digital_reports()->delete();
+        $record->triggers()->delete();
+        $record->alarms()->delete();
+        $record->mail_reports()->detach();
+        $record->average()->delete();
+        $record->behaviors()->delete();
+        $record->daily_averages()->delete();
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

@@ -30,8 +30,6 @@ class AddressController extends Controller
                 'register_type_id' => $request->register_type_id,
                 'configuration_type' => $request->configuration_type
             ])) {
-                //addChangeLog('Direccion Creada','addresses',convertColumns($new));
-
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');
@@ -47,19 +45,16 @@ class AddressController extends Controller
 
     public function update(AddressRequest $request,$id)
     {
-        $address = Address::findOrFail($id);
-        //$old = convertColumns($address);
+        $record = Address::findOrFail($id);
         if(Address::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
-            if ($address->update([
+            if ($record->update([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'register_type_id' => $request->register_type_id,
                 'configuration_type' => $request->configuration_type
             ])) {
-                //addChangeLog('Direccion Modificada','addresses',$old,convertColumns($address));
-
                 return $this->getResponse('success.update');
             } else {
                 return $this->getResponse('error.update');
@@ -69,10 +64,8 @@ class AddressController extends Controller
 
     public function destroy($id)
     {
-        $address = Address::findOrFail($id);
-        if ($address->delete()) {
-            //addChangeLog('Direccion Eliminada','addresses',convertColumns($address));
-
+        $record = Address::findOrFail($id);
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

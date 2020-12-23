@@ -6,11 +6,11 @@ use App\App\Traits\Model\Sluggable;
 use App\Domain\Client\CheckPoint\Type\CheckPointType;
 use App\Domain\Inspection\CheckList\Module\CheckListModule;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckList extends Model
+class CheckList extends Model implements Auditable
 {
-
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

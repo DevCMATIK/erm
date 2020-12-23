@@ -17,12 +17,10 @@ class PermissionController extends Controller
         return view('system.permission.index');
     }
 
-
     public function create()
     {
         return view('system.permission.create');
     }
-
 
     public function store(StorePermissionRequest $request)
     {
@@ -31,8 +29,6 @@ class PermissionController extends Controller
             foreach ($roles as $role) {
                 $role->handlePermissions($request->slug);
             }
-            //addChangeLog('Permiso creado','permissions',null,convertColumns($permission));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -48,15 +44,12 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         if (!Permission::slugExists($request->slug,$id)) {
-            if ($permission = Permission::find($id)) {
-                //$old = convertColumns($permission);
-                if ($permission->update($request->all())) {
+            if ($record = Permission::find($id)) {
+                if ($record->update($request->all())) {
                     $roles = Role::get();
                     foreach ($roles as $role) {
                         $role->handlePermissions($request->slug);
                     }
-                    //addChangeLog('Permiso Modificado','permissions',$old,convertColumns($permission));
-
                     return $this->getResponse('success.update');
                 } else {
                     return $this->getResponse('error.update');
@@ -74,9 +67,7 @@ class PermissionController extends Controller
     {
         Permission::find($id);
         if ( Permission::destroy($id)) {
-            //addChangeLog('Permiso Eliminado','permissions',convertColumns($permission));
-
-            return $this->getResponse('success.destroy');
+           return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');
         }

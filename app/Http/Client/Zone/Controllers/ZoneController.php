@@ -24,13 +24,11 @@ class ZoneController extends Controller
         if (Zone::findBySlug(Str::slug($request->name))) {
             return $this->slugError();
         } else {
-            if ($new = Zone::create([
+            if (Zone::create([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'display_name' => $request->display_name
             ])) {
-                //addChangeLog('Zona Creada','zones',null,convertColumns($new));
-
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');
@@ -46,18 +44,15 @@ class ZoneController extends Controller
 
     public function update(ZoneRequest $request,$id)
     {
-        $zone = Zone::findOrFail($id);
-        //$old = convertColumns($zone);
+        $record = Zone::findOrFail($id);
         if(Zone::slugExists(Str::slug($request->name),$id)) {
             return $this->slugError();
         } else {
-            if ($zone->update([
+            if ($record->update([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'display_name' => $request->display_name
             ])) {
-                //addChangeLog('Zona Modificada','zones',$old,convertColumns($zone));
-
                 return $this->getResponse('success.update');
             } else {
                 return $this->getResponse('error.update');
@@ -67,10 +62,8 @@ class ZoneController extends Controller
 
     public function destroy($id)
     {
-        $zone = Zone::findOrFail($id);
-        if ($zone->delete()) {
-            //addChangeLog('Zona Eliminada','zones',convertColumns($zone));
-
+        $record = Zone::findOrFail($id);
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

@@ -19,10 +19,11 @@ use App\Domain\WaterManagement\Report\MailReport;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends EloquentUser
+class User extends EloquentUser implements Auditable
 {
-    use RoleableEntity, Permissible, SoftDeletes, Notifiable;
+    use RoleableEntity, Permissible, SoftDeletes, Notifiable,\OwenIt\Auditing\Auditable;
 
     protected $dates = ['deleted_at','created_at','updated_at'];
 
