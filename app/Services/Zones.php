@@ -1,12 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\Type\CheckPointType;
 use App\Domain\Client\Zone\Zone;
-use App\Domain\WaterManagement\Device\Device;
-use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarm;
-use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Device\Sensor\Type\SensorType;
 

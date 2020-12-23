@@ -23,18 +23,18 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class User extends EloquentUser implements Auditable
 {
-    use RoleableEntity, Permissible, SoftDeletes, Notifiable,\OwenIt\Auditing\Auditable;
+    use RoleableEntity, Permissible, SoftDeletes, Notifiable, \OwenIt\Auditing\Auditable;
 
-    protected $dates = ['deleted_at','created_at','updated_at'];
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 
     public function destroyRelationships()
     {
-        if(!optional($this->roles)->first() || $this->roles()->detach()) {
+        if (!optional($this->roles)->first() || $this->roles()->detach()) {
 
-            if(!optional($this->groups)->first() || $this->groups()->detach()) {
-                if(!optional($this->sub_zones)->first() || $this->sub_zones()->detach()) {
-                    if(!optional($this->production_areas)->first() || $this->production_areas()->detach()) {
+            if (!optional($this->groups)->first() || $this->groups()->detach()) {
+                if (!optional($this->sub_zones)->first() || $this->sub_zones()->detach()) {
+                    if (!optional($this->production_areas)->first() || $this->production_areas()->detach()) {
                         return true;
                     }
                 }
@@ -46,14 +46,18 @@ class User extends EloquentUser implements Auditable
 
     public function getFullNameAttribute()
     {
-        return $this->first_name." ".$this->last_name;
+        return $this->first_name . " " . $this->last_name;
     }
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'role_users','user_id','role_id');
+        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
     }
 
+    public function getAuthIdentifier()
+    {
+        return $this->id;
+    }
 
     public function groups()
     {

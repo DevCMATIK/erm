@@ -230,4 +230,4 @@
 <?php echo makeValidation('#menu-serialization-form','/CheckPointSensorsSerialization/'.$checkPoint->id, "showGrid(".$checkPoint->id.")"); ?>
 
 
-<?php /**PATH /shared/httpd/water-management/resources/views/client/check-point/grid/index.blade.php ENDPATH**/ ?>
+<?php /**PATH /shared/httpd/water-management/resources/views/client/check-point/grid/index2.blade.php ENDPATH**/ ?>

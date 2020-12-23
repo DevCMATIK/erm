@@ -202,7 +202,6 @@
            </div>
        </div>
    </div>
-    <div id="reload"></div>
 
 @endsection
 

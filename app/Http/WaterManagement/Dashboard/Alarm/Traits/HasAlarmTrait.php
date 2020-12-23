@@ -6,6 +6,7 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Audit;
 use Sentinel;
 
 
@@ -29,6 +30,12 @@ trait HasAlarmTrait
             ->leftJoin('alarm_notifications','sensor_alarms.id','=','alarm_notifications.alarm_id')
             ->whereIn('devices.id',$this->getDevicesId()) //CRUD Alarmas Activas
             ->whereNull('sensor_alarms.deleted_at');
+    }
+
+    protected function queryLog()
+    {
+        return \OwenIt\Auditing\Models\Audit::query();
+
     }
 
     protected function activeAlarmQuery()
