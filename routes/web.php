@@ -152,6 +152,7 @@ Route::middleware('auth')->group(function() {
         Route::get('dashboard-alarms','Alarm\Controllers\AlarmDashboardController@index');
         Route::get('dashboard-alarms/getActiveAlarmsTable','Alarm\Controllers\ActiveAlarmsTableController@index');
         Route::get('dashboard-alarms/getLastAlarmsTable','Alarm\Controllers\LastAlarmsTableController@index');
+        Route::get('audit/getLogTable','Alarm\Controllers\LogTableController@index');
 
         //Alarms (Llenado de Select SubZones
         Route::get('getSubZones','Alarm\Controllers\LastAlarmsTableController@getSubZones');
@@ -234,7 +235,6 @@ Route::middleware('auth')->group(function() {
      // Export Alarm
     Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
     Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
-    //Route::get('dashboard-alarms/getLastAlarmsTable','WaterManagement\Dashboard\Alarm\Controllers\LastAlarmsTableController@index')->name('enviar');
 
 
     //Export Alarm Form
@@ -281,3 +281,10 @@ Route::get('/view-clear', function() {
 Route::get('TestView', function() {
     return view('test.view');
 });
+
+// Audit:
+//Route::view('audit','audit.index');
+Route::get('audit', function() {
+    return view('audit.index');
+});
+

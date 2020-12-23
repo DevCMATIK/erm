@@ -24,4 +24,4 @@
     <button type="button" class="btn btn-danger" onClick="$('.modal-content form').submit();">Cambiar Contraseña</button>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/system/user/password/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/system/user/password/index2.blade.php ENDPATH**/ ?>

@@ -194,4 +194,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/water-management/admin/device/sensor/disposition/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/water-management/admin/device/sensor/disposition/index2.blade.php ENDPATH**/ ?>

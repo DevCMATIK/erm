@@ -12,6 +12,7 @@ use Sentinel;
 
 class SensorTriggerController extends Controller
 {
+
     public function index(Request $request)
     {
         $sensor = Sensor::find($request->sensor_id);
@@ -77,4 +78,5 @@ class SensorTriggerController extends Controller
             return $this->getResponse('error.destroy');
         }
     }
+
 }

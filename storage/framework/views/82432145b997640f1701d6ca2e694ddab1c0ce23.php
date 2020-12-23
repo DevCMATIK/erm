@@ -55,4 +55,4 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('modal-width','60'); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/system/role/permissions/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/system/role/permissions/index2.blade.php ENDPATH**/ ?>

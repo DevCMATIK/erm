@@ -53,4 +53,4 @@
     </tbody>
 </table>
 
-<?php /**PATH /shared/httpd/erm/resources/views/water-management/dashboard/alarm/last-alarms.blade.php ENDPATH**/ ?>
+<?php /**PATH /shared/httpd/erm/resources/views/water-management/dashboard/alarm/last-log.blade.php ENDPATH**/ ?>
