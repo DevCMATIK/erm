@@ -4,11 +4,9 @@ namespace App\Domain\WaterManagement\Device\Sensor\Label;
 
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorLabel extends Model implements Auditable
+class SensorLabel extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

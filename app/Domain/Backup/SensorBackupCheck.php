@@ -5,11 +5,9 @@ namespace App\Domain\Backup;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorBackupCheck extends Model implements Auditable
+class SensorBackupCheck extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

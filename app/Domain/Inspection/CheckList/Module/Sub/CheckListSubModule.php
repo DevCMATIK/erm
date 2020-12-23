@@ -5,12 +5,9 @@ namespace App\Domain\Inspection\CheckList\Module\Sub;
 use App\Domain\Inspection\CheckList\Control\CheckListControl;
 use App\Domain\Inspection\CheckList\Module\CheckListModule;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckListSubModule extends Model implements Auditable
+class CheckListSubModule extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     public $timestamps = false;
 
     protected $fillable = [

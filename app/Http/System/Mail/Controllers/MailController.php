@@ -24,7 +24,7 @@ class MailController extends Controller
 
     public function store(MailRequest $request)
     {
-        if($record = Mail::create([
+        if($mail = Mail::create([
             'name' => $request->name,
             'subject' => $request->subject,
             'body' => $request->body,
@@ -35,9 +35,11 @@ class MailController extends Controller
             $attachables = MailAttachable::get();
             foreach($attachables as $attachable) {
                 if(strstr($request->body,$attachable->code)) {
-                    $record->attachables()->attach($attachable->id);
+                    $mail->attachables()->attach($attachable->id);
                 }
             }
+            //addChangeLog('Email creado','mails',null,convertColumns($mail));
+
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -53,8 +55,9 @@ class MailController extends Controller
 
     public function update(MailRequest $request,$id)
     {
-        $record = Mail::findOrFail($id);
-        if($record->update([
+        $mail = Mail::findOrFail($id);
+        //$old = convertColumns($mail);
+        if($mail->update([
             'name' => $request->name,
             'subject' => $request->subject,
             'body' => $request->body,
@@ -62,12 +65,14 @@ class MailController extends Controller
             'share_with_all' => ($request->has('share_with_all'))?1:0
         ])) {
             $attachables = MailAttachable::get();
-            $record->attachables()->detach();
+            $mail->attachables()->detach();
             foreach($attachables as $attachable) {
                 if(strstr($request->body,$attachable->code)) {
-                    $record->attachables()->attach($attachable->id);
+                    $mail->attachables()->attach($attachable->id);
                 }
             }
+            //addChangeLog('Mail modificado','mails',$old,convertColumns($mail));
+
             return $this->getResponse('success.update');
         } else {
             return $this->getResponse('error.update');
@@ -76,12 +81,14 @@ class MailController extends Controller
 
     public function destroy($id)
     {
-        $record = Mail::findOrFail($id);
-        $record->attachables()->detach();
-        $record->notifications()->delete();
-        $record->reminders()->delete();
-        $record->mail_reports()->forceDelete();
-        if($record->delete()) {
+        $mail = Mail::findOrFail($id);
+        $mail->attachables()->detach();
+        $mail->notifications()->delete();
+        $mail->reminders()->delete();
+        $mail->mail_reports()->forceDelete();
+        if($mail->delete()) {
+            //addChangeLog('Mail Eliminado','mails',convertColumns($mail));
+
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

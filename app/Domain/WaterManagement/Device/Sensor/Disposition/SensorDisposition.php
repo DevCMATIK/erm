@@ -7,12 +7,9 @@ use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Scale\Scale;
 use App\Domain\WaterManagement\Unit\Unit;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorDisposition extends Model implements Auditable
+class SensorDisposition extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     public $timestamps = false;
 
     protected $fillable = [

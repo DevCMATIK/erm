@@ -8,11 +8,10 @@ use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Group\Group;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class MailReport extends Model implements Auditable
+class MailReport extends Model
 {
-    use SoftDeletes, \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     public $timestamps =false;
 

@@ -5,11 +5,10 @@ namespace App\Domain\System\File;
 use App\Domain\System\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class File extends Model implements Auditable
+class File extends Model
 {
-    use SoftDeletes, \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable= [
         'user_id','referenced_table','referenced_id','file','extension','is_unique'

@@ -5,11 +5,10 @@ namespace App\Domain\Data\Export;
 use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\System\User\User;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class ExportReminder extends Model implements Auditable
+class ExportReminder extends Model
 {
-    use HasDateScopes, \OwenIt\Auditing\Auditable;
+    use HasDateScopes;
 
     public $timestamps = false;
 

@@ -4,11 +4,10 @@ namespace App\Domain\WaterManagement\Device\Sensor\Chronometer;
 
 use App\App\Traits\Dates\HasDateScopes;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class ChronometerTracking extends Model implements Auditable
+class ChronometerTracking extends Model
 {
-    use HasDateScopes, \OwenIt\Auditing\Auditable;
+    use HasDateScopes;
     public $timestamps = false;
 
     protected $fillable = [

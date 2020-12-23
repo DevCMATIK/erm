@@ -4,11 +4,9 @@ namespace App\Domain\Client\CheckPoint\Flow;
 
 use App\Domain\Client\CheckPoint\CheckPoint;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckPointAuthorizedFlow extends Model implements Auditable
+class CheckPointAuthorizedFlow extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

@@ -7,11 +7,9 @@ use App\Domain\System\User\User;
 use App\Domain\WaterManagement\Group\Group;
 use Cartalyst\Sentinel\Laravel\Facades\Reminder;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class AlarmNotification extends Model implements Auditable
+class AlarmNotification extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

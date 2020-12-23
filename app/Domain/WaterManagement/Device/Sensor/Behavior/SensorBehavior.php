@@ -5,11 +5,10 @@ namespace App\Domain\WaterManagement\Device\Sensor\Behavior;
 use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorBehavior extends Model implements Auditable
+class SensorBehavior extends Model
 {
-    use HasDateScopes, \OwenIt\Auditing\Auditable;
+    use HasDateScopes;
 
     public $timestamps = false;
 

@@ -4,11 +4,9 @@ namespace App\Domain\WaterManagement\Device\Sensor\Disposition\Line;
 
 use App\Domain\WaterManagement\Device\Sensor\Disposition\SensorDisposition;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class DispositionLine extends Model implements Auditable
+class DispositionLine extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

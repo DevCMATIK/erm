@@ -5,11 +5,10 @@ namespace App\Domain\Client\CheckPoint\Flow;
 use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckPointFlow extends Model implements Auditable
+class CheckPointFlow extends Model
 {
-    use HasDateScopes, \OwenIt\Auditing\Auditable;
+    use HasDateScopes;
 
     public $timestamps = false;
 

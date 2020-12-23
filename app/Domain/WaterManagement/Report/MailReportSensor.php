@@ -3,10 +3,8 @@
 namespace App\Domain\WaterManagement\Report;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class MailReportSensor extends Model implements Auditable
+class MailReportSensor extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     //
 }

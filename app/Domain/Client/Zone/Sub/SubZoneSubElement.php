@@ -5,12 +5,9 @@ namespace App\Domain\Client\Zone\Sub;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SubZoneSubElement extends Model implements Auditable
+class SubZoneSubElement extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     public $timestamps = false;
 
     protected $fillable = [

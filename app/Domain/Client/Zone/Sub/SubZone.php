@@ -9,11 +9,10 @@ use App\Domain\System\User\User;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Group\Group;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SubZone extends Model implements Auditable
+class SubZone extends Model
 {
-    use Sluggable, \OwenIt\Auditing\Auditable;
+    use Sluggable;
 
     public $timestamps = false;
 

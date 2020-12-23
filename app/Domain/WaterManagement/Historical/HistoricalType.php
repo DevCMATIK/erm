@@ -5,12 +5,9 @@ namespace App\Domain\WaterManagement\Historical;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\Data\Digital\DigitalReport;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class HistoricalType extends Model implements Auditable
+class HistoricalType extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     public $timestamps = false;
 
     protected $fillable = [

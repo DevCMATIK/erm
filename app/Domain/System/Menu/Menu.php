@@ -9,7 +9,7 @@ use App\Domain\System\Role\Role;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 
-class Menu extends Model implements \OwenIt\Auditing\Contracts\Auditable
+class Menu extends Model implements
 {
     use Sluggable,RoleableEntity, NestableMenu, Auditable;
 

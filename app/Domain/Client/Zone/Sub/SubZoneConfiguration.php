@@ -3,12 +3,9 @@
 namespace App\Domain\Client\Zone\Sub;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class SubZoneConfiguration extends Model implements Auditable
+class SubZoneConfiguration extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     public $timestamps = false;
 
     protected $fillable = [

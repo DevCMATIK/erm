@@ -6,11 +6,10 @@ use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class WaterConsumption extends Model implements Auditable
+class WaterConsumption extends Model
 {
-    use HasDateScopes, \OwenIt\Auditing\Auditable;
+    use HasDateScopes;
 
     public $timestamps = false;
 

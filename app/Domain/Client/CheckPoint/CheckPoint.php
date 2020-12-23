@@ -17,11 +17,10 @@ use App\Domain\WaterManagement\Device\Consumption\DeviceConsumption;
 use App\Domain\WaterManagement\Device\Device;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckPoint extends Model implements Auditable
+class CheckPoint extends Model
 {
-    use Sluggable,SoftDeletes, \OwenIt\Auditing\Auditable;
+    use Sluggable,SoftDeletes;
 
     public $timestamps = false;
 

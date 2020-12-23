@@ -24,11 +24,15 @@ class UserGroupController extends Controller
 
     public function handleUsersFromGroup(Request $request,$group_id)
     {
-        $record = Group::findOrFail($group_id);
-        $record->users()->detach();
+        $group = Group::findOrFail($group_id);
+        //$old = convertColumns($group->users);
+        $group->users()->detach();
         if (isset($request->users) && $request->users != null) {
-            $record->users()->sync($request->users);
+            $group->users()->sync($request->users);
+
         }
+        //addChangeLog('Usuarios del grupo :'.$group->name,'user_groups',$old,convertColumns(Group::findOrFail($group_id)->users));
+
         return response()->json(['success' => 'Se han modificado los usuarios del grupo correctamente']);
     }
 }

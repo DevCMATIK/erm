@@ -3,10 +3,8 @@
 namespace App\Domain\User\SubZone;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class UserSubZone extends Model implements Auditable
+class UserSubZone extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
 }

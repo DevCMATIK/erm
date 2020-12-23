@@ -4,11 +4,9 @@ namespace App\Domain\WaterManagement\Main;
 
 use App\Domain\WaterManagement\Device\Device;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class Command extends Model implements Auditable
+class Command extends Model
 {
-    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $connection= 'grdxf';
