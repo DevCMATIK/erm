@@ -9,6 +9,7 @@ use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarm;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Device\Sensor\Type\SensorType;
+use Sentinel;
 
 class Zones
 {
