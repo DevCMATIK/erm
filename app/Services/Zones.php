@@ -14,7 +14,9 @@ class Zones
 {
     public function getZones()
     {
-        $zones = Zone::get();
+        $zones = Zone::whereHas('sub_zones', $filter =  function($query){
+            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
+        })->with( ['sub_zones' => $filter,'sub_zones.sub_elements'])->get();
         foreach ($zones as $zone){
             $zonesArray[$zone->id] = $zone->name;
         }
