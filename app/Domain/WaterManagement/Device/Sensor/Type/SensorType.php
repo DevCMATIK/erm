@@ -14,7 +14,7 @@ class SensorType extends Model implements Auditable
     public $timestamps = false;
 
     protected $fillable = [
-        'slug','name','min_value','max_value','interval','is_exportable'
+        'slug','name','min_value','max_value','interval','is_exportable','is_dga','sensor_type'
     ];
 
     public function sensors()

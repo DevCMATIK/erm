@@ -77,15 +77,39 @@
             <label class="form-label">Valor máximo</label>
             <input type="text" class="form-control" id="max_value" name="max_value" value="{{ $type->max_value }}">
         </div>
-        <div class="custom-control custom-checkbox">
+        <h5><i class="fas fa-cog"></i> Opciones</h5>
+        <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" name="is_exportable" @if($type->is_exportable === 1) checked @endif id="is_exportable" value="1">
             <label class="custom-control-label" for="is_exportable">Exportable</label>
         </div>
-        <br>
-        <label class="custom-control custom-checkbox">
+        <label class="custom-control custom-switch">
             <input type="checkbox"  class="custom-control-input" value="1" name="apply_to_sensors">
             <span class="custom-control-label">Aplicar los valores a todos los sensores</span>
         </label>
+
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input main-control" name="is_dga" @if($type->is_dga === 1) checked @endif  id="is_dga" value="1">
+            <label class="custom-control-label" for="is_dga">Para DGA</label>
+        </div>
+        <div class="form-group mt-3">
+            <h5><i class="fas fa-th"></i> Tipo de sensor</h5>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="level" @if($type->sensor_type == 'level') checked @endif  value="level">
+                <label class="custom-control-label" for="level">Es Nivel</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="tote" @if($type->sensor_type == 'tote') checked @endif   value="tote">
+                <label class="custom-control-label" for="tote">Es Totalizador</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="flow"  @if($type->sensor_type == 'flow') checked @endif  value="flow">
+                <label class="custom-control-label" for="flow">Es Caudal</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type"  id="other" @if($type->sensor_type == 'other') checked @endif   value="other">
+                <label class="custom-control-label" for="other">Otro</label>
+            </div>
+        </div>
     </form>
 @endsection
 @section('modal-validation')

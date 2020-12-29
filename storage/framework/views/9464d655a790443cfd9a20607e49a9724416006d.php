@@ -1,8 +1,7 @@
-@extends('components.modals.form-modal')
-@section('modal-title','Crear Tipo de Sensor')
-@section('modal-content')
+<?php $__env->startSection('modal-title','Crear Tipo de Sensor'); ?>
+<?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="type-form">
-        @csrf
+        <?php echo csrf_field(); ?>
         <div class="form-group">
             <label class="form-label">Nombre</label>
             <input type="text" class="form-control" id="name" name="name">
@@ -56,7 +55,10 @@
            </div>
        </div>
     </form>
-@endsection
-@section('modal-validation')
-    {!!  makeValidation('#type-form','/sensor-types', "tableReload(); closeModal();") !!}
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('modal-validation'); ?>
+    <?php echo makeValidation('#type-form','/sensor-types', "tableReload(); closeModal();"); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/water-management/device/sensor/type/create.blade.php ENDPATH**/ ?>

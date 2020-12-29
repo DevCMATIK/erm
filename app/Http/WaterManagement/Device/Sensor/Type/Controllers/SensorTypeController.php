@@ -32,7 +32,9 @@ class SensorTypeController extends Controller
                 'interval' => $request->interval,
                 'min_value' => $request->min_value,
                 'max_value' => $request->max_value,
-                'is_exportable' => ($request->has('is_exportable'))?1:0
+                'is_exportable' => ($request->has('is_exportable'))?1:0,
+                'is_dga' => ($request->has('is_dga'))?1:0,
+                'sensor_type' => $request->sensor_type
             ])) {
                 return $this->getResponse('success.store');
             } else {
@@ -59,7 +61,9 @@ class SensorTypeController extends Controller
                 'interval' => $request->interval,
                 'min_value' => $request->min_value,
                 'max_value' => $request->max_value,
-                'is_exportable' => ($request->has('is_exportable'))?1:0
+                'is_exportable' => ($request->has('is_exportable'))?1:0,
+                'is_dga' => ($request->has('is_dga'))?1:0,
+                'sensor_type' => $request->sensor_type
             ])) {
 
                 if($request->has('apply_to_sensors')) {
