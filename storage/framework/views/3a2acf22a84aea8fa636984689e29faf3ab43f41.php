@@ -205,7 +205,6 @@
            </div>
        </div>
    </div>
-    <div id="reload"></div>
 
 <?php $__env->stopSection(); ?>
 
@@ -322,7 +321,6 @@
         });
 
         $(document).ready(function(){
-
             getAlarmsTotal();
             getAlarmsOn();
             getLastAlarm();

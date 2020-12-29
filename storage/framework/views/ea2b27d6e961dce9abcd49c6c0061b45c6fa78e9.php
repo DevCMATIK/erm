@@ -72,4 +72,4 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('no-submit','.'); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/water-management/admin/device/value-test.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/water-management/admin/device/value-index.blade.php ENDPATH**/ ?>

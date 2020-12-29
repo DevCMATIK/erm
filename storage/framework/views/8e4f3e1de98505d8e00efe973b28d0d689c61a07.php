@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Modificar Permiso'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="permission-form">

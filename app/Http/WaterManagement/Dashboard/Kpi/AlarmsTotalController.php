@@ -3,12 +3,7 @@
 namespace App\Http\WaterManagement\Dashboard\Kpi;
 
 use App\App\Traits\Dates\DateUtilitiesTrait;
-use App\Domain\Client\Zone\Zone;
-use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
-use App\Domain\WaterManagement\Main\Historical;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
-
-use App\Http\WaterManagement\Device\Sensor\Alarm\Controllers\AlarmLogController;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Sentinel;

@@ -9,10 +9,11 @@ use App\Domain\WaterManagement\Device\Sensor\Alarm\AlarmNotification;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarm;
 use App\Domain\WaterManagement\Report\MailReport;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Group extends Model
+class Group extends Model implements Auditable
 {
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

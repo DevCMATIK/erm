@@ -4,9 +4,12 @@ namespace App\Domain\System\Import;
 
 use App\Domain\System\User\User;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ImportFile extends Model
+class ImportFile extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $fillable = [
         'import_id','user_id','file','extension','imported','before_function','after_function'
     ];

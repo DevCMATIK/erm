@@ -62,16 +62,13 @@ class DeviceController extends Controller
 
     public function store(DeviceRequest $request)
     {
-        if ($device = Device::create(array_merge($request->all(),[
+        if (Device::create(array_merge($request->all(),[
             'from_bio' => ($request->has('from_bio'))?1:0
         ]))) {
-            addChangeLog('dispositivo Creado','devices',null,convertColumns($device));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
         }
-
     }
 
     public function edit($id)
@@ -83,13 +80,10 @@ class DeviceController extends Controller
 
     public function update(DeviceRequest $request,$id)
     {
-        $device = Device::findOrFail($id);
-        $old = convertColumns($device);
-        if ($device->update(array_merge($request->all(),[
+        $record = Device::findOrFail($id);
+        if ($record->update(array_merge($request->all(),[
             'from_bio' => ($request->has('from_bio'))?1:0
         ]))) {
-            addChangeLog('Dipositivo Modificado','devices',$old,convertColumns($device));
-
             return $this->getResponse('success.update');
         } else {
             return $this->getResponse('error.update');
@@ -98,10 +92,8 @@ class DeviceController extends Controller
 
     public function destroy($id)
     {
-        $device = Device::findOrFail($id);
-        if ($device->delete()) {
-            addChangeLog('Dispositivo eliminado','devices',convertColumns($device));
-
+        $record = Device::findOrFail($id);
+        if ($record->delete()) {
             return $this->getResponse('success.destroy');
         } else {
             return $this->getResponse('error.destroy');

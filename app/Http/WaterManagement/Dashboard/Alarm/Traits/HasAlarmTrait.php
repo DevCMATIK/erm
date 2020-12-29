@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Sentinel;
 
-
-
 trait HasAlarmTrait
 {
     use DateUtilitiesTrait;
@@ -84,7 +82,6 @@ trait HasAlarmTrait
     protected function activeAlarmData()
     {
         return $this->activeAlarmQuery()->get()->unique('log_id');
-
     }
 
     protected function resolveParameters($request, $query,$parameters)
@@ -129,8 +126,6 @@ trait HasAlarmTrait
             'alarms.type_id'        => 'type_alarms',
         ]),$request->dates,'start_date');
     }
-
-
 
     protected function getLastAlarmsWithParameters(Request $request)
     {

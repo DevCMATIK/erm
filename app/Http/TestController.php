@@ -9,7 +9,7 @@ use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
-use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
+use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
 use Sentinel;
 use SoapHeader;

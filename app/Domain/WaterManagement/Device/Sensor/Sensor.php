@@ -19,11 +19,12 @@ use App\Domain\WaterManagement\Device\Sensor\Trigger\SensorTrigger;
 use App\Domain\WaterManagement\Device\Sensor\Type\SensorType;
 use App\Domain\WaterManagement\Report\MailReport;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
-class Sensor extends Model
+class Sensor extends Model implements Auditable
 {
-    use HasEagerLimit;
+    use HasEagerLimit, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

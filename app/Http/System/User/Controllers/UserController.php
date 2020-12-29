@@ -29,19 +29,16 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        if ($user = Sentinel::registerAndActivate(array_merge($request->all(),[
+        if ($record = Sentinel::registerAndActivate(array_merge($request->all(),[
             'password' => explode('@',$request->email)[0]
         ]))) {
-            event(new UserRegistered($user));
+            event(new UserRegistered($record));
             if($request->has('roles')) {
-                $user->roles()->attach($request->roles);
+                $record->roles()->attach($request->roles);
             }
             if($request->has('groups')) {
-                $user->groups()->sync($request->groups);
-
+                $record->groups()->sync($request->groups);
             }
-            addChangeLog('Usuario Creado','users',convertColumns($user));
-
             return $this->getResponse('success.store');
         } else {
             return $this->getResponse('error.store');
@@ -58,28 +55,25 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        $user = User::find($id);
-        $old = convertColumns( $user);
+        $record = User::find($id);
         $tryUser = User::where('email',$request->email)->first();
         if($tryUser && $tryUser->id != $id){
             return response()->json(['error' => 'El Email ya fue usado por otro usuario'],401);
         }else{
-            $user->email = $request->email;
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->phone = $request->phone;
+            $record->email = $request->email;
+            $record->first_name = $request->first_name;
+            $record->last_name = $request->last_name;
+            $record->phone = $request->phone;
 
-            if ($user->save()) {
+            if ($record->save()) {
 
                 if($request->has('roles')) {
 
-                    $user->roles()->sync($request->roles);
+                    $record->roles()->sync($request->roles);
                 }
                 if($request->has('groups')) {
-                    $user->groups()->sync($request->groups);
+                    $record->groups()->sync($request->groups);
                 }
-                addChangeLog('Usuario Modificado','users',$old,convertColumns($user));
-
                 return $this->getResponse('success.update');
             }else{
                 return $this->getResponse('error.update');
@@ -89,11 +83,9 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if ($user = User::find($id)) {
-            if ($user->destroyRelationships()) {
-                if ($user->delete()) {
-                    addChangeLog('Usuario eliminado','users',convertColumns($user));
-
+        if ($record = User::find($id)) {
+            if ($record->destroyRelationships()) {
+                if ($record->delete()) {
                     return $this->getResponse('success.destroy');
                 } else {
                     return $this->getResponse('error.destroy');

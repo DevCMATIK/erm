@@ -5,9 +5,11 @@ namespace App\Domain\WaterManagement\Device\Sensor\Trigger;
 use App\Domain\System\User\User;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorTrigger extends Model
+class SensorTrigger extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     public $timestamps = false;
 
     protected $fillable = [

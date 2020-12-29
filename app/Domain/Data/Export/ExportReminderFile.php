@@ -3,9 +3,12 @@
 namespace App\Domain\Data\Export;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ExportReminderFile extends Model
+class ExportReminderFile extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

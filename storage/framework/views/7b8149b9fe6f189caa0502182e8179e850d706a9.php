@@ -41,7 +41,7 @@
             <td><?php echo e(\Carbon\Carbon::parse($log->start_date)->diff(\Carbon\Carbon::parse($log->end_date) ?? \Carbon\Carbon::now())->format('%H:%I:%S')); ?></td>
             <td><?php echo e(number_format($log->first_value_readed,2)); ?></td>
             <td><?php echo e(number_format($log->last_value,2)); ?></td>
-           
+
             <td><?php echo e(($log->accused === 1)? 'Si':'No'); ?></td>
             <td><?php echo e(($log->accused === 1)? $log->first_name.' '.$log->last_name:'N/A'); ?></td>
             <td><?php echo e(($log->accused_at)?? 'No Acusada'); ?></td>
@@ -54,4 +54,4 @@
     </tbody>
 </table>
 
-<?php /**PATH /shared/httpd/water-management/resources/views/water-management/dashboard/alarm/last-alarms.blade.php ENDPATH**/ ?>
+<?php /**PATH /shared/httpd/water-management/resources/views/water-management/dashboard/alarm/last-log.blade.php ENDPATH**/ ?>

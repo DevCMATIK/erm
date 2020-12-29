@@ -35,13 +35,11 @@ class MenuController extends Controller
             return response()->json(['error' => 'Debe seleccionar un Role'],401);
         } else {
             $lastMenu = Menu::orderBy('id','desc')->first();
-            if ($menu = Menu::create(array_merge($request->all(), [
+            if ($record = Menu::create(array_merge($request->all(), [
                 'slug' => Str::slug($request->name),
                 'position' => (isset($lastMenu))?$lastMenu->position +1:0
             ]))) {
-                $menu->attachRoles($roles);
-                addChangeLog('Menu Creado','menus',null,convertColumns($menu));
-
+                $record->attachRoles($roles);
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');
@@ -61,18 +59,15 @@ class MenuController extends Controller
     public function update(StoreMenuRequest $request, $id)
     {
         $roles = $request->roles;
-        $menu = Menu::find($id);
-        $old = convertColumns($menu);
+        $record = Menu::find($id);
         if(!$roles) {
             return response()->json(['Error' => 'Debe seleccionar almenos 1 Role'],401);
         } else {
-            if ($menu->update(array_merge($request->all(),[
+            if ($record->update(array_merge($request->all(),[
                 'slug' => Str::slug($request->name),
             ]))) {
-                $menu->roles()->detach();
-                $menu->attachRoles($roles);
-                addChangeLog('Menu Modificado','menus',$old,convertColumns($menu));
-
+                $record->roles()->detach();
+                $record->attachRoles($roles);
                 return $this->getResponse('success.update');
             } else {
                 return $this->getResponse('error.update');
@@ -83,11 +78,9 @@ class MenuController extends Controller
 
     public function destroy($id)
     {
-        $menu = Menu::find($id);
-        if($menu->roles()->detach()) {
+        $record = Menu::find($id);
+        if($record->roles()->detach()) {
             if (Menu::destroy($id)) {
-                addChangeLog('Menu Eliminado','menus',convertColumns($menu));
-
                 return $this->getResponse('success.destroy');
             } else {
                 return $this->getResponse('error.destroy');

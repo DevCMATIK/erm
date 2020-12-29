@@ -6,12 +6,8 @@ use App\Domain\Client\Zone\Sub\SubZone;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
 use App\App\Traits\Dates\DateUtilitiesTrait;
 use App\App\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DB;
-use Datatables;
-use Charts;
-use PhpParser\Node\Expr\Array_;
+
 
 class LastAlarmsTableController extends Controller
 {

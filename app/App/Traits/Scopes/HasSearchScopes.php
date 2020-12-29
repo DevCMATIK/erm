@@ -1,7 +1,6 @@
 <?php
 
-namespace App\App\Traits\Alarms;
-
+namespace App\App\Traits\Scopes;
 
 
 trait HasSearchScopes

@@ -5,10 +5,11 @@ namespace App\Domain\WaterManagement\Device\Sensor\Type;
 use App\App\Traits\Model\Sluggable;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class SensorType extends Model
+class SensorType extends Model implements Auditable
 {
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

@@ -16,10 +16,11 @@ use App\Domain\WaterManagement\Main\Historical;
 use App\Domain\WaterManagement\Main\Report;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Device extends Model
+class Device extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

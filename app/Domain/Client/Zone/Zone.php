@@ -7,10 +7,11 @@ use App\Domain\Client\Area\Area;
 use App\Domain\Client\ProductionArea\ProductionArea;
 use App\Domain\Client\Zone\Sub\SubZone;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Zone extends Model
+class Zone extends Model implements Auditable
 {
-    use Sluggable;
+    use Sluggable, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

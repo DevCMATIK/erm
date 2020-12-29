@@ -202,7 +202,6 @@
            </div>
        </div>
    </div>
-    <div id="reload"></div>
 
 @endsection
 
@@ -317,7 +316,6 @@
         });
 
         $(document).ready(function(){
-
             getAlarmsTotal();
             getAlarmsOn();
             getLastAlarm();

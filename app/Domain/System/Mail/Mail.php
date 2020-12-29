@@ -6,9 +6,12 @@ use App\Domain\System\User\User;
 use App\Domain\WaterManagement\Device\Sensor\Alarm\AlarmNotification;
 use App\Domain\WaterManagement\Report\MailReport;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Mail extends Model
+class Mail extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

@@ -35,4 +35,4 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('modal-width','20'); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/system/user/role/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/water-management/resources/views/system/user/role/index2.blade.php ENDPATH**/ ?>

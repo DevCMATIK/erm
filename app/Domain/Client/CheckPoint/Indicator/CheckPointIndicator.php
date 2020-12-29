@@ -6,9 +6,12 @@ use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Sensor\Chronometer\SensorChronometer;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CheckPointIndicator extends Model
+class CheckPointIndicator extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     public $timestamps = false;
 
     protected $fillable = [

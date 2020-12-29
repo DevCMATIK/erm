@@ -6,10 +6,11 @@ use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DeviceConsumption extends Model
+class DeviceConsumption extends Model implements Auditable
 {
-    use HasDateScopes;
+    use HasDateScopes, \OwenIt\Auditing\Auditable;
 
     public $timestamps = false;
 

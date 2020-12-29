@@ -2,15 +2,11 @@
 
 namespace App\Http\WaterManagement\Dashboard\Kpi;
 
-use App\App\Traits\Alarms\HasSearchScopes;
+use App\App\Traits\Scopes\Alarms\HasSearchScopes;
 use App\App\Traits\Dates\DateUtilitiesTrait;
-use App\Domain\Client\Zone\Zone;
-use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
-use App\Http\WaterManagement\Dashboard\Alarm\Controllers\ActiveAlarmsTableController;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
-use MongoDB\Driver\Query;
 use Sentinel;
 
 

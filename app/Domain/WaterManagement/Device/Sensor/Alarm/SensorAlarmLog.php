@@ -2,7 +2,8 @@
 
 namespace App\Domain\WaterManagement\Device\Sensor\Alarm;
 
-use App\App\Traits\Alarms\HasSearchScopes;
+
+use App\App\Traits\Scopes\HasSearchScopes;
 use App\App\Traits\Dates\HasDateScopes;
 use App\Domain\Device\Sensor\Alarm\UnaccusedAlarmLog;
 use App\Domain\System\User\User;
