@@ -168,6 +168,7 @@ return [
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         App\App\Providers\WhereLatestMacroProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
         /*
          * Application Service Providers...
          */
