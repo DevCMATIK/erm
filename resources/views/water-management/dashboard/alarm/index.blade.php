@@ -316,7 +316,6 @@
         });
 
         $(document).ready(function(){
-
             getAlarmsTotal();
             getAlarmsOn();
             getLastAlarm();

@@ -38,17 +38,19 @@
                                     </select>
                                     <?php if($errors->has('user_id')): ?>
                                         <span class="invalid-feedback" role="alert">
-                                                    <strong><?php echo e($errors->first('user_id')); ?></strong>
-                                                </span>
+                                             <strong><?php echo e($errors->first('user_id')); ?></strong>
+                                        </span>
                                     <?php endif; ?>
                                 </div>
                             </div>
 
+
+                            
                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
                                 <div class="form-group fix-selectpicker">
                                     <!--Combo Tipos de Sensor -->
                                     <label class="form-label">Tipo de evento</label>
-                                    <select id="type_sensor_id" name="type_sensor[]"
+                                    <select id="type_event_id" name="type_event[]"
                                             data-live-search="true"
                                             data-actions-box="true"
                                             data-deselect-all-text="Quitar Selección"
@@ -86,23 +88,24 @@
 
 <!--CRUD Ultimas 50 cambios -->
     <div class="row">
-    <div class="col-xl-12">
-        <div id="panel-last-alarms-table" class="panel">
-            <div class="panel-hdr">
-                <h2>Ultimos 50 Cambios</h2>
-                <div class="panel-toolbar">
-                    <button class="btn btn-outline-success btn-sm" id="download-last-alarm"><i class="fas fa-file-excel"></i> Excel </button>
-                    <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Minimizar"></button>
-                    <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+        <div class="col-xl-12">
+            <div id="panel-last-alarms-table" class="panel">
+                <div class="panel-hdr">
+                    <h2>Ultimos 50 Cambios</h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-outline-success btn-sm" id="download-last-alarm"><i class="fas fa-file-excel"></i> Excel </button>
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Minimizar"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                    </div>
                 </div>
-            </div>
-            <div class="panel-container show " id="contenido">
-                <div class="panel-content table-responsive p-0" id="log-table"></div>
+                <div class="panel-container show table-responsive " id="contenido">
+                     <div class="panel-content table-responsive p-0" id="log-table"></div>
+
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('more-scripts'); ?>
@@ -117,41 +120,13 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('select-scripts'); ?>
-    <script>
-        $(document).ready(function (){
-            function loadSubzone(){
-                var zone_id= $('#zone_id').val();
-                if($.trim(zone_id) !=''){
-                    $.get('getSubZones', {zone_id: zone_id}, function (subzones){
-                        removeItems('sub_zone_id');
-                        $.each(subzones, function (index,value){
-                            $('#sub_zone_id').append("<option value='"+ index + "'>" + value + "</option>")
-                        });
-                        $('#sub_zone_id').selectpicker('refresh');
-                    });
-                }
-            }
-            $('#zone_id').on('change', loadSubzone);
-        });
-
-        function removeItems(select) {
-            $('#'+select+' option').each(function(index,element){
-                element.remove();
-            });
-
-            $('#'+select).selectpicker('refresh');
-        }
-    </script>
-<?php $__env->stopSection(); ?>
-
 <?php $__env->startSection('page-extra-scripts'); ?>
     <script>
 
         $('#download-last-alarm').click
         (function(e){
                 toastr.info("Se esta generando un Excel")
-                location.href="/exportLastAlarm"
+                location.href="/exportLastAlar*m"
             }
         );
 
@@ -198,15 +173,16 @@
         });
 
         $(document).ready(function(){
-            getLastAlarmsTable();
+            getLogTable();
         });
 
-        function getLastAlarmsTable()
+        function getLogTable()
         {
             $.get('/audit/getLogTable',function(data){
                 $('#log-table').html(data);
             });
         }
+
     </script>
 <?php $__env->stopSection(); ?>
 

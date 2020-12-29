@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-
-
 use App\Domain\System\User\User;
-use OwenIt\Auditing\Models\Audit;
-
+use App\Domain\System\Audit\Audit;
 
 class ListBox
 {
@@ -21,9 +18,9 @@ class ListBox
 
     public function getEventType()
     {
-        $events = Audit::get();
+        $events = Audit::get()->unique('event');
         foreach ($events as $event){
-            $eventsArray[$event->id] = $event->event;
+            $eventsArray[$event->event] = $event->event;
         }
         return $eventsArray;
     }

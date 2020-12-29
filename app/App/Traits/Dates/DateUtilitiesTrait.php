@@ -10,11 +10,9 @@ trait DateUtilitiesTrait
     {
         $start = Carbon::parse($start);
         $end   = (($end)?Carbon::parse($end):null ?? Carbon::today())->startOfMonth();
-        $i = 0;
         do {
             $months[] = $start->format('m');
         } while ($start->addMonth() <= $end);
-
         return $months;
     }
 
@@ -29,7 +27,6 @@ trait DateUtilitiesTrait
             $to = Carbon::parse($to)->endOfDay()->toDateTimeString();
             $query = $query->between($field,$from,$to);
         }
-
         return $query;
     }
 }

@@ -104,6 +104,13 @@ Route::middleware('auth')->group(function() {
     Route::get('offline-devices','WaterManagement\Admin\Device\Controllers\OfflineDevicesController@index')->name('offline-devices');
     Route::get('offline-devices-list','Client\Devices\OfflineDevicesController@list')->name('offline-devices');
     Route::get('device-disconnections/{device_id}','WaterManagement\Admin\Device\Controllers\OfflineDevicesController@getLogView');
+
+    //audit
+    Route::get('audit', function() {
+        return view('audit.index');
+    });
+    Route::get('audit/getLogTable','Audit\Controllers\LogTableController@index');
+
     //DASHBOARD
     Route::namespace('WaterManagement\Dashboard')->group(function(){
         Route::namespace('Controllers')->group(function() {
@@ -152,7 +159,7 @@ Route::middleware('auth')->group(function() {
         Route::get('dashboard-alarms','Alarm\Controllers\AlarmDashboardController@index');
         Route::get('dashboard-alarms/getActiveAlarmsTable','Alarm\Controllers\ActiveAlarmsTableController@index');
         Route::get('dashboard-alarms/getLastAlarmsTable','Alarm\Controllers\LastAlarmsTableController@index');
-        Route::get('audit/getLogTable','Alarm\Controllers\LogTableController@index');
+
 
         //Alarms (Llenado de Select SubZones
         Route::get('getSubZones','Alarm\Controllers\LastAlarmsTableController@getSubZones');
@@ -233,8 +240,8 @@ Route::middleware('auth')->group(function() {
 
 
      // Export Alarm
-    Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
-    Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
+    //Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
+    //Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
 
 
     //Export Alarm Form
@@ -282,9 +289,5 @@ Route::get('TestView', function() {
     return view('test.view');
 });
 
-// Audit:
-//Route::view('audit','audit.index');
-Route::get('audit', function() {
-    return view('audit.index');
-});
+
 

@@ -3,6 +3,7 @@
 namespace App\Http\WaterManagement\Dashboard\Alarm\Exports;
 
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAlarmTrait;
+use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;

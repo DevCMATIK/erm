@@ -1,16 +1,14 @@
-@extends('layouts.app')
+<?php $__env->startSection('page-content'); ?>
+    <?php $users = app('App\Services\ListBox'); ?>
+    <?php $events = app('App\Services\ListBox'); ?>
 
-@section('page-content')
-@inject('users', App\Services\ListBox)
-@inject('events', App\Services\ListBox)
-
-<!--BOX Filters -->
+    <!--BOX Filters -->
     <div class="row">
         <div class="col-12">
             <div id="panel-alarms-table" class="panel">
                 <nav class="col-md-12 navbar navbar-light bg-light align-content-center">
                     <a class="navbar-brand">Busqueda Avanzada</a>
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <form class=" col-12 my-sm-8">
                         <div class="row my-2">
                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
@@ -31,45 +29,45 @@
                                             data-none-results-text="Sin resultados"
                                             data-select-all-text="Seleccionar todo"
                                             class="form-control text-dark selectpicker">
-                                        @foreach($users->getUsers() as $index => $user)
-                                            <option value="{{ $index }}" {{ (collect()->contains($index)) ? 'selected' : '' }}>
-                                                {{ $user }}
+                                        <?php $__currentLoopData = $users->getUsers(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e((collect()->contains($index)) ? 'selected' : ''); ?>>
+                                                <?php echo e($user); ?>
+
                                             </option>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    @if ($errors->has('user_id'))
+                                    <?php if($errors->has('user_id')): ?>
                                         <span class="invalid-feedback" role="alert">
-                                             <strong>{{ $errors->first('user_id') }}</strong>
-                                        </span>
-                                    @endif
+                                                    <strong><?php echo e($errors->first('user_id')); ?></strong>
+                                                </span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
 
-
-                            
                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-6">
                                 <div class="form-group fix-selectpicker">
                                     <!--Combo Tipos de Sensor -->
                                     <label class="form-label">Tipo de evento</label>
-                                    <select id="type_event_id" name="type_event[]"
+                                    <select id="type_sensor_id" name="type_sensor[]"
                                             data-live-search="true"
                                             data-actions-box="true"
                                             data-deselect-all-text="Quitar Selección"
                                             data-none-selected-text="Seleccione..."
                                             data-none-results-text="Sin resultados"
                                             data-select-all-text="Seleccionar todo"
-                                            multiple class="form-control selectpicker {{ $errors->has('type_sensor_id') ? ' is-invalid' : '' }}" >
-                                        @foreach($events->getEventType() as $index => $event)
-                                            <option value="{{ $index }}" {{ old('type_sensor_id') == $index ? 'selected' : '' }}>
-                                                {{ $event }}
+                                            multiple class="form-control selectpicker <?php echo e($errors->has('type_sensor_id') ? ' is-invalid' : ''); ?>" >
+                                        <?php $__currentLoopData = $events->getEventType(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($index); ?>" <?php echo e(old('type_sensor_id') == $index ? 'selected' : ''); ?>>
+                                                <?php echo e($event); ?>
+
                                             </option>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    @if ($errors->has('type_sensor_id'))
+                                    <?php if($errors->has('type_sensor_id')): ?>
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('type_sensor_id') }}</strong>
+                                            <strong><?php echo e($errors->first('type_sensor_id')); ?></strong>
                                         </span>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
 
@@ -86,7 +84,7 @@
         </div>
     </div>
 
-<!--CRUD Ultimas 50 cambios -->
+    <!--CRUD Ultimas 50 cambios -->
     <div class="row">
         <div class="col-xl-12">
             <div id="panel-last-alarms-table" class="panel">
@@ -98,33 +96,62 @@
                         <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
                     </div>
                 </div>
-                <div class="panel-container show table-responsive " id="contenido">
-                     <div class="panel-content table-responsive p-0" id="log-table"></div>
-
+                <div class="panel-container show " id="contenido">
+                    <div class="panel-content table-responsive p-0" id="log-table"></div>
                 </div>
-
             </div>
         </div>
     </div>
-@endsection
 
-@section('more-scripts')
-    {!! includeScript([
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('more-scripts'); ?>
+    <?php echo includeScript([
         'plugins/highcharts/highcharts.js',
         'plugins/highcharts/modules/boost.js',
         'plugins/highcharts/modules/exporting.js',
         'plugins/selectpicker/js/bootstrap-select.min.js'
-    ]) !!}
-    {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
-@endsection
+    ]); ?>
 
-@section('page-extra-scripts')
+    <?php echo includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('select-scripts'); ?>
+    <script>
+        $(document).ready(function (){
+            function loadSubzone(){
+                var zone_id= $('#zone_id').val();
+                if($.trim(zone_id) !=''){
+                    $.get('getSubZones', {zone_id: zone_id}, function (subzones){
+                        removeItems('sub_zone_id');
+                        $.each(subzones, function (index,value){
+                            $('#sub_zone_id').append("<option value='"+ index + "'>" + value + "</option>")
+                        });
+                        $('#sub_zone_id').selectpicker('refresh');
+                    });
+                }
+            }
+            $('#zone_id').on('change', loadSubzone);
+        });
+
+        function removeItems(select) {
+            $('#'+select+' option').each(function(index,element){
+                element.remove();
+            });
+
+            $('#'+select).selectpicker('refresh');
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('page-extra-scripts'); ?>
     <script>
 
         $('#download-last-alarm').click
         (function(e){
                 toastr.info("Se esta generando un Excel")
-                location.href="/exportLastAlar*m"
+                location.href="/exportLastAlarm"
             }
         );
 
@@ -171,24 +198,24 @@
         });
 
         $(document).ready(function(){
-            getLogTable();
+            getLastAlarmsTable();
         });
 
-        function getLogTable()
+        function getLastAlarmsTable()
         {
             $.get('/audit/getLogTable',function(data){
                 $('#log-table').html(data);
             });
         }
-
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('more-css')
-    {!! includeCss([
+<?php $__env->startSection('more-css'); ?>
+    <?php echo includeCss([
         'plugins/bootstrap-daterangepicker/daterangepicker.css',
         'plugins/selectpicker/css/bootstrap-select.min.css'
-    ]) !!}
+    ]); ?>
+
 
     <style>
         .fix-selectpicker  .dropdown-menu.show {
@@ -198,4 +225,6 @@
         }
     </style>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/water-management/audit/index.blade.php ENDPATH**/ ?>
