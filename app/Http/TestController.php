@@ -27,7 +27,7 @@ class TestController extends SoapController
         $first_date = now()->subDay()->toDateString();
         $second_date = now()->toDateString();
 
-        dd(WaterConsumption::get());
+        dd(WaterConsumption::get()->toJson());
 
         $time_end = microtime(true);
 
