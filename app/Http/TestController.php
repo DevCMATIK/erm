@@ -9,6 +9,7 @@ use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Domain\WaterManagement\Sensor\Consumption\WaterConsumption;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
 use Sentinel;
@@ -25,39 +26,14 @@ class TestController extends SoapController
 
         $first_date = now()->subDay()->toDateString();
         $second_date = now()->toDateString();
-        $checkPoints = $this->getCheckPoints(1);
-        $chks = array();
-        foreach($checkPoints as $checkPoint)
-        {
-            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
-                $sensors = $this->getSensors($checkPoint);
-                $tote = $this->getToteSensor($sensors);
-                $flow = $this->getFlowSensor($sensors);
-                $level = $this->getLevelSensor($sensors);
-                if($tote && $flow && $level) {
 
-                        $chks[] = [
-                            $tote->toArray(),
-                            $flow->toArray(),
-                            $level->toArray(),
-                            $this->getAnalogousValue($tote, true),
-                            $this->getAnalogousValue($flow, true),
-                            ($this->getAnalogousValue($level, true) * -1),
-                            $checkPoint->work_code,
-                            $checkPoint
-                        ];
-
-                } else {
-                    continue;
-                }
-            }
-        }
+        dd(WaterConsumption::get());
 
         $time_end = microtime(true);
 
         $execution_time = ($time_end - $time_start);
 
-        dd($execution_time,$chks);
+        dd($execution_time);
 
     }
 
