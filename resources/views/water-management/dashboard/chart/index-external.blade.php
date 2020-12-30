@@ -2,8 +2,8 @@
 @section('page-title')
     {{ $device->check_point->sub_zones->first()->name.' -> '.$device->check_point->name.': '.$sensor->name }}
     <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Descargar</a>
-    {{ $sensor->type->sensor_type }}
-    @if($sensor->type->sensor_type == 'is_tote')
+
+    @if($sensor->type->sensor_type == 'tote')
         <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
     @endif
 @endsection

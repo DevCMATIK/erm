@@ -126,9 +126,9 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 $query->select('id')->from('sensor_types')
                     ->where('is_dga',1)
                     ->whereIn('sensor_type',[
-                        'is_level',
-                        'is_tote',
-                        'is_flow',
+                        'tote',
+                        'level',
+                        'flow',
                     ]);
             })->get();
     }
@@ -136,14 +136,14 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getLevelSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect(['is_level'])->contains($sensor->type->sensor_type);
+            return collect(['level'])->contains($sensor->type->sensor_type);
         })->first();
     }
 
     protected function getToteSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect(['is_tote'
+            return collect(['tote'
             ])->contains($sensor->type->sensor_type);
         })->first();
 
@@ -152,7 +152,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getFlowSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect(['is_flow'
+            return collect(['flow'
             ])->contains($sensor->type->sensor_type);
         })->first();
 

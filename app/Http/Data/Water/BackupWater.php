@@ -37,7 +37,7 @@ class BackupWater implements ShouldQueue
         $first_date = Carbon::yesterday()->toDateString();
         $second_date = Carbon::today()->toDateString();
         $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('sensor_type','is_tote');
+            return $q->where('sensor_type','tote');
         })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
             return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
         })->with([
