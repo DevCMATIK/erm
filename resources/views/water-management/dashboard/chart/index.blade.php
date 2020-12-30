@@ -87,7 +87,7 @@
         </div>
     @endif
 
-
+    <input type="hidden" value="{{ $sensor->id }}" name="sensor_selected" id="sensor_selected">
     {!! includeScript('plugins/bootstrap-daterangepicker/daterangepicker.js') !!}
     <script>
 
@@ -120,6 +120,13 @@
             } else {
                 location.href = '/downloadDataFromChart/{{ $device_id }}/{{ $sensor_id }}?dates='+date+'&'+sensors+'&noAjax=true';
             }
+
+
+        }
+
+        function downloadConsumptionData() {
+            toastr.info('Se está generando el archivo')
+            location.href = '/downloadWaterConsumptionData/{{ $sensor_id }}?&noAjax=true';
 
 
         }
@@ -203,5 +210,8 @@
 @endsection
 @section('no-submit')
     <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Descargar</a>
+    @if($sensor->type->sensor_type == 'is_tote')
+        <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
+    @endif
 @endsection
 

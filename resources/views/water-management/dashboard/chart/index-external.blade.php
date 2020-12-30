@@ -2,7 +2,9 @@
 @section('page-title')
     {{ $device->check_point->sub_zones->first()->name.' -> '.$device->check_point->name.': '.$sensor->name }}
     <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Descargar</a>
-
+    @if($sensor->type->sensor_type == 'is_tote')
+        <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
+    @endif
 @endsection
 @section('page-icon','chart-line')
 @section('page-content')
@@ -102,6 +104,12 @@
                 useUTC: false
             }
         });
+
+        function downloadConsumptionData() {
+            toastr.info('Se está generando el archivo')
+            location.href = '/downloadWaterConsumptionData/{{ $sensor_id }}?&noAjax=true';
+        }
+
         function downloadData() {
             let date = $('#date').val();
             var sensors  = $('.sensors').serialize();

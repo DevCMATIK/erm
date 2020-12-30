@@ -178,6 +178,7 @@ Route::middleware('auth')->group(function() {
         Route::get('getDataForChartAverage/{device_id}/{sensor_id}','Chart\ChartDataAverageController');
         Route::get('getDataForChartDailyAverage/{device_id}/{sensor_id}','Chart\ChartDailyAveragesController');
         Route::get('downloadDataFromChart/{device_id}/{sensor_id}','Chart\ExportChartData');
+        Route::get('downloadWaterConsumptionData/{sensor_id}','Chart\ExportWaterConsumptionData');
         Route::get('downloadDataFromEnergy','Chart\ExportEnergyData');
         Route::get('downloadConsumptions/{sub_zone_id}','Chart\ExportConsumptionsData');
         Route::post('downloadDataFromChartTotal','Chart\ExportDataTotal');
