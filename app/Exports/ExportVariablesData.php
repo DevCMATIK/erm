@@ -33,11 +33,10 @@ class ExportVariablesData implements FromQuery, WithMapping, WithHeadings, WithT
 
             $interpreter = $rows->interpreter;
         }
-        $result = number_format($rows->result,2,',','');
             return [
                 $rows->sensor->device->name,
                 $rows->sensor->name,
-                $result,
+                $rows->result,
                 $rows->unit,
                 Carbon::parse($rows->date)->toDateString(),
                 Carbon::parse($rows->date)->format('H:i'),

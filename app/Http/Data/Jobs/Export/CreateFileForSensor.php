@@ -83,7 +83,7 @@ class CreateFileForSensor implements ShouldQueue
                 return [
                     $row->sensor->device->check_point->name,
                     $row->sensor->name,
-                    number_format($row->result,2,',',''),
+                    $row->result,
                     $row->unit,
                     Carbon::parse($row->date)->toDateString(),
                     Carbon::parse($row->date)->toTimeString(),

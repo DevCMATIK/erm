@@ -142,11 +142,10 @@ class ExportDataTotal extends Controller
 
             $interpreter = $row->interpreter;
         }
-        $result = number_format($row->result,2,',','');
         return [
             $row->sensor->device->name,
             $row->sensor->name,
-            $result,
+            $row->result,
             $row->unit,
             Carbon::parse($row->date)->toDateString(),
             Carbon::parse($row->date)->format('H:i'),
