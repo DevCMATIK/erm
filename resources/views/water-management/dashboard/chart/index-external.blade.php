@@ -4,7 +4,7 @@
     <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Descargar</a>
 
     @if($sensor->type->sensor_type == 'tote')
-        <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
+        <a href="javascript:void(0);" class="btn btn-success float-right mr-2" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
     @endif
 @endsection
 @section('page-icon','chart-line')
