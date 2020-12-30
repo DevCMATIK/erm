@@ -124,16 +124,11 @@ class ReportToDGA extends SoapController implements ShouldQueue
         return $this->getSensorsByCheckPoint($checkPoint->id)
             ->whereIn('type_id',function($query){
                 $query->select('id')->from('sensor_types')
-                    ->whereIn('slug',[
-                        'tx-nivel',
-                        'caudal-dga-arkon-modbus',
-                        'caudal-dga-siemens-modbus',
-                        'caudal-dga-wellford-corriente',
-                        'caudal-dga-wellford-modbus',
-                        'totalizador-dga-arkon-modbus',
-                        'totalizador-dga-siemens-modbus',
-                        'totalizador-dga-wellford-modbus',
-                        'totalizador-dga-wellford-pulsos'
+                    ->where('is_dga',1)
+                    ->whereIn('sensor_type',[
+                        'is_level',
+                        'is_tote',
+                        'is_flow',
                     ]);
             })->get();
     }
@@ -141,19 +136,15 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getLevelSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect(['tx-nivel'])->contains($sensor->type->slug);
+            return collect(['is_level'])->contains($sensor->type->sensor_type);
         })->first();
     }
 
     protected function getToteSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect([
-                'totalizador-dga-arkon-modbus',
-                'totalizador-dga-siemens-modbus',
-                'totalizador-dga-wellford-modbus',
-                'totalizador-dga-wellford-pulsos'
-            ])->contains($sensor->type->slug);
+            return collect(['is_tote'
+            ])->contains($sensor->type->sensor_type);
         })->first();
 
     }
@@ -161,12 +152,8 @@ class ReportToDGA extends SoapController implements ShouldQueue
     protected function getFlowSensor($sensors)
     {
         return $sensors->filter(function($sensor) {
-            return collect([
-                'caudal-dga-arkon-modbus',
-                'caudal-dga-siemens-modbus',
-                'caudal-dga-wellford-corriente',
-                'caudal-dga-wellford-modbus'
-            ])->contains($sensor->type->slug);
+            return collect(['is_flow'
+            ])->contains($sensor->type->sensor_type);
         })->first();
 
     }
