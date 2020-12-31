@@ -10,6 +10,7 @@ use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Sensor\Consumption\WaterConsumption;
+use App\Http\Data\Water\BackupWaterYear;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
 use Sentinel;
@@ -22,19 +23,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $time_start = microtime(true);
-
-        $first_date = now()->subDay()->toDateString();
-        $second_date = now()->toDateString();
-
-        dd(WaterConsumption::where('sensor_id',60)->get()->toJson());
-
-        $time_end = microtime(true);
-
-        $execution_time = ($time_end - $time_start);
-
-        dd($execution_time);
-
+        BackupWaterYear::dispatch('2020-01-01')->onQueue('long-running-backup');
     }
 
     protected function getSensors($checkPoint)
