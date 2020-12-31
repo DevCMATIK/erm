@@ -78,7 +78,7 @@ class BackupWaterYear implements ShouldQueue
             }
 
             WaterConsumption::insert($toInsert);
-            BackupWaterYear::dispatch($date->addDay()->toDateString())->onQueue('long-running-backup');
+            //BackupWaterYear::dispatch($date->addDay()->toDateString())->onQueue('long-running-backup');
         }
     }
 }
