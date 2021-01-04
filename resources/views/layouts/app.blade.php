@@ -160,16 +160,27 @@
 @if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl')
 
 <script>
+    let endpoint ="https://app.getbeamer.com/cmatikapp"
+    let apiKey = "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k=";
+    let urlbeamer;
+
 
     $.ajax({
-        url: "https://app.getbeamer.com/cmatikapp/posts/count",
+        url: endpoint + "/posts/count",
         type: "GET",
         dataType: "json",
         data: {
-            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+            "Beamer-Api-Key": apiKey
         },
-        header: {
-            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+        crossDomain: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        beforeSend: function (jqXHR) {
+            jqXHR.setRequestHeader('Beamer-Api-Key', apiKey);
         },
         success : function(json) {
             console.log(json);
