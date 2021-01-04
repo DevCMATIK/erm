@@ -47,9 +47,9 @@ if (!function_exists('makeAddLink')) {
         }
         if(Sentinel::getUser()->hasAccess([$url.".create"])) {
             if($remote) {
-                return makeRemoteLink('/'.$url.'/create'.$variables,'Agregar Nuevo','fa-plus','btn-primary','btn-sm');
+                return makeRemoteLink('/'.$url.'/create'.$variables,'Crear','fa-plus','btn-primary','btn-sm');
             } else {
-                return makeLink('/'.$url.'/create'.$variables,'Agregar Nuevo','fa-plus','btn-primary','btn-sm');
+                return makeLink('/'.$url.'/create'.$variables,'Crear','fa-plus','btn-primary','btn-sm');
             }
         } else {
             return '';
