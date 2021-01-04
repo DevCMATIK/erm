@@ -157,7 +157,28 @@
     @yield('page-extra-scripts')
     @yield('select-scripts')
 @endif
+@if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl')
+
 <script>
+
+    $.ajax({
+        url: "https://app.getbeamer.com/cmatikapp/posts/count",
+        type: "GET",
+        dataType: "json",
+        data: {
+            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+        },
+        header: {
+            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+        },
+        success : function(json) {
+            console.log(json);
+        }
+    });
+</script>
+@endif
+<script>
+
     $(document).ready(function() {
 
     });

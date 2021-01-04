@@ -33,6 +33,7 @@
             cursor: pointer;
         }
     </style>
+
     <img src="{{ asset('images/logo-white.png') }}" alt="Cmatik" aria-roledescription="logo" class=" mx-auto" style="height: 50px !important; margin-top: 5px;">
     <div class="ml-auto d-flex">
         @if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl')

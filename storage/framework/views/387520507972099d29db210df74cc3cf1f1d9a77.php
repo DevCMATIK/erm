@@ -159,6 +159,24 @@
     <?php echo $__env->yieldContent('select-scripts'); ?>
 <?php endif; ?>
 <script>
+
+    $.ajax({
+        url: "https://app.getbeamer.com/cmatikapp/posts/count",
+        type: "GET",
+        dataType: "json",
+        data: {
+            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+        },
+        header: {
+            "Beamer-Api-Key": "b_5Pcm9Xm5QaRXZS6QLpxMw95jcYnIuvH2dK9gAPkfE9k="
+        },
+        success : function(json) {
+            console.log(json);
+        }
+    });
+</script>
+<script>
+
     $(document).ready(function() {
 
     });
