@@ -15,6 +15,15 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .dropdown-toggle::after {
+            content: none !important;
+        }
+
+        .table-bordered, .table-bordered th,.table-bordered td {
+            border-color: #e5e5e5 !important;
+        }
+    </style>
     <!-- base css -->
 @include('components.html-helpers.core-css')
 <!-- Place favicon.ico in the root directory -->

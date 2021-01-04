@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('modal-title','Ordenar Zonas'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <?php echo includeCss(['plugins/nestable/nestable.css']); ?>

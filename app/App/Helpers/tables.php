@@ -21,7 +21,12 @@ if (!function_exists('makeTableHeader')) {
 
         for($i = 0;$i<count($cols);$i++){
             $html = $html . '<th>';
-            $html = $html . ucwords(str_replace('_',' ',$cols[$i]));
+            if($cols[$i] == 'Acciones') {
+                $html = $html . '<i class="fas fa-th-list"></i>';
+
+            } else {
+                $html = $html . ucwords(str_replace('_',' ',$cols[$i]));
+            }
             $html = $html . '</th>';
         }
 
@@ -56,7 +61,7 @@ if (!function_exists('getTableScript')) {
         return "<script>
                     let table".\Illuminate\Support\Str::slug($id,'_')." = $('#" . $id . "').DataTable({
                         pageLength: 25,
-                        responsive : true       
+                        responsive : true
                     });
                 </script>";
     }
@@ -69,12 +74,12 @@ if (!function_exists('getAjaxTable')) {
                     let table = $('#" . $id . "').DataTable({
                         pageLength: 25,
                         responsive : true,
-                        ajax: '/datatable/". $url . "/'            
+                        ajax: '/datatable/". $url . "/'
                     });
-                    
+
                     function tableReload() {
                         table.ajax.reload( false, false );
-                    } 
+                    }
                 </script>";
     }
 }
@@ -87,12 +92,12 @@ if (!function_exists('getAjaxTable2')) {
                     let table".$unique." = $('#" . $id . "').DataTable({
                         pageLength: 25,
                         responsive : true,
-                        ajax: '/datatable/". $url . "/'            
+                        ajax: '/datatable/". $url . "/'
                     });
-                    
+
                     function tableReload2() {
                         table".$unique.".ajax.reload( false, false );
-                    } 
+                    }
                 </script>";
     }
 }

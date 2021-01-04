@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-icon','cloud-upload-alt'); ?>
 <?php $__env->startSection('page-title'); ?>
 	Módulos de importación
@@ -38,4 +39,4 @@
     <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/system/import/show/index2.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/system/import/show/index.blade.php ENDPATH**/ ?>

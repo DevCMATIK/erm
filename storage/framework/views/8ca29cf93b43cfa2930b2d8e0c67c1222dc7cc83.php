@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Usuario: '.$user->full_name); ?>
 <?php $__env->startSection('modal-content'); ?>
     <script>
@@ -55,4 +56,4 @@
     .
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/user/sub-zones/index2.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('components.modals.form-modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/user/sub-zones/index.blade.php ENDPATH**/ ?>

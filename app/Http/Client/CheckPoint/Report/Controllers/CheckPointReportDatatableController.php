@@ -19,7 +19,10 @@ class CheckPointReportDatatableController extends DataTableAbstract
             $record->type->name,
             $record->sub_zones->first()->name,
             $record->dga_reports_count,
-            makeRemoteLink('/check-point/dga_reports/'.$record->id,'Log','fa-database','btn-link','btn-sm')
+            makeGroupedLinks([
+                makeRemoteLink('/check-point/dga_reports/'.$record->id,'Log','fa-database','btn-link','btn-sm',true),
+                makeLink('/check-point/dga_reports/download/'.$record->id,'Descargar','fa-excel','btn-link','btn-sm',true)
+            ])
         ];
     }
 }

@@ -20,6 +20,15 @@
 <!-- Place favicon.ico in the root directory -->
 
     <link rel="mask-icon" href="" color="#5bbad5">
+    <style>
+        .dropdown-toggle::after {
+            content: none !important;
+        }
+
+        .table-bordered, .table-bordered th,.table-bordered td {
+            border-color: #e5e5e5 !important;
+        }
+    </style>
 </head>
 <body class="mod-bg-1">
 <!-- DOC: script to save and load page settings -->

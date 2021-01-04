@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('page-title','test'); ?>
 <?php $__env->startSection('page-icon','fa-wrench'); ?>
 <?php $__env->startSection('page-content'); ?>
@@ -79,4 +78,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/test.blade.php ENDPATH**/ ?>

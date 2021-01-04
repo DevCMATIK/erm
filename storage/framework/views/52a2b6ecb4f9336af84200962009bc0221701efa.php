@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('page-content'); ?>
 <?php $users = app('App\Services\ListBox'); ?>
 <?php $events = app('App\Services\ListBox'); ?>

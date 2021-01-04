@@ -11,10 +11,11 @@
     <?php echo $__env->yieldContent('modal-content'); ?>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
     <?php if (! empty(trim($__env->yieldContent('no-submit')))): ?>
         <?php echo $__env->yieldContent('no-submit'); ?>
     <?php else: ?>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" onClick="$('.modal-content form').submit();">Guardar</button>
     <?php endif; ?>
 </div>

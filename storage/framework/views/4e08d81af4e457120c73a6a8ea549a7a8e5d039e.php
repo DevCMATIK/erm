@@ -93,19 +93,19 @@
         <div class="form-group mt-3">
             <h5><i class="fas fa-th"></i> Tipo de sensor</h5>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="level" <?php if($type->sensor_tpe == 'level'): ?> checked <?php endif; ?>  value="level">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="level" <?php if($type->sensor_type == 'level'): ?> checked <?php endif; ?>  value="level">
                 <label class="custom-control-label" for="level">Es Nivel</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="tote" <?php if($type->sensor_tpe == 'tote'): ?> checked <?php endif; ?>   value="tote">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="tote" <?php if($type->sensor_type == 'tote'): ?> checked <?php endif; ?>   value="tote">
                 <label class="custom-control-label" for="tote">Es Totalizador</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="flow"  <?php if($type->sensor_tpe == 'flow'): ?> checked <?php endif; ?>  value="flow">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type" id="flow"  <?php if($type->sensor_type == 'flow'): ?> checked <?php endif; ?>  value="flow">
                 <label class="custom-control-label" for="flow">Es Caudal</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input main-control" name="sensor_type"  id="other" <?php if($type->sensor_tpe == 'other'): ?> checked <?php endif; ?>   value="other">
+                <input type="radio" class="custom-control-input main-control" name="sensor_type"  id="other" <?php if($type->sensor_type == 'other'): ?> checked <?php endif; ?>   value="other">
                 <label class="custom-control-label" for="other">Otro</label>
             </div>
         </div>

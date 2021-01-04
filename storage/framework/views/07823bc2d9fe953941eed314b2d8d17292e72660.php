@@ -21,7 +21,6 @@
                             <div class="form-group pull-right text-right">
                                 <label class="form-label">Presione para </label><br>
                                 <button class="btn btn-success" id="download-data"><i class="fas fa-file-excel"></i> Descargar</button>
-                                <button class="btn btn-success" id="download-data-test"><i class="fas fa-file-excel"></i> Test Donwloader</button>
                             </div>
                         </div>
                     </div>
@@ -95,13 +94,11 @@
             var sensors  = $('.sensors').serialize();
             if(sensors === '') {
                 toastr.error('No ha seleccionado sensores');
-            } else {
+            }else {
                     form.submit(function( event ) {
                     form.attr('action', '/exportDataTest');
                 });
-
             }
-
         }
         );
 
@@ -193,4 +190,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/data/exports/index2.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/data/exports/index.blade.php ENDPATH**/ ?>

@@ -178,8 +178,8 @@ if (!function_exists('makeGroupedLinks')) {
     {
         if (is_array($buttons)) {
             $html = '<div class="btn-group btn-group-xs">
-                    <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Opciones
+                    <button type="button" class="btn btn-default px-2 dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" data>
+                        ···
                     </button>
                     <div class="dropdown-menu">';
             foreach ($buttons as $button) {

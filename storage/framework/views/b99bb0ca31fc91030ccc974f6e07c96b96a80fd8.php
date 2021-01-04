@@ -1,9 +1,10 @@
+
 <?php $__env->startSection('page-title','Opciones de cuenta'); ?>
 <?php $__env->startSection('page-icon','cog'); ?>
 <?php $__env->startSection('page-content'); ?>
     <div class="card overflow-hidden">
         <div class="row no-gutters row-bordered row-border-light">
-            <div class="col-md-2 pt-0">
+            <div class="col-md-8 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
                     <a class="list-group-item list-group-item-action active" data-toggle="list" id="first-item" href="<?php echo e(route('userSettings.general')); ?>">
                         General
@@ -48,4 +49,4 @@
 
 
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/user/settings/index2.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /shared/httpd/erm/resources/views/user/settings/index.blade.php ENDPATH**/ ?>
