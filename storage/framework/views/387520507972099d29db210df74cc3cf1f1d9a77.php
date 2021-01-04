@@ -134,7 +134,9 @@
                             <?php if (! empty(trim($__env->yieldContent('page-description')))): ?>
                                 <small><?php echo $__env->yieldContent('page-description'); ?></small>
                             <?php endif; ?>
+
                         </h1>
+                        <?php echo $__env->yieldContent('page-extra-buttons'); ?>
                     </div>
                 <?php endif; ?>
 

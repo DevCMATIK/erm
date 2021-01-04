@@ -2,16 +2,11 @@
 <?php echo includeCss('plugins/datatables/datatables.blunde.css'); ?>
 
 <?php $__env->stopSection(); ?>
+
 <div class="row">
     <div class="col-xl-12">
         <div class="float-right">
             <?php if(!$navBar): ?>
-                <?php if(Route::has('export.'.$entity) && Sentinel::getUser()->hasAccess($entity.'.export')): ?>
-                    <?php echo makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-sm'); ?>
-
-                <?php endif; ?>&nbsp;
-                <?php echo makeAddLink(); ?>
-
                 <?php if (! empty(trim($__env->yieldContent('page-buttons')))): ?>
                     <?php echo $__env->yieldContent('page-buttons'); ?>
                 <?php endif; ?>
@@ -20,6 +15,16 @@
         </div>
     </div>
 </div>
+<?php $__env->startSection('page-extra-buttons'); ?>
+    <div class="pull-right">
+        <?php if(Route::has('export.'.$entity) && Sentinel::getUser()->hasAccess($entity.'.export')): ?>
+            <?php echo makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-sm'); ?>
+
+        <?php endif; ?>&nbsp;
+        <?php echo makeAddLink(); ?>
+
+    </div>
+<?php $__env->stopSection(); ?>
 <?php if($navBar): ?>
 <?php $__env->startSection('page-navBar'); ?>
     <?php echo $__env->make('layouts.partials.navs.page-navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -43,5 +48,6 @@
     <?php echo getAjaxTable($entity); ?>
 
 <?php $__env->stopSection(); ?>
+
 
 <?php /**PATH /shared/httpd/erm/resources/views/components/views/crud.blade.php ENDPATH**/ ?>

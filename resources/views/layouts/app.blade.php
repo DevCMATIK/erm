@@ -133,7 +133,9 @@
                             @hasSection('page-description')
                                 <small>@yield('page-description')</small>
                             @endif
+
                         </h1>
+                        @yield('page-extra-buttons')
                     </div>
                 @endif
 
