@@ -85,7 +85,15 @@
         localStorage.setItem("themeSettings", "");
     }
 
+
 </script>
+<script>
+    var beamer_config = {
+        product_id : "YRmVmani28399" //DO NOT CHANGE: This is your product code on Beamer
+    };
+</script>
+<script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>
+
 
 <!-- BEGIN Page Wrapper -->
 <div class="page-wrapper">
