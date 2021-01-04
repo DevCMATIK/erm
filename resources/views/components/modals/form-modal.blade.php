@@ -11,10 +11,11 @@
     @yield('modal-content')
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
     @hasSection('no-submit')
         @yield('no-submit')
     @else
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" onClick="$('.modal-content form').submit();">Guardar</button>
     @endif
 </div>

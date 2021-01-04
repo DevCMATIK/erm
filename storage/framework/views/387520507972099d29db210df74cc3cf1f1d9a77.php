@@ -167,22 +167,15 @@
 
 
     $.ajax({
-        url: endpoint + "/posts/count",
+        url: endpoint + "/url",
         type: "GET",
-        dataType: "json",
-        data: {
-            "Beamer-Api-Key": apiKey
+        dataType : 'jsonp',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods' : 'OPTIONS,GET,POST',
+            'Beamer-Api-Key': apiKey
         },
         crossDomain: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        },
-        xhrFields: {
-            withCredentials: true
-        },
-        beforeSend: function (jqXHR) {
-            jqXHR.setRequestHeader('Beamer-Api-Key', apiKey);
-        },
         success : function(json) {
             console.log(json);
         }

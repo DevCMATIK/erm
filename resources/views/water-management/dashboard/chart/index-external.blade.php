@@ -1,10 +1,10 @@
 @extends('layouts.app-blank')
 @section('page-title')
     {{ $device->check_point->sub_zones->first()->name.' -> '.$device->check_point->name.': '.$sensor->name }}
-    <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Descargar</a>
+    <a href="javascript:void(0);" class="btn btn-success float-right" onclick="downloadData()"><i class="fas fa-file-excel"></i> Históricos</a>
 
     @if($sensor->type->sensor_type == 'tote')
-        <a href="javascript:void(0);" class="btn btn-success float-right mr-2" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Descargar Consumo</a>
+        <a href="javascript:void(0);" class="btn btn-success float-right mr-2" onclick="downloadConsumptionData()"><i class="fas fa-file-excel"></i> Consumo</a>
     @endif
 @endsection
 @section('page-icon','chart-line')
