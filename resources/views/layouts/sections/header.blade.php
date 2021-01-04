@@ -27,8 +27,20 @@
             <i class="fas fa-bars"></i>
         </a>
     </div>
+    <style>
+        .header-icon i{
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+    </style>
     <img src="{{ asset('images/logo-white.png') }}" alt="Cmatik" aria-roledescription="logo" class=" mx-auto" style="height: 50px !important; margin-top: 5px;">
     <div class="ml-auto d-flex">
+        @if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl')
+            <a href="#" class="header-icon" id="beamer-notif" style="color: #ffffff !important;" title="Noticias">
+                <i class="fal fa-bell fa-2x"></i>
+                <span class="badge badge-icon">1</span>
+            </a>
+        @endif
 
         <div>
             <a href="#" data-toggle="dropdown" title="{{ Sentinel::getUser()->email }}" class="header-icon d-flex align-items-center justify-content-center ml-2">
