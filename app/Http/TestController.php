@@ -24,7 +24,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        ReportToDGA::dispatch(1);
+        ReportToDGA::dispatch(1)->onQueue('long-running-backup');
     }
 
     protected function getSensors($checkPoint)
