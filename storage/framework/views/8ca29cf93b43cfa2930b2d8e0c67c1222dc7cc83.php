@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('modal-title','Usuario: '.$user->full_name); ?>
 <?php $__env->startSection('modal-content'); ?>
     <script>
@@ -17,7 +16,7 @@
             <?php $__currentLoopData = $productionAreas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $productionArea): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php if($user->inProductionArea($productionArea->id)): ?>
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" checked="checked" class="custom-control-input" value="<?php echo e($productionArea->id); ?>" name="production_areas[]">
+                        <input type="checkbox" checked="checked" class="custom-control-input " value="<?php echo e($productionArea->id); ?>" name="production_areas[]">
                         <span class="custom-control-label"><?php echo e($productionArea->name); ?></span>
                     </label>
                 <?php else: ?>

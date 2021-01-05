@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('production-areas','Client\ProductionArea\Controllers\ProductionAreaController');
     Route::get('productionArea/zones/{id}', 'Client\ProductionArea\Controllers\ProductionAreaZonesController@index');
     Route::post('productionArea/zones/{id}', 'Client\ProductionArea\Controllers\ProductionAreaZonesController@storeZones');
+    Route::get('production-area/{id}/users', 'Client\ProductionArea\Controllers\ProductionAreaUsersController@index');
+    Route::post('production-area/{id}/users', 'Client\ProductionArea\Controllers\ProductionAreaUsersController@storeUsers');
     Route::get('area-zones/{area}','Client\Area\Controllers\AreaZonesController@index');
     Route::post('area-zones/{area}','Client\Area\Controllers\AreaZonesController@storeZones');
     Route::resource('areas','Client\Area\Controllers\AreaController');

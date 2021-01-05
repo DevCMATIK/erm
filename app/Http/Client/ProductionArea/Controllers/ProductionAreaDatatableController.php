@@ -27,7 +27,8 @@ class ProductionAreaDatatableController extends DataTableAbstract
     public function getOptionButtons($id)
     {
         return makeGroupedLinks(array_merge($this->getDefaultOptions($id),[
-            makeRemoteLink('/productionArea/zones/'.$id,'Zonas','fa-sitemap','','',true)
+            makeRemoteLink('/productionArea/zones/'.$id,'Zonas','fa-sitemap','','',true),
+            makeRemoteLink('/production-area/'.$id.'/users','Usuarios','fa-users','','',true)
         ]));
     }
 }

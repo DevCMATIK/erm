@@ -27,11 +27,16 @@ class SubZoneController extends Controller
         if (SubZone::findBySlug(Str::slug($request->name))) {
             return $this->slugError();
         } else {
-            if (SubZone::create([
+            if ($sub_zone = SubZone::create([
                 'slug' => $request->name,
                 'name' => $request->name,
                 'zone_id' => Zone::findBySlug($request->zone)->id
             ])) {
+                foreach($sub_zone->zone->production_areas as $production_area) {
+                    foreach($production_area->users as $user) {
+                        $user->sub_zones()->syncWithoutDetaching($sub_zone->id);
+                    }
+                }
                 return $this->getResponse('success.store');
             } else {
                 return $this->getResponse('error.store');

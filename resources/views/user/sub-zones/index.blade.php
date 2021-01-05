@@ -17,7 +17,7 @@
             @foreach($productionAreas as $productionArea)
                 @if($user->inProductionArea($productionArea->id))
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" checked="checked" class="custom-control-input" value="{{ $productionArea->id }}" name="production_areas[]">
+                        <input type="checkbox" checked="checked" class="custom-control-input " value="{{ $productionArea->id }}" name="production_areas[]">
                         <span class="custom-control-label">{{ $productionArea->name }}</span>
                     </label>
                 @else

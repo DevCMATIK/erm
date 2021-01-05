@@ -27,6 +27,7 @@ class User extends EloquentUser implements Auditable
 
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
+    protected $appends =['full_name'];
 
     public function destroyRelationships()
     {
