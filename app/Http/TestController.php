@@ -25,7 +25,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        Redis::flushDB();
+        \Cache::store("redis")->flush();
     }
 
     protected function getSensors($checkPoint)
