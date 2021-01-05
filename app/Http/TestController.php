@@ -10,6 +10,7 @@ use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Domain\WaterManagement\Sensor\Consumption\WaterConsumption;
+use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Water\BackupWaterYear;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
@@ -23,7 +24,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        BackupWaterYear::dispatch('2020-01-01')->onQueue('long-running-backup');
+        ReportToDGA::dispatch(1);
     }
 
     protected function getSensors($checkPoint)
