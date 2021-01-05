@@ -4,7 +4,7 @@
     <!-- DOC: nav menu layout change shortcut -->
     <div class="hidden-md-down dropdown-icon-menu position-relative">
         <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
-            <i class="fas fa-bars text-white"></i>
+            <i class="fas fa-bars"></i>
         </a>
         <ul>
             <li>

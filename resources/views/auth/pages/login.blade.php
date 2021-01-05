@@ -1,5 +1,4 @@
 @extends('auth.main')
-@section('page-title','Ingresar')
 
 @section('auth-content')
     <form id="login-form">
