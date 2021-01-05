@@ -1,10 +1,10 @@
-<header class="page-header bg-dark" role="banner">
+<header class="page-header bg-gray-700" role="banner">
 
 
     <!-- DOC: nav menu layout change shortcut -->
     <div class="hidden-md-down dropdown-icon-menu position-relative">
         <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
-            <i class="fas fa-bars"></i>
+            <i class="fas fa-bars text-white"></i>
         </a>
         <ul>
             <li>
@@ -34,7 +34,6 @@
         }
     </style>
 
-    <img src="<?php echo e(asset('images/logo-white.png')); ?>" alt="Cmatik" aria-roledescription="logo" class=" mx-auto" style="height: 50px !important; margin-top: 5px;">
     <div class="ml-auto d-flex">
         <?php if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl'): ?>
             <a href="#" class="header-icon" id="beamer-notif" style="color: #ffffff !important;" title="Noticias">

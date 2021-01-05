@@ -1,5 +1,5 @@
 @extends('components.modals.form-modal')
-@section('modal-title','Log de reportes a DGa')
+@section('modal-title','Log de reportes a DGA')
 @section('modal-content')
     <div class="row">
         <div class="col-xl-12 table-responsive">

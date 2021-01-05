@@ -1,5 +1,4 @@
-
-<?php $__env->startSection('page-title','Login'); ?>
+<?php $__env->startSection('page-title','Ingresar'); ?>
 
 <?php $__env->startSection('auth-content'); ?>
     <form id="login-form">

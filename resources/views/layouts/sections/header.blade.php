@@ -1,4 +1,4 @@
-<header class="page-header bg-dark" role="banner">
+<header class="page-header bg-gray-700" role="banner">
 
 
     <!-- DOC: nav menu layout change shortcut -->
@@ -34,7 +34,6 @@
         }
     </style>
 
-    <img src="{{ asset('images/logo-white.png') }}" alt="Cmatik" aria-roledescription="logo" class=" mx-auto" style="height: 50px !important; margin-top: 5px;">
     <div class="ml-auto d-flex">
         @if(Sentinel::getUser()->email == 'maxi.rebolledo@gmail.com' || Sentinel::getUser()->email == 'faraya@cmatik.cl')
             <a href="#" class="header-icon" id="beamer-notif" style="color: #ffffff !important;" title="Noticias">

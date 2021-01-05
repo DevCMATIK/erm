@@ -1,5 +1,4 @@
 @extends('auth.main')
-@section('page-title','Reset Password')
 @section('auth-content')
     <h4 class="text-center text-lighter font-weight-normal mt-5 mb-0">Cambiar mi Contraseña</h4>
 

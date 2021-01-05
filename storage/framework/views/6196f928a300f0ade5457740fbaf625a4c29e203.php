@@ -19,25 +19,21 @@
 <body>
 <div class="page-wrapper">
     <div class="page-inner bg-gray-200">
-        <div class="page-content-wrapper bg-transparent m-0">
-            <div class="height-10 w-100 shadow-lg px-4 bg-info-900">
-                <div class="d-flex align-items-center container p-0">
-                        <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-left">
-                            <img src="<?php echo e(asset('images/logo-white.png')); ?>" alt="Cmatik" aria-roledescription="logo" style="height: 60px !important; margin-top: 5px;">
-                        </a>
-                </div>
-            </div>
-            <div class="flex-1" style="background: url(<?php echo e(asset('images/pattern-1.svg')); ?>) no-repeat center bottom fixed; background-size: cover;">
+        <div class="page-content-wrapper bg-transparent m-0 mt-5">
+
+            <div class="flex-1 mt-5" style="background: url(<?php echo e(asset('images/pattern-1.svg')); ?>) no-repeat center bottom fixed; background-size: cover;">
                 <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0">
                     <div class="row">
                         <div class="col col-md-6 col-lg-7 hidden-sm-down" >
-                            <img src="<?php echo e(asset('images/main.png')); ?>" alt="" width="150%" style="margin: 0px; margin-left: -200px; margin-top: -150px;">
+                            <img src="<?php echo e(asset('images/main-logo.png')); ?>" alt="" width="100%" style="margin: 0px; margin-left: -100px;">
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
-                            <h1 class="text-dark fw-300 mb-3 d-sm-block d-md-none">
-                                <?php echo $__env->yieldContent('page-title'); ?>
-                            </h1>
+                                <img src="<?php echo e(asset('images/main-logo.png')); ?>" alt="" class="d-sm-block d-md-none mx-auto" width="100%" style="margin-top: -110px; margin-left: auto;">
+
                             <div class="card p-4 rounded-plus bg-faded text-dark">
+                                <div class="text-center fs-md">
+                                    <?php echo $__env->yieldContent('page-title'); ?>
+                                </div>
                                <?php echo $__env->yieldContent('auth-content'); ?>
                             </div>
                         </div>

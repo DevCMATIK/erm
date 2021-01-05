@@ -7,9 +7,7 @@
     <div class="col-xl-12">
         <div class="float-right">
             <?php if(!$navBar): ?>
-                <?php if (! empty(trim($__env->yieldContent('page-buttons')))): ?>
-                    <?php echo $__env->yieldContent('page-buttons'); ?>
-                <?php endif; ?>
+
             <?php endif; ?>
 
         </div>
@@ -18,12 +16,15 @@
 <?php $__env->startSection('page-extra-buttons'); ?>
     <div class="pull-right">
         <?php if(Route::has('export.'.$entity) && Sentinel::getUser()->hasAccess($entity.'.export')): ?>
-            <?php echo makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-sm'); ?>
+            <?php echo makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-md'); ?>
 
         <?php endif; ?>&nbsp;
         <?php echo makeAddLink(); ?>
 
     </div>
+    <?php if (! empty(trim($__env->yieldContent('page-buttons')))): ?>
+        <?php echo $__env->yieldContent('page-buttons'); ?>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 <?php if($navBar): ?>
 <?php $__env->startSection('page-navBar'); ?>

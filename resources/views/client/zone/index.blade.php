@@ -3,7 +3,7 @@
 @section('page-icon','database')
 @section('page-buttons')
 
-    {!! makeRemoteLink('/zoneSerialization','Serializar','fa-list-ol','btn-info','btn-sm') !!}
+    {!! makeRemoteLink('/zoneSerialization','Serializar','fa-list-ol','btn-info','btn-md') !!}
 
 @endsection
 @section('page-content')

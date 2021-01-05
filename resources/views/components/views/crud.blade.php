@@ -6,9 +6,7 @@
     <div class="col-xl-12">
         <div class="float-right">
             @if(!$navBar)
-                @hasSection('page-buttons')
-                    @yield('page-buttons')
-                @endif
+
             @endif
 
         </div>
@@ -17,10 +15,13 @@
 @section('page-extra-buttons')
     <div class="pull-right">
         @if(Route::has('export.'.$entity) && Sentinel::getUser()->hasAccess($entity.'.export'))
-            {!! makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-sm') !!}
+            {!! makeLink('export/'.$entity,'Excel','fa-file-excel','btn-success','btn-md') !!}
         @endif&nbsp;
         {!! makeAddLink() !!}
     </div>
+    @hasSection('page-buttons')
+        @yield('page-buttons')
+    @endif
 @endsection
 @if($navBar)
 @section('page-navBar')
