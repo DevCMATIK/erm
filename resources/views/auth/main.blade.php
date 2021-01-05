@@ -31,10 +31,7 @@
                                 <img src="{{ asset('images/main-logo.png') }}" alt="" class="d-sm-block d-md-none mx-auto" width="100%" style="margin-top: -110px; margin-left: auto;">
 
                             <div class="card p-4 rounded-plus bg-faded text-dark">
-                                <div class="text-center fs-md">
-                                    @yield('page-title')
-                                </div>
-                               @yield('auth-content')
+                                @yield('auth-content')
                             </div>
                         </div>
                     </div>
