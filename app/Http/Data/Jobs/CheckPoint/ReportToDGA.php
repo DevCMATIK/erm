@@ -48,7 +48,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
                         $this->getAnalogousValue($flow,true),
                         ($this->getAnalogousValue($level,true) * -1),
                         $checkPoint->work_code,
-                        $checkPoint)->onQueue('long-running-queue');
+                        $checkPoint)->onQueue('long-running-backup');
 
                 } else {
                     continue;
