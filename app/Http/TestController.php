@@ -16,6 +16,7 @@ use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
 use Sentinel;
 use SoapHeader;
+use Redis;
 
 
 class TestController extends SoapController
@@ -24,7 +25,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        ReportToDGA::dispatch(1)->onQueue('long-running-backup');
+        Redis::flushDB();
     }
 
     protected function getSensors($checkPoint)
