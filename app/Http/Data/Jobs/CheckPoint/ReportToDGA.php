@@ -4,6 +4,7 @@ namespace App\Http\Data\Jobs\CheckPoint;
 
 use App\App\Controllers\Soap\InstanceSoapClient;
 use App\App\Controllers\Soap\SoapController;
+use App\App\Jobs\SendToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
@@ -43,13 +44,12 @@ class ReportToDGA extends SoapController implements ShouldQueue
                 $flow = $this->getFlowSensor($sensors);
                 $level = $this->getLevelSensor($sensors);
                 if($tote && $flow && $level) {
-                    $this->ReportToDGA(
-                        $this->getAnalogousValue($tote,true),
+                    SendToDGA::dispatch($this->getAnalogousValue($tote,true),
                         $this->getAnalogousValue($flow,true),
                         ($this->getAnalogousValue($level,true) * -1),
                         $checkPoint->work_code,
-                        $checkPoint
-                    );
+                        $checkPoint)->onQueue('long-running-queue');
+
                 } else {
                     continue;
                 }
@@ -57,54 +57,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
         }
     }
 
-    public function ReportToDGA($totalizador,$caudal,$nivelFreatico,$codigoDeObra,$checkPoint)
-    {
-        try {
-            ini_set('default_socket_timeout', 600);
-            self::setWsdl('https://snia.mop.gob.cl/controlextraccion/wsdl/datosExtraccion/SendDataExtraccionService');
-            $service = InstanceSoapClient::init();
-            $params = [
-                'sendDataExtraccionRequest' => [
-                    'dataExtraccionSubterranea' => [
-                        'fechaMedicion' => Carbon::now()->format('d-m-Y'),
-                        'horaMedicion' => Carbon::now()->format('H:i:s'),
-                        'totalizador' => number_format($totalizador,0,'',''),
-                        'caudal' => number_format($caudal,2,'.',''),
-                        'nivelFreaticoDelPozo' => number_format($nivelFreatico,2,'.',''),
-                    ]
-                ]
-            ];
 
-            $headerParams = array(
-                'codigoDeLaObra' => $codigoDeObra,
-                'timeStampOrigen' =>   Carbon::now()->toIso8601ZuluString()
-            );
-
-
-            $headers[] = new SoapHeader('http://www.mop.cl/controlextraccion/xsd/datosExtraccion/SendDataExtraccionRequest',
-                'sendDataExtraccionTraza',
-                $headerParams
-            );
-
-            $service->__setSoapHeaders($headers);
-
-            $response = $service->__soapCall('sendDataExtraccionOp',$params);
-
-            $checkPoint->dga_reports()->create([
-                'response' => $response->status->Code,
-                'response_text' => $response->status->Description,
-                'tote_reported' => $totalizador,
-                'flow_reported' => $caudal,
-                'water_table_reported' => $nivelFreatico,
-                'report_date' => Carbon::now()->toDateTimeString()
-            ]);
-
-
-
-        } catch(\Exception $e) {
-            return $e->getMessage();
-        }
-    }
 
     protected function getCheckPoints()
     {
