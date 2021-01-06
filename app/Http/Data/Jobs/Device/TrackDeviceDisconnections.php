@@ -32,13 +32,28 @@ class TrackDeviceDisconnections implements ShouldQueue
     public function handle()
     {
         $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
-                return  optional($device->report)->state === 0 ||
+            if($device->from_bio === 1) {
+                $state =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($device)->internal_id)
+                    ->first()->state;
+            } else {
+                $state = optional($device->report)->state ;
+            }    
+
+            return  $state === 0 ||
                         (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
         });
 
         foreach($devices as  $device){
+            if($device->from_bio === 1) {
+                $state =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($device)->internal_id)
+                    ->first()->state;
+            } else {
+                $state = optional($device->report)->state ;
+            }
             if(optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
-                if(optional($device->report)->state === 0) {
+                if($state === 0) {
                     continue;
                 } else {
                     $last = $device->last_disconnection->first();
