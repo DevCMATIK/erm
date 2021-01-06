@@ -63,6 +63,8 @@ class TestController extends SoapController
                 }
             }
         }
+
+        dd($devices);
     }
 
     protected function getSensors($checkPoint)
