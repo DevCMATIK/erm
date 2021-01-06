@@ -62,7 +62,7 @@ class TrackDeviceDisconnections implements ShouldQueue
                     $last->save();
                 }
             } else {
-                if(optional($device->report)->state === 0) {
+                if($state === 0) {
                     $device->disconnections()->create([
                         'start_date' => Carbon::now()->toDateTimeString()
                     ]);
