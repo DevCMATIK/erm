@@ -97,9 +97,9 @@
         <!-- BEGIN Left Aside -->
         <aside class="page-sidebar bg-info-800">
             <div class="page-logo bg-info-900 flex-column">
-                <span class="page-logo-link mr-1 mt-2 mb-n3 fs-xl font-weight-bolder">{{ config('app.name') }} <small>®</small></span> <br>
+                <img src="{{ asset('images/logo-white-st.PNG') }}" alt="" style="width: 60%;  bottom: 0;">
 
-                <p class="page-logo-text text-white mr-1 fs-sm ">Efficient Resource Management</p>
+                <p class="page-logo-text text-white mr-1 fs-sm  mt-n3">Efficient Resource Management</p>
             </div>
             <!-- BEGIN PRIMARY NAVIGATION -->
             <nav id="js-primary-nav" class="primary-nav bg-info-800" role="navigation">
