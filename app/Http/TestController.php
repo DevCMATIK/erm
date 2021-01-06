@@ -14,6 +14,7 @@ use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Water\BackupWaterYear;
 use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Sentinel;
 use SoapHeader;
 use Redis;
@@ -25,10 +26,43 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        dd( $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
-            return  optional($device->report)->state === 0 ||
+        $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
+            if($device->from_bio === 1) {
+                $state =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($device)->internal_id)
+                    ->first()->state;
+            } else {
+                $state = optional($device->report)->state ;
+            }
+
+            return  $state === 0 ||
                 (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
-        }));
+        });
+
+        foreach($devices as  $device){
+            if($device->from_bio === 1) {
+                $state =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($device)->internal_id)
+                    ->first()->state;
+            } else {
+                $state = optional($device->report)->state ;
+            }
+            if(optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
+                if($state === 0) {
+                    continue;
+                } else {
+                    $last = $device->last_disconnection->first();
+                    $last->end_date = Carbon::now()->toDateTimeString();
+                    $last->save();
+                }
+            } else {
+                if(optional($device->report)->state === 0) {
+                    $device->disconnections()->create([
+                        'start_date' => Carbon::now()->toDateTimeString()
+                    ]);
+                }
+            }
+        }
     }
 
     protected function getSensors($checkPoint)
