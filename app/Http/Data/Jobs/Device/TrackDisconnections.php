@@ -32,7 +32,7 @@ class TrackDisconnections implements ShouldQueue
      */
     public function handle()
     {
-        $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
+        $devices =  Device::with('report','disconnections','last_disconnection')->where('from_bio',0)->get()->filter(function($device){
             if($device->from_bio === 1) {
                 $state =  DB::connection('bioseguridad')->table('reports')
                     ->where('grd_id',optional($device)->internal_id)
