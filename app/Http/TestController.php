@@ -25,7 +25,10 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        \Cache::store("redis")->flush();
+        dd( $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
+            return  optional($device->report)->state === 0 ||
+                (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
+        }));
     }
 
     protected function getSensors($checkPoint)
