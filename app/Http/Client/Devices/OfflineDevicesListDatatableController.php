@@ -6,6 +6,7 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Device;
 use App\Http\System\DataTable\DataTableAbstract;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Sentinel;
 
 class OfflineDevicesListDatatableController extends DataTableAbstract
@@ -13,7 +14,14 @@ class OfflineDevicesListDatatableController extends DataTableAbstract
     public function getRecords()
     {
         return  Device::with('report','check_point.sub_zones.zone','last_disconnection')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
-            return optional($device->report)->state === 0;
+            if($device->from_bio === 1) {
+                $state =  DB::connection('bioseguridad')->table('reports')
+                    ->where('grd_id',optional($device)->internal_id)
+                    ->first()->state;
+            } else {
+                $state = optional($device->report)->state ;
+            }
+            return $state === 0;
         });
     }
 
@@ -23,8 +31,8 @@ class OfflineDevicesListDatatableController extends DataTableAbstract
             $record->check_point->sub_zones()->first()->zone->name,
             $record->check_point->sub_zones()->first()->name,
             $record->check_point->name,
-            optional($record->last_disconnection()->first())->start_date,
-            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_disconnection()->first()->start_date)),
+            optional($record->last_disconnection()->first())->start_date ?? '',
+            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_disconnection()->first()->start_date) ?? now()->toDateTimeString()),
         ];
     }
 

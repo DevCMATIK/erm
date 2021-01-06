@@ -9,6 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\DB;
 
 class TrackDeviceDisconnections implements ShouldQueue
 {
@@ -38,7 +39,7 @@ class TrackDeviceDisconnections implements ShouldQueue
                     ->first()->state;
             } else {
                 $state = optional($device->report)->state ;
-            }    
+            }
 
             return  $state === 0 ||
                         (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
