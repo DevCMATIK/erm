@@ -14,6 +14,7 @@ use App\Http\Data\Jobs\CheckPOint\CalculateConsumptions;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Jobs\Device\NotifyDevicesOffline;
 use App\Http\Data\Jobs\Device\TrackDeviceDisconnections;
+use App\Http\Data\Jobs\Device\TrackDisconnections;
 use App\Http\Data\Jobs\ProcessData;
 use App\Http\Data\Jobs\Sensors\BackupAnalogousSensors;
 use App\Http\Data\Jobs\Sensors\BackupDigitalSensors;
@@ -77,7 +78,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
         $schedule->job(new NotifyDevicesOffline())->hourly();
-        $schedule->job(new TrackDeviceDisconnections(),'tracking-queue')->everyMinute();
+        $schedule->job(new TrackDisconnections(),'tracking-queue')->everyMinute();
 
         // Get all tasks from the database
         $mailReports = MailReport::active()->get();
