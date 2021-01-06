@@ -40,7 +40,7 @@
     </tr>
     <tr>
         <td align="center" bgcolor="#0960a5" style="padding: 5px 5px 5px 5px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-            <img src="{{ asset('images/logo-white-st.PNG') }}" alt="" width="30%"  style="margin-top: 7px;">
+            <img src="{{ asset('images/logo-white-ct.PNG') }}" alt="" width="30%"  style="margin-top: 7px;">
         </td>
     </tr>
 
