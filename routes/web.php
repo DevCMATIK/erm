@@ -294,4 +294,9 @@ Route::get('TestView', function() {
 });
 
 
+Route::get('force-dga',function(){
+    \App\Http\Data\Jobs\CheckPoint\ReportToDGA::dispatch(1)->onQueue('tracking-queue');
+    echo 'Se ha enviado el job de DGA';
+});
+
 
