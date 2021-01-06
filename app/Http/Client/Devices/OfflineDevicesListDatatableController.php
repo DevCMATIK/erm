@@ -28,8 +28,8 @@ class OfflineDevicesListDatatableController extends DataTableAbstract
     public function getRecord($record)
     {
         return [
-            $record->check_point->sub_zones()->first()->zone->name,
-            $record->check_point->sub_zones()->first()->name,
+            $record->check_point->sub_zones->first()->zone->name,
+            $record->check_point->sub_zones->first()->name,
             $record->check_point->name,
             optional($record->last_disconnection()->first())->start_date ?? '',
             Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_disconnection()->first()->start_date) ?? now()->toDateTimeString()),
