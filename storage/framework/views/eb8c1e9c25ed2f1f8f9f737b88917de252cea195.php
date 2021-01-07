@@ -1,8 +1,7 @@
-
 <?php $__env->startSection('page-title','Sub Zonas'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
-    <?php echo makeLink('/zones','Zonas','fa-sitemap','btn-info','btn-sm'); ?>
+    <?php echo makeLink('/zones','Zonas','fa-sitemap','btn-info','btn-md'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-content'); ?>
