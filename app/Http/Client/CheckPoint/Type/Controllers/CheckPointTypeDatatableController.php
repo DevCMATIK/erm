@@ -28,7 +28,8 @@ class CheckPointTypeDatatableController extends DataTableAbstract
         return makeGroupedLinks(
             array_merge(
                 $this->getDefaultOptions($record->id),[
-                makeLink("/check-points?type={$record->slug}","Puntos de Control ({$record->check_points_count})",'fa-sitemap','btn-primary','btn-md','true')
+                makeLink("/check-points?type={$record->slug}","Puntos de Control ({$record->check_points_count})",'fa-sitemap','btn-primary','btn-md','true'),
+                makeRemoteLink("/check-points/create?type={$record->slug}","Crear punto de control",'fa-plus','btn-primary','btn-md','true')
             ]));
     }
 }
