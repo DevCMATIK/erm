@@ -24,6 +24,15 @@ class ProductionAreaZonesController extends Controller
                     $productionArea->zones()->detach();
                 }
                 $productionArea->zones()->attach($request->zones);
+
+                $production_area = ProductionArea::with(['zones.sub_zones','users'])->findOrFail($id);
+
+                foreach($production_area->zones as $zone) {
+                    foreach($zone->sub_zones as $sub_zone) {
+                        $sub_zone->users()->syncWithoutDetaching($production_area->users->pluck('id')->toArray() ?? []);
+
+                    }
+                }
                 return response()->json(['success' => 'Zonas Asignadas.'],200);
 
         } else {
