@@ -31,6 +31,7 @@ class ZoneDatatableController extends DataTableAbstract
            array_merge(
                 $this->getDefaultOptions($record->id),[
                 makeLink("/sub-zones?zone={$record->slug}","Sub Zonas ({$record->sub_zones_count})",'fa-sitemap','btn-primary','btn-md','true'),
+                makeRemoteLink("/sub-zones/create?zone={$record->slug}","Crear sub zona",'fa-plus','btn-primary','btn-md','true'),
                 makeRemoteLink("/subZoneSerialization/{$record->id}","Reordernar Sub zonas",'fa-list-ol','btn-primary','btn-md','true')
        ]));
     }

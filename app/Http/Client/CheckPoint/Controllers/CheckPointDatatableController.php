@@ -32,7 +32,8 @@ class CheckPointDatatableController extends DataTableAbstract
         return makeGroupedLinks(
             array_merge(
                 $this->getDefaultOptions($record->id),[
-                makeLink("/devices?check_point_id={$record->id}","Dispositivos ({$record->devices_count})",'fa-sitemap','btn-primary','btn-md','true')
+                makeLink("/devices?check_point_id={$record->id}","Dispositivos ({$record->devices_count})",'fa-sitemap','btn-primary','btn-md','true'),
+                makeRemoteLink("/devices/create?check_point_id={$record->id}","Crear dispositivo",'fa-plus','btn-primary','btn-md','true')
             ]));
     }
 }

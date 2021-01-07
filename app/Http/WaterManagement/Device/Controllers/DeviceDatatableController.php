@@ -33,6 +33,7 @@ class DeviceDatatableController extends DataTableAbstract
             array_merge(
                 $this->getDefaultOptions($record->id),[
                 makeLink("/sensors?device_id={$record->id}","Sensores ({$record->sensors_count})",'fa-sitemap','btn-primary','btn-md','true'),
+                makeRemoteLink("/sensors/create?device_id={$record->id}","Crear sensor",'fa-plus','btn-primary','btn-md','true'),
                 makeRemoteLink('/device-disconnections/'.$record->id,'Desconexiones','fa-database','btn-link','btn-sm',true)
 
             ]));

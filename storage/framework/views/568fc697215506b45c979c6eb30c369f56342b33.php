@@ -2,7 +2,7 @@
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
 
-    <?php echo makeRemoteLink('/zoneSerialization','Serializar','fa-list-ol','btn-info','btn-sm'); ?>
+    <?php echo makeRemoteLink('/zoneSerialization','Serializar','fa-list-ol','btn-info','btn-md'); ?>
 
 
 <?php $__env->stopSection(); ?>
