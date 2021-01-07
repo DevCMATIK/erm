@@ -4,7 +4,7 @@
 @if(Sentinel::getUser()->hasAccess('menus.serialize'))
 @section('page-buttons')
 
-    {!! makeRemoteLink('/menuSerialization','Serializar','fa-list-ol','btn-info','btn-sm') !!}
+    {!! makeRemoteLink('/menuSerialization','Serializar','fa-list-ol','btn-info','btn-md') !!}
 
 @endsection
 @endif

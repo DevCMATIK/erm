@@ -3,7 +3,7 @@
 @section('page-icon','database')
 @section('page-buttons')
 
-    {!! makeLink('/export-commands-executed','Exportar','fa-file-excel','btn-success','btn-sm') !!}
+    {!! makeLink('/export-commands-executed','Exportar','fa-file-excel','btn-success','btn-md') !!}
 
 @endsection
 @section('page-content')
