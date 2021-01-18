@@ -27,11 +27,11 @@ class TestController extends SoapController
     public function __invoke()
     {
         $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
-            if($device->from_bio === 1) {
-                $state =  DB::connection('bioseguridad')->table('reports')
-                    ->where('grd_id',optional($device)->internal_id)
-                    ->first()->state;
-            } else {
+            if($device->from_bio !== 1) {
+                /* $state =  DB::connection('bioseguridad')->table('reports')
+                     ->where('grd_id',optional($device)->internal_id)
+                     ->first()->state;
+             } else {*/
                 $state = optional($device->report)->state ;
             }
 
@@ -39,16 +39,18 @@ class TestController extends SoapController
                 (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
         });
 
-        foreach($devices as  $device){
-            if($device->from_bio === 1) {
-                $state =  DB::connection('bioseguridad')->table('reports')
-                    ->where('grd_id',optional($device)->internal_id)
-                    ->first()->state;
-            } else {
-                $state = optional($device->report)->state ;
+        dd($devices->toArray());
+
+        foreach($devices as  $device) {
+            if ($device->from_bio !== 1) {
+                /* $state =  DB::connection('bioseguridad')->table('reports')
+                     ->where('grd_id',optional($device)->internal_id)
+                     ->first()->state;
+             } else {*/
+                $state = optional($device->report)->state;
             }
-            if(optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
-                if($state === 0) {
+            if (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
+                if ($state === 0) {
                     continue;
                 } else {
                     $last = $device->last_disconnection->first();
@@ -56,15 +58,13 @@ class TestController extends SoapController
                     $last->save();
                 }
             } else {
-                if(optional($device->report)->state === 0) {
+                if ($state === 0) {
                     $device->disconnections()->create([
                         'start_date' => Carbon::now()->toDateTimeString()
                     ]);
                 }
             }
         }
-
-        dd($devices);
     }
 
     protected function getSensors($checkPoint)
