@@ -13,7 +13,7 @@ class OfflineDevicesDatatableController extends DataTableAbstract
 {
     public function getRecords()
     {
-        return  Device::with('report','check_point.sub_zones.zone','last_disconnection')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
+        return  Device::with('report','check_point.sub_zones.zone','last_dc')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
             return optional($device->report)->state === 0;
         });
     }
@@ -25,8 +25,8 @@ class OfflineDevicesDatatableController extends DataTableAbstract
             $record->check_point->sub_zones()->first()->name,
             $record->check_point->name,
             $record->name,
-            optional($record->last_disconnection()->first())->start_date,
-            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_disconnection()->first()->start_date)),
+            optional($record->last_dc)->start_date,
+            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_dc()->start_date)),
             makeRemoteLink('/client-device-disconnections/'.$record->id,'Log','fa-database','btn-link','btn-sm')
         ];
     }
