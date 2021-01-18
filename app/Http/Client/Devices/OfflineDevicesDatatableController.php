@@ -26,7 +26,7 @@ class OfflineDevicesDatatableController extends DataTableAbstract
             $record->check_point->name,
             $record->name,
             optional($record->last_dc)->start_date,
-            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_dc()->start_date)),
+            Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse(optional($record->last_dc)->start_date ?? now()->toDateTimeString())),
             makeRemoteLink('/client-device-disconnections/'.$record->id,'Log','fa-database','btn-link','btn-sm')
         ];
     }
