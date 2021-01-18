@@ -16,6 +16,7 @@ use App\Http\Data\Jobs\Device\NotifyDevicesOffline;
 use App\Http\Data\Jobs\Device\TrackDeviceDisconnections;
 use App\Http\Data\Jobs\Device\TrackDisconnections;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromBio;
+use App\Http\Data\Jobs\Device\TrackDisconnectionsFromWater;
 use App\Http\Data\Jobs\ProcessData;
 use App\Http\Data\Jobs\Sensors\BackupAnalogousSensors;
 use App\Http\Data\Jobs\Sensors\BackupDigitalSensors;
@@ -79,7 +80,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
         $schedule->job(new NotifyDevicesOffline())->hourly();
-        $schedule->job(new TrackDisconnections(),'tracking-queue')->everyMinute();
+        $schedule->job(new TrackDisconnectionsFromWater(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromBio(),'tracking-queue')->everyMinute();
 
         // Get all tasks from the database
