@@ -39,6 +39,8 @@ class TrackDeviceDisconnections implements ShouldQueue
                     ->first()->state;
             } else {*/
                 $state = optional($device->report)->state ;
+            } else {
+                $state = 1;
             }
 
             return  $state === 0 ||
@@ -52,6 +54,8 @@ class TrackDeviceDisconnections implements ShouldQueue
                     ->first()->state;
             } else {*/
                 $state = optional($device->report)->state ;
+            } else {
+                $state = 1;
             }
             if(optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
                 if($state === 0) {
