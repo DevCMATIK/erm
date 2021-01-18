@@ -2,22 +2,12 @@
 
 namespace App\Http;
 
-use App\App\Controllers\Controller;
-use App\App\Controllers\Soap\InstanceSoapClient;
 use App\App\Controllers\Soap\SoapController;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
-use App\Domain\WaterManagement\Device\Sensor\Sensor;
-use App\Domain\WaterManagement\Sensor\Consumption\WaterConsumption;
-use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
-use App\Http\Data\Water\BackupWaterYear;
-use App\Http\WaterManagement\Dashboard\Alarm\Traits\HasAuditTrait;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Sentinel;
-use SoapHeader;
-use Redis;
 
 
 class TestController extends SoapController
@@ -26,16 +16,34 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $devices =  Device::with('report','last_dc')->where('from_bio',0)
-            ->get()->filter(function($device){
-                return  optional($device->report)->state  === 0 ||
-                (optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null);
+        $devices =  Device::with('report','last_dc')->where('from_bio',0)->get()->filter(function($device){
+            return  optional($device->report)->state  === 0 ||
+                (
+                    optional($device->last_disconnection->first())->start_date != ''
+                    &&
+                    optional($device->last_disconnection->first())->end_date == null
+                );
         });
 
-        //dd($devices->toArray());
+        foreach($devices as  $device){
 
-        foreach($devices as  $device) {
-            dd($device->last_dc->end_date);
+            $state = optional($device->report)->state ;
+
+            if(optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null) {
+                if($state === 0) {
+                    continue;
+                } else {
+                    $last = $device->last_dc;
+                    $last->end_date = Carbon::now()->toDateTimeString();
+                    $last->save();
+                }
+            } else {
+                if($state === 0) {
+                    $device->disconnections()->create([
+                        'start_date' => Carbon::now()->toDateTimeString()
+                    ]);
+                }
+            }
         }
     }
 
