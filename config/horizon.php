@@ -194,7 +194,7 @@ return [
                     'tracking-queue'
                 ],
                 'balance' => 'simple',
-                'processes' => 1,
+                'processes' => 9,
                 'tries' => 1,
                 'timeout' => 15,
             ],
@@ -254,7 +254,7 @@ return [
                     'tracking-queue'
                 ],
                 'balance' => 'simple',
-                'processes' => 1,
+                'processes' => 9,
                 'tries' => 1,
                 'timeout' => 15,
             ]
