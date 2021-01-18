@@ -120,6 +120,11 @@ class Device extends Model implements Auditable
         return $this->disconnections()->orderBy('id','desc');
     }
 
+    public function last_dc()
+    {
+        return $this->hasOne(DeviceOfflineLog::class,'device_id','id')->orderBy('id','desc');
+    }
+
     public function scopeCheckPointType($query,$slug)
     {
         return $this->whereHas('check_point',function($q) use($slug){

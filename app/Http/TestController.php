@@ -26,36 +26,22 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $devices =  Device::with('report','disconnections','last_disconnection')->get()->filter(function($device){
-            if($device->from_bio !== 1) {
-                /* $state =  DB::connection('bioseguridad')->table('reports')
-                     ->where('grd_id',optional($device)->internal_id)
-                     ->first()->state;
-             } else {*/
-                $state = optional($device->report)->state ;
-            } else {
-                $state = 1;
-            }
-
-            return  $state === 0 ||
-                (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null);
+        $devices =  Device::with('report','last_dc')->where('from_bio',0)
+            ->get()->filter(function($device){
+                return  optional($device->report)->state  === 0 ||
+                (optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null);
         });
 
         dd($devices->toArray());
 
         foreach($devices as  $device) {
-            if ($device->from_bio !== 1) {
-                /* $state =  DB::connection('bioseguridad')->table('reports')
-                     ->where('grd_id',optional($device)->internal_id)
-                     ->first()->state;
-             } else {*/
-                $state = optional($device->report)->state;
-            }
-            if (optional($device->last_disconnection->first())->start_date != '' && optional($device->last_disconnection->first())->end_date == null) {
+            $state = optional($device->report)->state;
+
+            if (optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null) {
                 if ($state === 0) {
                     continue;
                 } else {
-                    $last = $device->last_disconnection->first();
+                    $last = $device->last_dc;
                     $last->end_date = Carbon::now()->toDateTimeString();
                     $last->save();
                 }
