@@ -16,35 +16,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $devices =  Device::with('report','last_dc')->where('from_bio',0)->get()->filter(function($device){
-            return  optional($device->report)->state  === 0 ||
-                (
-                    optional($device->last_disconnection->first())->start_date != ''
-                    &&
-                    optional($device->last_disconnection->first())->end_date == null
-                );
-        });
-
-        foreach($devices as  $device){
-
-            $state = optional($device->report)->state ;
-
-            if(optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null) {
-                if($state === 0) {
-                    continue;
-                } else {
-                    $last = $device->last_dc;
-                    $last->end_date = Carbon::now()->toDateTimeString();
-                    $last->save();
-                }
-            } else {
-                if($state === 0) {
-                    $device->disconnections()->create([
-                        'start_date' => Carbon::now()->toDateTimeString()
-                    ]);
-                }
-            }
-        }
+        dd(Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse('2019-12-31 06:31:02'),3));
     }
 
     protected function getSensors($checkPoint)

@@ -20,8 +20,8 @@ class OfflineDevicesLogDatatableController extends DataTableAbstract
             $record->start_date,
             $record->end_date ?? 'Vigente',
             ($record->end_date != '')?
-                Carbon::parse($record->end_date)->longAbsoluteDiffForHumans(Carbon::parse($record->start_date)) :
-                Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->start_date))
+                Carbon::parse($record->end_date)->longAbsoluteDiffForHumans(Carbon::parse($record->start_date),3) :
+                Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->start_date),3)
         ];
     }
 }
