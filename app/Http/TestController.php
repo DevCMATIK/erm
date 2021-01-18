@@ -33,6 +33,8 @@ class TestController extends SoapController
                      ->first()->state;
              } else {*/
                 $state = optional($device->report)->state ;
+            } else {
+                $state = 1;
             }
 
             return  $state === 0 ||
