@@ -32,26 +32,10 @@ class TestController extends SoapController
                 (optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null);
         });
 
-        dd($devices->toArray());
+        //dd($devices->toArray());
 
         foreach($devices as  $device) {
-            $state = optional($device->report)->state;
-
-            if (optional($device->last_dc)->start_date != '' && optional($device->last_dc)->end_date == null) {
-                if ($state === 0) {
-                    continue;
-                } else {
-                    $last = $device->last_dc;
-                    $last->end_date = Carbon::now()->toDateTimeString();
-                    $last->save();
-                }
-            } else {
-                if ($state === 0) {
-                    $device->disconnections()->create([
-                        'start_date' => Carbon::now()->toDateTimeString()
-                    ]);
-                }
-            }
+            dd($device->last_dc->end_date);
         }
     }
 
