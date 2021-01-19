@@ -6,6 +6,11 @@ use Carbon\Carbon;
 Route::middleware('auth')->group(function() {
     Route::view('d-electric','test.electric.index');
     Route::resource('groups','User\Group\Controllers\GroupController');
+
+    Route::get('restore-data','Data\Controllers\RestoreDataController@index');
+    Route::get('restore-data/get-sensor-data','Data\Controllers\RestoreDataController@getSensorData');
+    Route::get('restore-data/delete','Data\Controllers\RestoreDataController@deleteData');
+    Route::get('restore-data/begin-restore','Data\Controllers\RestoreDataController@beginRestore');
     //Client
     Route::get('getSubZones/{zone_id}/{check_point_id?}','Client\CheckPoint\Controllers\GetSubZonesController@getSubZones');
     Route::resource('check-points','Client\CheckPoint\Controllers\CheckPointController');
