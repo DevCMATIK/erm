@@ -48,89 +48,92 @@ class RestoreDataForSensor implements ShouldQueue
             ->whereRaw("timestamp between '{$this->current_date} 00:00:00' and '{$this->current_date} 23:59:59'")
             ->get();
         $records = $this->getRowsFilteredByInterval($rows,$sensor->type->interval,$this->current_date);
-        if($sensor->address->configuration_type == 'scale') {
-            $toInsert = array();
-            if (!$disposition = $sensor->selected_disposition->first()) {
-                $disposition = $sensor->dispositions()->first();
-            }
+        if(count($records) > 0) {
+            if($sensor->address->configuration_type == 'scale') {
+                $toInsert = array();
+                if (!$disposition = $sensor->selected_disposition->first()) {
+                    $disposition = $sensor->dispositions()->first();
+                }
 
-            if ($disposition) {
-                foreach ($records as $record) {
-                    $value = $record['value'];
-                    $ingMin = optional($disposition)->sensor_min;
-                    $ingMax = optional($disposition)->sensor_max;
-                    $escalaMin = optional($disposition)->scale_min;
-                    $escalaMax = optional($disposition)->scale_max;
-                    if($escalaMin == null && $escalaMax == null) {
-                        $data = ($ingMin * $value) + $ingMax;
-                    } else {
-                        $f1 = $ingMax - $ingMin;
-                        $f2 = $escalaMax - $escalaMin;
-                        $f3 = $value - $escalaMin;
-                        if($f2 == 0) {
-                            $data = ((0)*($f3)) + $ingMin ;
+                if ($disposition) {
+                    foreach ($records as $record) {
+                        $value = $record['value'];
+                        $ingMin = optional($disposition)->sensor_min;
+                        $ingMax = optional($disposition)->sensor_max;
+                        $escalaMin = optional($disposition)->scale_min;
+                        $escalaMax = optional($disposition)->scale_max;
+                        if($escalaMin == null && $escalaMax == null) {
+                            $data = ($ingMin * $value) + $ingMax;
                         } else {
-                            $data = (($f1/$f2)*($f3)) + $ingMin ;
-                        }
-                    }
-                    if($disposition->unit->name == 'mt') {
-                        $data = $sensor->max_value + $data;
-                    }
-                    $ranges = $sensor->ranges;
-                    if (count($ranges) > 0) {
-                        foreach($ranges as $range) {
-                            if((float)$data >= $range->min && (float)$data <= $range->max) {
-                                $color = $range->color;
+                            $f1 = $ingMax - $ingMin;
+                            $f2 = $escalaMax - $escalaMin;
+                            $f3 = $value - $escalaMin;
+                            if($f2 == 0) {
+                                $data = ((0)*($f3)) + $ingMin ;
+                            } else {
+                                $data = (($f1/$f2)*($f3)) + $ingMin ;
                             }
                         }
+                        if($disposition->unit->name == 'mt') {
+                            $data = $sensor->max_value + $data;
+                        }
+                        $ranges = $sensor->ranges;
+                        if (count($ranges) > 0) {
+                            foreach($ranges as $range) {
+                                if((float)$data >= $range->min && (float)$data <= $range->max) {
+                                    $color = $range->color;
+                                }
+                            }
+                        }
+                        if(!isset($color) || $color == '') {
+                            $color = null;
+                        }
+                        array_push($toInsert, [
+                            'device_id' => $sensor->device->id,
+                            'register_type' => $sensor->address->register_type_id,
+                            'address' => $sensor->address_number,
+                            'sensor_id' => $sensor->id,
+                            'scale' => $disposition->name,
+                            'scale_min'=> $disposition->scale_min,
+                            'scale_max' => $disposition->scale_max,
+                            'ing_min' => $disposition->sensor_min,
+                            'ing_max' => $disposition->sensor_max,
+                            'unit' => $disposition->unit->name,
+                            'value' => $value,
+                            'result' => $data,
+                            'scale_color' => $color,
+                            'date' => $record['timestamp'],
+                            'pump_location' => $sensor->max_value
+                        ]);
                     }
-                    if(!isset($color) || $color == '') {
-                        $color = null;
+                }
+                AnalogousReport::insert($toInsert);
+
+
+            } else {
+                $toInsert = array();
+                $label = $sensor->label;
+                if ($label) {
+                    foreach ($records as $record) {
+                        array_push($toInsert, [
+                            'device_id' => $sensor->device->id,
+                            'register_type' => $sensor->address->register_type_id,
+                            'address' => $sensor->address_number,
+                            'sensor_id' => $sensor->id,
+                            'name' => $sensor->name,
+                            'on_label' => $label->on_label,
+                            'off_label' => $label->off_label,
+                            'value' => $record['value'],
+                            'label' => ($record['value'] == 1)? $label->on_label : $label->off_label,
+                            'date' => $record['timestamp']
+                        ]);
                     }
-                    array_push($toInsert, [
-                        'device_id' => $sensor->device->id,
-                        'register_type' => $sensor->address->register_type_id,
-                        'address' => $sensor->address_number,
-                        'sensor_id' => $sensor->id,
-                        'scale' => $disposition->name,
-                        'scale_min'=> $disposition->scale_min,
-                        'scale_max' => $disposition->scale_max,
-                        'ing_min' => $disposition->sensor_min,
-                        'ing_max' => $disposition->sensor_max,
-                        'unit' => $disposition->unit->name,
-                        'value' => $value,
-                        'result' => $data,
-                        'scale_color' => $color,
-                        'date' => $record['timestamp'],
-                        'pump_location' => $sensor->max_value
-                    ]);
                 }
+
+                DigitalReport::insert($toInsert);
             }
-            AnalogousReport::insert($toInsert);
-
-
-        } else {
-            $toInsert = array();
-            $label = $sensor->label;
-            if ($label) {
-                foreach ($records as $record) {
-                    array_push($toInsert, [
-                        'device_id' => $sensor->device->id,
-                        'register_type' => $sensor->address->register_type_id,
-                        'address' => $sensor->address_number,
-                        'sensor_id' => $sensor->id,
-                        'name' => $sensor->name,
-                        'on_label' => $label->on_label,
-                        'off_label' => $label->off_label,
-                        'value' => $record['value'],
-                        'label' => ($record['value'] == 1)? $label->on_label : $label->off_label,
-                        'date' => $record['timestamp']
-                    ]);
-                }
-            }
-
-            DigitalReport::insert($toInsert);
         }
+
 
         if($this->current_date != $this->end_date) {
             RestoreDataForSensor::dispatch($this->sensor_id,$this->start_date,$this->end_date,Carbon::parse($this->current_date)->addDay()->toDateString())->onQueue('long-running-queue-low');
@@ -149,94 +152,118 @@ class RestoreDataForSensor implements ShouldQueue
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:04:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
+
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:05:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:09:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:10:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:14:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:15:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:19:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:20:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:24:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:25:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
-
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:34:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:35:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:39:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:40:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:44:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:45:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:49:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:50:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:54:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:55:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                }
 
                break;
@@ -249,46 +276,58 @@ class RestoreDataForSensor implements ShouldQueue
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:09:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:10:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:19:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:20:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:39:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:40:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:49:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:50:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                }
                break;
            case 15:
@@ -300,30 +339,38 @@ class RestoreDataForSensor implements ShouldQueue
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:14:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:15:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:44:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:45:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
 
                }
@@ -337,15 +384,19 @@ class RestoreDataForSensor implements ShouldQueue
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
 
                }
                break;
@@ -358,12 +409,19 @@ class RestoreDataForSensor implements ShouldQueue
                            strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                            && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
                        );
-                   })->first()->toArray();
-                   array_push($newRows,$row);
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
                }
                break;
            default:
-               $newRows = $rows->toArray();
+               if(count($rows) > 0) {
+                   $newRows = $rows->toArray();
+               } else {
+                   $newRows = [];
+               }
+
 
        }
 
