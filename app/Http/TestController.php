@@ -6,6 +6,7 @@ use App\App\Controllers\Soap\SoapController;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Device;
+use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Sentinel;
 
@@ -16,7 +17,21 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        dd(Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse('2019-12-31 06:31:02'),3));
+        dd( Sensor::with([
+            'type.interpreters',
+            'dispositions.unit',
+            'device.report',
+            'ranges'
+        ])->whereIn('type_id',function($query){
+            $query->select('id')->from('sensor_types')
+                ->where('slug','ee-p-act-u');
+        })->whereIn('id',function($query) {
+            $query->select('sensor_id')
+                ->from('sub_element_sensors')
+                ->leftJoin('sub_zone_sub_elements','sub_element_sensors.sub_element_id','=','sub_zone_sub_elements.id')
+                ->leftJoin('sub_zone_elements','sub_zone_elements.id','=','sub_zone_sub_elements.sub_zone_element_id')
+                ->where('sub_zone_elements.sub_zone_id',65);
+        })->whereIn('name',['P1','P2','P3'])->toSql());
     }
 
     protected function getSensors($checkPoint)
