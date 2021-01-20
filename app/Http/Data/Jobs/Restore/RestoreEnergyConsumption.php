@@ -46,29 +46,31 @@ class RestoreEnergyConsumption implements ShouldQueue
             'analogous_reports' => $reportsFilter,
             'consumptions'
         ])->first();
-
-        if(count($sensor->consumptions) > 0) {
-            $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
-            $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-        } else {
-            $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
-            $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-        }
-        $consumption_yesterday = $sensor->consumptions->where('date',$first_date)->first();
-        if(!$consumption_yesterday) {
-            if ($first_read && $last_read) {
-                $consumption = $last_read - $first_read;
-                ElectricityConsumption::create([
-                    'sensor_id' => $sensor->id,
-                    'first_read' => $first_read,
-                    'last_read' => $last_read,
-                    'consumption' => $consumption,
-                    'sensor_type' => $sensor->type->slug,
-                    'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                    'date' => $first_date
-                ]);
+        if($sensor) {
+            if(count($sensor->consumptions) > 0) {
+                $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
+                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
+            } else {
+                $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
+                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
+            }
+            $consumption_yesterday = $sensor->consumptions->where('date',$first_date)->first();
+            if(!$consumption_yesterday) {
+                if ($first_read && $last_read) {
+                    $consumption = $last_read - $first_read;
+                    ElectricityConsumption::create([
+                        'sensor_id' => $sensor->id,
+                        'first_read' => $first_read,
+                        'last_read' => $last_read,
+                        'consumption' => $consumption,
+                        'sensor_type' => $sensor->type->slug,
+                        'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
+                        'date' => $first_date
+                    ]);
+                }
             }
         }
+
 
         if($this->current_date != $this->end_date) {
             RestoreEnergyConsumption::dispatch($sensor->id,$this->start_date,$this->end_date,Carbon::parse($this->current_date)->addDay()->toDateString())->onQueue('long-running-queue-low');
