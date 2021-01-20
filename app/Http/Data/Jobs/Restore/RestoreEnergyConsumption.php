@@ -38,14 +38,14 @@ class RestoreEnergyConsumption implements ShouldQueue
     public function handle()
     {
         $first_date = Carbon::parse($this->current_date)->subDay()->toDateString();
-        $sensor =  Sensor::find($this->sensor_id)
+        $sensor =  Sensor::where('id',$this->sensor_id)
             ->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date){
             return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$this->current_date} 00:01:00'");
         })->with([
             'device.check_point.sub_zones',
             'analogous_reports' => $reportsFilter,
             'consumptions'
-        ])->get();
+        ])->first();
 
         if(count($sensor->consumptions) > 0) {
             $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
