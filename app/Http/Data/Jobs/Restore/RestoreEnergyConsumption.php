@@ -73,7 +73,7 @@ class RestoreEnergyConsumption implements ShouldQueue
 
 
         if($this->current_date != $this->end_date) {
-            RestoreEnergyConsumption::dispatch($sensor->id,$this->start_date,$this->end_date,Carbon::parse($this->current_date)->addDay()->toDateString())->onQueue('long-running-queue-low');
+            RestoreEnergyConsumption::dispatch($this->sensor_id,$this->start_date,$this->end_date,Carbon::parse($this->current_date)->addDay()->toDateString())->onQueue('long-running-queue-low');
         }
 
     }
