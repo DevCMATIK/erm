@@ -17,7 +17,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $sensor = Sensor::with(['device','address','type','dispositions','selected_disposition','ranges'])->find($this->sensor_id);
+        $sensor = Sensor::with(['device','address','type','dispositions','selected_disposition','ranges'])->find(1632);
 
         $rows = Historical::where('grd_id', $sensor->device->internal_id)
             ->where('register_type',$sensor->address->register_type_id)
