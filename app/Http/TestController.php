@@ -34,6 +34,7 @@ class TestController extends SoapController
                     && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
                 );
             })->first();
+            dd($row);
             if($row) {
                 array_push($newRows,$row->toArray());
             }
