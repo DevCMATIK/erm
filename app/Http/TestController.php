@@ -47,6 +47,6 @@ class TestController extends SoapController
                 array_push($newRows,$row->toArray());
             }
         }
-        dd($newRows,$rows)
+        dd($newRows,$rows);
     }
 }
