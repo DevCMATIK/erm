@@ -149,8 +149,8 @@ class RestoreDataForSensor implements ShouldQueue
                    $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:09:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:00:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:09:59")
                        );
                    })->first();
                    if($row) {
@@ -158,8 +158,8 @@ class RestoreDataForSensor implements ShouldQueue
                    }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:10:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:19:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:10:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:19:59")
                        );
                    })->first();
                    if($row) {
@@ -167,18 +167,8 @@ class RestoreDataForSensor implements ShouldQueue
                    }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:20:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
-                       );
-                   })->first();
-                   if($row) {
-                       array_push($newRows,$row->toArray());
-                   }
-
-                   $row = $rows->filter(function($item) use ($hour,$current_date){
-                       return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:39:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:20:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:29:59")
                        );
                    })->first();
                    if($row) {
@@ -187,8 +177,8 @@ class RestoreDataForSensor implements ShouldQueue
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:40:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:49:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:30:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:39:59")
                        );
                    })->first();
                    if($row) {
@@ -197,8 +187,18 @@ class RestoreDataForSensor implements ShouldQueue
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:50:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:40:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:49:59")
+                       );
+                   })->first();
+                   if($row) {
+                       array_push($newRows,$row->toArray());
+                   }
+
+                   $row = $rows->filter(function($item) use ($hour,$current_date){
+                       return (
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:50:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:59:59")
                        );
                    })->first();
                    if($row) {
@@ -212,8 +212,8 @@ class RestoreDataForSensor implements ShouldQueue
                    $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:14:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:00:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:14:59")
                        );
                    })->first();
                    if($row) {
@@ -221,8 +221,8 @@ class RestoreDataForSensor implements ShouldQueue
                    }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:15:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:15:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:29:59")
                        );
                    })->first();
                    if($row) {
@@ -230,8 +230,8 @@ class RestoreDataForSensor implements ShouldQueue
                    }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:44:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:30:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:44:59")
                        );
                    })->first();
                    if($row) {
@@ -240,8 +240,8 @@ class RestoreDataForSensor implements ShouldQueue
 
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:45:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:45:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:59:59")
                        );
                    })->first();
                    if($row) {
@@ -257,8 +257,8 @@ class RestoreDataForSensor implements ShouldQueue
                    $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:00:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:29:59")
                        );
                    })->first();
                    if($row) {
@@ -266,8 +266,8 @@ class RestoreDataForSensor implements ShouldQueue
                    }
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:30:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:59:59")
                        );
                    })->first();
                    if($row) {
@@ -282,8 +282,8 @@ class RestoreDataForSensor implements ShouldQueue
                    $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
                    $row = $rows->filter(function($item) use ($hour,$current_date){
                        return (
-                           strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
-                           && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
+                           strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:00:00")
+                           && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:59:59")
                        );
                    })->first();
                    if($row) {
