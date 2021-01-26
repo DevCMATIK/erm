@@ -30,7 +30,7 @@ class TestController extends SoapController
             $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
             $row = $rows->filter(function($item) use ($hour,$current_date){
 
-                dd($item,strtotime($item->timestamp) ,strtotime("{$current_date} {$hour}:00:00"));
+                dd($item->timestamp,strtotime($item->timestamp) ,strtotime("{$current_date} {$hour}:00:00"));
                 return (
                     strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
                     && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
