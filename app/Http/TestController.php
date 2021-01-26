@@ -29,21 +29,18 @@ class TestController extends SoapController
         for($i= 0;$i<24;$i++) {
             $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
             $row = $rows->filter(function($item) use ($hour,$current_date){
-
-                dd($item->toArray()['timestamp'],strtotime($item->timestamp) ,strtotime("{$current_date} {$hour}:00:00"));
                 return (
-                    strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:00:00")
-                    && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:29:59")
+                    strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:00:00")
+                    && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:29:59")
                 );
             })->first();
-            dd($row);
             if($row) {
                 array_push($newRows,$row->toArray());
             }
             $row = $rows->filter(function($item) use ($hour,$current_date){
                 return (
-                    strtotime($item->timestamp) > strtotime("{$current_date} {$hour}:30:00")
-                    && strtotime($item->timestamp) < strtotime("{$current_date} {$hour}:59:59")
+                    strtotime($item->toArray()['timestamp']) > strtotime("{$current_date} {$hour}:30:00")
+                    && strtotime($item->toArray()['timestamp']) < strtotime("{$current_date} {$hour}:59:59")
                 );
             })->first();
             if($row) {
