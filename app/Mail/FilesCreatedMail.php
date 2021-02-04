@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\Domain\Data\Export\ExportReminderFile;
 use App\Domain\System\File\File;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -31,7 +32,7 @@ class FilesCreatedMail extends Mailable
     {
         $files = ExportReminderFile::where('export_reminder_id',$this->reminder->id)->get();
         return $this->from('sys-erm@cmatik.app', 'ERM® CMATIK')
-            ->subject('Archivos disponibles para descargar ERM ® 2020')
+            ->subject('Archivos disponibles para descargar ERM ® '.Carbon::now()->year)
             ->view('emails.files-created')
             ->with([
                     'user' => $this->user,
