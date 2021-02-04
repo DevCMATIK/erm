@@ -26,7 +26,7 @@ class ExportDataTotal implements WithMultipleSheets
     {
         $sheets = [];
 
-        foreach($this->sensors as $sensor) {
+        foreach($this->sensors->unique() as $sensor) {
             if(optional($sensor->label)->name) {
                 $digital = true;
             } else {

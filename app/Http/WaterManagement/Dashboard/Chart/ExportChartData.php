@@ -49,7 +49,7 @@ class ExportChartData extends Controller
                 'expires_at' => Carbon::tomorrow()->toDateString()
             ]);
             $user_id = Sentinel::getUser()->id;
-            $jobs = $sensors->map(function($item) use($from,$to,$user_id,$reminder){
+            $jobs = $sensors->unique()->map(function($item) use($from,$to,$user_id,$reminder){
                 return new CreateFileForSensor($item,$from,$to,$user_id,$reminder);
             })->toArray();
             ExportDataBySensor::withChain(
