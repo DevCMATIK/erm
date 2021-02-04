@@ -94,7 +94,7 @@ class CreateFileForSensor implements ShouldQueue
 
     protected function getData()
     {
-        if(optional($this->sensor->label)->name) {
+        if($this->sensor->address->configuration_type == 'boolean') {
             $this->is_digital = true;
         } else {
             $this->is_digital = false;

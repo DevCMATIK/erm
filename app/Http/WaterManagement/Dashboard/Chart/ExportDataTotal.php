@@ -3,6 +3,7 @@
 namespace App\Http\Watermanagement\Dashboard\Chart;
 
 use App\Domain\Data\Analogous\AnalogousReport;
+use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\Data\Export\ExportReminder;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use App\Exports\ExportChartDataWithSheets;
@@ -20,6 +21,7 @@ use Rap2hpoutre\FastExcel\SheetCollection;
 
 class ExportDataTotal extends Controller
 {
+    public $is_digital;
     public function __invoke(Request $request)
     {
 
@@ -104,7 +106,7 @@ class ExportDataTotal extends Controller
     protected function query($sensor,$dates)
     {
         return $this->resolveDatesQuery(
-            AnalogousReport::query()
+            $this->resolveQuery($sensor)
                 ->with([
                     'sensor.device.check_point.sub_zones',
                     'sensor.type'
@@ -112,6 +114,17 @@ class ExportDataTotal extends Controller
                 ->where('sensor_id',$sensor->id),
             $dates
         )->orderBy('date');
+    }
+
+    protected function resolveQuery($sensor)
+    {
+        if($sensor->address->configuration_type == 'boolean') {
+            $this->is_digital = true;
+            return DigitalReport::query();
+        } else {
+            $this->is_digital = false;
+            return  AnalogousReport::query();
+        }
     }
 
     protected function mapQuery($sensor,$dates)
@@ -123,35 +136,58 @@ class ExportDataTotal extends Controller
 
     protected function getHeaders(): array
     {
-        return [
-            'Punto de Control',//=>$puntoControl
-            'Variable',
-            'Valor Leído',
-            'Unidad',
-            'Fecha',
-            'Hora',
-            'Descripción',
-        ];
+        if($this->is_digital) {
+            return [
+                'Punto de Control',
+                'Variable',
+                'Valor Leído',
+                'Etiqueta',
+                'Fecha',
+                'Hora',
+            ];
+        } else {
+            return [
+                'Punto de Control',
+                'Variable',
+                'Valor Leído',
+                'Unidad',
+                'Fecha',
+                'Hora',
+                'Descripción',
+            ];
+        }
     }
 
     public function resolveRow($row): array
     {
-        if($row->sensor->type->id === 1 && strtolower($row->unit) === 'mt') {
-            $interpreter = " UBba {$row->sensor->max_value} MT";
+        if ($this->is_digital) {
+            return  [
+                $row->sensor->device->check_point->name,
+                $row->sensor->name,
+                (string)$row->value,
+                $row->label,
+                Carbon::parse($row->date)->toDateString(),
+                Carbon::parse($row->date)->toTimeString(),
+            ];
         } else {
 
-            $interpreter = $row->interpreter;
-        }
-        return [
-            $row->sensor->device->name,
-            $row->sensor->name,
-            $row->result,
-            $row->unit,
-            Carbon::parse($row->date)->toDateString(),
-            Carbon::parse($row->date)->format('H:i'),
-            $interpreter,
+            if ($row->sensor->type->id === 1 && strtolower($row->unit) === 'mt') {
+                $interpreter = " UBba {$row->sensor->max_value} MT";
+            } else {
+                $interpreter = $row->interpreter;
+            }
 
-        ];
+            return [
+                $row->sensor->device->check_point->name,
+                $row->sensor->name,
+                $row->result,
+                $row->unit,
+                Carbon::parse($row->date)->toDateString(),
+                Carbon::parse($row->date)->toTimeString(),
+                $interpreter,
+            ];
+        }
+       
     }
 
     protected function resolveDatesQuery($query,$dates)
