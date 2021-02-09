@@ -187,7 +187,7 @@ class ExportDataTotal extends Controller
                 $interpreter,
             ];
         }
-       
+
     }
 
     protected function resolveDatesQuery($query,$dates)
