@@ -29,7 +29,7 @@ class TestController extends SoapController
                     DB::raw('COUNT(*) as "reports"')
                 ));
 
-            dd($reports->toJson());
+           return $reports->toJson();
         }
     }
 }
