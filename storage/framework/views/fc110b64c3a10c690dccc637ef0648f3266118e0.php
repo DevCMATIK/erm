@@ -1,4 +1,8 @@
-<?php $__env->startSection('page-title','Puntos de Control que reportan a DGA'); ?>
+<?php $__env->startSection('page-title'); ?>
+    Puntos de Control que reportan a DGA
+    <?php echo makeLink(route('check-point.reports-export'),'Exportar Todo','fa-file-excel','btn-success float-right','btn-md'); ?>
+
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-content'); ?>
     <?php echo makeDefaultView(['Punto de Control','Tipo','Zona','Cantidad de reportes','Acciones'],'check-point/dga-reports'); ?>

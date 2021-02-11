@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('check-points','Client\CheckPoint\Controllers\CheckPointController');
     Route::get('check-point/dga/{id}','Client\CheckPoint\Controllers\CheckPointDGAController@store');
     Route::get('check-point/reports','Client\CheckPoint\Report\Controllers\CheckPointReportController@index')->name('check-point.reports');
+    Route::get('check-point/reports-export','Client\CheckPoint\Report\Controllers\ExportReportsController')->name('check-point.reports-export');
     Route::get('check-point/dga_reports/{id}','Client\CheckPoint\Report\Controllers\CheckPointReportController@log')->name('check-point.reports-log');
     Route::get('check-point/dga_reports/download/{check_point_id}','Client\CheckPoint\Report\Controllers\ExportCheckPointRecordsController')->name('check-point.reports-download');
     Route::get('check-point-labels','Client\CheckPoint\Label\Controllers\CheckPointLabelController@index')->name('check-point-label');
