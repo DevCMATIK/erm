@@ -5,5 +5,5 @@
 @endsection
 @section('page-icon','database')
 @section('page-content')
-    {!! makeDefaultView(['Punto de Control','Tipo','Zona','Cantidad de reportes','Acciones'],'check-point/dga-reports') !!}
+    {!! makeDefaultView(['Punto de Control','Código de Obra','Frecuencia','Tipo','Zona','Cantidad de reportes','Acciones'],'check-point/dga-reports') !!}
 @endsection

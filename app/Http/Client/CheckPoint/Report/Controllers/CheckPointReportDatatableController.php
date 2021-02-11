@@ -14,9 +14,25 @@ class CheckPointReportDatatableController extends DataTableAbstract
 
     public function getRecord($record)
     {
+        switch($record->dga_report) {
+            case 1:
+                $frequency = 'Cada hora';
+                break;
+            case 2 :
+                $frequency = 'Cada día';
+                break;
+            case 3:
+                $frequency = 'Cada mes';
+                break;
+            default:
+                $frequency = 'Cada año';
+                break;
+        }
         return [
             $record->name,
             $record->type->name,
+            $record->type->work_code,
+            $frequency,
             $record->sub_zones->first()->name,
             $record->dga_reports_count,
             makeGroupedLinks([
