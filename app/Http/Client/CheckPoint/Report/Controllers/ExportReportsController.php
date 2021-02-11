@@ -44,7 +44,7 @@ class ExportReportsController extends Controller
             $row->check_point->name,
             $row->check_point->work_code,
             $row->response_text,
-            number_format($row->tote_reported,0,'.',''),
+            (string)$row->tote_reported,
             'm3',
             number_format($row->flow_reported,2,'.',''),
             'l/s',
