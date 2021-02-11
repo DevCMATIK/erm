@@ -32,7 +32,6 @@ class CheckPointReportDatatableController extends DataTableAbstract
             $record->name,
             $record->work_code,
             $frequency,
-            $record->type->name,
             $record->sub_zones->first()->name,
             $record->dga_reports_count,
             makeGroupedLinks([
