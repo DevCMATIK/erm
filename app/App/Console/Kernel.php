@@ -67,7 +67,7 @@ class Kernel extends ConsoleKernel
         //DGA REPORT
         $schedule->job(new ReportToDGA(1),'long-running-queue-low')->hourly();
         //Diario
-        $schedule->job(new ReportToDGA(2),'long-running-queue-low')->dailyAt('00:04');
+        $schedule->job(new ReportToDGA(2),'long-running-queue-low')->dailyAt('12:04');
         // mensual
         $schedule->job(new ReportToDGA(3),'long-running-queue-low')->monthlyOn(1,'00:01');
         //anual
