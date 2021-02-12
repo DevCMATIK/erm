@@ -61,6 +61,7 @@
                         @endphp
                         @for($i = 1 ; $i<=$last_day ; $i++)
                             @php
+                            dd($reps);
                                 $rep = $reps->where('date',$month.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
                             @endphp
                             @if($rep)
