@@ -5,6 +5,7 @@ namespace App\Http;
 use App\App\Controllers\Soap\SoapController;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Sentinel;
 
@@ -29,7 +30,9 @@ class TestController extends SoapController
                     DB::raw('COUNT(*) as "reports"')
                 ));
 
-           return $reports->toJson();
+           return $reports->groupBy(function($item) {
+               return Carbon::parse($item['date'])->format('m');
+           })->toJson();
         }
     }
 }
