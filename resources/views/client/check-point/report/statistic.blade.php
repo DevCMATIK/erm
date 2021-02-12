@@ -57,7 +57,7 @@
                     <fieldset>
                         <legend>{{ $month }}</legend>
                         @php
-                            $last_day = \Carbon\Carbon::parse($month.'01')->endOfMonth()->day;
+                            $last_day = \Carbon\Carbon::parse('01-'.$month)->endOfMonth()->day;
                         @endphp
                         @for($i = 1 ; $i<=$last_day ; $i++)
                             @php
