@@ -20,7 +20,7 @@ class ReportStatisticsController extends Controller
                 DB::raw('Date(report_date) as date'),
                 DB::raw('COUNT(*) as "reports"')
             ))->sortByDesc('date')->groupBy(function($item) {
-                return Carbon::parse($item['date'])->format('m-Y');
+                return Carbon::parse($item['date'])->format('Y-m');
             });
         $check_point = CheckPoint::find($check_point_id);
         return view('client.check-point.report.statistic',compact('reports','check_point'));

@@ -57,12 +57,11 @@
                     <fieldset>
                         <legend>{{ $month }}</legend>
                         @php
-                            $last_day = \Carbon\Carbon::parse('01-'.$month)->endOfMonth()->day;
+                            $last_day = \Carbon\Carbon::parse($month.'-01')->endOfMonth()->day;
                         @endphp
                         @for($i = 1 ; $i<=$last_day ; $i++)
                             @php
-                            dd($reps);
-                                $rep = $reps->where('date',$month.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
+                                $rep = $reps->where('date',$month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
                             @endphp
                             @if($rep)
                                 <div class="day-box text-white @if($rep['reports'] >= 24) bg-success @else bg-danger @endif">
