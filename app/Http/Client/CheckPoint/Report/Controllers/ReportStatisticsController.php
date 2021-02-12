@@ -18,7 +18,7 @@ class ReportStatisticsController extends Controller
             ->orderBy('date', 'DESC')
             ->get(array(
                 DB::raw('Date(report_date) as date'),
-                DB::raw("DATE_FORMAT(created_at, '%m-%Y')  as year_month"),
+                DB::raw("DATE_FORMAT(report_date, '%m-%Y')  as year_month"),
                 DB::raw('COUNT(*) as "reports"')
             ))->sortByDesc('date')->groupBy(function($item) {
                 return $item['year_month'];
