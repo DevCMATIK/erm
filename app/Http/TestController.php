@@ -30,9 +30,7 @@ class TestController extends SoapController
                     DB::raw('COUNT(*) as "reports"')
                 ));
 
-           return $reports->groupBy(function($item) {
-               return Carbon::parse($item['date'])->format('Y-m');
-           })->toJson();
+           return $reports->toJson();
         }
     }
 }
