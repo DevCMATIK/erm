@@ -1,7 +1,9 @@
 @extends('layouts.app-navbar')
 @section('page-title')
     Puntos de Control que reportan a DGA
-    {!! makeLink(route('check-point.reports-export'),'Exportar Todo','fa-file-excel','btn-success float-right','btn-md') !!}
+    @if (Sentinel::getUser()->hasAccess('dga.export'))
+        {!! makeLink(route('check-point.reports-export'),'Exportar Todo','fa-file-excel','btn-success float-right','btn-md') !!}
+    @endif
 @endsection
 @section('page-icon','database')
 @section('page-content')
