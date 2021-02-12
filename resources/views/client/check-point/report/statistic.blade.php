@@ -69,7 +69,7 @@
                                         {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
                                     </div>
                                     <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
-                                        {{ ($rep['reports'] > 24)?24 :$rep['reports'] .' / 24' }}
+                                        {{ ($rep['reports'] > 24)?'24' :$rep['reports'] .' / 24' }}
                                     </div>
                                 </div>
                             @else
