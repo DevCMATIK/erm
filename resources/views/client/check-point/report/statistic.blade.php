@@ -53,6 +53,13 @@
     <div class="row">
         <div class="col-xl-12">
             <form id="statistics-form">
+                @php
+                    if($check_point->dga_report == 1) {
+                        $max = 24;
+                    } else {
+                        $max = 1;
+                    }
+                @endphp
                 @foreach($reports as $month => $reps)
                     <fieldset>
                         <legend>{{ $month }}</legend>
@@ -64,12 +71,12 @@
                                 $rep = $reps->where('date',$month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
                             @endphp
                             @if($rep)
-                                <div class="day-box text-white @if($rep['reports'] >= 24) bg-success @else bg-danger @endif">
+                                <div class="day-box text-white @if($rep['reports'] >= $max) bg-success @else bg-danger @endif">
                                     <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
                                         {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
                                     </div>
                                     <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
-                                        {{ ($rep['reports'] > 24)?'24' :$rep['reports'] .' / 24' }}
+                                        {{ ($rep['reports'] > $max)? $max.' / '.$max :$rep['reports'] .' / '.$max }}
                                     </div>
                                 </div>
                             @else
@@ -78,7 +85,7 @@
                                         {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
                                     </div>
                                     <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
-                                         S/R
+                                         n/r
                                     </div>
                                 </div>
                             @endif
