@@ -55,7 +55,7 @@ class SendToDGA extends SoapController implements ShouldQueue
                         'fechaMedicion' => Carbon::now()->format('d-m-Y'),
                         'horaMedicion' => Carbon::now()->format('H:i:s'),
                         'totalizador' => number_format($totalizador,0,'',''),
-                        'caudal' => number_format($caudal,2,'.',''),
+                        'caudal' => number_format(($caudal<0)?0:$caudal,2,'.',''),
                         'nivelFreaticoDelPozo' => number_format($nivelFreatico,2,'.',''),
                     ]
                 ]
