@@ -31,7 +31,7 @@ class TestController extends SoapController
                 ));
 
            return $reports->groupBy(function($item) {
-               return Carbon::parse($item['date'])->format('m');
+               return Carbon::parse($item['date'])->format('Y-m');
            })->toJson();
         }
     }
