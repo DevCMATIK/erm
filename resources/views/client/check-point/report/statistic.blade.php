@@ -53,22 +53,40 @@
     <div class="row">
         <div class="col-xl-12">
             <form id="statistics-form">
-                <fieldset>
-                    <legend>2021-02</legend>
-                    @for($i = 1 ; $i<=27 ; $i++)
+                @foreach($reports as $month => $reps)
+                    <fieldset>
+                        <legend>{{ $month }}</legend>
                         @php
-                            $reports = rand(21,24)
+                            $last_day = \Carbon\Carbon::parse($month)->endOfMonth()->day;
                         @endphp
-                        <div class="day-box text-white @if($reports == 24) bg-success @else bg-danger @endif">
-                            <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
-                                {{ $i }}
-                            </div>
-                            <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
-                                {{ $reports .' / 24' }}
-                            </div>
-                        </div>
-                    @endfor
-                </fieldset>
+                        @for($i = 1 ; $i<=$last_day ; $i++)
+                            @php
+                                $rep = $reps->where('date',$month.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
+                            @endphp
+                            @if($rep)
+                                <div class="day-box text-white @if($rep['reports'] >= 24) bg-success @else bg-danger @endif">
+                                    <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
+                                        {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                    </div>
+                                    <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
+                                        {{ ($rep['reports'] > 24)?24 :$rep['reports'] .' / 24' }}
+                                    </div>
+                                </div>
+                            @else
+                                <div class="day-box text-white bg-secondary">
+                                    <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
+                                        {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                    </div>
+                                    <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
+                                        {{ S/R }}
+                                    </div>
+                                </div>
+                            @endif
+
+                        @endfor
+                    </fieldset>
+                @endforeach
+
 
             </form>
 
