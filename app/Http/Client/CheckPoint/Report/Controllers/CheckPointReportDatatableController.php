@@ -43,7 +43,7 @@ class CheckPointReportDatatableController extends DataTableAbstract
             if($max == 0){
                 $status = '<label class="badge badge-success badge-pill p-1">OK</label>';
             } else {
-                if($record->reports_to_date == $diff) {
+                if($record->reports_to_date_count == $diff) {
                     $status = '<label class="badge badge-success badge-pill p-1">OK</label>';
                 } else {
                     $status = '<label class="badge badge-danger badge-pill p-1">Error</label>';
