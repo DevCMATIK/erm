@@ -21,7 +21,9 @@ class TestController extends SoapController
             ->where('dga_report',1)
             ->get();
         foreach($check_points as $check_point) {
-            dd(Carbon::parse($check_point->last_report->report_date)->hour,now()->hour);
+            if(Carbon::parse($check_point->last_report->report_date)->hour != now()->hour) {
+                dd($check_point->last_report);
+            }
 
         }
     }
