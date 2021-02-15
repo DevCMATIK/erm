@@ -17,6 +17,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        dd(Carbon::now()->startOfMonth()->diffInDays(Carbon::now()));
+        $record =  CheckPoint::with(['type','sub_zones'])->withCount(['dga_reports','this_month_failed_reports','reports_to_date'])->whereNotNull('work_code')->find(27);
+        dd($record);
     }
 }
