@@ -14,6 +14,7 @@ class ReportStatisticsController extends Controller
     public function index($check_point_id)
     {
         $reports = CheckPointReport::where('check_point_id',$check_point_id)
+            ->where('response',0)
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->get(array(
