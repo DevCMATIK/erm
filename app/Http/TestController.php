@@ -17,14 +17,6 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $check_points =   CheckPoint::with('last_report')->whereNotNull('work_code')
-            ->where('dga_report',1)
-            ->get();
-        foreach($check_points as $check_point) {
-            if(Carbon::parse($check_point->last_report->report_date)->hour != now()->hour) {
-                dd($check_point->last_report);
-            }
-
-        }
+        dd(Carbon::now()->startOfMonth()->diffInDays(Carbon::now()));
     }
 }

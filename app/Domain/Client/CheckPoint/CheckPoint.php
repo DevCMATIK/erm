@@ -15,6 +15,7 @@ use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Sub\SubZoneSubElement;
 use App\Domain\WaterManagement\Device\Consumption\DeviceConsumption;
 use App\Domain\WaterManagement\Device\Device;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -121,5 +122,21 @@ class CheckPoint extends Model implements Auditable
     public function last_report()
     {
         return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('report_date');
+    }
+
+    public function this_month_reports()
+    {
+        return $this->dga_reports()->whereRaw('report_date between "'.Carbon::now()->startOfMonth()->toDateString().' 00:00:00"  and "'.Carbon::now()->endOfMonth()->toDateString().' 23:59:59"');
+    }
+
+    public function this_month_failed_reports()
+    {
+        return $this->this_month_reports()->where('response','<>',0);
+    }
+
+    public function reports_to_date()
+    {
+        return $this->dga_reports()->whereRaw('report_date between "'.Carbon::now()->startOfMonth()->toDateString().' 00:00:00"  and "'.Carbon::yesterday()->toDateString().' 23:59:59"');
+
     }
 }
