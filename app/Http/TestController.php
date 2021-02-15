@@ -22,7 +22,7 @@ class TestController extends SoapController
             ->get();
 
         foreach($check_points as $check_point) {
-
+            dd($check_point->last_report);
             dd(Carbon::parse($check_point->last_report->report_date)->hour,now()->hour);
 
         }
