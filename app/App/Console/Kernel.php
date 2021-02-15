@@ -3,6 +3,7 @@
 namespace App\App\Console;
 
 
+use App\App\Jobs\CheckReportToDga;
 use App\App\Jobs\TrackSensors;
 use App\Domain\WaterManagement\Report\MailReport;
 use App\Http\Data\Electric\BackupEnergy;
@@ -66,10 +67,13 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('03:00');
         //DGA REPORT
         $schedule->job(new ReportToDGA(1),'long-running-queue-low')->hourly();
+        $schedule->job(new CheckReportToDga(1),'long-running-queue-low')->hourlyAt(30);
         //Diario
         $schedule->job(new ReportToDGA(2),'long-running-queue-low')->dailyAt('12:04');
+        $schedule->job(new CheckReportToDga(2),'long-running-queue-low')->dailyAt('12:34');
         // mensual
-        $schedule->job(new ReportToDGA(3),'long-running-queue-low')->monthlyOn(1,'00:01');
+        $schedule->job(new ReportToDGA(3),'long-running-queue-low')->monthlyOn(1,'12:01');
+        $schedule->job(new CheckReportToDga(3),'long-running-queue-low')->monthlyOn(1,'12:34');
         //anual
         $schedule->job(new ReportToDGA(4),'long-running-queue-low')->yearly();
         $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');

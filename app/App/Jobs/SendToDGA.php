@@ -88,6 +88,14 @@ class SendToDGA extends SoapController implements ShouldQueue
 
 
         } catch(\Exception $e) {
+            $checkPoint->dga_reports()->create([
+                'response' => 500,
+                'response_text' => 'Error, tiempo de espera excedido',
+                'tote_reported' => $totalizador,
+                'flow_reported' => $caudal,
+                'water_table_reported' => $nivelFreatico,
+                'report_date' => Carbon::now()->toDateTimeString()
+            ]);
             return $e->getMessage();
         }
     }
