@@ -120,6 +120,6 @@ class CheckPoint extends Model implements Auditable
 
     public function last_report()
     {
-        return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('report_date')->take(1);
+        return $this->hasOne(CheckPointReport::class,'check_point_id','id')->orderByDesc('report_date');
     }
 }
