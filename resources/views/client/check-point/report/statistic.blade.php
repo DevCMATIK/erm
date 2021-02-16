@@ -71,7 +71,7 @@
                                 $rep = $reps->where('date',$month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
                             @endphp
                             @if($rep)
-                                <div class="day-box text-white @if($rep['reports'] >= $max) bg-success @else @if($i == now()->day) bg-info @else bg-danger @endif @endif">
+                                <div class="day-box text-white @if($rep['reports'] >= $max) bg-success @else @if($month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT) == now()->toDateString()) bg-info @else bg-danger @endif @endif">
                                     <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
                                         {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
                                     </div>
