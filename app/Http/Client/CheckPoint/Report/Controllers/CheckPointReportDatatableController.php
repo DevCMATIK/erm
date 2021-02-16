@@ -30,6 +30,10 @@ class CheckPointReportDatatableController extends DataTableAbstract
                 $frequency = 'Cada mes';
                 $max = 0;
                 break;
+            case 5:
+                $frequency = 'Semestral';
+                $max = 0;
+                break;
             default:
                 $frequency = 'Cada año';
                 $max = 0;
@@ -37,7 +41,7 @@ class CheckPointReportDatatableController extends DataTableAbstract
         }
 
         if($record->this_month_failed_reports_count > 0){
-            $status = '<label class="badge badge-danger badge-pill p-1">Error</label>';
+            $status = '<label class="badge badge-warning badge-pill p-1">Erróneo</label>';
         } else {
             $diff = Carbon::now()->startOfMonth()->diffInDays(Carbon::now()) * $max;
             if($max == 0){
@@ -46,7 +50,7 @@ class CheckPointReportDatatableController extends DataTableAbstract
                 if($record->reports_to_date_count >= $diff) {
                     $status = '<label class="badge badge-success badge-pill p-1">OK</label>';
                 } else {
-                    $status = '<label class="badge badge-danger badge-pill p-1">Error</label>';
+                    $status = '<label class="badge badge-danger badge-pill p-1">Faltante</label>';
                 }
             }
         }

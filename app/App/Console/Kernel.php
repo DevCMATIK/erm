@@ -76,6 +76,13 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CheckReportToDga(3),'long-running-queue-low')->monthlyOn(1,'12:34');
         //anual
         $schedule->job(new ReportToDGA(4),'long-running-queue-low')->yearly();
+        //semestral
+        $schedule->job(new ReportToDGA(5))->dailyAt('12:04')->when(function () {
+            return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
+        });
+        $schedule->job(new CheckReportToDga(5))->dailyAt('12:34')->when(function () {
+            return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
+        });
         $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('01:20');
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('01:30');
