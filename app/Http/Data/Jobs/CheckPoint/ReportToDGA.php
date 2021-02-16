@@ -38,7 +38,7 @@ class ReportToDGA extends SoapController implements ShouldQueue
         $checkPoints = $this->getCheckPoints();
         foreach($checkPoints as $checkPoint)
         {
-            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 40) {
+            if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 28) {
                 $sensors = $this->getSensors($checkPoint);
                 $tote = $this->getToteSensor($sensors);
                 $flow = $this->getFlowSensor($sensors);
