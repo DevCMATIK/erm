@@ -52,6 +52,15 @@ return [
             'username' => 'gestionhidro',
             'password' => 'gestionhidro'
         ],
+        'dpl' => [
+            'driver' => 'mysql',
+            'host' => '10.250.128.31',
+            //'host' => '34.66.170.27',
+            'port' => '3306',
+            'database' => 'dpl',
+            'username' => 'appint',
+            'password' => 'DevAppint'
+        ],
         'bioseguridad' => [
             'driver' => 'mysql',
             'host' => '35.185.14.47',
