@@ -6,6 +6,7 @@ use App\Domain\System\Mail\MailLog;
 use App\Domain\WaterManagement\Main\Report;
 use App\Mail\SystemMail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail as LaravelMailer;
 
 trait CheckAlarmsTrait
@@ -177,7 +178,28 @@ trait CheckAlarmsTrait
         $sensor_address = $alarm->sensor->full_address;
         $sensor_grd_id = $alarm->sensor->device->internal_id;
 
-        return (int) Report::where('grd_id',$sensor_grd_id)->first()->{$sensor_address};
+        return (int) $this->getReportValue($alarm->sensor);
+    }
+
+    protected function getReportValue($sensor)
+    {
+        $address = $sensor->full_address;
+
+        if($sensor->device->from_bio === 1) {
+            return DB::connection('bioseguridad')
+                    ->table('reports')
+                    ->where('grd_id',$sensor->device->internal_id)
+                    ->first()->{$address} ?? false;
+        }
+
+        if($sensor->device->from_dpl === 1) {
+            return DB::connection('dpl')
+                    ->table('reports')
+                    ->where('grd_id',$sensor->device->internal_id)
+                    ->first()->{$address} ?? false;
+        }
+
+        return $sensor->device->report->{$address} ?? false;
     }
 
     protected function getAnalogousValue($alarm)
@@ -188,7 +210,7 @@ trait CheckAlarmsTrait
             $disposition = $alarm->sensor->dispositions()->first();
         }
         if($disposition) {
-            $valorReport = Report::where('grd_id',$sensor_grd_id)->first()->$sensor_address;
+            $valorReport =  $this->getReportValue($alarm->sensor);
             if($valorReport){
                 $ingMin = $disposition->sensor_min;
                 $ingMax = $disposition->sensor_max;

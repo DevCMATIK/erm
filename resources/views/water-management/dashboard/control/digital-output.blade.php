@@ -12,7 +12,13 @@
                     ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
                     ->first()->{$address};
          } else {
-                $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
+             if($digital_sensor->sensor->device->from_dpl === 1) {
+                $valorReport =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
+                    ->first()->{$address};
+             } else {
+                 $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
+             }
          }
 			if($valorReport == 1) {
 				$data = $digital_sensor->sensor->label->on_label;

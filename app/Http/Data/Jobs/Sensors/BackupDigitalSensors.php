@@ -2,6 +2,7 @@
 
 namespace App\Http\Data\Jobs\Sensors;
 
+use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class BackupDigitalSensors implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels,HasAnalogousData;
 
     /**
      * Create a new job instance.
@@ -41,7 +42,7 @@ class BackupDigitalSensors implements ShouldQueue
                 continue;
             }
             $address = $sensor->full_address;
-            $report_value = $sensor->device->report->{$address};
+            $report_value = $this->getReportValue($sensor);
 
             if(!isset($sensor->address_number)) {
                 continue;

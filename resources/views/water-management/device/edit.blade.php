@@ -28,8 +28,13 @@
         </div>
         <label class="custom-control custom-checkbox">
             <input type="checkbox"  class="custom-control-input" value="1" @if($device->from_bio === 1) checked @endif name="from_bio">
-            <span class="custom-control-label">Dato desde bioseguridad</span>
+            <span class="custom-control-label">Datos desde bioseguridad</span>
         </label>
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox"  class="custom-control-input" value="1" @if($device->from_dpl === 1) checked @endif name="from_dpl">
+            <span class="custom-control-label">Datos desde DPL</span>
+        </label>
+
     </form>
 
 @endsection

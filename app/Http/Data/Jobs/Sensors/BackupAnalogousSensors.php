@@ -2,6 +2,7 @@
 
 namespace App\Http\Data\Jobs\Sensors;
 
+use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class   BackupAnalogousSensors implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasAnalogousData;
 
 
     public $interval;
@@ -43,13 +44,7 @@ class   BackupAnalogousSensors implements ShouldQueue
                 continue;
             }
             $address = $sensor->full_address;
-            if(optional($sensor->device)->from_bio === 1) {
-               $report_value =  DB::connection('bioseguridad')->table('reports')
-                    ->where('grd_id',optional($sensor->device)->internal_id)
-                    ->first()->{$address};
-            } else {
-                $report_value = optional($sensor->device->report)->{$address};
-            }
+            $report_value = $this->getReportValue($sensor);
 
 
             if($sensor->fix_values === 1) {

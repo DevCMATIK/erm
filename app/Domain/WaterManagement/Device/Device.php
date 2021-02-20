@@ -31,7 +31,8 @@ class Device extends Model implements Auditable
         'check_point_id',
         'internal_id',
         'name',
-        'from_bio'
+        'from_bio',
+        'from_dpl'
     ];
 
     public function type()

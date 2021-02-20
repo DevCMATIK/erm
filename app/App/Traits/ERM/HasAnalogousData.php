@@ -105,6 +105,13 @@ trait HasAnalogousData
                 ->first()->{$address} ?? false;
         }
 
+        if($sensor->device->from_dpl === 1) {
+            return DB::connection('dpl')
+                    ->table('reports')
+                    ->where('grd_id',$sensor->device->internal_id)
+                    ->first()->{$address} ?? false;
+        }
+
         return $sensor->device->report->{$address} ?? false;
     }
 

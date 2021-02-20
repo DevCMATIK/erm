@@ -6,7 +6,13 @@
                     ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
                     ->first()->{$address};
          } else {
-                $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
+             if($digital_sensor->sensor->device->from_dpl === 1) {
+                $valorReport =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
+                    ->first()->{$address};
+             } else {
+                 $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
+             }
          }
 		if($valorReport == 1) {
 			$data = $digital_sensor->sensor->label->on_label;
@@ -31,13 +37,19 @@
     @if($digital_sensor->sensor->address->slug == 'i' || $digital_sensor->is_not_an_output == 1)
         @php
             $address = $digital_sensor->sensor->full_address;
-             if($digital_sensor->sensor->device->from_bio === 1) {
+              if($digital_sensor->sensor->device->from_bio === 1) {
                  $valorReport =  DB::connection('bioseguridad')->table('reports')
                     ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
                     ->first()->{$address};
-                 } else {
-                        $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
-                 }
+         } else {
+             if($digital_sensor->sensor->device->from_dpl === 1) {
+                $valorReport =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',optional($digital_sensor->sensor->device)->internal_id)
+                    ->first()->{$address};
+             } else {
+                 $valorReport = $digital_sensor->sensor->device->report->$address; // 0, 400
+             }
+         }
 			if($valorReport == 1) {
 				$data = $digital_sensor->sensor->label->on_label;
 				$class = 'success';
