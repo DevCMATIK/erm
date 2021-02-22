@@ -8,6 +8,7 @@
                 ->where('grd_id',$ss->device->internal_id)
                 ->first()->state ?? null;
         } else {
+             dd($ss->device);
            if($ss->device->from_dpl === 1) {
                 $state = DB::connection('dpl')
                     ->table('reports')
