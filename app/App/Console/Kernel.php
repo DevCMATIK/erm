@@ -69,7 +69,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('03:00');
 
         //Al Cambio
-        $seconds = 5;
+        $seconds = 3;
 
         $schedule->call(function () use ($seconds) {
 
