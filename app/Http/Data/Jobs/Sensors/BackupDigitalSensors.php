@@ -16,14 +16,11 @@ class BackupDigitalSensors implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels,HasAnalogousData;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $interval;
+
+    public function __construct($interval)
     {
-        //
+        $this->interval = $interval;
     }
 
     /**
@@ -48,18 +45,39 @@ class BackupDigitalSensors implements ShouldQueue
                 continue;
             }
 
-            array_push($toInsert, [
-                'device_id' => $sensor->device->id,
-                'register_type' => $sensor->address->register_type_id,
-                'address' => $sensor->address_number,
-                'sensor_id' => $sensor->id,
-                'name' => $sensor->name,
-                'on_label' => $sensor->label->on_label,
-                'off_label' => $sensor->label->off_label,
-                'value' => $report_value,
-                'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
-                'date' => Carbon::now()->toDateTimeString()
-            ]);
+            if($sensor->type->interval == 77) {
+                if($sensor->last_value != $report_value) {
+                    array_push($toInsert, [
+                        'device_id' => $sensor->device->id,
+                        'register_type' => $sensor->address->register_type_id,
+                        'address' => $sensor->address_number,
+                        'sensor_id' => $sensor->id,
+                        'name' => $sensor->name,
+                        'on_label' => $sensor->label->on_label,
+                        'off_label' => $sensor->label->off_label,
+                        'value' => $report_value,
+                        'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
+                        'date' => Carbon::now()->toDateTimeString()
+                    ]);
+                    $sensor->last_value = $report_value;
+                    $sensor->save();
+                }
+            } else {
+                array_push($toInsert, [
+                    'device_id' => $sensor->device->id,
+                    'register_type' => $sensor->address->register_type_id,
+                    'address' => $sensor->address_number,
+                    'sensor_id' => $sensor->id,
+                    'name' => $sensor->name,
+                    'on_label' => $sensor->label->on_label,
+                    'off_label' => $sensor->label->off_label,
+                    'value' => $report_value,
+                    'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
+                    'date' => Carbon::now()->toDateTimeString()
+                ]);
+            }
+
+
         }
 
         DigitalReport::insert($toInsert);
@@ -67,11 +85,15 @@ class BackupDigitalSensors implements ShouldQueue
 
     protected function getSensors()
     {
+
         return Sensor::with([
             'device.report',
             'address',
-            'label'
-        ])
+            'label',
+            'type'
+        ]) ->whereHas('type' , function($q){
+            return $q->where('interval',$this->interval);
+        })
             ->where('sensors.historial',1)
             ->whereHas('label')
             ->digital()

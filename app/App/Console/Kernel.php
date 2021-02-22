@@ -14,11 +14,8 @@ use App\Http\Data\Jobs\CheckPoint\BackupTotalizers;
 use App\Http\Data\Jobs\CheckPOint\CalculateConsumptions;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Jobs\Device\NotifyDevicesOffline;
-use App\Http\Data\Jobs\Device\TrackDeviceDisconnections;
-use App\Http\Data\Jobs\Device\TrackDisconnections;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromBio;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromWater;
-use App\Http\Data\Jobs\ProcessData;
 use App\Http\Data\Jobs\Sensors\BackupAnalogousSensors;
 use App\Http\Data\Jobs\Sensors\BackupDigitalSensors;
 use App\Http\Data\Water\BackupWater;
@@ -61,10 +58,36 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupAnalogousSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupAnalogousSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupAnalogousSensors(60),'long-running-queue')->hourly();
-        $schedule->job(new BackupDigitalSensors(),'long-running-queue')->everyFiveMinutes();
+        $schedule->job(new BackupDigitalSensors(1),'long-running-queue')->everyMinute();
+        $schedule->job(new BackupDigitalSensors(5),'long-running-queue')->everyFiveMinutes();
+        $schedule->job(new BackupDigitalSensors(10),'long-running-queue')->everyTenMinutes();
+        $schedule->job(new BackupDigitalSensors(15),'long-running-queue')->everyFifteenMinutes();
+        $schedule->job(new BackupDigitalSensors(30),'long-running-queue')->everyThirtyMinutes();
+        $schedule->job(new BackupDigitalSensors(60),'long-running-queue')->hourly();
         $schedule->job(new BackupSensorAverages(),'long-running-queue-low')->everyFiveMinutes();
         $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('04:00');
         $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('03:00');
+
+        //Al Cambio
+        $seconds = 10;
+
+        $schedule->call(function () use ($seconds) {
+
+            $dt = Carbon::now();
+
+            $x=60/$seconds;
+
+            do{
+
+                BackupDigitalSensors::dispatch(77)->onQueue('ten-seconds');
+                BackupAnalogousSensors::dispatch(77)->onQueue('ten-seconds');
+
+                time_sleep_until($dt->addSeconds($seconds)->timestamp);
+
+            } while($x-- > 0);
+
+        })->everyMinute();
+
         //DGA REPORT
         $schedule->job(new ReportToDGA(1),'long-running-queue-low')->hourly();
         $schedule->job(new CheckReportToDga(1),'long-running-queue-low')->hourlyAt(30);

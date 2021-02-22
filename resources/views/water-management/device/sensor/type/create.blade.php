@@ -17,6 +17,7 @@
                 <option value="15">Cada 15 Minutos</option>
                 <option value="30">Cada 30 Minutos</option>
                 <option value="60">Cada 60 Minutos</option>
+                <option value="77">Al Cambio</option>
             </select>
         </div>
         <div class="form-group">

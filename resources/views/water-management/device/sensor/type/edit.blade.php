@@ -20,6 +20,7 @@
                     <option value="15">Cada 15 Minutos</option>
                     <option value="30">Cada 30 Minutos</option>
                     <option value="60">Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
                     @break
                     @case(5)
 
@@ -29,6 +30,7 @@
                     <option value="15">Cada 15 Minutos</option>
                     <option value="30">Cada 30 Minutos</option>
                     <option value="60">Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
                     @break
                     @case(10)
 
@@ -38,6 +40,7 @@
                     <option value="15">Cada 15 Minutos</option>
                     <option value="30">Cada 30 Minutos</option>
                     <option value="60">Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
                     @break
                     @case(15)
 
@@ -47,6 +50,7 @@
                     <option value="15" selected>Cada 15 Minutos</option>
                     <option value="30">Cada 30 Minutos</option>
                     <option value="60">Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
                     @break
                     @case(30)
 
@@ -56,6 +60,7 @@
                     <option value="15">Cada 15 Minutos</option>
                     <option value="30" selected>Cada 30 Minutos</option>
                     <option value="60">Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
                     @break
                     @case(60)
 
@@ -65,6 +70,17 @@
                     <option value="15">Cada 15 Minutos</option>
                     <option value="30">Cada 30 Minutos</option>
                     <option value="60" selected>Cada 60 Minutos</option>
+                    <option value="77">Al Cambio</option>
+                    @break
+                    @case(77)
+
+                    <option value="1">Cada 1 Minuto</option>
+                    <option value="5">Cada 5 Minutos</option>
+                    <option value="10">Cada 10 Minutos</option>
+                    <option value="15">Cada 15 Minutos</option>
+                    <option value="30">Cada 30 Minutos</option>
+                    <option value="60" >Cada 60 Minutos</option>
+                    <option value="77" selected>Al Cambio</option>
                     @break
                 @endswitch
             </select>

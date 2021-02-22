@@ -148,6 +148,16 @@ return [
                 'processes' => 10,
                 'tries' => 3,
             ],
+            'supervisor-ten-seconds' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'ten-seconds'
+                ],
+                'balance' => 'simple',
+                'processes' => 9,
+                'tries' => 2,
+                'timeout' => 900,
+            ],
             'supervisor-long-running' => [
                 'connection' => 'redis',
                 'queue' => [
@@ -212,6 +222,16 @@ return [
                 'connection' => 'redis',
                 'queue' => [
                     'long-running-queue'
+                ],
+                'balance' => 'simple',
+                'processes' => 9,
+                'tries' => 2,
+                'timeout' => 900,
+            ],
+            'supervisor-ten-seconds' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'ten-seconds'
                 ],
                 'balance' => 'simple',
                 'processes' => 9,
