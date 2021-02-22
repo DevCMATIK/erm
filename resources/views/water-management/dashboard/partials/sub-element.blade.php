@@ -1,7 +1,25 @@
 @php
     $off = false;
     foreach($sub_element as $ss){
-        if($ss->device->report->state == 0) {
+
+         if($ss->device->from_bio === 1) {
+            $state =  DB::connection('bioseguridad')
+                ->table('reports')
+                ->where('grd_id',$ss->device->internal_id)
+                ->first()->state ?? null;
+        } else {
+           if($ss->device->from_dpl === 1) {
+                $state = DB::connection('dpl')
+                    ->table('reports')
+                    ->where('grd_id',$ss->device->internal_id)
+                    ->first()->state ?? false;
+            } else {
+               $state = $ss->device->report->state;
+            }
+        }
+
+
+        if($state== 0) {
             $off = true;
         }
     }
