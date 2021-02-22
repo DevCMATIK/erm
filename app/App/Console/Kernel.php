@@ -79,6 +79,7 @@ class Kernel extends ConsoleKernel
 
             do{
                 BackupDigitalSensors::dispatchNow(77);
+                BackupAnalogousSensors::dispatchNow(77);
 
 
 

@@ -78,7 +78,31 @@ class   BackupAnalogousSensors implements ShouldQueue
                     $interpreter = null;
                 }
 
-
+                if($sensor->type->interval == 77) {
+                    if($sensor->last_value != $report_value) {
+                        array_push($toInsert, [
+                            'device_id' => $sensor->device->id,
+                            'register_type' => $sensor->address->register_type_id,
+                            'address' => $sensor->address_number,
+                            'sensor_id' => $sensor->id,
+                            'scale' => $disposition->name,
+                            'scale_min'=> $disposition->scale_min,
+                            'scale_max' => $disposition->scale_max,
+                            'ing_min' => $disposition->sensor_min,
+                            'ing_max' => $disposition->sensor_max,
+                            'unit' => $disposition->unit->name,
+                            'value' => $report_value,
+                            'result' => $result,
+                            'scale_color' => $range,
+                            'interpreter' => $interpreter,
+                            'date' => Carbon::now()->toDateTimeString(),
+                            'pump_location' => $sensor->max_value
+                        ]);
+                        $sensor->last_value = $report_value;
+                        $sensor->save();
+                        array_push($insertedSensors,$sensor->id);
+                    }
+                } else {
                     array_push($toInsert, [
                         'device_id' => $sensor->device->id,
                         'register_type' => $sensor->address->register_type_id,
@@ -97,7 +121,9 @@ class   BackupAnalogousSensors implements ShouldQueue
                         'date' => Carbon::now()->toDateTimeString(),
                         'pump_location' => $sensor->max_value
                     ]);
-                array_push($insertedSensors,$sensor->id);
+                    array_push($insertedSensors,$sensor->id);
+                }
+
             }
         }
 
