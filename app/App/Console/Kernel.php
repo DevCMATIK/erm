@@ -74,19 +74,17 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () use ($seconds) {
 
             $now = Carbon::now();
-            $dt = $now;
 
             $x=60/$seconds;
 
             do{
-                if(strtotime(Carbon::now()->toDateTimeString()) < strtotime($dt->addSeconds(58)->toDateTimeString())) {
-                    BackupDigitalSensors::dispatch(77)->onQueue('ten-seconds');
-                }
+                BackupDigitalSensors::dispatch(77)->onQueue('ten-seconds');
+
 
 
                 time_sleep_until($now->addSeconds($seconds)->timestamp);
 
-            } while($x-- > 0);
+            } while($x-- > 3);
 
         })->everyMinute();
 
