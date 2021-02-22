@@ -80,7 +80,6 @@ class Kernel extends ConsoleKernel
             do{
 
                 BackupDigitalSensors::dispatch(77)->onQueue('ten-seconds');
-                BackupAnalogousSensors::dispatch(77)->onQueue('ten-seconds');
 
                 time_sleep_until($dt->addSeconds($seconds)->timestamp);
 
