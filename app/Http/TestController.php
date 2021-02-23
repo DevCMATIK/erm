@@ -20,6 +20,11 @@ class TestController extends SoapController
 
     public function __invoke()
     {
+        return view('test.view');
+    }
+
+    protected function another()
+    {
         $checkPoint = CheckPoint::with('last_report')->find(242);
         if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 28) {
             $sensors = $this->getSensors($checkPoint);
@@ -36,7 +41,6 @@ class TestController extends SoapController
             }
         }
     }
-
     protected function calculateTimeSinceLastReport($check_point)
     {
         return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));

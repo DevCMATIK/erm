@@ -30,6 +30,8 @@ class SensorRangesController extends Controller
 
         Sensor::find($sensor)->update([
             'max_value' => ($disposition->unit->name == '%')?100:$request->max_value,
+            'pre_text' => $request->pre_text,
+            'post_text' => $request->post_text,
             'default_disposition' => $request->default_disposition
         ]);
         return $this->getResponse('success.store');

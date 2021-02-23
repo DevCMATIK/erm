@@ -11,7 +11,7 @@ use App\Http\Data\Jobs\Average\BackupDailySensorAverages;
 use App\Http\Data\Jobs\Average\BackupSensorAverages;
 use App\Http\Data\Jobs\CheckPoint\BackupAverageFlow;
 use App\Http\Data\Jobs\CheckPoint\BackupTotalizers;
-use App\Http\Data\Jobs\CheckPOint\CalculateConsumptions;
+use App\Http\Data\Jobs\CheckPoint\CalculateConsumptions;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Jobs\Device\NotifyDevicesOffline;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromBio;

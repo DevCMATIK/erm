@@ -1,7 +1,7 @@
 <h5 class="mt-3"><?php echo e($sensor->name); ?></h5>
 <form id="sensor-range-form">
     <?php echo csrf_field(); ?>
-    <div class="row mb-4">
+    <div class="row mb-2">
         <div class="col-xl-6">
             <div class="form-group">
                 <label class="form-label">Valor Maximo</label>
@@ -22,6 +22,20 @@
                         <option value="" selected="" disabled>No hay opciones</option>
                     <?php endif; ?>
                 </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-xl-6">
+            <div class="form-group">
+                <label class="form-label">Texto anterior (antes de valor máximo)</label>
+                <input type="text" class="form-control" name="pre_text" value="<?php echo e($sensor->pre_text); ?>">
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="form-group">
+                <label class="form-label">Texto posterior (despues de la unidad en valor máximo)</label>
+                <input type="text" class="form-control" name="post_text" value="<?php echo e($sensor->post_text); ?>">
             </div>
         </div>
     </div>

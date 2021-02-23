@@ -43,7 +43,9 @@ class Sensor extends Model implements Auditable
         'fix_values',
         'fix_min_value',
         'fix_max_value',
-        'last_value'
+        'last_value',
+        'pre_text',
+        'post_text'
     ];
 
     protected $appends = ['full_address'];

@@ -1,7 +1,7 @@
 <h5 class="mt-3">{{ $sensor->name }}</h5>
 <form id="sensor-range-form">
     @csrf
-    <div class="row mb-4">
+    <div class="row mb-2">
         <div class="col-xl-6">
             <div class="form-group">
                 <label class="form-label">Valor Maximo</label>
@@ -22,6 +22,20 @@
                         <option value="" selected="" disabled>No hay opciones</option>
                     @endforelse
                 </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-xl-6">
+            <div class="form-group">
+                <label class="form-label">Texto previo (antes de valor máximo)</label>
+                <input type="text" class="form-control" name="pre_text" value="{{ $sensor->pre_text }}">
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="form-group">
+                <label class="form-label">Texto posterior (despues de la unidad en valor máximo)</label>
+                <input type="text" class="form-control" name="post_text" value="{{ $sensor->post_text }}">
             </div>
         </div>
     </div>
