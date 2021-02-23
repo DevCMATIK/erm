@@ -43,3 +43,12 @@
 @else
     </div>
 @endif
+
+<script>
+    $(function(){
+        $('body').popover(
+            {
+                selector: '.has-popover'
+            });
+    })
+</script>
