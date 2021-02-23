@@ -5,7 +5,7 @@
        data-trigger="hover"
        data-placement="top"
        title=""
-       data-content="{{ number_format($analogous_sensor->sensor->max_value,',','') }} {{ optional(optional($disposition)->unit)->name }}  {{ $analogous_sensor->sensor->post_text ?? '' }}"
+       data-content="{{ $analogous_sensor->sensor->max_value }} {{ optional(optional($disposition)->unit)->name }}  {{ $analogous_sensor->sensor->post_text ?? '' }}"
        data-template='<div class="popover bg-primary-500 border-primary" role="tooltip"><div class="arrow"></div><h3 class="popover-header bg-transparent"></h3><div class="popover-body text-white text-center"></div></div>'
        data-original-title="{{ $analogous_sensor->sensor->pre_text ?? '' }}"
        @endif
@@ -20,7 +20,7 @@
         data-trigger="hover"
         data-placement="top"
         title=""
-        data-content="{{ number_format($analogous_sensor->sensor->max_value,',','') }} {{ optional(optional($disposition)->unit)->name }}  {{ $analogous_sensor->sensor->post_text ?? '' }}"
+        data-content="{{ $analogous_sensor->sensor->max_value }} {{ optional(optional($disposition)->unit)->name }}  {{ $analogous_sensor->sensor->post_text ?? '' }}"
         data-template='<div class="popover bg-primary-500 border-primary" role="tooltip"><div class="arrow"></div><h3 class="popover-header bg-transparent"></h3><div class="popover-body text-white text-center"></div></div>'
         data-original-title="{{ $analogous_sensor->sensor->pre_text ?? '' }}"
         @endif
