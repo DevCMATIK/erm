@@ -23,12 +23,12 @@
         </div>
         <br>
         <label class="custom-control custom-checkbox">
-            <input type="checkbox" checked="checked" class="custom-control-input" value="1" name="from_bio">
+            <input type="checkbox"  class="custom-control-input" value="1" name="from_bio">
             <span class="custom-control-label">Datos  desde bioseguridad</span>
         </label>
 
         <label class="custom-control custom-checkbox">
-            <input type="checkbox" checked="checked" class="custom-control-input" value="1" name="from_dlp">
+            <input type="checkbox"  class="custom-control-input" value="1" name="from_dpl">
             <span class="custom-control-label">Datos desde DPL</span>
         </label>
     </form>
