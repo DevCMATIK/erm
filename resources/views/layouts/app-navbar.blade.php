@@ -157,6 +157,14 @@
     @yield('page-extra-scripts')
 @endif
 <script>
+    $(function(){
+        $('body').popover(
+            {
+                selector: '.has-popover'
+            });
+    })
+</script>
+<script>
     $(document).ready(function() {
 
     });

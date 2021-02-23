@@ -10,11 +10,11 @@
        data-original-title="{{ $analogous_sensor->sensor->pre_text ?? '' }}"
        @endif
        {!! makeLinkRemote() !!}
-       class="d-block  rounded-plus mb-1 px-2 py-1 text-center"
+       class="d-block  rounded-plus mb-1 px-2 py-1 text-center has-popover"
        id="d_{{$analogous_sensor->id}}_{{$analogous_sensor->sensor->id}}">
 @else
     <div
-        class="d-block  rounded-plus mb-1 px-2 py-1 text-center"
+        class="d-block  rounded-plus mb-1 px-2 py-1 text-center has-popover"
         @if($analogous_sensor->sensor->pre_text != '')
         data-toggle="popover"
         data-trigger="hover"
