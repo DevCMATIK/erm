@@ -36,7 +36,7 @@
         </h2>
         <span  class="font-weight-bold text-dark  fs-nano">{{ $analogous_sensor->sensor->name}}</span>
         @if($analogous_sensor->sensor->pre_text != '')
-            <span  class="font-weight-bold text-muted hidden-sm-up  fs-nano"> ({{ $analogous_sensor->sensor->pre_text ?? '' }} {{ number_format($analogous_sensor->sensor->max_value,',','') }} {{ optional(optional($disposition)->unit)->name }} {{ $analogous_sensor->sensor->post_text ?? '' }})</span>
+            <span  class="font-weight-bold text-muted hidden-sm-up  fs-nano"> ({{ $analogous_sensor->sensor->pre_text ?? '' }} {{ $analogous_sensor->sensor->max_value }} {{ optional(optional($disposition)->unit)->name }} {{ $analogous_sensor->sensor->post_text ?? '' }})</span>
         @endif
 @if($analogous_sensor->no_chart_needed != 1)
     </a>
