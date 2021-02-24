@@ -11,11 +11,6 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-12" id="cupLevelsContainer">
-
-                </div>
-            </div>
         </div>
     </div>
 
@@ -46,13 +41,10 @@
 
 
         $(document).ready(function(){
-            getOnlineDevices();
-            getAlarmsOn();
-            getLastUpdate();
-
-
             $.get('/kpi/getCupLevels', function (data) {
                 $('#cupLevelsContainer').html(data);
+                getOnlineDevices();
+                getAlarmsOn();
             });
         });
 
@@ -70,11 +62,6 @@
             });
         }
 
-        function getLastUpdate()
-        {
-            $.get('/kpi/getLastUpdate',function(data){
-                $('#last-update').html(data);
-            });
-        }
+
     </script>
 @endsection

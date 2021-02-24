@@ -14,50 +14,37 @@ class CupLevelsController extends Controller
 {
     public function __invoke()
     {
-        $zones = $this->getZones();
-
-        $sensors =$this->getSensors($zones);
-        $data = array();
-        foreach($sensors as $sensor) {
-            $lastReport = AnalogousReport::with('device.check_point.sub_zones.zone')
-                                        ->where('device_id',$sensor->device_id)
-                                        ->where('register_type',$sensor->register_type_id)
-                                        ->where('address',$sensor->address)
-                                        ->orderBy('id','desc')
-                                        ->take(1)
-                                        ->first();
-            if($lastReport) {
-                if($lastReport->result  != '') {
-                    array_push($data,[
-                        'check_point' => $sensor->check_point,
-                        'value' => number_format($lastReport->result,1),
-                        'zone' => $lastReport->device->check_point->sub_zones()->first()->zone->name,
-                        'sub_zone' => $lastReport->device->check_point->sub_zones()->first()->name,
-                        'sub_zone_id' => $lastReport->device->check_point->sub_zones()->first()->id,
-                        'position' => $lastReport->device->check_point->sub_zones()->first()->zone->position,
-                        'sub_zone_position' => $lastReport->device->check_point->sub_zones()->first()->position,
-                        'check_point_id' => $sensor->check_point_id,
-                        'device_id' => $sensor->device_id,
-                        'label' => $sensor->label,
-                        'color' => $lastReport->scale_color
-                    ]);
-                }
-            }
-        }
-        $data = collect($data)->sortBy('position');
-
-        return view('water-management.dashboard.statistics.cup-levels',compact('data'));
+        return view('water-management.dashboard.statistics.cup-levels',[
+            'zones' => $this->getSensors()
+                ->groupBy('zone')
+                ->sortByDesc(function($zone){
+                    return count($zone);
+                })
+        ]);
     }
 
-    protected function getDevicesId($zones)
+    protected function getZones()
+    {
+        $user_sub_zones = Sentinel::getUser()->sub_zones()->pluck('id')->toArray();
+
+        return Zone::with([
+            'sub_zones.configuration',
+            'sub_zones.sub_elements'
+        ])->get()->filter(function($item) use($user_sub_zones){
+            return $item->sub_zones->filter(function($sub_zone)  use ($user_sub_zones){
+                    return in_array($sub_zone->id,$user_sub_zones) && isset($sub_zone->configuration);
+                })->count() > 0;
+        });
+    }
+
+    protected function getDevicesId()
     {
         $ids = array();
-        foreach($zones as $zone) {
+
+        foreach($this->getZones() as $zone) {
             foreach($zone->sub_zones as $sub_zone) {
                 foreach($sub_zone->sub_elements as $sub_element) {
-                    if(Sentinel::getUser()->inSubZone($sub_zone->id)) {
-                        array_push($ids,$sub_element->device_id);
-                    }
+                    array_push($ids,$sub_element->device_id);
                 }
             }
         }
@@ -65,31 +52,34 @@ class CupLevelsController extends Controller
         return $ids;
     }
 
-    protected function getZones()
+    protected function getSensors()
     {
-        return Zone::with([
-            'sub_zones.configuration',
-            'sub_zones.sub_elements'
-        ])->get()->filter(function($item){
-            return $item->sub_zones->filter(function($sub_zone) {
-                    return Sentinel::getUser()->inSubZone($sub_zone->id) && isset($sub_zone->configuration);
-                })->count() > 0;
-        });
-    }
-
-    protected function getSensors($zones)
-    {
-        return Sensor::leftJoin('devices','devices.id','=','sensors.device_id')
-            ->leftJoin('check_points','check_points.id','=','devices.check_point_id')
-            ->leftJoin('check_point_labels','devices.id','=','check_point_labels.device_id')
-            ->leftJoin('check_point_types','check_point_types.id','=','check_points.type_id')
-            ->leftJoin('addresses','addresses.id','=','sensors.address_id')
-            ->where('sensors.type_id',32 )
-            ->whereNull('devices.deleted_at')
-            ->whereNull('check_points.deleted_at')
-            ->whereRaw("(check_point_types.slug = 'copas' or check_point_types.slug = 'relevadoras') and addresses.register_type_id = 11")
-            ->whereIn('devices.id',$this->getDevicesId($zones))
-            ->selectRaw('check_points.name as check_point,check_points.id as check_point_id,check_point_labels.label as label,sensors.address_number as address,addresses.register_type_id,devices.id as device_id')
-            ->get();
+        return Sensor::query()->with([
+            'type.interpreters',
+            'dispositions.unit',
+            'device.report',
+            'device.check_point.sub_zones.zone',
+            'device.check_point.type',
+            'device.check_point.label',
+            'ranges'
+        ])
+            ->where('type_id',32)
+            ->where('address_id',1)
+            ->whereIn('device_id', function($query) {
+                $query->select('id')->from('devices')->whereIn('check_point_id',function($query) {
+                    $query->select('id')->from('check_points')->wherein('type_id',function($query){
+                        $query->select('id')->from('check_point_types')->whereIn('slug',['copas','relevadoras']);
+                    });
+                });
+            })
+            ->whereIn('device_id',$this->getDevicesId())
+            ->get()->map(function($sensor){
+                return [
+                    'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
+                    'check_point' =>  $sensor->device->check_point->label->first()->label ?? $sensor->device->check_point->name,
+                    'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
+                    'data' => $this->getAnalogousValue($sensor)
+                ];
+            });
     }
 }
