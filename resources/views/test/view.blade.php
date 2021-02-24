@@ -2,9 +2,8 @@
 @section('page-title','TestView')
 @section('page-icon','key')
 @section('page-content')
-    @foreach($zones->chunk(2)  as $chunk)
-        <div class="row my-2">
-            @foreach($chunk as $zone => $sub_zones)
+    <div class="row my-2">
+        @foreach($zones as $zone => $sub_zones)
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 my-2">
                     <h5 class=" py-1 font-weight-bolder border-bottom">
                         {{ $zone }}
@@ -26,6 +25,5 @@
                     @endforeach
                 </div>
             @endforeach
-        </div>
-    @endforeach
+    </div>
 @endsection
