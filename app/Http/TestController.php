@@ -29,7 +29,7 @@ class TestController extends SoapController
                 return [
                     'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
                     'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
-                    'check_point' => $sensor->device->checkpoint->name,
+                    'check_point' => $sensor->device->check_point->name,
                     'value' => $this->getAnalogousValue($sensor,true)
                 ];
             })
@@ -76,7 +76,14 @@ class TestController extends SoapController
             'ranges'
         ])
             ->where('type_id',32)
-
+            ->where('address_id',1)
+            ->whereIn('device_id', function($query) {
+                $query->select('id')->from('devices')->whereIn('check_point_id',function($query) {
+                   $query->select('id')->from('check_points')->wherein('type_id',function($query){
+                       $query->select('id')->from('check_point_types')->whereIn('slug',['copas','relevadoras']);
+                   });
+                });
+            })
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
     }
