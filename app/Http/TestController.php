@@ -22,17 +22,17 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-
+        $sensors = $this->getSensors()->map(function($sensor){
+            return [
+                'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
+                'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
+                'check_point' => $sensor->device->check_point->name,
+                'value' => $this->getAnalogousValue($sensor,true)
+            ];
+        });
         return $this->testResponse([
-            'sensors' => $this->getSensors(),
-            'sensors-mapped' => $this->getSensors()->map(function($sensor){
-                return [
-                    'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
-                    'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
-                    'check_point' => $sensor->device->check_point->name,
-                    'value' => $this->getAnalogousValue($sensor,true)
-                ];
-            })
+            'sensors-mapped' => $sensors,
+            'sensors-grouped' => $sensors->groupBy('zone')
         ]);
     }
 
