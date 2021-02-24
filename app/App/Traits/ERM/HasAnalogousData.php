@@ -181,6 +181,7 @@ trait HasAnalogousData
             'type.interpreters',
             'dispositions.unit',
             'device.report',
+            'device.check_point',
             'ranges'
         ]);
     }

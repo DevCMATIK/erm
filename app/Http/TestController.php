@@ -22,35 +22,34 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $zones = $this->getZones();
 
         return $this->testResponse([
-            'zones' => $zones,
-            'sensors' => $this->getSensors($zones)
+            'sensors' => $this->getSensors()
         ]);
     }
 
     protected function getZones()
     {
+        $user_sub_zones = Sentinel::getUser()->sub_zones()->pluck('id')->toArray();
+
         return Zone::with([
             'sub_zones.configuration',
             'sub_zones.sub_elements'
-        ])->get()->filter(function($item){
-            return $item->sub_zones->filter(function($sub_zone) {
-                    return Sentinel::getUser()->inSubZone($sub_zone->id) && isset($sub_zone->configuration);
+        ])->get()->filter(function($item) use($user_sub_zones){
+            return $item->sub_zones->filter(function($sub_zone)  use ($user_sub_zones){
+                    return in_array($sub_zone->id,$user_sub_zones) && isset($sub_zone->configuration);
                 })->count() > 0;
         });
     }
 
-    protected function getDevicesId($zones)
+    protected function getDevicesId()
     {
         $ids = array();
-        foreach($zones as $zone) {
+
+        foreach($this->getZones() as $zone) {
             foreach($zone->sub_zones as $sub_zone) {
                 foreach($sub_zone->sub_elements as $sub_element) {
-                    if(Sentinel::getUser()->inSubZone($sub_zone->id)) {
-                        array_push($ids,$sub_element->device_id);
-                    }
+                    array_push($ids,$sub_element->device_id);
                 }
             }
         }
@@ -58,18 +57,11 @@ class TestController extends SoapController
         return $ids;
     }
 
-    protected function getSensors($zones)
+    protected function getSensors()
     {
-        return Sensor::leftJoin('devices','devices.id','=','sensors.device_id')
-            ->leftJoin('check_points','check_points.id','=','devices.check_point_id')
-            ->leftJoin('check_point_labels','devices.id','=','check_point_labels.device_id')
-            ->leftJoin('check_point_types','check_point_types.id','=','check_points.type_id')
-            ->leftJoin('addresses','addresses.id','=','sensors.address_id')
-            ->where('sensors.type_id',32 )
-            ->whereNull('devices.deleted_at')
-            ->whereNull('check_points.deleted_at')
-            ->whereRaw("(check_point_types.slug = 'copas' or check_point_types.slug = 'relevadoras') and addresses.register_type_id = 11")
-            ->whereIn('devices.id',$this->getDevicesId($zones))
+        return $this->sensorBaseQuery()
+            ->where('type_id',32)
+            ->whereIn('device_id',$this->getDevicesId())
             ->selectRaw('check_points.name as check_point,check_points.id as check_point_id,check_point_labels.label as label,sensors.address_number as address,addresses.register_type_id,devices.id as device_id')
             ->get();
     }
