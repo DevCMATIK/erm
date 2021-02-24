@@ -73,15 +73,17 @@ class TestController extends SoapController
             'dispositions.unit',
             'device.report',
             'device.check_point.sub_zones.zone',
+            'device.check_point.type',
             'ranges'
         ])
             ->where('type_id',32)
+            ->where('address_id',11)
             ->whereIn('device_id', function($query) {
                 $query->select('id')->from('devices')->whereIn('check_point_id',function($query) {
-                   $query->select('id')->from('check_points')->wherein('slug',['copas','relevadoras']);
+                   $query->select('id')->from('check_points')->wherein('type_id',function($query){
+                       $query->select('id')->from('check_point_types')->whereIn('slug',['copas','relevadoras']);
+                   });
                 });
-            })->whereIn('address_id',function($query){
-                $query->select('id')->from('addresses')->where('register_type_id',11);
             })
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
