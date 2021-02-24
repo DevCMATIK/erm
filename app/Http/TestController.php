@@ -24,7 +24,8 @@ class TestController extends SoapController
     {
 
         return $this->testResponse([
-            'sensors' => $this->getSensors()->map(function($sensor){
+            'sensors' => $this->getSensors(),
+            'sensors-mapped' => $this->getSensors()->map(function($sensor){
                 return [
                     'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
                     'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
