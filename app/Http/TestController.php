@@ -62,7 +62,6 @@ class TestController extends SoapController
         return $this->sensorBaseQuery()
             ->where('type_id',32)
             ->whereIn('device_id',$this->getDevicesId())
-            ->selectRaw('check_points.name as check_point,check_points.id as check_point_id,check_point_labels.label as label,sensors.address_number as address,addresses.register_type_id,devices.id as device_id')
             ->get();
     }
 
