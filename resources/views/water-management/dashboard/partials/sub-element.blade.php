@@ -18,6 +18,7 @@
             }
         }
 
+         echo $state;
 
         if($state== 0) {
             $off = true;
