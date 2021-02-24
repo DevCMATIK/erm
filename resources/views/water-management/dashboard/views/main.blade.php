@@ -38,11 +38,11 @@
         {
             location.href = "/offline-devices-list";
         }
-
+        getOnlineDevices();
+        getAlarmsOn();
 
         $(document).ready(function(){
-            getOnlineDevices();
-            getAlarmsOn();
+
            /* $.get('/kpi/getCupLevels', function (data) {
                 $('#cupLevelsContainer').html(data);
 
