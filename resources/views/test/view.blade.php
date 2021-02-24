@@ -16,7 +16,7 @@
                                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="row mt-1 px-2">
                                         <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] }}</div>
-                                        <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] === null ) bg-primary @else {{ $check_point['data']['color'] }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
+                                        <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] === null ) bg-primary @else bg-{{ $check_point['data']['color'] }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
                                             <a href="/dashboard/{{ $check_point['sub_zone_id'] }}" class="text-white">{{ number_format($check_point['data']['value'],1,',','').' '.$check_point['data']['unit'] }}</a>
                                         </div>
                                     </div>
