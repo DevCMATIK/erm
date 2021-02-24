@@ -32,7 +32,9 @@ class TestController extends SoapController
         });
         return $this->testResponse([
             'sensors-mapped' => $sensors,
-            'sensors-grouped' => $sensors->groupBy('zone')
+            'sensors-grouped' => $sensors->groupBy('zone')->sortByDesc(function($zone){
+                return count($zone);
+            })
         ]);
     }
 
