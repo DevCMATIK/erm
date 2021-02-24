@@ -14,7 +14,7 @@ use Sentinel;
 class CupLevelsController extends Controller
 {
     use HasAnalogousData;
-    
+
     public function __invoke()
     {
         return view('water-management.dashboard.statistics.cup-levels',[

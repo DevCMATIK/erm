@@ -8,7 +8,7 @@
 
             <div class="row">
                 <div class="col-xl-12" id="cupLevelsContainer">
-
+                    @include('water-management.dashboard.statistics.cup-levels',['zones', $zones])
                 </div>
             </div>
         </div>
@@ -41,11 +41,12 @@
 
 
         $(document).ready(function(){
-            $.get('/kpi/getCupLevels', function (data) {
+            getOnlineDevices();
+            getAlarmsOn();
+           /* $.get('/kpi/getCupLevels', function (data) {
                 $('#cupLevelsContainer').html(data);
-                getOnlineDevices();
-                getAlarmsOn();
-            });
+
+            });*/
         });
 
         function getOnlineDevices()
