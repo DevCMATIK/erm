@@ -24,7 +24,14 @@ class TestController extends SoapController
     {
 
         return $this->testResponse([
-            'sensors' => $this->getSensors()
+            'sensors' => $this->getSensors()->map(function($sensor){
+                return [
+                    'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
+                    'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
+                    'check_point' => $sensor->device->checkpoint->name,
+                    'value' => $this->getAnalogousValue($sensor,true)
+                ];
+            })
         ]);
     }
 
@@ -60,6 +67,7 @@ class TestController extends SoapController
     protected function getSensors()
     {
         return Sensor::query()->with([
+            'address',
             'type.interpreters',
             'dispositions.unit',
             'device.report',
@@ -67,6 +75,13 @@ class TestController extends SoapController
             'ranges'
         ])
             ->where('type_id',32)
+            ->whereIn('device_id', function($query) {
+                $query->select('id')->from('devices')->whereIn('check_point_id',function($query) {
+                   $query->select('id')->from('check_points')->wherein('slug',['copas','relevadoras']);
+                });
+            })->whereIn('address_id',function($query){
+                $query->select('id')->from('addresses')->where('register_type_id',11);
+            })
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
     }
