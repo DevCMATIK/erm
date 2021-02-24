@@ -59,7 +59,13 @@ class TestController extends SoapController
 
     protected function getSensors()
     {
-        return $this->sensorBaseQuery()
+        return Sensor::query()->with([
+            'type.interpreters',
+            'dispositions.unit',
+            'device.report',
+            'device.check_point.sub_zones.zone',
+            'ranges'
+        ])
             ->where('type_id',32)
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
