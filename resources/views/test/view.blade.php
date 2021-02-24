@@ -10,8 +10,10 @@
                         {{ $zone }}
                     </h5>
                     @foreach($sub_zones->chunk(2) as $chunked_sub_zones)
+
                         <div class="row">
                             @foreach($chunked_sub_zones as $check_point)
+                                @dd($chunked_sub_zones,$check_point)
                                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="row mt-1 px-2">
                                         <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] }}</div>
