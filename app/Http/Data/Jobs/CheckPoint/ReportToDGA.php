@@ -67,6 +67,8 @@ class ReportToDGA extends SoapController implements ShouldQueue
             ->get();
     }
 
+
+
     protected function calculateTimeSinceLastReport($check_point)
     {
         return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));

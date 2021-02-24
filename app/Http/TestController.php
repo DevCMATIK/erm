@@ -7,6 +7,7 @@ use App\App\Jobs\SendToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
+use App\Domain\Client\Zone\Zone;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Sentinel;
@@ -20,68 +21,34 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        return view('test.view');
+
+
+        return $this->testResponse([
+            'zones' => $this->getZones()
+        ]);
     }
 
-    protected function another()
+    protected function getZones()
     {
-        $checkPoint = CheckPoint::with('last_report')->find(242);
-        if(!isset($checkPoint->last_report) || $this->calculateTimeSinceLastReport($checkPoint) > 28) {
-            $sensors = $this->getSensors($checkPoint);
-            $tote = $this->getToteSensor($sensors);
-            $flow = $this->getFlowSensor($sensors);
-            $level = $this->getLevelSensor($sensors);
-            if($tote && $flow && $level) {
-                SendToDGA::dispatch($this->getAnalogousValue($tote,true),
-                    $this->getAnalogousValue($flow,true),
-                    ($this->getAnalogousValue($level,true) * -1),
-                    $checkPoint->work_code,
-                    $checkPoint)->onQueue('long-running-queue-low');
-
-            }
-        }
-    }
-    protected function calculateTimeSinceLastReport($check_point)
-    {
-        return Carbon::now()->diffInMinutes(Carbon::parse($check_point->last_report->report_date));
+        return Zone::with([
+            'sub_zones.configuration',
+            'sub_zones.sub_elements'
+        ])->get()->filter(function($item){
+            return $item->sub_zones->filter(function($sub_zone) {
+                    return Sentinel::getUser()->inSubZone($sub_zone->id) && isset($sub_zone->configuration);
+                })->count() > 0;
+        });
     }
 
-    protected function getSensors($checkPoint)
+    public function testResponse($results)
     {
-        return $this->getSensorsByCheckPoint($checkPoint->id)
-            ->whereIn('type_id',function($query){
-                $query->select('id')->from('sensor_types')
-                    ->where('is_dga',1)
-                    ->whereIn('sensor_type',[
-                        'tote',
-                        'level',
-                        'flow',
-                    ]);
-            })->get();
+        return response()->json(array_merge(['results' => $results],$this->getExecutionTime()));
     }
 
-    protected function getLevelSensor($sensors)
+    public function getExecutionTime()
     {
-        return $sensors->filter(function($sensor) {
-            return collect(['level'])->contains($sensor->type->sensor_type);
-        })->first();
-    }
-
-    protected function getToteSensor($sensors)
-    {
-        return $sensors->filter(function($sensor) {
-            return collect(['tote'
-            ])->contains($sensor->type->sensor_type);
-        })->first();
-
-    }
-
-    protected function getFlowSensor($sensors)
-    {
-        return $sensors->filter(function($sensor) {
-            return collect(['flow'
-            ])->contains($sensor->type->sensor_type);
-        })->first();
-
+        return [
+            'time_in_seconds' => (microtime(true) - LARAVEL_START)
+        ];
     }
 }
