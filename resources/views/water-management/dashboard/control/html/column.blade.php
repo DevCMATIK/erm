@@ -72,11 +72,7 @@
                             if($data == 0 || $dat == 0) {
                                 $max_vol = 0;
                             } else {
-                                if($data = 0) {
-                                    $max_vol = 0;
-                                } else {
                                    $max_vol = $dat * 100 / $data;
-                                }
                             }
 
                         }
