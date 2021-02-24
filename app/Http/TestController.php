@@ -68,7 +68,6 @@ class TestController extends SoapController
     protected function getSensors()
     {
         return Sensor::query()->with([
-            'address',
             'type.interpreters',
             'dispositions.unit',
             'device.report',
@@ -77,8 +76,7 @@ class TestController extends SoapController
             'ranges'
         ])
             ->where('type_id',32)
-            ->where('address_id',11)
-            
+
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
     }
