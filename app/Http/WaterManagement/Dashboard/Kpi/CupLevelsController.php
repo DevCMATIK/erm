@@ -2,6 +2,7 @@
 
 namespace App\Http\WaterManagement\Dashboard\Kpi;
 
+use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
@@ -12,6 +13,8 @@ use Sentinel;
 
 class CupLevelsController extends Controller
 {
+    use HasAnalogousData;
+    
     public function __invoke()
     {
         return view('water-management.dashboard.statistics.cup-levels',[
