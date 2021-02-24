@@ -78,13 +78,7 @@ class TestController extends SoapController
         ])
             ->where('type_id',32)
             ->where('address_id',11)
-            ->whereIn('device_id', function($query) {
-                $query->select('id')->from('devices')->whereIn('check_point_id',function($query) {
-                   $query->select('id')->from('check_points')->wherein('type_id',function($query){
-                       $query->select('id')->from('check_point_types')->whereIn('slug',['copas','relevadoras']);
-                   });
-                });
-            })
+            
             ->whereIn('device_id',$this->getDevicesId())
             ->get();
     }
