@@ -1,5 +1,6 @@
 @php
     $off = false;
+$states = array();
     foreach($sub_element as $ss){
 
          if($ss->device->from_bio === 1) {
@@ -17,13 +18,14 @@
                $state = $ss->device->report->state;
             }
         }
+        array_push($states,$state);
 
-         echo $state;
 
-        if($state== 0) {
+    }
+    $state = array_reverse(\Illuminate\Support\Arr::sort($states))[0] ?? 0;
+if($state== 0) {
             $off = true;
         }
-    }
 @endphp
 <div class="card rounded-plus mb-2 " id="sub_element_{{$sub_element->first()->id}}" style="min-height: 400px;">
     @if($sub_element->first()->active_alarm()->first())
