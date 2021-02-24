@@ -25,7 +25,7 @@ class TestController extends SoapController
         $sensors = $this->getSensors()->map(function($sensor){
             return [
                 'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
-                'check_point' => $sensor->device->check_point->label->label ?? $sensor->device->check_point->name,
+                'check_point' =>  $sensor->device->check_point->name,
                 'sub-zone_id' => $sensor->device->check_point->sub_zones->first()->id,
                 'data' => $this->getAnalogousValue($sensor)
             ];
