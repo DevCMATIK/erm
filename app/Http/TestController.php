@@ -25,17 +25,14 @@ class TestController extends SoapController
         $sensors = $this->getSensors()->map(function($sensor){
             return [
                 'zone' => $sensor->device->check_point->sub_zones->first()->zone->name,
-                'sub_zone' => $sensor->device->check_point->sub_zones->first()->name,
-                'check_point' => $sensor->device->check_point->name,
-                'value' => $this->getAnalogousValue($sensor,true)
+                'check_point' => $sensor->device->check_point->label->label ?? $sensor->device->check_point->name,
+                'sub-zone_id' => $sensor->device->check_point->sub_zones->first()->id,
+                'data' => $this->getAnalogousValue($sensor)
             ];
         });
-        return $this->testResponse([
-            'sensors-mapped' => $sensors,
-            'sensors-grouped' => $sensors->groupBy('zone')->sortByDesc(function($zone){
-                return count($zone);
-            })
-        ]);
+        return view('test.view',['zones' => $sensors->groupBy('zone')->sortByDesc(function($zone){
+            return count($zone);
+        })]);
     }
 
     protected function getZones()
@@ -75,6 +72,7 @@ class TestController extends SoapController
             'device.report',
             'device.check_point.sub_zones.zone',
             'device.check_point.type',
+            'device.check_point.label',
             'ranges'
         ])
             ->where('type_id',32)

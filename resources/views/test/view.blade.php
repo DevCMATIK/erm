@@ -2,53 +2,29 @@
 @section('page-title','TestView')
 @section('page-icon','key')
 @section('page-content')
-    <style>
-        .progress-bar-vertical {
-            width: 80%;
-            margin: auto;
-            min-height: 140px;
-            display: flex;
-            align-items: flex-end;
-            border-radius: 5px !important;
-        }
-
-        .progress-bar-vertical .progress-bar {
-            width: 100%;
-            height: 0;
-            -webkit-transition: height 0.6s ease;
-            -o-transition: height 0.6s ease;
-            transition: height 0.6s ease;
-        }
-    </style>
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-block  has-popover rounded-plus mb-1 px-2 py-1 text-center" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="120,6l/s" data-template='<div class="popover bg-primary-500 border-primary" role="tooltip"><div class="arrow"></div><h3 class="popover-header bg-transparent"></h3><div class="popover-body text-white text-center"></div></div>' data-original-title="Caudal autorizado" id="d_1">
-                        <h2 class=" mb-0 text-success">
-                            <span class="font-weight-bolder " style=" font-size: 0.9em !important;">1111,25</span>
-                            <span class="fs-nano text-dark">l/s</span>
-                        </h2>
-                        <span  class="font-weight-bold text-dark  fs-nano">Caudal</span>
-                        <span  class="font-weight-bold text-muted hidden-sm-up  fs-nano"> (Autorizado 120,61 l/s)</span>
-                    </div>
-                    <div class="d-block  rounded-plus mb-1 px-2 py-1 text-center" id="d_2">
-                        <h2 class=" mb-0 text-success">
-                            <span class="font-weight-bolder " style=" font-size: 0.9em !important;">123,25</span>
-                            <span class="fs-nano text-dark">mt</span>
-                        </h2>
-                        <span  class="font-weight-bold text-dark  fs-nano">Otro</span>
-                    </div>
+    @foreach($zones->chunk(2)  as $chunk)
+        <div class="row my-2">
+            @foreach($chunk as $zone => $sub_zones)
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 my-2">
+                    <h5 class=" py-1 font-weight-bolder border-bottom">
+                        {{ $zone }}
+                    </h5>
+                    @foreach($sub_zones->chunk(2) as $chunked_sub_zones)
+                        <div class="row">
+                            @foreach($chunked_sub_zones as $check_point)
+                                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                    <div class="row mt-1 px-2">
+                                        <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['$check_point'] }}</div>
+                                        <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] === null ) bg-primary @else {{ $zone['data']['color'] }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
+                                            <a href="/dashboard/{{ $check_point['sub_zone_id'] }}" class="text-white">{{ number_format($check_point['data']['value'],1,',','').' '.$check_point['data']['unit'] }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
-            </div>
+            @endforeach
         </div>
-    </div>
-    <script>
-        $(function(){
-            $('body').popover(
-                {
-                    selector: '.has-popover'
-                });
-        })
-    </script>
+    @endforeach
 @endsection
