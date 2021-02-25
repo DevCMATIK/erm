@@ -18,15 +18,15 @@ class CheckPointLabelController extends Controller
         $data = array();
         foreach($sensors as $sensor) {
             array_push($data,[
-                        'check_point' => $sensor->check_point,
+                        'check_point' => $sensor->device->check_point->name,
                         'zone' => $sensor->device->check_point->sub_zones()->first()->zone->name,
                         'sub_zone' => $sensor->device->check_point->sub_zones()->first()->name,
                         'position' => $sensor->device->check_point->sub_zones()->first()->zone->position,
                         'sub_zone_position' => $sensor->device->check_point->sub_zones()->first()->position,
-                        'check_point_id' => $sensor->check_point_id,
-                        'label' => $sensor->label,
+                        'check_point_id' => $sensor->device->check_point_id,
+                        'label' => $sensor->device->check_point->label->label ?? '',
                         'device_id' => $sensor->device_id,
-                        'device_name' => $sensor->device_name
+                        'device_name' => $sensor->device->name
                     ]);
         }
         $data = collect($data)->sortBy('position');
