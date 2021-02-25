@@ -76,7 +76,9 @@ class TestController extends SoapController
                     $from = Carbon::parse($from)->startOfDay()->toDateTimeString();  //2016-09-29 00:00:00.000000
                     $to = Carbon::parse($to)->endOfDay()->toDateTimeString();
                     $query = $query->between('date',$from,$to);
-
+                    return $this->testResponse([
+                        'query_formation' => $query
+                    ]);
                     $data['title'] = "";
 
 
@@ -184,7 +186,7 @@ class TestController extends SoapController
 
         }
         $data['yAxis'] = $yAxis;
-        return $this->testResponse([1]);
+        return $this->testResponse([$data]);
     }
 
     protected function transformData($rows){
