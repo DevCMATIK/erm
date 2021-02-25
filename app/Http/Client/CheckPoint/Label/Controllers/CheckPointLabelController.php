@@ -45,7 +45,6 @@ class CheckPointLabelController extends Controller
                 $new = $check->label()
                     ->updateOrCreate([
                         'check_point_id' => $check_point,
-                        'device_id' => $request->devices[$i]
                     ],[
                         'label' => $request->labels[$i]
                     ]);
