@@ -68,7 +68,7 @@
                     if((float)$data >= $range->min && (float)$data <= $range->max) {
                         $color = $range->color;
                         if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
-                            echo 'color:'.$color.'|||valor:'.$data.'||min:'.$range->min.'||max:'.$range->max.'<br>';
+                            echo 'color:'.$color.'|||valor:'.(float)$data.'||min:'.$range->min.'||max:'.$range->max.'<br>';
                         }
                     }
                 }
