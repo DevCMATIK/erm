@@ -5,6 +5,7 @@ namespace App\Http\WaterManagement\Dashboard\Controllers;
 use App\Domain\Client\Zone\Sub\SubZone;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class SubZoneDevicesStateController extends Controller
 {
@@ -23,7 +24,26 @@ class SubZoneDevicesStateController extends Controller
         }) as $check_point) {
             $off = false;
             foreach($check_point as $se){
-                if($se->device->report->state == 0) {
+
+                if($se->device->from_bio == 1) {
+                    $state =  DB::connection('bioseguridad')
+                            ->table('reports')
+                            ->where('grd_id',$se->device->internal_id)
+                            ->first()->state ?? 0;
+                } else {
+                    if($se->device->from_dpl == 1) {
+                        $state =  DB::connection('dpl')
+                                ->table('reports')
+                                ->where('grd_id',$se->device->internal_id)
+                                ->first()->state ?? 0;
+                    } else {
+                        if($se->device->report->state == 0) {
+                            $state = 0;
+                        }
+                    }
+                }
+
+                if($state = 0) {
                     $off = true;
                 }
             }
