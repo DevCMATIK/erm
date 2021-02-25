@@ -11,9 +11,9 @@
 @endif
         <h2 class=" mb-0  @if($off) text-muted @else text-{{ $color }} @endif">
             @if(!is_numeric((str_replace(',','.',$data))))
-                <span class="font-weight-bolder " style=" font-size: 0.9em !important;">{{ $data }}</span>
+                <span class="font-weight-bolder text-{{ $color ?? 'success' }}" style=" font-size: 0.9em !important;">{{ $data }}</span>
             @else
-                <span class="font-weight-bolder " style=" font-size: 0.9em !important;">{{ $data }}</span>
+                <span class="font-weight-bolder text-{{ $color ?? 'success' }} " style=" font-size: 0.9em !important;">{{ $data }}</span>
                 <span class="fs-nano text-dark">{{ strtoupper(optional(optional($disposition)->unit)->name) }}</span>
             @endif
         </h2>
@@ -27,11 +27,3 @@
     </div>
 @endif
 
-<script>
-    $(function(){
-        $('body').popover(
-            {
-                selector: '.has-popover'
-            });
-    })
-</script>
