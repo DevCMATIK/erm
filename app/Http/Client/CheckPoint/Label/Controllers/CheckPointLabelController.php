@@ -24,7 +24,7 @@ class CheckPointLabelController extends Controller
                         'position' => $sensor->device->check_point->sub_zones()->first()->zone->position,
                         'sub_zone_position' => $sensor->device->check_point->sub_zones()->first()->position,
                         'check_point_id' => $sensor->device->check_point_id,
-                        'label' => $sensor->device->check_point->label->label ?? '',
+                        'label' => $sensor->device->check_point->label->first()->label ?? '',
                         'device_id' => $sensor->device_id,
                         'device_name' => $sensor->device->name
                     ]);
