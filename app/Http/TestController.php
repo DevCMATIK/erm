@@ -75,10 +75,7 @@ class TestController extends SoapController
                     $from = Carbon::parse($from)->startOfDay()->toDateTimeString();  //2016-09-29 00:00:00.000000
                     $to = Carbon::parse($to)->endOfDay()->toDateTimeString();
                     $query = $query->between('date',$from,$to);
-                    return $this->testResponse([
-                        'query' => $query->toSql(),
-                        'query_formation' => $query->get()->sortBy('date')
-                    ]);
+
                     $data['title'] = "";
 
 
@@ -89,14 +86,13 @@ class TestController extends SoapController
                     }
 
                 } else {
-                    $query = AnalogousReport::with('sensor')->where('device_id',$device_id)
+                    $query = AnalogousReport::with('sensor')
                         ->where('sensor_id',$sensor->id)
-                        ->whereRaw('date > date_sub(now(),interval 7 day)')
-                        ->orderBy('date');
+                        ->whereRaw('date > date_sub(now(),interval 7 day)');
                 }
 
 
-                $rows = $query->get();
+                $rows = $query->get()->sortBy('date');
 
 
                 if(count($rows) > 0) {
