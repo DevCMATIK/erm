@@ -8,6 +8,7 @@ use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
+use Sentinel;
 
 class CheckPointLabelController extends Controller
 {
