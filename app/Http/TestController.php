@@ -77,7 +77,7 @@ class TestController extends SoapController
                     $query = $query->between('date',$from,$to);
                     return $this->testResponse([
                         'query' => $query->toSql(),
-                        'query_formation' => $query->get()->count()
+                        'query_formation' => $query->get()->sortBy('date')
                     ]);
                     $data['title'] = "";
 
