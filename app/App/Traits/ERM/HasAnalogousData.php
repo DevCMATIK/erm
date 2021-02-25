@@ -98,14 +98,14 @@ trait HasAnalogousData
     {
         $address = $sensor->full_address;
 
-        if($sensor->device->from_bio === 1) {
+        if($sensor->device->from_bio == 1) {
             return DB::connection('bioseguridad')
                 ->table('reports')
                 ->where('grd_id',$sensor->device->internal_id)
                 ->first()->{$address} ?? false;
         }
 
-        if($sensor->device->from_dpl === 1) {
+        if($sensor->device->from_dpl == 1) {
             return DB::connection('dpl')
                     ->table('reports')
                     ->where('grd_id',$sensor->device->internal_id)
