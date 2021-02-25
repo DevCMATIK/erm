@@ -39,16 +39,21 @@ class CheckPointLabelController extends Controller
         $i = 0;
         foreach($request->check_points as $check_point){
             $check = CheckPoint::find($check_point);
-            $old = convertColumns($check->label);
-            $new = $check->label()
-                ->updateOrCreate([
-                    'check_point_id' => $check_point,
-                    'device_id' => $request->devices[$i]
-                    ],[
-                'label' => $request->labels[$i]
-            ]);
 
-            addChangeLog('Nombre de Punto de Control ','check_point_labels',$old,convertColumns($new));
+            if($request->labels[$i] != '') {
+                $old = convertColumns($check->label);
+                $new = $check->label()
+                    ->updateOrCreate([
+                        'check_point_id' => $check_point,
+                        'device_id' => $request->devices[$i]
+                    ],[
+                        'label' => $request->labels[$i]
+                    ]);
+                addChangeLog('Nombre de Punto de Control ','check_point_labels',$old,convertColumns($new));
+
+            }
+
+
 
             $i++;
         }
