@@ -67,9 +67,8 @@ class TestController extends SoapController
             ]);
             foreach($sensors as $sensor) {
                 if ($request->has('date') && $request->date != '') {
-                    $query = AnalogousReport::with('sensor')->where('device_id',$device_id)
-                        ->where('sensor_id',$sensor->id)
-                        ->orderBy('date');
+                    $query = AnalogousReport::with('sensor')
+                        ->where('sensor_id',$sensor->id);
                     $dates = explode(' ',$request->date);
                     $from = date($dates[0]);
                     $to = date($dates[2]);
@@ -78,7 +77,7 @@ class TestController extends SoapController
                     $query = $query->between('date',$from,$to);
                     return $this->testResponse([
                         'query' => $query->toSql(),
-                        'query_formation' => $query->get()
+                        'query_formation' => $query->get()->count()
                     ]);
                     $data['title'] = "";
 
