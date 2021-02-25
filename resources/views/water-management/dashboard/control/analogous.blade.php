@@ -63,7 +63,7 @@
             if (count($ranges) > 0) {
                 foreach($ranges as $range) {
                      if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
-                            var_dump($range);
+                            echo $range->min.' |||  '.$range->max.'   |||   '.$range->color.'<br>';
                         }
                     if((float)$data >= $range->min && (float)$data <= $range->max) {
                         $color = $range->color;
