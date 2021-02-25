@@ -77,7 +77,8 @@ class TestController extends SoapController
                     $to = Carbon::parse($to)->endOfDay()->toDateTimeString();
                     $query = $query->between('date',$from,$to);
                     return $this->testResponse([
-                        'query_formation' => $query
+                        'query' => $query->toSql(),
+                        'query_formation' => $query->get()
                     ]);
                     $data['title'] = "";
 
