@@ -35,18 +35,32 @@ class BackupDigitalSensors implements ShouldQueue
         $toInsert = array();
 
         foreach($sensors as $sensor) {
-            if(!isset($sensor->device->report)) {
-                continue;
-            }
+
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
+            if($report_value) {
+                if(!isset($sensor->address_number)) {
+                    continue;
+                }
 
-            if(!isset($sensor->address_number)) {
-                continue;
-            }
-
-            if($sensor->type->interval == 77) {
-                if($sensor->last_value != $report_value) {
+                if($sensor->type->interval == 77) {
+                    if($sensor->last_value != $report_value) {
+                        array_push($toInsert, [
+                            'device_id' => $sensor->device->id,
+                            'register_type' => $sensor->address->register_type_id,
+                            'address' => $sensor->address_number,
+                            'sensor_id' => $sensor->id,
+                            'name' => $sensor->name,
+                            'on_label' => $sensor->label->on_label,
+                            'off_label' => $sensor->label->off_label,
+                            'value' => $report_value,
+                            'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
+                            'date' => Carbon::now()->toDateTimeString()
+                        ]);
+                        $sensor->last_value = $report_value;
+                        $sensor->save();
+                    }
+                } else {
                     array_push($toInsert, [
                         'device_id' => $sensor->device->id,
                         'register_type' => $sensor->address->register_type_id,
@@ -59,23 +73,9 @@ class BackupDigitalSensors implements ShouldQueue
                         'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
                         'date' => Carbon::now()->toDateTimeString()
                     ]);
-                    $sensor->last_value = $report_value;
-                    $sensor->save();
                 }
-            } else {
-                array_push($toInsert, [
-                    'device_id' => $sensor->device->id,
-                    'register_type' => $sensor->address->register_type_id,
-                    'address' => $sensor->address_number,
-                    'sensor_id' => $sensor->id,
-                    'name' => $sensor->name,
-                    'on_label' => $sensor->label->on_label,
-                    'off_label' => $sensor->label->off_label,
-                    'value' => $report_value,
-                    'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
-                    'date' => Carbon::now()->toDateTimeString()
-                ]);
             }
+
 
 
         }
