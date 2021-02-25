@@ -64,7 +64,7 @@
                 foreach($ranges as $range) {
                     if((float)$data >= $range->min && (float)$data <= $range->max) {
                         $color = $range->color;
-                        echo $color;
+                        echo 'color:'.$color.'|||valor:'.$data.'||min:'.$range->min.'||max:'.$range->max;
                     }
                 }
             }
