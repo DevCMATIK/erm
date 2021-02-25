@@ -44,40 +44,63 @@ class   BackupAnalogousSensors implements ShouldQueue
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
 
-
-            if($sensor->fix_values === 1) {
-                if($report_value > $sensor->fix_max_value || $report_value < $sensor->fix_min_value) {
-                    $report_value = $sensor->last_value;
-                    if($report_value === null) {
-                        $report_value = AnalogousReport::where('sensor_id',$sensor->id)->orderBy('date','desc')->take(1)->first()->value ?? null;
-                    }
-
-                }
-            }
-            if($report_value !== null) {
-                if (!$disposition = $sensor->selected_disposition()->first()) {
-                    $disposition = $sensor->dispositions()->first();
-                }
+            if($report_value) {
                 if($sensor->fix_values === 1) {
-                    $sensor->last_value = $report_value;
-                    $sensor->save();
-                }
-                $result = $this->calculateData($disposition,$report_value,$sensor->fix_values_out_of_range,$sensor);
-                $range = $this->calculateRange($sensor,$result);
-                $interpreters = $sensor->type->interpreters;
+                    if($report_value > $sensor->fix_max_value || $report_value < $sensor->fix_min_value) {
+                        $report_value = $sensor->last_value;
+                        if($report_value === null) {
+                            $report_value = AnalogousReport::where('sensor_id',$sensor->id)->orderBy('date','desc')->take(1)->first()->value ?? null;
+                        }
 
-                if(count($interpreters) > 0) {
-                    if($interpreter = $interpreters->where('value',(int) $result)->first()) {
-                        $interpreter = $interpreter->description;
+                    }
+                }
+                if($report_value !== null) {
+                    if (!$disposition = $sensor->selected_disposition()->first()) {
+                        $disposition = $sensor->dispositions()->first();
+                    }
+                    if($sensor->fix_values === 1) {
+                        $sensor->last_value = $report_value;
+                        $sensor->save();
+                    }
+                    $result = $this->calculateData($disposition,$report_value,$sensor->fix_values_out_of_range,$sensor);
+                    $range = $this->calculateRange($sensor,$result);
+                    $interpreters = $sensor->type->interpreters;
+
+                    if(count($interpreters) > 0) {
+                        if($interpreter = $interpreters->where('value',(int) $result)->first()) {
+                            $interpreter = $interpreter->description;
+                        } else {
+                            $interpreter = null;
+                        }
                     } else {
                         $interpreter = null;
                     }
-                } else {
-                    $interpreter = null;
-                }
 
-                if($sensor->type->interval == 77) {
-                    if($sensor->last_value != $report_value) {
+                    if($sensor->type->interval == 77) {
+                        if($sensor->last_value != $report_value) {
+                            array_push($toInsert, [
+                                'device_id' => $sensor->device->id,
+                                'register_type' => $sensor->address->register_type_id,
+                                'address' => $sensor->address_number,
+                                'sensor_id' => $sensor->id,
+                                'scale' => $disposition->name,
+                                'scale_min'=> $disposition->scale_min,
+                                'scale_max' => $disposition->scale_max,
+                                'ing_min' => $disposition->sensor_min,
+                                'ing_max' => $disposition->sensor_max,
+                                'unit' => $disposition->unit->name,
+                                'value' => $report_value,
+                                'result' => $result,
+                                'scale_color' => $range,
+                                'interpreter' => $interpreter,
+                                'date' => Carbon::now()->toDateTimeString(),
+                                'pump_location' => $sensor->max_value
+                            ]);
+                            $sensor->last_value = $report_value;
+                            $sensor->save();
+                            array_push($insertedSensors,$sensor->id);
+                        }
+                    } else {
                         array_push($toInsert, [
                             'device_id' => $sensor->device->id,
                             'register_type' => $sensor->address->register_type_id,
@@ -96,33 +119,12 @@ class   BackupAnalogousSensors implements ShouldQueue
                             'date' => Carbon::now()->toDateTimeString(),
                             'pump_location' => $sensor->max_value
                         ]);
-                        $sensor->last_value = $report_value;
-                        $sensor->save();
                         array_push($insertedSensors,$sensor->id);
                     }
-                } else {
-                    array_push($toInsert, [
-                        'device_id' => $sensor->device->id,
-                        'register_type' => $sensor->address->register_type_id,
-                        'address' => $sensor->address_number,
-                        'sensor_id' => $sensor->id,
-                        'scale' => $disposition->name,
-                        'scale_min'=> $disposition->scale_min,
-                        'scale_max' => $disposition->scale_max,
-                        'ing_min' => $disposition->sensor_min,
-                        'ing_max' => $disposition->sensor_max,
-                        'unit' => $disposition->unit->name,
-                        'value' => $report_value,
-                        'result' => $result,
-                        'scale_color' => $range,
-                        'interpreter' => $interpreter,
-                        'date' => Carbon::now()->toDateTimeString(),
-                        'pump_location' => $sensor->max_value
-                    ]);
-                    array_push($insertedSensors,$sensor->id);
-                }
 
+                }
             }
+
         }
 
 
