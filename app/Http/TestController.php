@@ -22,10 +22,12 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $sensors = $this->getSensors();
-        return view('test.view',['zones' => $sensors->groupBy('zone')->sortByDesc(function($zone){
-            return count($zone);
-        })]);
+        $sensor = Sensor::find(2702);
+        return $this->testResponse([
+            'sensor' => $sensor,
+            'report_value' => $this->getReportValue($sensor),
+            'analogous' => $this->getAnalogousValue($sensor)
+        ]);
     }
 
     protected function getZones()
