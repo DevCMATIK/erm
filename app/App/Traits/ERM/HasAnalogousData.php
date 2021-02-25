@@ -97,12 +97,15 @@ trait HasAnalogousData
     protected function getReportValue($sensor)
     {
         $address = $sensor->full_address;
+        if(!$sensor->device) {
+            return false;
+        }
 
         if($sensor->device->from_bio == 1) {
             return DB::connection('bioseguridad')
-                ->table('reports')
-                ->where('grd_id',$sensor->device->internal_id)
-                ->first()->{$address} ?? false;
+                    ->table('reports')
+                    ->where('grd_id',$sensor->device->internal_id)
+                    ->first()->{$address} ?? false;
         }
 
         if($sensor->device->from_dpl == 1) {
@@ -113,6 +116,7 @@ trait HasAnalogousData
         }
 
         return $sensor->device->report->{$address} ?? false;
+
     }
 
     protected function getDisposition($sensor)
