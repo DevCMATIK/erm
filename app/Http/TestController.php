@@ -10,6 +10,7 @@ use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Sentinel;
 
@@ -20,9 +21,9 @@ class TestController extends SoapController
 
     public $current_date = '2020-12-01';
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $sensor = Sensor::find(2702);
+        $sensor = Sensor::find($request->sensor_id);
         return $this->testResponse([
             'sensor' => $sensor,
             'report_value' => $this->getReportValue($sensor),
