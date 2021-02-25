@@ -63,14 +63,10 @@
             $ranges = $analogous_sensor->sensor->ranges;
             if (count($ranges) > 0) {
                 foreach($ranges as $range) {
-                     if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
-                            echo $range->min.' |||  '.$range->max.'   |||   '.$range->color.'<br>';
-                        }
+
                     if($val >= $range->min && $val <= $range->max) {
                         $color = $range->color;
-                        if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
-                            echo 'color:'.$color.'|||valor:'.$val.'||min:'.$range->min.'||max:'.$range->max.'<br>';
-                        }
+                        
                     }
                 }
             }
