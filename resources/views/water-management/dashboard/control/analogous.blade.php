@@ -46,6 +46,7 @@
                     $data = (($f1/$f2)*($f3)) + $ingMin ;
                 }
             }
+            $val = $data;
             $interpreters = $analogous_sensor->sensor->type->interpreters;
             if(count($interpreters) > 0) {
                 if($interpreter = $interpreters->where('value',(int) $data)->first()) {
@@ -65,10 +66,10 @@
                      if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
                             echo $range->min.' |||  '.$range->max.'   |||   '.$range->color.'<br>';
                         }
-                    if((float)$data >= $range->min && (float)$data <= $range->max) {
+                    if($val >= $range->min && $val <= $range->max) {
                         $color = $range->color;
                         if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
-                            echo 'color:'.$color.'|||valor:'.(float)$data.'||min:'.$range->min.'||max:'.$range->max.'<br>';
+                            echo 'color:'.$color.'|||valor:'.$val.'||min:'.$range->min.'||max:'.$range->max.'<br>';
                         }
                     }
                 }
