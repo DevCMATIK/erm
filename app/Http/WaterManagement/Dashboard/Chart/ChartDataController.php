@@ -52,9 +52,8 @@ class ChartDataController extends Controller
             ]);
             foreach($sensors as $sensor) {
                 if ($request->has('date') && $request->date != '') {
-                    $query = AnalogousReport::with('sensor')->where('device_id',$device_id)
-                        ->where('sensor_id',$sensor->id)
-                        ->orderBy('date');
+                    $query = AnalogousReport::with('sensor')
+                        ->where('sensor_id',$sensor->id);
                     $dates = explode(' ',$request->date);
                     $from = date($dates[0]);
                     $to = date($dates[2]);
@@ -72,14 +71,13 @@ class ChartDataController extends Controller
                     }
 
                 } else {
-                    $query = AnalogousReport::with('sensor')->where('device_id',$device_id)
+                    $query = AnalogousReport::with('sensor')
                         ->where('sensor_id',$sensor->id)
-                        ->whereRaw('date > date_sub(now(),interval 7 day)')
-                        ->orderBy('date');
+                        ->whereRaw('date > date_sub(now(),interval 7 day)');
                 }
 
 
-                $rows = $query->get();
+                $rows = $query->get()->sortBy('date');
 
 
                 if(count($rows) > 0) {
