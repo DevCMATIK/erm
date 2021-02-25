@@ -40,9 +40,7 @@ class   BackupAnalogousSensors implements ShouldQueue
         $insertedSensors = array();
 
         foreach ($sensors as $sensor) {
-            if(!isset($sensor->device->report)) {
-                continue;
-            }
+            
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
 
