@@ -28,46 +28,20 @@ class TestController extends SoapController
     {
        $last_id = AnalogousReport::orderBy('date','desc')->first();
 
-       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->count();
-       dd($analogous_reports);
+       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->get();
 
-       $reports = array();
+
 
        foreach($analogous_reports->chunk(1000) as $chunk)
        {
+           dd($chunk);
            AnalogousReport::insert($chunk->toArray());
        }
 
        return $this->testResponse([count($analogous_reports)]);
     }
 
-    protected function transformData($rows){
-        $array = array();
-        if (stristr($rows->first()->sensor->name,'Aporte')  ) {
-            foreach ($rows as $key => $row) {
-                if($row->result >0) {
-                    array_push($array, [
-                        'x' => (strtotime($row->date))*1000,
-                        'y' => (integer)number_format($row->result,0,'',''),
-                        'name' => $row->date
-                    ]);
-                }
 
-            }
-
-        }else {
-            foreach ($rows as $key => $row) {
-                array_push($array, [
-                    'x' => (strtotime($row->date))*1000,
-                    'y' => (float)number_format($row->result,2,'.',''),
-                    'name' => $row->date
-                ]);
-            }
-        }
-
-
-        return $array;
-    }
     public function testResponse($results)
     {
         return response()->json(array_merge(['results' => $results],$this->getExecutionTime()));
