@@ -62,7 +62,7 @@ return [
             'password' => 'DevAppint'
         ],'erm' => [
             'driver' => 'mysql',
-            'host' => '10.250.128.6',
+            'host' => '34.71.73.66',
             //'host' => '34.66.170.27',
             'port' => '3306',
             'database' => 'watermanagement',
