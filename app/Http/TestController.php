@@ -28,15 +28,10 @@ class TestController extends SoapController
     {
        $last_id = AnalogousReport::orderBy('date','desc')->first();
 
-       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->get();
+       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->chunk(1000, function($reports) {
+           AnalogousReport::insert($reports->toArray());
+       });
 
-
-
-       foreach($analogous_reports->chunk(1000) as $chunk)
-       {
-           dd($chunk);
-           AnalogousReport::insert($chunk->toArray());
-       }
 
        return $this->testResponse([count($analogous_reports)]);
     }
