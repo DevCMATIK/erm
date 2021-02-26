@@ -29,7 +29,30 @@ class TestController extends SoapController
        $last_id = AnalogousReport::orderBy('date','desc')->first();
 
        $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->chunk(1000, function($reports) {
-           AnalogousReport::insert($reports->toArray());
+           $report_array = array();
+
+           foreach($reports as $report) {
+               array_push($report_array,[
+                   'device_id' => $report->device_id,
+                   'register_type' => $report->register_type,
+                   'address' => $report->address,
+                   'sensor_id' => $report->sensor_id,
+                   'historical_type_id' => $report->historical_type_id,
+                   'scale' => $report->scale,
+                   'scale_min' => $report->scale_min,
+                   'scale_max' => $report->scale_max,
+                   'ing_min' => $report->ing_min,
+                   'ing_max' => $report->ing_max,
+                   'unit' => $report->unit,
+                   'value' => $report->value,
+                   'result' => $report->result,
+                   'date' => $report->date,
+                   'scale_color' => $report->scale_color,
+                   'interpreter' => $report->interpreter
+               ]);
+           }
+
+           AnalogousReport::insert($report_array);
        });
 
 
