@@ -28,7 +28,7 @@ class TestController extends SoapController
     {
        $last_id = AnalogousReport::orderBy('date','desc')->first();
 
-       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->coun();
+       $analogous_reports = AnalogousReports::where('id','>',$last_id->id)->count();
        dd($analogous_reports);
 
        $reports = array();
