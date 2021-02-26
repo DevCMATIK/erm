@@ -60,7 +60,8 @@ return [
             'database' => 'dpl',
             'username' => 'appint',
             'password' => 'DevAppint'
-        ],'erm' => [
+        ],
+        'erm' => [
             'driver' => 'mysql',
             'host' => '10.250.128.6',
             //'host' => '34.66.170.27',
