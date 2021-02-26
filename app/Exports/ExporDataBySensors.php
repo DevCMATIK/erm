@@ -100,7 +100,7 @@ class ExporDataBySensors implements FromQuery, WithMapping, WithHeadings, WithTi
         if(strlen($this->sensor->device->check_point->name.' - '.$this->sensor->name) > 30) {
             return substr($this->sensor->device->check_point->name,0,15).''.
                 substr($this->sensor->name,0,12);
-                ;
+               
         } else {
             return $this->sensor->device->check_point->name.' - '.$this->sensor->name;
         }
