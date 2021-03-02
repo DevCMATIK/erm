@@ -38,7 +38,7 @@ class BackupDigitalSensors implements ShouldQueue
 
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
-            if($report_value) {
+            if($report_value !== false) {
 
                 if($sensor->type->interval == 77) {
                     if($sensor->last_value != $report_value) {
