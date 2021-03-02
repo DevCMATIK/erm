@@ -80,7 +80,6 @@ class TestController extends SoapController
 
         return $this->testResponse([
             'to_insert' => $toInsert,
-            'sensors' => $sensors,
             'report_value' => $reports_values
         ]);
     }
