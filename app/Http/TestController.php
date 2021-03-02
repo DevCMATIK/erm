@@ -39,7 +39,7 @@ class TestController extends SoapController
                 'report_value' => $report_value,
                 'sensor' => $sensor->id
             ]);
-            if($report_value) {
+            if($report_value !== false) {
                 dd('report_value ok');
                 if($sensor->type->interval == 77) {
                     dd('valor_distinto');
