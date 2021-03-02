@@ -29,11 +29,16 @@ class TestController extends SoapController
         $sensors = $this->getSensors();
 
         $toInsert = array();
+        $reports_values = array();
 
         foreach($sensors as $sensor) {
 
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
+            array_push($reports_values,[
+                'report_value' => $report_value,
+                'sensor' => $sensor->id
+            ]);
             if($report_value) {
 
                 if($sensor->type->interval == 77) {
@@ -73,7 +78,10 @@ class TestController extends SoapController
 
         }
 
-        return $this->testResponse([$toInsert]);
+        return $this->testResponse([
+            'to_insert' => $toInsert,
+            'sensors' => $sensors
+        ]);
     }
 
     protected function getSensors()
