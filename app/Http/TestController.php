@@ -40,11 +40,11 @@ class TestController extends SoapController
                 'sensor' => $sensor->id
             ]);
             if($report_value) {
-                echo 'aca si';
+                dd('report_value ok');
                 if($sensor->type->interval == 77) {
-                    echo 'sensor 77';
+                    dd('valor_distinto');
                     if($sensor->last_value != $report_value) {
-                        echo 'valor_distinto';
+                        dd('valor_distinto');
                         array_push($toInsert, [
                             'device_id' => $sensor->device->id,
                             'register_type' => $sensor->address->register_type_id,
@@ -61,7 +61,7 @@ class TestController extends SoapController
                         $sensor->save();
                     }
                 } else {
-                    echo 'aca no deberia';
+                    dd('aca no deberia');
                     array_push($toInsert, [
                         'device_id' => $sensor->device->id,
                         'register_type' => $sensor->address->register_type_id,
