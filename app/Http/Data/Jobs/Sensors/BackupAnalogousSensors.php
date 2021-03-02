@@ -44,7 +44,7 @@ class   BackupAnalogousSensors implements ShouldQueue
             $address = $sensor->full_address;
             $report_value = $this->getReportValue($sensor);
 
-            if($report_value) {
+            if($report_value !== false) {
                 if($sensor->fix_values === 1) {
                     if($report_value > $sensor->fix_max_value || $report_value < $sensor->fix_min_value) {
                         $report_value = $sensor->last_value;
