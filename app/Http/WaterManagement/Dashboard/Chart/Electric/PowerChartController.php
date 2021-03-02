@@ -17,8 +17,7 @@ class PowerChartController extends Controller
             'sensor.type',
             'sensor.dispositions',
             'sensor.selected_disposition'
-        ])->whereIn('sensor_id',explode(',',$request->sensors))
-            ->orderBy('date');
+        ])->whereIn('sensor_id',explode(',',$request->sensors));
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' ',$request->date);
             $from = date($dates[0]);
@@ -40,7 +39,7 @@ class PowerChartController extends Controller
             $query = $query->today('date');
         }
 
-        $rows = $query->get();
+        $rows = $query->get()->sortBy('date');
         $data['series'] = array();
 
         if(count($rows) > 0) {

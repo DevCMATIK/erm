@@ -87,12 +87,12 @@ class DownloadVarDataController extends Controller
                 ->where('sensor_id',$sensor->id),
             $start_date,
             $end_date
-        )->orderBy('date');
+        );
     }
 
     protected function mapQuery($sensor,$start_date,$end_date)
     {
-        return $this->query($sensor,$start_date,$end_date)->get()->map(function($item){
+        return $this->query($sensor,$start_date,$end_date)->get()->sortBy('date')->map(function($item){
             return array_combine($this->getHeaders(),$this->resolveRow($item));
         });
     }

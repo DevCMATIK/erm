@@ -53,7 +53,7 @@ class ExportVariablesData implements FromQuery, WithMapping, WithHeadings, WithT
             ])
             ->where('device_id',$this->device)
             ->where('sensor_id',$this->sensor->id)
-        )->orderBy('date');
+        );
     }
 
     public function headings(): array

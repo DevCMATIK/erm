@@ -107,7 +107,7 @@ class CreateFileForSensor implements ShouldQueue
         return $this->handleQuery($query
             ->with('sensor.device.check_point.sub_zones')
             ->where('sensor_id',$this->sensor->id))
-            ->orderBy('date')->get();
+            ->get()->sortByDesc('date');
     }
 
     protected function handleQuery($query)

@@ -118,12 +118,12 @@ class ExportChartData extends Controller
                 ])
                 ->where('sensor_id',$sensor->id),
             $dates
-        )->orderBy('date');
+        );
     }
 
     protected function mapQuery($sensor,$dates)
     {
-        return $this->query($sensor,$dates)-> get()->map(function($item){
+        return $this->query($sensor,$dates)->get()->sortBy('date')->map(function($item){
             return array_combine($this->getHeaders(),$this->resolveRow($item));
         });
     }
