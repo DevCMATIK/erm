@@ -112,7 +112,7 @@ trait CheckAlarmsTrait
                             }
                         }
                         try{
-                           /* LaravelMailer::to(['sys-erm@cmatik.app'])
+                            LaravelMailer::to(['sys-erm@cmatik.app'])
                                 ->bcc($users)
                                 ->send(new SystemMail(
                                     $notification->mail,
@@ -139,7 +139,7 @@ trait CheckAlarmsTrait
                             ]);
                             foreach($notification->group->users->pluck('id')->toArray() as $user) {
                                 $log->users()->create(['user_id' => $user]);
-                            }*/
+                            }
                         }catch (\Exception $e) {
                             $log = MailLog::create([
                                 'mail_id' => $notification->mail->id,

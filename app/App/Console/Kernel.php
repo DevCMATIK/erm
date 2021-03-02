@@ -77,7 +77,7 @@ class Kernel extends ConsoleKernel
             $x=60/$seconds;
 
             do{
-                BackupDigitalSensors::dispatchNow(77);
+                BackupDigitalSensors::dispatch(77)->onQueue('long-running-backup');
                 BackupAnalogousSensors::dispatchNow(77);
 
 
