@@ -19,7 +19,7 @@ class OnlineDevicesController extends Controller
         $total = $devices->count();
 
 
-        $offline = $devices-->filter(function($device){
+        $offline = $devices->filter(function($device){
                 if($device->from_dpl === 1) {
                     $state =  DB::connection('dpl')->table('reports')
                         ->where('grd_id',$device->internal_id)
