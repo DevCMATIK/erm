@@ -31,7 +31,7 @@ class TrackDisconnectionsFromWater implements ShouldQueue
      */
     public function handle()
     {
-        $devices =  Device::with('report','last_dc')->where('from_bio',0)->get()->filter(function($device){
+        $devices =  Device::with('report','last_dc')->where('from_bio',0)->where('from_dpl',0)->get()->filter(function($device){
             return  optional($device->report)->state  === 0 ||
                 (
                     optional($device->last_disconnection->first())->start_date != ''
