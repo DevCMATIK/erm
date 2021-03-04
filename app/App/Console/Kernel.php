@@ -15,6 +15,7 @@ use App\Http\Data\Jobs\CheckPoint\CalculateConsumptions;
 use App\Http\Data\Jobs\CheckPoint\ReportToDGA;
 use App\Http\Data\Jobs\Device\NotifyDevicesOffline;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromBio;
+use App\Http\Data\Jobs\Device\TrackDisconnectionsFromDPL;
 use App\Http\Data\Jobs\Device\TrackDisconnectionsFromWater;
 use App\Http\Data\Jobs\Sensors\BackupAnalogousSensors;
 use App\Http\Data\Jobs\Sensors\BackupDigitalSensors;
@@ -116,6 +117,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new NotifyDevicesOffline())->hourly();
         $schedule->job(new TrackDisconnectionsFromWater(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromBio(),'tracking-queue')->everyMinute();
+        $schedule->job(new TrackDisconnectionsFromDPL(),'tracking-queue')->everyMinute();
 
         // Get all tasks from the database
         $mailReports = MailReport::active()->get();
