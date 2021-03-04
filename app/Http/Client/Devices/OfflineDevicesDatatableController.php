@@ -6,6 +6,7 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Device;
 use App\Http\System\DataTable\DataTableAbstract;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Sentinel;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,20 @@ class OfflineDevicesDatatableController extends DataTableAbstract
     public function getRecords()
     {
         return  Device::with('report','check_point.sub_zones.zone','last_dc')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
-            return optional($device->report)->state === 0;
+            if($device->from_dpl === 1) {
+                $state =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',$device->internal_id)
+                    ->first()->state;
+            } else {
+                if($device->from_bio === 1) {
+                    $state =  DB::connection('bioseguridad')->table('reports')
+                        ->where('grd_id',$device->internal_id)
+                        ->first()->state;
+                } else {
+                    $state = $device->report->state ?? 0;
+                }
+            }
+            return $state === 0;
         });
     }
 
