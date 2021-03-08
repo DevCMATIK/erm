@@ -63,7 +63,7 @@ return [
         ],
         'bioseguridad' => [
             'driver' => 'mysql',
-            'host' => '35.185.14.47',
+            'host' => '10.250.128.55',
             //'host' => '34.66.170.27',
             'port' => '3306',
             'database' => 'grdxf',
