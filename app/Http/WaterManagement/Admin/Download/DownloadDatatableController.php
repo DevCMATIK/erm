@@ -19,16 +19,12 @@ class DownloadDatatableController extends DataTableAbstract
     public function getRecord($record)
     {
         $links = array();
-        foreach($record->files as $file) {
-            array_push($links,
-                makeLink('https://erm.cmatik.app/download-file/'.$file->id,$file->display_name,'fa-file-excel','btn-link','btn-sm')
-            );
-        }
+
 
         return [
             $record->creation_date,
             $record->user->full_name,
-            implode('<br>',$links),
+            makeLink('/descargar-archivos/'.$record->id,'('.$record->files->unique('display_name')->count().') Ver archivos','fa-file-excel','btn-link','btn-sm'),
             $record->from,
             $record->to
         ];
