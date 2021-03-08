@@ -45,21 +45,35 @@ class CreateFileForSensor implements ShouldQueue
     {
         ini_set('memory_limit','2048M');
 
+        $display_name = $this->sensor->device->check_point->sub_zones()->first()->name.'_'.$this->sensor->device->check_point->name.'_'.$this->sensor->name;
 
+        if(!$file = $this->reminder->files()->where('display_name',$display_name)->first()) {
 
-        $fileName = 'Data-'.md5(rand(0,10000000)).'.xlsx';
+            $fileName = 'Data-'.md5(rand(0,10000000)).'.xlsx';
 
+            (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {
+                return array_combine($this->getHeader(),$this->mapRows($row));
+            });
 
-        (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {
-            return array_combine($this->getHeader(),$this->mapRows($row));
-        });
+            $this->reminder->files()->create([
+                'display_name' => $display_name,
+                'file' => $fileName,
+            ]);
+            freeMemory();
+        } else {
+            if(!file_exists(storage_path('app/public/'.$file->file))) {
+                $fileName = 'Data-'.md5(rand(0,10000000)).'.xlsx';
 
-        $this->reminder->files()->updateOrCreate([
-            'display_name' => $this->sensor->device->check_point->sub_zones()->first()->name.'_'.$this->sensor->device->check_point->name.'_'.$this->sensor->name
-        ],[
-            'file' => $fileName,
-        ]);
-        freeMemory();
+                (new FastExcel($this->getData()))->export(storage_path('app/public/'.$fileName), function ($row) {
+                    return array_combine($this->getHeader(),$this->mapRows($row));
+                });
+
+                $this->reminder->files()->where('id',$file->id)->update([
+                    'file' => $fileName,
+                ]);
+            }
+        }
+
     }
 
     protected function mapRows($row)
