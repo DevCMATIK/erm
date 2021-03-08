@@ -14,6 +14,7 @@ use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Sentinel;
 
 
@@ -26,65 +27,11 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $sensors = $this->getSensors();
 
-        $toInsert = array();
-        $reports_values = array();
+        Redis::connection()->del('queues:exports-queue');
+       return $this->testResponse([
 
-        foreach($sensors as $sensor) {
-
-            $address = $sensor->full_address;
-            $report_value = $this->getReportValue($sensor);
-            array_push($reports_values,[
-                'report_value' => $report_value,
-                'sensor' => $sensor->id
-            ]);
-            if($report_value !== false) {
-                dd('report_value ok');
-                if($sensor->type->interval == 77) {
-                    dd('valor_distinto');
-                    if($sensor->last_value != $report_value) {
-                        dd('valor_distinto');
-                        array_push($toInsert, [
-                            'device_id' => $sensor->device->id,
-                            'register_type' => $sensor->address->register_type_id,
-                            'address' => $sensor->address_number,
-                            'sensor_id' => $sensor->id,
-                            'name' => $sensor->name,
-                            'on_label' => $sensor->label->on_label,
-                            'off_label' => $sensor->label->off_label,
-                            'value' => $report_value,
-                            'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
-                            'date' => Carbon::now()->toDateTimeString()
-                        ]);
-                        $sensor->last_value = $report_value;
-                        $sensor->save();
-                    }
-                } else {
-                    dd('aca no deberia');
-                    array_push($toInsert, [
-                        'device_id' => $sensor->device->id,
-                        'register_type' => $sensor->address->register_type_id,
-                        'address' => $sensor->address_number,
-                        'sensor_id' => $sensor->id,
-                        'name' => $sensor->name,
-                        'on_label' => $sensor->label->on_label,
-                        'off_label' => $sensor->label->off_label,
-                        'value' => $report_value,
-                        'label' => ($report_value === 1)? $sensor->label->on_label : $sensor->label->off_label,
-                        'date' => Carbon::now()->toDateTimeString()
-                    ]);
-                }
-            }
-
-
-
-        }
-
-        return $this->testResponse([
-            'to_insert' => $toInsert,
-            'report_value' => $reports_values
-        ]);
+       ]);
     }
 
     protected function getSensors()
