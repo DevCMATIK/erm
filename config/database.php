@@ -45,21 +45,21 @@ return [
         ],
         'grdxf' => [
             'driver' => 'mysql',
-            'host' => '10.250.128.7',
+            'host' => '10.250.128.63',
             //'host' => '34.66.170.27',
             'port' => '3306',
             'database' => 'grdxf',
-            'username' => 'gestionhidro',
-            'password' => 'gestionhidro'
+            'username' => 'AppDev',
+            'password' => 'DevCMATIK'
         ],
         'erm' => [
             'driver' => 'mysql',
-            'host' => '10.250.128.7',
+            'host' => '10.250.128.6',
             //'host' => '34.66.170.27',
             'port' => '3306',
             'database' => 'watermanagement',
-            'username' => 'gestionhidro',
-            'password' => 'gestionhidro'
+            'username' => 'root',
+            'password' => 'cmatik'
         ],
         'dpl' => [
             'driver' => 'mysql',
