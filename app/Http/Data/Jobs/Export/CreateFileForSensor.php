@@ -54,9 +54,10 @@ class CreateFileForSensor implements ShouldQueue
             return array_combine($this->getHeader(),$this->mapRows($row));
         });
 
-        $this->reminder->files()->create([
+        $this->reminder->files()->updateOrCreate([
+            'display_name' => $this->sensor->device->check_point->sub_zones()->first()->name.'_'.$this->sensor->device->check_point->name.'_'.$this->sensor->name
+        ],[
             'file' => $fileName,
-            'display_name' => $this->sensor->device->check_point->sub_zones()->first()->name.'_'.$this->sensor->device->check_point->name.'_'.$this->sensor->name,
         ]);
         freeMemory();
     }
