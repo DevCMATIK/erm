@@ -12,7 +12,7 @@
     </a>
 
     <div class="ml-auto d-flex">
-
+        @if(Sentinel::check())
         <div>
             <a href="#" data-toggle="dropdown" title="{{ Sentinel::getUser()->email }}" class="header-icon d-flex align-items-center justify-content-center ml-2">
                 <img src="@if($avatar = \App\Domain\System\File\File::findByTableAndId('users',Sentinel::getUser()->id)) {{ Storage::url($avatar->getFullPath()) }} @else {{ asset('images/user.png') }} @endif" class="profile-image rounded-circle" alt="{{ Sentinel::getUser()->full_name }}">
@@ -53,5 +53,6 @@
                 </a>
             </div>
         </div>
+        @endif
     </div>
 </header>

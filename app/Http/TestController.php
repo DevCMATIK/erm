@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 use Sentinel;
 
 
@@ -28,9 +29,12 @@ class TestController extends SoapController
     public function __invoke()
     {
 
-        Redis::connection()->del('queues:exports-queue');
+       $name = 'Santa Rosa_Pozo Nº6 St. Rosa_Caudal';
        return $this->testResponse([
-
+            'name' => $name,
+            'compare' => ($name == $name)?'igual':'distinto',
+            'slugged' => Str::slug($name),
+            'compare-slugged' => (Str::slug($name) == Str::slug($name)) ? 'igual' : 'distinto'
        ]);
     }
 

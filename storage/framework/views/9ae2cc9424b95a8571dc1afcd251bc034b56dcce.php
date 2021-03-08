@@ -16,6 +16,15 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <style>
+        .dropdown-toggle::after {
+            content: none !important;
+        }
+
+        .table-bordered, .table-bordered th,.table-bordered td {
+            border-color: #e5e5e5 !important;
+        }
+    </style>
     <!-- base css -->
 <?php echo $__env->make('components.html-helpers.core-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!-- Place favicon.ico in the root directory -->
@@ -104,6 +113,7 @@
                         <?php if (! empty(trim($__env->yieldContent('page-description')))): ?>
                             <small><?php echo $__env->yieldContent('page-description'); ?></small>
                         <?php endif; ?>
+                        <?php echo $__env->yieldContent('page-extra-buttons'); ?>
                     </h1>
                 </div>
 
@@ -135,6 +145,14 @@
 <?php if (! empty(trim($__env->yieldContent('page-extra-scripts')))): ?>
     <?php echo $__env->yieldContent('page-extra-scripts'); ?>
 <?php endif; ?>
+<script>
+    $(function(){
+        $('body').popover(
+            {
+                selector: '.has-popover'
+            });
+    })
+</script>
 <script>
     $(document).ready(function() {
 

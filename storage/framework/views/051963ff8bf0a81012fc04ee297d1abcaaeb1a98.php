@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('page-content'); ?>
 
     <div class="row ">
@@ -8,12 +7,7 @@
 
             <div class="row">
                 <div class="col-xl-12" id="cupLevelsContainer">
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12" id="cupLevelsContainer">
-
+                    <?php echo $__env->make('water-management.dashboard.statistics.cup-levels',['zones', $zones], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
             </div>
         </div>
@@ -44,17 +38,15 @@
         {
             location.href = "/offline-devices-list";
         }
-
+        getOnlineDevices();
+        getAlarmsOn();
 
         $(document).ready(function(){
-            getOnlineDevices();
-            getAlarmsOn();
-            getLastUpdate();
 
-
-            $.get('/kpi/getCupLevels', function (data) {
+           /* $.get('/kpi/getCupLevels', function (data) {
                 $('#cupLevelsContainer').html(data);
-            });
+
+            });*/
         });
 
         function getOnlineDevices()
@@ -71,12 +63,7 @@
             });
         }
 
-        function getLastUpdate()
-        {
-            $.get('/kpi/getLastUpdate',function(data){
-                $('#last-update').html(data);
-            });
-        }
+
     </script>
 <?php $__env->stopSection(); ?>
 

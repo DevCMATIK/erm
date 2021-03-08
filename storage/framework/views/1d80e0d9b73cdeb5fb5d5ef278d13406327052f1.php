@@ -3,17 +3,16 @@
 
     <!-- DOC: nav menu layout change shortcut -->
     <div class="pt-2 ">
-        <span class="page-logo-link ml-2 text-white fs-xl font-weight-bolder"><?php echo e(config('app.name')); ?> <small>®</small></span> <br>
+        <span class="page-logo-link ml-2 text-white fs-xl font-weight-bolder"><?php echo e(config('app.name')); ?> <small>©</small></span> <br>
 
         <p class="page-logo-text text-white fs-sm">Efficient Resource Management</p>
     </div>
     <!-- DOC: mobile button appears during mobile width -->
     <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center mx-auto">
-        <img src="<?php echo e(asset('images/logo-white.png')); ?>" alt="Cmatik" aria-roledescription="logo" style="height: 50px !important; margin-top: 5px;">
     </a>
 
     <div class="ml-auto d-flex">
-
+        <?php if(Sentinel::check()): ?>
         <div>
             <a href="#" data-toggle="dropdown" title="<?php echo e(Sentinel::getUser()->email); ?>" class="header-icon d-flex align-items-center justify-content-center ml-2">
                 <img src="<?php if($avatar = \App\Domain\System\File\File::findByTableAndId('users',Sentinel::getUser()->id)): ?> <?php echo e(Storage::url($avatar->getFullPath())); ?> <?php else: ?> <?php echo e(asset('images/user.png')); ?> <?php endif; ?>" class="profile-image rounded-circle" alt="<?php echo e(Sentinel::getUser()->full_name); ?>">
@@ -54,6 +53,7 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 </header>
 <?php /**PATH /shared/httpd/erm/resources/views/layouts/sections/header-blank.blade.php ENDPATH**/ ?>

@@ -19,6 +19,7 @@ class CreateFileForSensor implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+
     public $sensor;
 
     public $from;

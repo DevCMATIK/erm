@@ -13,14 +13,9 @@
         </b>
     </p>
     <p>Se han generado los archivos solicitados en {{ $reminder->creation_date }}</p>
-    <p>Haga click en los siguientes enlaces para descargar:</p>
+    <p>Haga click en el siguiente enlace para ir a la página de descarga:</p>
     <p>
-        @foreach($files as $file)
-            <a href="https://erm.cmatik.app/download-file/{{ $file->id }}" target="_blank">{{ $file->display_name }}</a><br>
-        @endforeach
-    </p>
-    <p>
-        <span style="font-size: 0.8125rem; letter-spacing: 0.1px;">Estos enlaces expiran en {{ $reminder->expires_at }}</span><br>
+        <a href="https://erm.cmatik.app/descargar-archivos/{{ $file->id }}" target="_blank">Click Aqui</a><br>
     </p>
     <p><br></p>
     <p>Saludos Cordiales</p>

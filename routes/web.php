@@ -277,6 +277,12 @@ Route::get('download-file/{id}',function($id){
     return response()->download(storage_path('app/public/'.$file->file), \Illuminate\Support\Str::slug($file->display_name,'_').'.xlsx');
 });
 
+Route::get('/descargar-archivos/{id}', function($id) {
+    return view('export.index',[
+        'reminder' => \App\Domain\Data\Export\ExportReminder::with('files')->findOrFail($id) ?? false
+    ]);
+});
+
 Route::get('/route-cache', function() {
     $exitCode = Artisan::call('route:cache');
     return 'Routes cache cleared';
