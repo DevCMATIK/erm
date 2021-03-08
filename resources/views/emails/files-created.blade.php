@@ -15,7 +15,7 @@
     <p>Se han generado los archivos solicitados en {{ $reminder->creation_date }}</p>
     <p>Haga click en el siguiente enlace para ir a la página de descarga:</p>
     <p>
-        <a href="https://erm.cmatik.app/descargar-archivos/{{ $file->id }}" target="_blank">Click Aqui</a><br>
+        <a href="https://erm.cmatik.app/descargar-archivos/{{ $reminder->id }}" target="_blank">Click Aqui</a><br>
     </p>
     <p><br></p>
     <p>Saludos Cordiales</p>
