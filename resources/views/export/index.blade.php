@@ -5,7 +5,7 @@
 @section('page-icon','download')
 @section('page-content')
     <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-12 col-xl-6 col-md-6 col-lg-6  offset-xl-3 offset-md-3 offset-lg-3">
             <div class="alert alert-info">
                 <strong>Hola, {{ $reminder->user->first_name }} {{ $reminder->user->last_name }}:</strong><br>
                 Se han generado los siguientes link de descarga, según su solicitud hecha en : <strong> {{ $reminder->creation_date ?? 'null' }}</strong>
