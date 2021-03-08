@@ -52,6 +52,15 @@ return [
             'username' => 'gestionhidro',
             'password' => 'gestionhidro'
         ],
+        'erm' => [
+            'driver' => 'mysql',
+            'host' => '10.250.128.7',
+            //'host' => '34.66.170.27',
+            'port' => '3306',
+            'database' => 'watermanagement',
+            'username' => 'gestionhidro',
+            'password' => 'gestionhidro'
+        ],
         'dpl' => [
             'driver' => 'mysql',
             'host' => '10.250.128.31',

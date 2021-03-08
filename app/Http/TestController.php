@@ -11,6 +11,12 @@ use App\Domain\Client\Zone\Zone;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Http\ERM\Jobs\Restore;
+use App\Http\ERM\Jobs\RestoreAlarmLog;
+use App\Http\ERM\Jobs\RestoreAnalogousReport;
+use App\Http\ERM\Jobs\RestoreCommandLog;
+use App\Http\ERM\Jobs\RestoreDigitalReport;
+use App\Http\ERM\Jobs\RestoreSensorTriggerLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,33 +34,20 @@ class TestController extends SoapController
 
     public function __invoke()
     {
+        Restore::withChain([
+            new RestoreAnalogousReport(),
+            new RestoreDigitalReport(),
+            new RestoreAlarmLog(),
+            new RestoreCommandLog(),
+            new RestoreSensorTriggerLog()
+        ])->dispatch()->allOnQueue('default');
 
-       $name = 'Santa Rosa_Pozo Nº6 St. Rosa_Caudal';
-       return $this->testResponse([
-            'name' => $name,
-            'compare' => ($name == $name)?'igual':'distinto',
-            'slugged' => Str::slug($name),
-            'compare-slugged' => (Str::slug($name) == Str::slug($name)) ? 'igual' : 'distinto'
-       ]);
+        return $this->testResponse([
+            'Se han enviado los jobs'
+            ]);
     }
 
-    protected function getSensors()
-    {
 
-        return Sensor::with([
-            'device.report',
-            'address',
-            'label',
-            'type'
-        ]) ->whereHas('type' , function($q){
-            return $q->where('interval',77);
-        })
-            ->where('sensors.historial',1)
-            ->whereHas('label')
-            ->digital()
-            ->where('id',406)
-            ->get();
-    }
     public function testResponse($results)
     {
         return response()->json(array_merge(['results' => $results],$this->getExecutionTime()));
