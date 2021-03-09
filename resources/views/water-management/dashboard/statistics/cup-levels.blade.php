@@ -25,7 +25,7 @@
                                  if(!isset($check_point['data']['color'])) {
                                             $color = 'secondary';
                                      } else {
-                                            $olor = $check_point['data']['color'];
+                                            $color = $check_point['data']['color'];
                                      }
 
                                 @endphp
