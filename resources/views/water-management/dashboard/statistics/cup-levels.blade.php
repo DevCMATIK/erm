@@ -9,9 +9,12 @@
                     @foreach($chunked_sub_zones as $check_point)
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="row mt-1 px-2">
-                                <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] }}</div>
-                                <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] === null  || $check_point['data']['color'] == 'success') bg-primary @else bg-{{ $check_point['data']['color'] }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
-                                    <a href="/dashboard/{{ $check_point['sub_zone_id'] }}" class="text-white">{{ number_format($check_point['data']['value'],1,',','').' '.$check_point['data']['unit'] }}</a>
+                                @php
+                                    $value = $check_point['data']['value'] ?? 0;
+                                @endphp
+                                <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] ?? null }}</div>
+                                <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] ?? null === null  || $check_point['data']['color'] ?? null == 'success') bg-primary @else bg-{{ $check_point['data']['color'] ?? 'secondary' }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
+                                    <a href="/dashboard/{{ $check_point['sub_zone_id'] ?? 'id' }}" class="text-white">{{ number_format($value,1,',','').' '.$check_point['data']['unit'] ?? 'N'}}</a>
                                 </div>
                             </div>
                         </div>
