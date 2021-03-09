@@ -37,10 +37,7 @@ class TestController extends SoapController
         Redis::connection()->del('queues:default');
         Restore::withChain([
             new RestoreAnalogousReport(),
-            new RestoreDigitalReport(),
-            new RestoreAlarmLog(),
-            new RestoreCommandLog(),
-            new RestoreSensorTriggerLog()
+            new RestoreDigitalReport()
         ])->dispatch()->allOnQueue('default');
 
         return $this->testResponse([
