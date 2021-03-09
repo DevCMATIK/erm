@@ -11,9 +11,11 @@
                             <div class="row mt-1 px-2">
                                 @php
                                     if(!isset($check_point['data']['value'])) {
-                                        dd($check_point);
+                                        $value = 0;
+                                    } else {
+                                        $value = $check_point['data']['value'];
                                     }
-                                    $value = $check_point['data']['value'] ?? 0;
+
                                 @endphp
                                 <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] ?? null }}</div>
                                 <div class="col-xl-4 col-4  text-center py-4 @if($check_point['data']['color'] ?? null === null  || $check_point['data']['color'] ?? null == 'success') bg-primary @else bg-{{ $check_point['data']['color'] ?? 'secondary' }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
