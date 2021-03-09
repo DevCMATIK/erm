@@ -9,7 +9,7 @@ class AnalogousReport extends Model
 
     protected $connection= 'erm';
 
-    protected $table = 'erm.analogous_reports';
+    protected $table = 'watermanagement.analogous_reports';
 
 
     protected $fillable = [

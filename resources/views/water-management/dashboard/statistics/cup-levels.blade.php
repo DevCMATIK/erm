@@ -8,7 +8,7 @@
                 <div class="row">
                     @foreach($chunked_sub_zones as $check_point)
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                            
+
                         </div>
                     @endforeach
                 </div>

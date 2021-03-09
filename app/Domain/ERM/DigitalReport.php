@@ -8,7 +8,7 @@ class DigitalReport extends Model
 {
     protected $connection = 'erm';
 
-    protected $table = 'erm.digital_reports';
+    protected $table = 'watermanagement.digital_reports';
 
 
     protected $fillable = [

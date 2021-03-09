@@ -8,7 +8,7 @@ class CommandLog extends Model
 {
     protected $connection = 'erm';
 
-    protected $table = 'erm.command_logs';
+    protected $table = 'watermanagement.command_logs';
 
     protected $fillable = [
         'user_id',

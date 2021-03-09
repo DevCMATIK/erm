@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SensorAlarmLog extends Model
 {
     protected $connection = 'erm';
-    protected $table = 'erm.sensor_alarm_logs';
+    protected $table = 'watermanagement.sensor_alarm_logs';
 
 
     protected $fillable = [
