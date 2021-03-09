@@ -16,7 +16,7 @@ class CheckPointCostKpiController extends Controller
         });
         foreach($checkPoints as $checkPoint) {
             $last = optional($checkPoint->consumptions)->sortByDesc('date')->first();
-            setlocale(LC_MONETARY, 'es_CL');
+    
             if($fromCheckpoint) {
                 $name = 'Costo M3 -> kWh';
             } else {
@@ -24,8 +24,8 @@ class CheckPointCostKpiController extends Controller
             }
             array_push($data,[
                 'check_point' => $name,
-                'average_cost' => money_format('%#1n',optional($checkPoint->consumptions)->avg('hour_consumption')),
-                'last_hour_cost' => money_format('%#1n',optional($last)->hour_consumption),
+                'average_cost' => optional($checkPoint->consumptions)->avg('hour_consumption'),
+                'last_hour_cost' => optional($last)->hour_consumption,
                 'last_hour_input' => optional($last)->water_input,
                 'last_hour_energy' => optional($last)->active_energy,
 
