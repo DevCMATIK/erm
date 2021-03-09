@@ -10,8 +10,8 @@
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="row mt-1 px-2">
                                 @php
-                                    if(!is_numeric($check_point['data']['value'])) {
-                                        dd($check_point['data']['value']);
+                                    if(!isset($check_point['data']['value'])) {
+                                        dd($check_point);
                                     }
                                     $value = $check_point['data']['value'] ?? 0;
                                 @endphp
