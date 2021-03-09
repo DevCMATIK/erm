@@ -3,6 +3,7 @@
 namespace App\Http\ERM\Restores;
 
 use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarm;
+use App\Domain\WaterManagement\Device\Sensor\Alarm\SensorAlarmLog;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,6 +34,6 @@ class InsertAlarmLogs implements ShouldQueue
      */
     public function handle()
     {
-        SensorAlarm::insert($this->records);
+        SensorAlarmLog::insert($this->records);
     }
 }
