@@ -31,7 +31,7 @@ class RestoreSensorTriggerLog implements ShouldQueue
      */
     public function handle()
     {
-        $last_id = SensorTriggerLog::orderBy('date','desc')->first();
+        $last_id = SensorTriggerLog::orderBy('id','desc')->first();
 
         \App\Domain\ERM\SensorTriggerLog::where('id','>',$last_id->id)->chunk(1000, function($records) {
             InsertSensorTriggerLogs::dispatch($records->toArray());

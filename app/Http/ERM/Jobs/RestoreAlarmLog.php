@@ -31,7 +31,7 @@ class RestoreAlarmLog implements ShouldQueue
      */
     public function handle()
     {
-        $last_id = SensorAlarmLog::orderBy('date','desc')->first();
+        $last_id = SensorAlarmLog::orderBy('id','desc')->first();
 
         \App\Domain\ERM\SensorAlarmLog::where('id','>',$last_id->id)->chunk(1000, function($records) {
             InsertAlarmLogs::dispatch($records->toArray());

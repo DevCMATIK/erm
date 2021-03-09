@@ -31,7 +31,7 @@ class RestoreCommandLog implements ShouldQueue
      */
     public function handle()
     {
-        $last_id = CommandLog::orderBy('date','desc')->first();
+        $last_id = CommandLog::orderBy('id','desc')->first();
 
         \App\Domain\ERM\CommandLog::where('id','>',$last_id->id)->chunk(1000, function($reports) {
             InsertCommandLogs::dispatch($reports->toArray());
