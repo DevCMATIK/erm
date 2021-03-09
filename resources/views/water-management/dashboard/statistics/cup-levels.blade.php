@@ -4,6 +4,7 @@
             <h5 class=" py-1 font-weight-bolder border-bottom">
                 {{ $zone }}
             </h5>
+            @dd($sub_zones)
             @foreach($sub_zones->chunk(2) as $chunked_sub_zones)
                 <div class="row">
                     @foreach($chunked_sub_zones as $check_point)
