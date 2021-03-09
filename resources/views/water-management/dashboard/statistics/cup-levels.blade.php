@@ -10,6 +10,9 @@
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="row mt-1 px-2">
                                 @php
+                                    if(!is_numeric($check_point['data']['value'])) {
+                                        dd($check_point['data']['value']);
+                                    }
                                     $value = $check_point['data']['value'] ?? 0;
                                 @endphp
                                 <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] ?? null }}</div>
