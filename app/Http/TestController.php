@@ -34,6 +34,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
+        Redis::connection()->del('queues:default');
         Restore::withChain([
             new RestoreAnalogousReport(),
             new RestoreDigitalReport(),
