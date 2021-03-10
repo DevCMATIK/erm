@@ -16,7 +16,7 @@ class CheckPointCostKpiController extends Controller
         });
         foreach($checkPoints as $checkPoint) {
             $last = optional($checkPoint->consumptions)->sortByDesc('date')->first();
-    
+
             if($fromCheckpoint) {
                 $name = 'Costo M3 -> kWh';
             } else {

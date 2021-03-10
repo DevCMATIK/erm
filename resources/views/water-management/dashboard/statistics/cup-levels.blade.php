@@ -30,7 +30,7 @@
 
                                 @endphp
                                 <div class="col-xl-8 col-8 py-4 pl-2  bg-gray-200 rounded-plus border-bottom-right-radius-0 border-top-right-radius-0 fs-xl ">{{ $check_point['check_point'] ?? null }}</div>
-                                <div class="col-xl-4 col-4  text-center py-4 @if($color === null  || $color ?? null == 'success') bg-primary @else bg-{{ $color ?? 'secondary' }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
+                                <div class="col-xl-4 col-4  text-center py-4 @if($color === null  || $color  == 'success') bg-primary @else bg-{{ $color }} @endif text-white rounded-plus border-bottom-left-radius-0 border-top-left-radius-0 fs-xl font-weight-bolder" >
                                     <a href="/dashboard/{{ $check_point['sub_zone_id'] ?? 'id' }}" class="text-white">{{ number_format($value,1,',','').' '.$unit}}</a>
                                 </div>
                             </div>
