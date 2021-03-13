@@ -36,9 +36,9 @@ trait CheckAlarmsTrait
     protected function handleAlarm($alarm,$value,$is_alarm)
     {
         if ($is_alarm) {
-        //    $this->handleAlarmActive($alarm,$value);
+            $this->handleAlarmActive($alarm,$value);
         } else {
-          //  $this->handleAlarmEnding($alarm,$value);
+            $this->handleAlarmEnding($alarm,$value);
         }
     }
 
@@ -67,10 +67,10 @@ trait CheckAlarmsTrait
         if($last_log->accused !== 1) {
             if(isset($alarm->last_log->first()->last_email)){
                 if(Carbon::parse($alarm->last_log->first()->last_email)->diffInMinutes(Carbon::now()) >= 30) {
-               //     $this->handleEmails($alarm,$value);
+                    $this->handleEmails($alarm,$value);
                 }
             } else {
-               // $this->handleEmails($alarm,$value);
+                $this->handleEmails($alarm,$value);
 
             }
 
