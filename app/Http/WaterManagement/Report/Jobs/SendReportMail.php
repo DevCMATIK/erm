@@ -38,6 +38,6 @@ class SendReportMail
             'mail'
         ])->find($this->id);
 
-        $this->handleReportEmail($reportMail);
+        //$this->handleReportEmail($reportMail);
     }
 }
