@@ -43,6 +43,6 @@ class CheckAlarms implements ShouldQueue
             'sensor.label'
         ])->where('is_active',1)->get();
 
-        $this->handleAlarms($alarms);
+      //  $this->handleAlarms($alarms);
     }
 }
