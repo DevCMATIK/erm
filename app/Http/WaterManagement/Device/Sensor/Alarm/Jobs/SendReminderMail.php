@@ -40,6 +40,6 @@ class SendReminderMail implements ShouldQueue
             'sensor.dispositions'
         ])->has('active_and_accused_alarm')->where('is_active',1)->get();
 
-       // $this->handleAlarms($alarms);
+        $this->handleAlarms($alarms);
     }
 }
