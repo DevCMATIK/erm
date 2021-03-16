@@ -11,7 +11,15 @@ class CheckPointReportDatatableController extends DataTableAbstract
 {
     public function getRecords()
     {
-        return CheckPoint::with(['type','sub_zones'])->withCount(['dga_reports','this_month_failed_reports','reports_to_date'])->whereNotNull('work_code')->get();
+        return CheckPoint::whereHas('sub_zones', $filter = function ($q){
+                return $q->whereIn('id',Sentinel::getUser()->getSubZonesIds());
+            })->with(['type','sub_zones' => $filter])
+            ->withCount(['dga_reports','this_month_failed_reports','reports_to_date'])->whereNotNull('work_code')->get();
+    }
+
+    protected function getSubZones()
+    {
+
     }
 
     public function getRecord($record)

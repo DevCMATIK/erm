@@ -59,6 +59,7 @@ class ExportDataTotal extends Controller
                 ->allOnQueue('exports-queue');
             return back()->withSuccess('Export started!');
         } else {
+
             return $this->download($request,$sensors);
         }
 
