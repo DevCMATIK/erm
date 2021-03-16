@@ -9,12 +9,15 @@ use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
+use Sentinel;
 
 class ExportReportsController extends Controller
 {
     public function __invoke()
     {
-        $check_points = CheckPoint::whereNotNull('work_code')->get();
+        $check_points = CheckPoint::whereHas('sub_zones', $filter = function ($q){
+            return $q->whereIn('id',Sentinel::getUser()->getSubZonesIds());
+        })->with(['type','sub_zones' => $filter])->whereNotNull('work_code')->get();
         $data =array();
         $sheetsName =array();
         foreach($check_points as $check_point) {
