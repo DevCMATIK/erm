@@ -123,7 +123,6 @@
                 <div class="row my-4">
                     <div class="col-12">
 
-                                        })->collapse()->collapse()->unique())
                         <table class="table m-0 table-bordered">
                             <thead>
                             <tr>
@@ -159,6 +158,10 @@
                                                });
                                            });
                                        })->collapse()->collapse()->unique() as $month)
+
+                                        @if(!isset(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))
+                                            @dd($consumption)
+                                        @endif
                                         <td>{{ (is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption'],1,',',''):'0'}}</td>
                                     @endforeach
                                 </tr>
