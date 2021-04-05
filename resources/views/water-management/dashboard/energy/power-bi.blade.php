@@ -158,12 +158,19 @@
                                            });
                                        })->collapse()->collapse()->unique() as $month)
 
-
-                                    @if(isset(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))
-                                        <td>{{ (is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption'],1,',',''):'0'}}</td>
-                                    @else
-                                        <td>0</td>
-                                    @endif
+                                    @php
+                                        if(isset($consumption[key($consumption)]['monthly'])) {
+                                            $c = collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first();
+                                            if($c) {
+                                                $val = $c['consumption'];
+                                            } else {
+                                                $val = 0;
+                                            }
+                                        } else {
+                                            $val = 0;
+                                        }
+                                    @endphp
+                                        <td>{{ number_format($val,1,',','') }}</td>
                                     @endforeach
                                 </tr>
                             @endforeach
