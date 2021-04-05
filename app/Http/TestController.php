@@ -36,7 +36,7 @@ class TestController extends SoapController
     public function __invoke()
     {
 
-        $zone = Zone::with('sub_zones.consumptions')->find($zone_id);
+        $zone = Zone::with('sub_zones.consumptions')->find(11);
         $consumptions = array();
 
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
