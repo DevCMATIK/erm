@@ -122,6 +122,7 @@
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
+
                         <table class="table m-0 table-bordered">
                             <thead>
                             <tr>
@@ -156,7 +157,20 @@
                                                });
                                            });
                                        })->collapse()->collapse()->unique() as $month)
-                                        <td>{{ (is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption'],1,',',''):'0'}}</td>
+
+                                        @php
+                                            if(isset($consumption[key($consumption)]['monthly'])) {
+                                                $c = collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first();
+                                                if($c) {
+                                                    $val = $c['consumption'];
+                                                } else {
+                                                    $val = 0;
+                                                }
+                                            } else {
+                                                $val = 0;
+                                            }
+                                        @endphp
+                                        <td>{{ number_format($val,1,',','') }}</td>
                                     @endforeach
                                 </tr>
                             @endforeach
