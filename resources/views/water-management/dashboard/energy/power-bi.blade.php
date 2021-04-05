@@ -144,12 +144,7 @@
                             <tbody>
                             @foreach($consumptions as $consumption)
                                 <tr>
-                                    <td>{{ key($consumption) }}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',',''):'0'}}</td>
-                                    @foreach($consumptions->map(function($item,$key){
+                                    <td>{{ key($consumption) }}</td>@foreach($consumptions->map(function($item,$key){
                                            return collect($item)->map(function($item,$key){
                                                return collect($item['monthly'])->map(function($item){
                                                    return $item['month'];
