@@ -122,12 +122,7 @@
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
-                        @dd($consumptions->map(function($item,$key){
-                                            return collect($item)->map(function($item,$key){
-                                                return collect($item['monthly'])->map(function($item){
-                                                    return $item['month'];
-                                                });
-                                            });
+
                                         })->collapse()->collapse()->unique())
                         <table class="table m-0 table-bordered">
                             <thead>
@@ -150,6 +145,7 @@
                             </thead>
                             <tbody>
                             @foreach($consumptions as $consumption)
+                                @dd($consumption)
                                 <tr>
                                     <td>{{ key($consumption) }}</td>
                                     <td>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',',''):'0'}}</td>
