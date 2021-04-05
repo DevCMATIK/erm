@@ -144,7 +144,6 @@
                             </thead>
                             <tbody>
                             @foreach($consumptions as $consumption)
-                                @dd($consumption)
                                 <tr>
                                     <td>{{ key($consumption) }}</td>
                                     <td>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',',''):'0'}}</td>
