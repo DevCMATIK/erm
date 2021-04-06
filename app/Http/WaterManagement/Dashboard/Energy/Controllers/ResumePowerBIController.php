@@ -28,7 +28,7 @@ class ResumePowerBIController extends Controller
                 ]
             );
         }
-        $consumptions = collect($consumptions)->collapse();
+        $consumptions = collect($consumptions);
         $rows = array();
         echo json_encode($consumptions->toArray());
         exit;
