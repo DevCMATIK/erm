@@ -42,7 +42,6 @@ class ResumePowerBIController extends Controller
                 }
             }
         }
-        dd($rows);
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
             'rows' => collect($rows)->map(function($column,$index){
