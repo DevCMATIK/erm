@@ -28,7 +28,7 @@ class ResumePowerBIController extends Controller
                 ]
             );
         }
-        dd($consumptios);
+        dd($consumptions);
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
             'consumptions' => collect($consumptions)
