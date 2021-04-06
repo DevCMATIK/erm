@@ -111,14 +111,14 @@
 
                 <div class="subheader " >
                     <h1 class="subheader-title">
-                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'>{{ 'Resumen Energía: TEST' }}</span>
+                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'>{{ 'Resumen Energía: '.$zone->name }}</span>
 
                     </h1>
                 </div>
 
                 <div class="alert alert-info">
                     Copie la siguiente URL en Power BI
-                    <h1><strong>https://erm.cmatik.app/zone-resume-table/{{ 'TEST' }}</strong></h1>
+                    <h1><strong>https://erm.cmatik.app/zone-resume-table/{{ $zone->id }}</strong></h1>
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
@@ -133,7 +133,6 @@
                             </thead>
                             <tbody>
                             @foreach($rows as $row)
-                                @dd($row)
                                 <tr>
                                     <td>{{ $row[2] }}</td>
                                     <td>{{ $row[0] }}</td>
