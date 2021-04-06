@@ -50,7 +50,6 @@ class TestController extends SoapController
 
         echo json_encode($consumptions);*/
         $consumptions = collect($this->getConsumptions())->collapse();
-        return $this->testResponse($consumptions->map(function($item)));
         $first =collect($consumptions->first());
         $rows = array();
         foreach ($consumptions as $sub_zone => $consumption) {
