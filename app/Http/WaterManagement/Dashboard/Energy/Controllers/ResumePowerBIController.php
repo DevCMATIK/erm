@@ -31,7 +31,6 @@ class ResumePowerBIController extends Controller
         $consumptions = collect($consumptions)->collapse();
         $rows = array();
         foreach ($consumptions as $sub_zone => $consumption) {
-            dd($consumption,$sub_zone);
             $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
             foreach(collect($consumption)->collapse() as $key => $data) {
                 if($key !== 'this-year') {
