@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Ingresar'); ?>
 
 <?php $__env->startSection('auth-content'); ?>

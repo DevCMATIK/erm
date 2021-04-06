@@ -4,7 +4,7 @@
 <?php if(Sentinel::getUser()->hasAccess('menus.serialize')): ?>
 <?php $__env->startSection('page-buttons'); ?>
 
-    <?php echo makeRemoteLink('/menuSerialization','Serializar','fa-list-ol','btn-info','btn-sm'); ?>
+    <?php echo makeRemoteLink('/menuSerialization','Serializar','fa-list-ol','btn-info','btn-md'); ?>
 
 
 <?php $__env->stopSection(); ?>

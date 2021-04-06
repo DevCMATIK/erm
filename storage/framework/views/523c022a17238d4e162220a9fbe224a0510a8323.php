@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Crear nuevo email tipo'); ?>
 <?php $__env->startSection('page-icon','envelope'); ?>
 <?php $__env->startSection('more-css'); ?>

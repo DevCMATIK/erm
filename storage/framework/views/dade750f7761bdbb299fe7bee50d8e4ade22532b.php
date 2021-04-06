@@ -21,6 +21,15 @@
 <!-- Place favicon.ico in the root directory -->
 
     <link rel="mask-icon" href="" color="#5bbad5">
+    <style>
+        .dropdown-toggle::after {
+            content: none !important;
+        }
+
+        .table-bordered, .table-bordered th,.table-bordered td {
+            border-color: #e5e5e5 !important;
+        }
+    </style>
 </head>
 <body class="mod-bg-1 layout-composed">
 <!-- DOC: script to save and load page settings -->
@@ -92,9 +101,9 @@
         <!-- BEGIN Left Aside -->
         <aside class="page-sidebar bg-info-800">
             <div class="page-logo bg-info-900 flex-column">
-                <span class="page-logo-link mr-1 mt-2 mb-n3 fs-xl font-weight-bolder"><?php echo e(config('app.name')); ?> <small>®</small></span> <br>
+                <img src="<?php echo e(asset('images/logo-white-st.PNG')); ?>" alt="" style="width: 60%;  bottom: 0;">
 
-                <p class="page-logo-text text-white mr-1 fs-sm ">Efficient Resource Management</p>
+                <p class="page-logo-text text-white mr-1 fs-sm  mt-n3">Efficient Resource Management</p>
             </div>
             <!-- BEGIN PRIMARY NAVIGATION -->
             <nav id="js-primary-nav" class="primary-nav bg-info-800" role="navigation">
@@ -148,6 +157,14 @@
 <?php if (! empty(trim($__env->yieldContent('page-extra-scripts')))): ?>
     <?php echo $__env->yieldContent('page-extra-scripts'); ?>
 <?php endif; ?>
+<script>
+    $(function(){
+        $('body').popover(
+            {
+                selector: '.has-popover'
+            });
+    })
+</script>
 <script>
     $(document).ready(function() {
 

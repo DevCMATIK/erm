@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Crear Sensor'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="sensor-form">
@@ -36,7 +37,7 @@
             <input type="text" class="form-control" id="fix_max_value" name="fix_max_value">
         </div>
         <label class="custom-control custom-checkbox">
-            <input type="checkbox"  class="custom-control-input" value="1">
+            <input type="checkbox"  class="custom-control-input" value="1" name="fix_values">
             <span class="custom-control-label">Reparar valores erróneos</span>
         </label>
     </form>

@@ -1,8 +1,9 @@
+
 <?php $__env->startSection('page-title','Comandos Ejecutados'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
 
-    <?php echo makeLink('/export-commands-executed','Exportar','fa-file-excel','btn-success','btn-sm'); ?>
+    <?php echo makeLink('/export-commands-executed','Exportar','fa-file-excel','btn-success','btn-md'); ?>
 
 
 <?php $__env->stopSection(); ?>

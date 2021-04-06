@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Configurar Punto de Control : '.$sub_element->check_point->name); ?>
 <?php $__env->startSection('modal-content'); ?>
     <div class="alert alert-info">

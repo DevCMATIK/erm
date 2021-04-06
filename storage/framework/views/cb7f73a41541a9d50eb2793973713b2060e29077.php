@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Modificar Trigger'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <?php echo includeCss('plugins/select2/select2.css'); ?>

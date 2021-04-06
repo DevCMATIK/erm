@@ -40,7 +40,7 @@
     </tr>
     <tr>
         <td align="center" bgcolor="#0960a5" style="padding: 5px 5px 5px 5px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-            <img src="<?php echo e(asset('images/logo-white.png')); ?>" alt="" width="30%"  style="margin-top: 7px;">
+            <img src="<?php echo e(asset('images/logo-white-ct.PNG')); ?>" alt="" width="30%"  style="margin-top: 7px;">
         </td>
     </tr>
 
@@ -49,7 +49,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="center" width="100%" style="color: #414141; font-family: Arial, sans-serif; font-size: 12px;">
-                        ERM® <?php echo e(\Carbon\Carbon::today()->year); ?> CMATIK 
+                        ERM© <?php echo e(\Carbon\Carbon::today()->year); ?> CMATIK
                     </td>
                 </tr>
             </table>

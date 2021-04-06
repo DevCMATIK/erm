@@ -50,30 +50,32 @@ class TestController extends SoapController
 
         echo json_encode($consumptions);*/
         $consumptions = collect($this->getConsumptions())->collapse();
-        dd($consumptions);
+
         $first =collect($consumptions->first());
-        $rows = array_values($first->map(function($item,$key){
-            return $key;
-        })->toArray());
-        $columns = array();
+        $rows = array();
         foreach ($consumptions as $sub_zone => $consumption) {
            $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
            foreach($consumption as $key => $data) {
-               if($key == 'this-year') {
-                   $data = $data['consumption'];
+               if($key !== 'this-year') {
+                   if(!isset($rows[$name][$key])) {
+                       $rows[$name][$key] = $data;
+                   } else  {
+                       $rows[$name][$key] += $data;
+                   }
                }
-               if(!isset($columns[$name][$key])) {
-                   $columns[$name][$key] = $data;
-               } else  {
-                   $columns[$name][$key] += $data;
-               }
+
 
 
            }
         }
-        return $this->testResponse([
-            $rows,
-            $columns
+        return view('water-management.dashboard.energy.power-bi', [
+            'rows' =>  collect($rows)->map(function($column,$index){
+                return array_values(collect($column)->map(function($col,$month) use($index){
+                    return [
+                        $index,$col,$month
+                    ];
+                })->toArray());
+            })->collapse(),
         ]);
     }
 

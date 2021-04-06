@@ -69,10 +69,10 @@
                        }
 
                         if($dis->unit->name == 'm3') {
-                            if($data === 0 || $dat === 0) {
+                            if($data == 0 || $dat == 0) {
                                 $max_vol = 0;
                             } else {
-                                $max_vol = $dat * 100 / $data;
+                                   $max_vol = $dat * 100 / $data;
                             }
 
                         }

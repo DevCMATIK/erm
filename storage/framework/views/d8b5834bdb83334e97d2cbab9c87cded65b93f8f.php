@@ -2,7 +2,7 @@
 <?php $__env->startSection('page-title',$sensor->name.': Alarmas'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
-    <?php echo makeLink('/sensors?device_id='.$sensor->device_id,'Sensores','fa-sitemap','btn-info','btn-sm'); ?>
+    <?php echo makeLink('/sensors?device_id='.$sensor->device_id,'Sensores','fa-sitemap','btn-info','btn-md'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-content'); ?>

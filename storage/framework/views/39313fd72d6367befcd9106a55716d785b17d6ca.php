@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('mail-content'); ?>
     <tr>
         <td align="center" bgcolor="#ffffff" style="padding: 75px 20px 40px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px; border-bottom: 1px solid #f6f6f6;">

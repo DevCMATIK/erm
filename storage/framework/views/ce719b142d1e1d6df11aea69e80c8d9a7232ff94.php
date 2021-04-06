@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Listado de Cambios'); ?>
 <?php $__env->startSection('page-icon','users'); ?>
 <?php $__env->startSection('page-content'); ?>

@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Log de desconexiones'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <div class="row">

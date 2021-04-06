@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     Puntos de Control que reportan a DGA
     <?php if(Sentinel::getUser()->hasAccess('dga.export')): ?>

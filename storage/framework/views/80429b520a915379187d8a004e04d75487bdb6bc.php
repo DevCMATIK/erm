@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Modificar Reporte de email'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="mail-report-form">

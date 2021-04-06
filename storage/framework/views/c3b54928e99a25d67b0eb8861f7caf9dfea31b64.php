@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Crear Dispositivo'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="device-form">
@@ -22,8 +23,13 @@
         </div>
         <br>
         <label class="custom-control custom-checkbox">
-            <input type="checkbox" checked="checked" class="custom-control-input" value="1" name="from_bio">
-            <span class="custom-control-label">Dato desde bioseguridad</span>
+            <input type="checkbox"  class="custom-control-input" value="1" name="from_bio">
+            <span class="custom-control-label">Datos  desde bioseguridad</span>
+        </label>
+
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox"  class="custom-control-input" value="1" name="from_dpl">
+            <span class="custom-control-label">Datos desde DPL</span>
         </label>
     </form>
 

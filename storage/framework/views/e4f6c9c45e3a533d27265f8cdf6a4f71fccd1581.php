@@ -1,4 +1,5 @@
-<?php $__env->startSection('page-title','Status reportes DGA : Punto de control'); ?>
+
+<?php $__env->startSection('page-title','Status reportes DGA : '.$check_point->name.' - '.$check_point->work_code); ?>
 <?php $__env->startSection('page-icon','check'); ?>
 <?php $__env->startSection('more-css'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('/plugins/step-form-wizard/css/step-form-wizard-all.css')); ?>">
@@ -52,38 +53,51 @@
     <div class="row">
         <div class="col-xl-12">
             <form id="statistics-form">
-                <fieldset>
-                    <legend>2021-02</legend>
-                    <?php for($i = 1 ; $i<=27 ; $i++): ?>
+                <?php
+                    if($check_point->dga_report == 1) {
+                        $max = 24;
+                    } else {
+                        $max = 1;
+                    }
+                ?>
+                <?php $__currentLoopData = $reports; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $month => $reps): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <fieldset>
+                        <legend><?php echo e($month); ?></legend>
                         <?php
-                            $reports = rand(21,24)
+                            $last_day = \Carbon\Carbon::parse($month.'-01')->endOfMonth()->day;
                         ?>
-                        <div class="day-box text-white <?php if($reports == 24): ?> bg-success <?php else: ?> bg-danger <?php endif; ?>">
-                            <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
-                                <?php echo e($i); ?>
+                        <?php for($i = 1 ; $i<=$last_day ; $i++): ?>
+                            <?php
+                                $rep = $reps->where('date',$month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT))->first()
+                            ?>
+                            <?php if($rep): ?>
+                                <div class="day-box text-white <?php if($rep['reports'] >= $max): ?> bg-success <?php else: ?> <?php if($month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT) == now()->toDateString()): ?> bg-info <?php else: ?> bg-danger <?php endif; ?> <?php endif; ?>">
+                                    <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
+                                        <?php echo e(str_pad($i, 2, '0', STR_PAD_LEFT)); ?>
 
-                            </div>
-                            <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
-                                <?php echo e($reports .' / 24'); ?>
+                                    </div>
+                                    <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
+                                        <?php echo e(($rep['reports'] > $max)? $max.' / '.$max :$rep['reports'] .' / '.$max); ?>
 
-                            </div>
-                        </div>
-                    <?php endfor; ?>
-                </fieldset>
-                <fieldset>
-                    <legend>2021-01</legend>
-                    <?php for($i = 1 ; $i<=31 ; $i++): ?>
-                        <?php
-                            $reports = rand(21,24)
-                        ?>
-                        <div class="day-box text-white <?php if($reports == 24): ?> bg-success <?php else: ?> bg-danger <?php endif; ?>">
-                            <div class="label-day-box" style>
-                                <?php echo e($i); ?>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <div class="day-box text-white bg-secondary">
+                                    <div class="label-day-box" style="float:left; margin-top: -20px; margin-left: -20px; font-size: 1.5em;">
+                                        <?php echo e(str_pad($i, 2, '0', STR_PAD_LEFT)); ?>
 
-                            </div>
-                        </div>
-                    <?php endfor; ?>
-                </fieldset>
+                                    </div>
+                                    <div class="label-day-box" style="float:right; margin-bottom: -10px; margin-right: -20px; font-size: 1.5em; font-weight: bolder;">
+                                         n/r
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                        <?php endfor; ?>
+                    </fieldset>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
             </form>
 
         </div>

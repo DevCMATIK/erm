@@ -2,7 +2,7 @@
 <?php $__env->startSection('page-title',$device->name.': Sensores'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
-    <?php echo makeLink('/devices?check_point_id='.$device->check_point_id,'Dispositivos','fa-sitemap','btn-info','btn-sm'); ?>
+    <?php echo makeLink('/devices?check_point_id='.$device->check_point_id,'Dispositivos','fa-sitemap','btn-info','btn-md'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-content'); ?>

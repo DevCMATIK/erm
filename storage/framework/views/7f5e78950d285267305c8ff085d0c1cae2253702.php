@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Nombres de puntos de control para home'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 

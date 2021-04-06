@@ -6,12 +6,18 @@
         $disposition = $analogous->sensor->dispositions()->first();
     }
     if($disposition) {
-         if($analogous->sensor->device->from_bio === 1) {
+        if($analogous->sensor->device->from_bio === 1) {
                  $valorReport =  DB::connection('bioseguridad')->table('reports')
-                    ->where('grd_id',optional($analogous->sensor->device)->internal_id)
+                    ->where('grd_id',optional($analogous_sensor->sensor->device)->internal_id)
                     ->first()->{$address};
             } else {
-                $valorReport = $analogous->sensor->device->report->$address; // 0, 400
+                if($analogous->sensor->device->from_dpl === 1) {
+                     $valorReport =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',optional($analogous_sensor->sensor->device)->internal_id)
+                    ->first()->{$address};
+                } else {
+                    $valorReport = $analogous->sensor->device->report->$address; // 0, 400
+                }
             }
         $ingMin = $disposition->sensor_min;
         $ingMax = $disposition->sensor_max;
@@ -45,7 +51,23 @@
         $percentaje = number_format((float)($fill*100/$max), (int)$disposition->precision);
         if(isset($digital) && $digital) {
              $digitalAddress = strtolower($digital->sensor->address->name."".$digital->sensor->address_number);
-             if($digitalValue = $digital->sensor->device->report->$digitalAddress == 1) {
+             if($digital->sensor->device->from_bio === 1) {
+                    $vall =  DB::connection('bioseguridad')
+                        ->table('reports')
+                        ->where('grd_id',$digital->sensor->device->internal_id)
+                        ->first()->{$digitalAddress} ?? null;
+                } else {
+                   if($digital->sensor->device->from_dpl === 1) {
+                        $vall = DB::connection('dpl')
+                            ->table('reports')
+                            ->where('grd_id',$digital->sensor->device->internal_id)
+                            ->first()->{$digitalAddress} ?? null;
+                    } else {
+                       $vall = $digital->sensor->device->report->{$digitalAddress};
+                    }
+                }
+
+             if($digitalValue = $vall == 1) {
                 $digital_label = $digital->sensor->label->on_label;
             } else {
                 $digital_label = $digital->sensor->label->off_label;

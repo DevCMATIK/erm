@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Receptores del email'); ?>
 <?php $__env->startSection('modal-content'); ?>
    <div class="row">

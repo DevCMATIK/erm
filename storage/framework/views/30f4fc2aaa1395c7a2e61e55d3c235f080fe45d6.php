@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Listado de registros del trigger'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <h5>Datos del disparador</h5>

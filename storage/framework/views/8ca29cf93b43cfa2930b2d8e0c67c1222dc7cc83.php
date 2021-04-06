@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Usuario: '.$user->full_name); ?>
 <?php $__env->startSection('modal-content'); ?>
     <script>

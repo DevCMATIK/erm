@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','test'); ?>
 <?php $__env->startSection('page-icon','fa-wrench'); ?>
 <?php $__env->startSection('page-content'); ?>

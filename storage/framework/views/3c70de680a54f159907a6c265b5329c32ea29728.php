@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title',''); ?>
 <?php $__env->startSection('modal-content'); ?>
     <style>

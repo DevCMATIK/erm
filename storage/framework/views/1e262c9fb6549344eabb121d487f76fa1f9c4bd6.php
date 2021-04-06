@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Administrar Dispositivos'); ?>
 <?php $__env->startSection('page-icon','cog'); ?>
 <?php $__env->startSection('page-content'); ?>

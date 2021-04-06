@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Dispositivos fuera de línea'); ?>
 <?php $__env->startSection('page-icon','power-off'); ?>
 <?php $__env->startSection('page-content'); ?>

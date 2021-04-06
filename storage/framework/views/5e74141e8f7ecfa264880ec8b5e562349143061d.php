@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('mail-content'); ?>
     <p style="text-align: center;">
         <span style="font-size: 18px;">

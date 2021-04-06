@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Serializar Sensores'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <?php echo includeCss(['plugins/nestable/nestable.css']); ?>

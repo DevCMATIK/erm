@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Crear Area de produccion'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <?php echo includeCss('plugins/duallistbox/duallistbox.css'); ?>

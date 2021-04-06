@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e($device->check_point->sub_zones->first()->name.' -> '.$device->check_point->name.': '.$sensor->name); ?>
 

@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Editar Mail: '.$mail->name); ?>
 <?php $__env->startSection('page-icon','envelope'); ?>
 <?php $__env->startSection('more-css'); ?>

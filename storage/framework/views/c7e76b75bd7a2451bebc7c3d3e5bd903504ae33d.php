@@ -1,7 +1,8 @@
+
 <?php $__env->startSection('page-title',$type->name.': Interpretadores'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
-    <?php echo makeLink('/sensor-types','Tipos de Sensor','fa-sitemap','btn-info','btn-sm'); ?>
+    <?php echo makeLink('/sensor-types','Tipos de Sensor','fa-sitemap','btn-info','btn-md'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-content'); ?>

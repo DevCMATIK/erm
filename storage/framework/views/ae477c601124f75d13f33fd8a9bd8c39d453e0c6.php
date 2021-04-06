@@ -28,7 +28,7 @@
     <div class="row mb-4">
         <div class="col-xl-6">
             <div class="form-group">
-                <label class="form-label">Texto anterior (antes de valor máximo)</label>
+                <label class="form-label">Texto previo (antes de valor máximo)</label>
                 <input type="text" class="form-control" name="pre_text" value="<?php echo e($sensor->pre_text); ?>">
             </div>
         </div>

@@ -1,10 +1,31 @@
 <?php
     $off = false;
+$states = array();
     foreach($sub_element as $ss){
-        if($ss->device->report->state == 0) {
+
+         if($ss->device->from_bio === 1) {
+            $state =  DB::connection('bioseguridad')
+                ->table('reports')
+                ->where('grd_id',$ss->device->internal_id)
+                ->first()->state ?? null;
+        } else {
+           if($ss->device->from_dpl === 1) {
+                $state = DB::connection('dpl')
+                    ->table('reports')
+                    ->where('grd_id',$ss->device->internal_id)
+                    ->first()->state ?? false;
+            } else {
+               $state = $ss->device->report->state;
+            }
+        }
+        array_push($states,$state);
+
+
+    }
+    $state = array_reverse(\Illuminate\Support\Arr::sort($states))[0] ?? 0;
+if($state== 0) {
             $off = true;
         }
-    }
 ?>
 <div class="card rounded-plus mb-2 " id="sub_element_<?php echo e($sub_element->first()->id); ?>" style="min-height: 400px;">
     <?php if($sub_element->first()->active_alarm()->first()): ?>

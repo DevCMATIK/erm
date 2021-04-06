@@ -126,6 +126,7 @@
                         <option value="2">1 vez al día</option>
                         <option value="3">1 vez al mes</option>
                         <option value="4">1 vez al año</option>
+                        <option value="5">Semestral</option>
                     <?php break; ?>
                     <?php case (2): ?>
                         <option value="null">No Reportar</option>
@@ -133,6 +134,7 @@
                         <option value="2" selected>1 vez al día</option>
                         <option value="3">1 vez al mes</option>
                         <option value="4">1 vez al año</option>
+                        <option value="5">Semestral</option>
                     <?php break; ?>
                     <?php case (3): ?>
                         <option value="null">No Reportar</option>
@@ -140,6 +142,7 @@
                         <option value="2">1 vez al día</option>
                         <option value="3" selected>1 vez al mes</option>
                         <option value="4">1 vez al año</option>
+                        <option value="5">Semestral</option>
                     <?php break; ?>
                     <?php case (4): ?>
                         <option value="null">No Reportar</option>
@@ -147,6 +150,15 @@
                         <option value="2">1 vez al día</option>
                         <option value="3">1 vez al mes</option>
                         <option value="4" selected>1 vez al año</option>
+                        <option value="5">Semestral</option>
+                    <?php break; ?>
+                    <?php case (5): ?>
+                        <option value="null">No Reportar</option>
+                        <option value="1">Cada Hora</option>
+                        <option value="2">1 vez al día</option>
+                        <option value="3">1 vez al mes</option>
+                        <option value="4" selected>1 vez al año</option>
+                        <option value="5" selected>Semestral</option>
                     <?php break; ?>
                     <?php default: ?>
                         <option value="null" selected>No Reportar</option>
@@ -154,6 +166,7 @@
                         <option value="2">1 vez al día</option>
                         <option value="3">1 vez al mes</option>
                         <option value="4">1 vez al año</option>
+                    <option value="5" >Semestral</option>
                     <?php break; ?>
                 <?php endswitch; ?>
 

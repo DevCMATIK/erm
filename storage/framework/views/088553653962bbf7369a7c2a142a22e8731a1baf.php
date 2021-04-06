@@ -10,7 +10,13 @@
                     ->where('grd_id',optional($analogous_sensor->sensor->device)->internal_id)
                     ->first()->{$address};
             } else {
-                $valorReport = $analogous_sensor->sensor->device->report->$address; // 0, 400
+                if($analogous_sensor->sensor->device->from_dpl === 1) {
+                     $valorReport =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',optional($analogous_sensor->sensor->device)->internal_id)
+                    ->first()->{$address};
+                } else {
+                    $valorReport = $analogous_sensor->sensor->device->report->$address; // 0, 400
+                }
             }
 
             if($analogous_sensor->sensor->fix_values_out_of_range === 1) {
@@ -40,6 +46,7 @@
                     $data = (($f1/$f2)*($f3)) + $ingMin ;
                 }
             }
+            $val = $data;
             $interpreters = $analogous_sensor->sensor->type->interpreters;
             if(count($interpreters) > 0) {
                 if($interpreter = $interpreters->where('value',(int) $data)->first()) {
@@ -56,8 +63,14 @@
             $ranges = $analogous_sensor->sensor->ranges;
             if (count($ranges) > 0) {
                 foreach($ranges as $range) {
-                    if((float)$data >= $range->min && (float)$data <= $range->max) {
+                    /* if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
+                            echo $range->min.' |||  '.$range->max.'   |||   '.$range->color.'<br>';
+                        }*/
+                    if($val >= $range->min && $val <= $range->max) {
                         $color = $range->color;
+                       /* if(Sentinel::getUser()->email = 'maxi.rebolledo@gmail.com') {
+                            echo 'color:'.$color.'|||valor:'.(float)$val.'||min:'.$range->min.'||max:'.$range->max.'<br>';
+                        }*/
                     }
                 }
             }

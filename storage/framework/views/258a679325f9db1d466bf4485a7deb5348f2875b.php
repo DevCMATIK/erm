@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('auth-content'); ?>
     <h4 class="text-center text-lighter font-weight-normal mt-5 mb-0">Recuperar Contraseña</h4>
 

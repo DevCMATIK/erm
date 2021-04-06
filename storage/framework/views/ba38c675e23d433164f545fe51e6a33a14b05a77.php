@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Log de Commandos ejecutados por usuarios'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 

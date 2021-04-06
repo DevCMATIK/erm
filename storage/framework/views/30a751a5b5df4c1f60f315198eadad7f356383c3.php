@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Triggers'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 

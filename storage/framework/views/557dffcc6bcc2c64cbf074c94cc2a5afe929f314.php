@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Grupo: '.$group->name); ?>
 <?php $__env->startSection('modal-content'); ?>
 

@@ -158,6 +158,14 @@
     <?php echo $__env->yieldContent('page-extra-scripts'); ?>
 <?php endif; ?>
 <script>
+    $(function(){
+        $('body').popover(
+            {
+                selector: '.has-popover'
+            });
+    })
+</script>
+<script>
     $(document).ready(function() {
 
     });

@@ -2,7 +2,7 @@
 <?php $__env->startSection('page-title',$checkPoint->name.': Dispositivos'); ?>
 <?php $__env->startSection('page-icon','database'); ?>
 <?php $__env->startSection('page-buttons'); ?>
-    <?php echo makeLink('/check-points?type='.$checkPoint->type->slug,'Puntos de Control','fa-sitemap','btn-info','btn-sm'); ?>
+    <?php echo makeLink('/check-points?type='.$checkPoint->type->slug,'Puntos de Control','fa-sitemap','btn-info','btn-md'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('page-content'); ?>

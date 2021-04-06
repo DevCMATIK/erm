@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Crear cronómetro para el sensor: '.$sensor->name); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="chronometer-form">

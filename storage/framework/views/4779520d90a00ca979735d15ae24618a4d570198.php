@@ -112,53 +112,32 @@
 
                 <div class="subheader " >
                     <h1 class="subheader-title">
-                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'><?php echo e('Resumen Energía: '.$zone->name); ?></span>
+                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'><?php echo e('Resumen Energía: TEST'); ?></span>
 
                     </h1>
                 </div>
 
                 <div class="alert alert-info">
                     Copie la siguiente URL en Power BI
-                    <h1><strong>https://erm.cmatik.app/zone-resume-table/<?php echo e($zone->id); ?></strong></h1>
+                    <h1><strong>https://erm.cmatik.app/zone-resume-table/<?php echo e('TEST'); ?></strong></h1>
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
+
                         <table class="table m-0 table-bordered">
                             <thead>
                             <tr>
+                                <th>Fecha</th>
                                 <th>Sub Zona</th>
-                                <th>Hoy</th>
-                                <th>Ayer</th>
-                                <th>Este mes</th>
-                                <th>Este año</th>
-                                <?php $__currentLoopData = $consumptions->map(function($item,$key){
-                                            return collect($item)->map(function($item,$key){
-                                                return collect($item['monthly'])->map(function($item){
-                                                    return $item['month'];
-                                                });
-                                            });
-                                        })->collapse()->collapse()->unique(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $month): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <th><?php echo e($month); ?></th>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <th>Consumo</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $__currentLoopData = $consumptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $consumption): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td><?php echo e(key($consumption)); ?></td>
-                                    <td><?php echo e((is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',',''):'0'); ?></td>
-                                    <td><?php echo e((is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',',''):'0'); ?></td>
-                                    <td><?php echo e((is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',',''):'0'); ?></td>
-                                    <td><?php echo e((is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',',''):'0'); ?></td>
-                                    <?php $__currentLoopData = $consumptions->map(function($item,$key){
-                                           return collect($item)->map(function($item,$key){
-                                               return collect($item['monthly'])->map(function($item){
-                                                   return $item['month'];
-                                               });
-                                           });
-                                       })->collapse()->collapse()->unique(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $month): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <td><?php echo e((is_numeric(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption']))?number_format(collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first()['consumption'],1,',',''):'0'); ?></td>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <td><?php echo e($row[2]); ?></td>
+                                    <td><?php echo e($row[0]); ?></td>
+                                    <td><?php echo e(number_format($row[1],1,',','')); ?></td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>

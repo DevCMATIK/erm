@@ -28,10 +28,27 @@ class ResumePowerBIController extends Controller
                 ]
             );
         }
-        dd(collect($consumptions)->collapse());
+        $consumptions = collect($consumptions)->collapse();
+        $rows = array();
+        foreach ($consumptions as $sub_zone => $consumption) {
+            $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
+            foreach($consumption as $key => $data) {
+                if(!isset($rows[$name][$key])) {
+                    $rows[$name][$key] = $data;
+                } else  {
+                    $rows[$name][$key] += $data;
+                }
+            }
+        }
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
-            'consumptions' => collect($consumptions)
+            'rows' => collect($rows)->map(function($column,$index){
+                return array_values(collect($column)->map(function($col,$month) use($index){
+                    return [
+                        $index,$col,$month
+                    ];
+                })->toArray());
+            })->collapse(),
         ]);
     }
 

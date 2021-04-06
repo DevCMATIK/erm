@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('modal-title','Modificar Sensor'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <form class="" role="form"  id="sensor-form">

@@ -13,14 +13,9 @@
         </b>
     </p>
     <p>Se han generado los archivos solicitados en <?php echo e($reminder->creation_date); ?></p>
-    <p>Haga click en los siguientes enlaces para descargar:</p>
+    <p>Haga click en el siguiente enlace para ir a la página de descarga:</p>
     <p>
-        <?php $__currentLoopData = $files; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <a href="https://erm.cmatik.app/download-file/<?php echo e($file->id); ?>" target="_blank"><?php echo e($file->display_name); ?></a><br>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </p>
-    <p>
-        <span style="font-size: 0.8125rem; letter-spacing: 0.1px;">Estos enlaces expiran en <?php echo e($reminder->expires_at); ?></span><br>
+        <a href="https://erm.cmatik.app/descargar-archivos/<?php echo e($reminder->id); ?>" target="_blank">Click Aqui</a><br>
     </p>
     <p><br></p>
     <p>Saludos Cordiales</p>

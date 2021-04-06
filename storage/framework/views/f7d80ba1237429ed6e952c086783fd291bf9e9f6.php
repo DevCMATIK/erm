@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('mail-header'); ?>
     <?php echo $header; ?>
 

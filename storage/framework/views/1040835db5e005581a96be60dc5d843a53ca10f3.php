@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title','Log de emails'); ?>
 <?php $__env->startSection('page-icon','envelope'); ?>
 <?php $__env->startSection('page-content'); ?>

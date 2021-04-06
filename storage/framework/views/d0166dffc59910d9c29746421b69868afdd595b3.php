@@ -1,4 +1,5 @@
-<?php $__env->startSection('modal-title','Log de reportes a DGa'); ?>
+
+<?php $__env->startSection('modal-title','Log de reportes a DGA'); ?>
 <?php $__env->startSection('modal-content'); ?>
     <div class="row">
         <div class="col-xl-12 table-responsive">
