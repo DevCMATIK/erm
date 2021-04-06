@@ -112,14 +112,14 @@
 
                 <div class="subheader " >
                     <h1 class="subheader-title">
-                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'><?php echo e('Resumen Energía: TEST'); ?></span>
+                        <i class='subheader-icon fal fa-bolt'></i>  <span class='fw-300'><?php echo e('Resumen Energía: '.$zone->name); ?></span>
 
                     </h1>
                 </div>
 
                 <div class="alert alert-info">
                     Copie la siguiente URL en Power BI
-                    <h1><strong>https://erm.cmatik.app/zone-resume-table/<?php echo e('TEST'); ?></strong></h1>
+                    <h1><strong>https://erm.cmatik.app/zone-resume-table/<?php echo e($zone->id); ?></strong></h1>
                 </div>
                 <div class="row my-4">
                     <div class="col-12">
