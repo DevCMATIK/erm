@@ -28,7 +28,7 @@ class ResumePowerBIController extends Controller
                 ]
             );
         }
-        $consumptions = collect($consumptions);
+        $consumptions = collect($consumptions)->collapse();
         $rows = array();
         foreach ($consumptions as $sub_zone => $consumption) {
             dd($consumption,$sub_zone);
