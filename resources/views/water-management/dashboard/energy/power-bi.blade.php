@@ -133,6 +133,7 @@
                             </thead>
                             <tbody>
                             @foreach($rows as $row)
+                                @dd($row)
                                 <tr>
                                     <td>{{ $row[2] }}</td>
                                     <td>{{ $row[0] }}</td>
