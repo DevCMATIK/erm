@@ -30,18 +30,19 @@ class ResumePowerBIController extends Controller
         }
         $consumptions = collect($consumptions);
         $rows = array();
-        echo json_encode($consumptions->toArray());
-        exit;
         foreach ($consumptions as $sub_zone => $consumption) {
             $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
-            foreach($consumption as $key => $data) {
-                if(!isset($rows[$name][$key])) {
-                    $rows[$name][$key] = $data;
-                } else  {
-                    $rows[$name][$key] += $data;
+            foreach(collect($consumption)->collapse() as $key => $data) {
+                if($key !== 'this-year') {
+                    if(!isset($rows[$name][$key])) {
+                        $rows[$name][$key] = $data;
+                    } else  {
+                        $rows[$name][$key] += $data;
+                    }
                 }
             }
         }
+        dd($rows);
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
             'rows' => collect($rows)->map(function($column,$index){
