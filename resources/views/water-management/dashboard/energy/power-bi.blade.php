@@ -126,52 +126,17 @@
                         <table class="table m-0 table-bordered">
                             <thead>
                             <tr>
+                                <th>Fecha</th>
                                 <th>Sub Zona</th>
-                                <th>Hoy</th>
-                                <th>Ayer</th>
-                                <th>Este mes</th>
-                                <th>Este año</th>
-                                @foreach($consumptions->map(function($item,$key){
-                                            return collect($item)->map(function($item,$key){
-                                                return collect($item['monthly'])->map(function($item){
-                                                    return $item['month'];
-                                                });
-                                            });
-                                        })->collapse()->collapse()->unique() as $month)
-                                    <th>{{ $month }}</th>
-                                @endforeach
+                                <th>Consumo</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($consumptions as $consumption)
+                            @foreach($rows as $row)
                                 <tr>
-                                    <td>{{ key($consumption) }}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',',''):'0'}}</td>
-                                    <td>{{ (is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',',''):'0'}}</td>
-                                    @foreach($consumptions->map(function($item,$key){
-                                           return collect($item)->map(function($item,$key){
-                                               return collect($item['monthly'])->map(function($item){
-                                                   return $item['month'];
-                                               });
-                                           });
-                                       })->collapse()->collapse()->unique() as $month)
-
-                                        @php
-                                            if(isset($consumption[key($consumption)]['monthly'])) {
-                                                $c = collect($consumption[key($consumption)]['monthly'])->where('month',$month)->first();
-                                                if($c) {
-                                                    $val = $c['consumption'];
-                                                } else {
-                                                    $val = 0;
-                                                }
-                                            } else {
-                                                $val = 0;
-                                            }
-                                        @endphp
-                                        <td>{{ number_format($val,1,',','') }}</td>
-                                    @endforeach
+                                    <td>{{ $row[2] }}</td>
+                                    <td>{{ $row[0] }}</td>
+                                    <td>{{ number_format($row[1],1,',','') }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

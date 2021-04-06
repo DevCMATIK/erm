@@ -21,20 +21,36 @@ class ResumePowerBIController extends Controller
 
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
-            $yesterday = $this->getYesterdayConsumption($sub_zone);
-            array_push($consumptions,[
-                $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
-                    'monthly' => $monthly->toArray(),
-                    'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
-                    'yesterday' => $yesterday->consumption,
-                    'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read)
+            //$yesterday = $this->getYesterdayConsumption($sub_zone);
+            array_push($consumptions,
+                [
+                    $sub_zone->name => $monthly->toArray()
                 ]
-            ]);
+            );
+        }
+        $consumptions = collect($consumptions)->collapse();
+        $rows = array();
+        foreach ($consumptions as $sub_zone => $consumption) {
+            $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
+            foreach(collect($consumption)->collapse() as $key => $data) {
+                if($key !== 'this-year') {
+                    if(!isset($rows[$name][$key])) {
+                        $rows[$name][$key] = $data;
+                    } else  {
+                        $rows[$name][$key] += $data;
+                    }
+                }
+            }
         }
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
-            'consumptions' => collect($consumptions)
+            'rows' => collect($rows)->map(function($column,$index){
+                return array_values(collect($column)->map(function($col,$month) use($index){
+                    return [
+                        $index,$col,$month
+                    ];
+                })->toArray());
+            })->collapse(),
         ]);
     }
 
@@ -69,7 +85,11 @@ class ResumePowerBIController extends Controller
         )->where('sensor_type','ee-e-activa')
             ->where('sub_zone_id',$sub_zone->id)
             ->groupBy('month')
-            ->get();
+            ->get()->map(function($item){
+                return [
+                    $item['month'] => $item['consumption']
+                ];
+            });
     }
 
     protected function getThisYearTotal($sub_zone)
