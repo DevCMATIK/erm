@@ -85,7 +85,11 @@ class ResumePowerBIController extends Controller
         )->where('sensor_type','ee-e-activa')
             ->where('sub_zone_id',$sub_zone->id)
             ->groupBy('month')
-            ->get();
+            ->get()->map(function($item){
+                return [
+                    $item['month'] => $item['consumption']
+                ];
+            });
     }
 
     protected function getThisYearTotal($sub_zone)
