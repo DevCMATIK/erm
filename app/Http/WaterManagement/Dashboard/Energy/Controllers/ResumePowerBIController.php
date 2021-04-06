@@ -21,17 +21,14 @@ class ResumePowerBIController extends Controller
 
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
-            $yesterday = $this->getYesterdayConsumption($sub_zone);
-            array_push($consumptions,[
-                $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
-                    'monthly' => $monthly->toArray(),
-                    'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
-                    'yesterday' => $yesterday->consumption,
-                    'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read)
+            //$yesterday = $this->getYesterdayConsumption($sub_zone);
+            array_push($consumptions,
+                [
+                    $sub_zone->name => $monthly->toArray()
                 ]
-            ]);
+            );
         }
+        dd($consumptios);
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
             'consumptions' => collect($consumptions)
