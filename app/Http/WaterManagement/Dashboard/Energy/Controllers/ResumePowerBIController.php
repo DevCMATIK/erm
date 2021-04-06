@@ -47,7 +47,7 @@ class ResumePowerBIController extends Controller
             'rows' => collect($rows)->map(function($column,$index){
                 return array_values(collect($column)->map(function($col,$month) use($index){
                     return [
-                        $index,$col['consumption'],$col['month']
+                        $index,$col,$month
                     ];
                 })->toArray());
             })->collapse(),
