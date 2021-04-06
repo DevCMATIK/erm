@@ -30,7 +30,8 @@ class ResumePowerBIController extends Controller
         }
         $consumptions = collect($consumptions)->collapse();
         $rows = array();
-        dd($consumptions);
+        echo json_encode($consumptions->toArray());
+        exit;
         foreach ($consumptions as $sub_zone => $consumption) {
             $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
             foreach($consumption as $key => $data) {
