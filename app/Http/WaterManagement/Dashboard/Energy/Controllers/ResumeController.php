@@ -90,7 +90,7 @@ class ResumeController extends Controller
         $zone = Zone::with('sub_zones.consumptions')->find($zone_id);
         $consumptions = array();
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
-            $monthly = $this->getMonthlyTotal($sub_zone);
+            $monthly = $this->getMonthlyTotalCon($sub_zone);
             //$yesterday = $this->getYesterdayConsumption($sub_zone);
             array_push($consumptions,
                 [

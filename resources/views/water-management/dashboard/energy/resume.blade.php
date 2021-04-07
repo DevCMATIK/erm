@@ -65,7 +65,7 @@
             ])
        </div>
    </div>
-    <div class="row">
+    <div class="row my-4">
         <div class="col">
             <div class="card">
                 <div class="card-body">
