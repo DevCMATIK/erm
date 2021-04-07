@@ -295,6 +295,7 @@ Route::get('/config-cache', function() {
 });
 
 Route::get('zone-resume-table/{zone_id}', 'WaterManagement\Dashboard\Energy\Controllers\ResumePowerBIController');
+Route::get('zone-resume-chart/{zone_id}/data', [\App\Http\TestController::class,'chartData']);
 // Clear view cache:
 Route::get('/view-clear', function() {
     $exitCode = Artisan::call('view:clear');

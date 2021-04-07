@@ -140,7 +140,20 @@
         </div>
     </div>
 </div>
-@include('components.html-helpers.core-scripts')
+{!! includeScript(
+    'js/app.js',
+    'js/app.vendor.js',
+    'js/app.blunde.js',
+    'plugins/toastr/toastr.js',
+    'plugins/sweetalert2/sweetalert2.js',
+    'js/forms.js',
+    'js/confirmAction.js',
+    'js/moment.js',
+    'plugins/easypiechart/easypiechart.bundle.js'
+) !!}
+@hasSection('more-scripts')
+    @yield('more-scripts')
+@endif
 @hasSection('page-extra-scripts')
     @yield('page-extra-scripts')
 @endif

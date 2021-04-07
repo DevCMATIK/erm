@@ -141,7 +141,21 @@
         </div>
     </div>
 </div>
-<?php echo $__env->make('components.html-helpers.core-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo includeScript(
+    'js/app.js',
+    'js/app.vendor.js',
+    'js/app.blunde.js',
+    'plugins/toastr/toastr.js',
+    'plugins/sweetalert2/sweetalert2.js',
+    'js/forms.js',
+    'js/confirmAction.js',
+    'js/moment.js',
+    'plugins/easypiechart/easypiechart.bundle.js'
+); ?>
+
+<?php if (! empty(trim($__env->yieldContent('more-scripts')))): ?>
+    <?php echo $__env->yieldContent('more-scripts'); ?>
+<?php endif; ?>
 <?php if (! empty(trim($__env->yieldContent('page-extra-scripts')))): ?>
     <?php echo $__env->yieldContent('page-extra-scripts'); ?>
 <?php endif; ?>
