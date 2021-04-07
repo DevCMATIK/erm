@@ -103,7 +103,7 @@ class ResumeController extends Controller
         if($request->sub_zone != '') {
             foreach ($consumptions as $sub_zone => $consumption) {
                 $name = str_replace(' TG-1','',str_replace(' TG-2','',$sub_zone));
-                foreach(collect($consumption) as $key => $data) {
+                foreach(collect($consumption)->collapse() as $key => $data) {
                     if($row = collect($rows)->where('sub_zone',$name)->where('month',$key)->first()) {
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
