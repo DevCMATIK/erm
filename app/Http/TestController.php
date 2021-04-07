@@ -52,13 +52,16 @@ class TestController extends SoapController
         $zone = Zone::with('sub_zones.consumptions')->find(11);
         $consumptions = collect($this->getConsumptions())->collapse();
         $months = array_keys(collect($consumptions->first())->collapse()->toArray());
-
+        $years = collect($months)->map(function($month){
+            return explode('-',$month)[0];
+        })->unique();
         return view('water-management.dashboard.energy.resume-chart', [
             'months' => $months,
             'sub_zones' => $zone->sub_zones->map(function($item){
                 return str_replace(' TG-1','',str_replace(' TG-2','',$item->name));
             })->unique()->toArray(),
-            'zone' => $zone
+            'zone' => $zone,
+            'years' => $years
         ]);
     }
 
@@ -67,7 +70,7 @@ class TestController extends SoapController
     {
         $data['series'] = array();
         array_push($data['series'] , [
-            'name' => "Consumo",
+            'name' => "Consumo Energía Mensual",
             'data' => $this->makeSeries($request,$zone_id),
         ]) ;
 

@@ -1,5 +1,10 @@
 <script>
-
+    Highcharts.setOptions({
+        lang: {
+            decimalPoint: ',',
+            thousandsSep: '.'
+        }
+    });
    function renderChart()
    {
        $.getJSON('/zone-resume-chart/{{ $zone_id }}/data',getFilters(), function (data) {
@@ -10,7 +15,7 @@
                },
                colors : ['#0a6ebd'],
                title: {
-                   text: 'Consumo Mensual'
+                   text: 'Consumo Energía (kWh)'
                },
                xAxis: {
                    type: 'datetime',
@@ -28,7 +33,7 @@
 
                    min:0,
                    title: {
-                       text: 'Consumo KwH'
+                       text: 'Energía Activa (kWh)'
                    },
                    stackLabels: {
                        enabled: false,
@@ -53,7 +58,8 @@
                    }
                },
                tooltip: {
-                   shared: true
+                   shared: true,
+                   valueSuffix: ' kWh',
                },
 
                credits: {

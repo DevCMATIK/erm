@@ -21,14 +21,27 @@
                         <li class="nav-item" id="sensor_list_dropdown">
                             <a class="form-control border " href="javascript:void(0);" data-toggle="dropdown">Meses <i class="fal fa-chevron-down"></i></a>
                             <ul class="dropdown-menu " style="max-height: 300px; overflow-y: auto;">
-                                <?php $__currentLoopData = $months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $month): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = array_reverse($years->toArray()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $year): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li class="list-group-item">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input sensors" value="<?php echo e($month); ?>" checked name="months">
-                                            <span class="custom-control-label"><?php echo e($month); ?></span>
+                                        <label class="custom-control custom-checkbox mb-2">
+                                            <input type="checkbox" id="check_<?php echo e($year); ?>" class="custom-control-input sensors year-check" value="<?php echo e($year); ?>" checked name="years">
+                                            <span class="custom-control-label"><?php echo e($year); ?></span>
                                         </label>
+                                        <?php $__currentLoopData = $months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $month): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
+                                            \Carbon\Carbon::setLocale('es');
+                                            setlocale(LC_ALL, 'es_ES');
+                                            ?>
+                                            <?php if(stristr($month,$year)): ?>
+                                                <label class="custom-control custom-checkbox ml-4">
+                                                    <input type="checkbox" class="custom-control-input sensors check_<?php echo e($year); ?>" value="<?php echo e($month); ?>" checked name="months">
+                                                    <span class="custom-control-label"><?php echo e(\Carbon\Carbon::parse($month.'-01')->formatLocalized('%B')); ?></span>
+                                                </label>
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                             </ul>
                         </li>
 
@@ -59,13 +72,29 @@
                 sub_zone : $('#sub_zone_id').val()
             };
         }
+        $('.year-check').on('click',function() {
+            let year = $(this).val();
+            $('.check_'+year).prop('checked',$(this).is(':checked'));
+            renderChart()
+        });
 
         $('#sub_zone_id').on('change',function() {
             renderChart();
         })
 
         $('input[name="months"]').on('click',function() {
+            let year = $(this).val().split('-')[0];
+            let checks = document.querySelectorAll('.check_'+year)
+            let allChecked = true;
+
+            for (let i = 0; i < checks.length; i++) {
+                if(!checks[i].checked) {
+                    allChecked = false;
+                }
+            }
+            $('#check_'+year).prop('checked',allChecked)
             renderChart();
+
         });
         renderChart();
     </script>

@@ -22,14 +22,27 @@
                         <li class="nav-item" id="sensor_list_dropdown">
                             <a class="form-control border " href="javascript:void(0);" data-toggle="dropdown">Meses <i class="fal fa-chevron-down"></i></a>
                             <ul class="dropdown-menu " style="max-height: 300px; overflow-y: auto;">
-                                @foreach($months as $month)
+                                @foreach(array_reverse($years->toArray()) as $year)
                                     <li class="list-group-item">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input sensors" value="{{ $month }}" checked name="months">
-                                            <span class="custom-control-label">{{ $month}}</span>
+                                        <label class="custom-control custom-checkbox mb-2">
+                                            <input type="checkbox" id="check_{{$year}}" class="custom-control-input sensors year-check" value="{{ $year }}" checked name="years">
+                                            <span class="custom-control-label">{{ $year }}</span>
                                         </label>
+                                        @foreach($months as $month)
+                                            @php
+                                            \Carbon\Carbon::setLocale('es');
+                                            setlocale(LC_ALL, 'es_ES');
+                                            @endphp
+                                            @if(stristr($month,$year))
+                                                <label class="custom-control custom-checkbox ml-4">
+                                                    <input type="checkbox" class="custom-control-input sensors check_{{ $year }}" value="{{ $month }}" checked name="months">
+                                                    <span class="custom-control-label">{{ \Carbon\Carbon::parse($month.'-01')->formatLocalized('%B')  }}</span>
+                                                </label>
+                                            @endif
+                                        @endforeach
                                     </li>
                                 @endforeach
+
                             </ul>
                         </li>
 
@@ -59,13 +72,29 @@
                 sub_zone : $('#sub_zone_id').val()
             };
         }
+        $('.year-check').on('click',function() {
+            let year = $(this).val();
+            $('.check_'+year).prop('checked',$(this).is(':checked'));
+            renderChart()
+        });
 
         $('#sub_zone_id').on('change',function() {
             renderChart();
         })
 
         $('input[name="months"]').on('click',function() {
+            let year = $(this).val().split('-')[0];
+            let checks = document.querySelectorAll('.check_'+year)
+            let allChecked = true;
+
+            for (let i = 0; i < checks.length; i++) {
+                if(!checks[i].checked) {
+                    allChecked = false;
+                }
+            }
+            $('#check_'+year).prop('checked',allChecked)
             renderChart();
+
         });
         renderChart();
     </script>
