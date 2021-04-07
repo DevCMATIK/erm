@@ -155,7 +155,7 @@ Route::middleware('auth')->group(function() {
             Route::get('energy/charts/stream/{sub_zone}','Chart\StreamChartController');
             //varData
             Route::get('downloadVarData/{sub_zone}', 'DownloadVarDataController');
-            Route::get('zone-resume/{zone_id}', 'ResumeController');
+            Route::get('zone-resume/{zone_id}', 'ResumeController@index');
 
 
         });
@@ -295,6 +295,7 @@ Route::get('/config-cache', function() {
 });
 
 Route::get('zone-resume-table/{zone_id}', 'WaterManagement\Dashboard\Energy\Controllers\ResumePowerBIController');
+Route::get('zone-resume-chart/{zone_id}/data', [\App\Http\WaterManagement\Dashboard\Energy\Controllers\ResumeController::class,'chartData']);
 // Clear view cache:
 Route::get('/view-clear', function() {
     $exitCode = Artisan::call('view:clear');

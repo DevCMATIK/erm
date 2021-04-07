@@ -42,6 +42,7 @@ class ResumePowerBIController extends Controller
                 }
             }
         }
+
         return view('water-management.dashboard.energy.power-bi', [
             'zone' => $zone,
             'rows' => collect($rows)->map(function($column,$index){
@@ -53,6 +54,7 @@ class ResumePowerBIController extends Controller
             })->collapse(),
         ]);
     }
+
 
     protected function getTodayConsumption($sub_zone,$last_read)
     {
