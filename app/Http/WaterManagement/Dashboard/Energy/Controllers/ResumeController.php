@@ -129,7 +129,7 @@ class ResumeController extends Controller
             $rows = collect($rows)->where('sub_zone',$request->sub_zone);
         } else {
             foreach ($consumptions as $sub_zone => $consumption) {
-                foreach (collect($consumption) as $key => $data) {
+                foreach (collect($consumption)->collapse() as $key => $data) {
                     if ($row = collect($rows)->where('month', $key)->first()) {
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
                             if ($item['month'] == $key) {

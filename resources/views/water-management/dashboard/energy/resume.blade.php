@@ -19,7 +19,7 @@
         }
     </style>
    <div class="row">
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 ">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
                 'value' => $consumptions->reduce(function($carry,$item){
@@ -30,7 +30,7 @@
                 'icon' => 'fa-bolt'
             ])
        </div>
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
                 'value' => $consumptions->reduce(function($carry,$item){
@@ -42,7 +42,7 @@
             ])
        </div>
 
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary',
                 'value' => $consumptions->reduce(function($carry,$item){
@@ -53,7 +53,7 @@
                 'icon' => 'fa-calendar'
             ])
        </div>
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12">
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary',
                 'value' => $consumptions->reduce(function($carry,$item){
@@ -65,7 +65,7 @@
             ])
        </div>
    </div>
-    <div class="row my-4">
+    <div class="row mt-4">
         <div class="col">
             <div class="card">
                 <div class="card-body">
