@@ -29,10 +29,6 @@
                                             <span class="custom-control-label">{{ $year }}</span>
                                         </label>
                                         @foreach($months as $month)
-                                            @php
-                                            \Carbon\Carbon::setLocale('es');
-                                            setlocale(LC_ALL, 'es_ES');
-                                            @endphp
                                             @if(stristr($month,$year))
                                                 <label class="custom-control custom-checkbox ml-4">
                                                     <input type="checkbox" class="custom-control-input sensors check_{{ $year }}" value="{{ $month }}" checked name="months">
