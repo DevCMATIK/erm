@@ -28,7 +28,12 @@
                                             <input type="checkbox" id="check_{{$year}}" class="custom-control-input sensors year-check" value="{{ $year }}" checked name="years">
                                             <span class="custom-control-label">{{ $year }}</span>
                                         </label>
+                                        @php
+                                            \Carbon\Carbon::setLocale('es');
+                                            setlocale(LC_ALL, 'es_ES');
+                                        @endphp
                                         @foreach($months as $month)
+
                                             @if(stristr($month,$year))
                                                 <label class="custom-control custom-checkbox ml-4">
                                                     <input type="checkbox" class="custom-control-input sensors check_{{ $year }}" value="{{ $month }}" checked name="months">
