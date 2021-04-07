@@ -146,7 +146,7 @@ class TestController extends SoapController
         foreach ($rows as $key => $row) {
             array_push($array, [
                 'x' => (strtotime($row['month'].'-01'))*1000,
-                'y' => number_format(0,$row['consumption']),
+                'y' => number_format($row['consumption'],0),
                 'name' => $row['month']
             ]);
 
