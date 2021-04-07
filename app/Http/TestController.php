@@ -115,7 +115,7 @@ class TestController extends SoapController
 
                 }
             }
-            $rows = $rows->where('sub_zone',$request->sub_zone);
+            $rows = collect($rows)->where('sub_zone',$request->sub_zone);
         } else {
             foreach ($consumptions as $sub_zone => $consumption) {
                 foreach (collect($consumption) as $key => $data) {
