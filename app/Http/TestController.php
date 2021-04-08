@@ -34,7 +34,8 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-       dd(Carbon::now()->toDateTimeString());
+        $date = '2020-04-07 23:58:56';
+       dd(Carbon::parse($date)->subDay()->toDateTimeString());
     }
 
 

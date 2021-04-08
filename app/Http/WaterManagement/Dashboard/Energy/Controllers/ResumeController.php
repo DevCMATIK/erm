@@ -28,8 +28,8 @@ class ResumeController extends Controller
                     'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
                     'monthly' => $monthly->toArray(),
                     'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
-                    'yesterday' => $yesterday->consumption,
-                    'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read)
+                    'yesterday' => $yesterday->consumption ?? 0,
+                    'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read ?? 0)
                 ]
             ]);
         }
@@ -177,7 +177,7 @@ class ResumeController extends Controller
             );
         $value = $this->getAnalogousValue($sensor);
 
-        return number_format( ($value['value'] - $last_read),2);
+        return number_format( ((($last_read == 0)?0: $value['value']) - $last_read),2);
     }
 
     protected function getYesterdayConsumption($sub_zone)

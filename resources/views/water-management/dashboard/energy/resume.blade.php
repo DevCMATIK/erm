@@ -33,7 +33,9 @@
        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
-                'value' => $consumptions->reduce(function($carry,$item){
+                'value' => ($consumptions->reduce(function($carry,$item){
+                                return $carry + $item[key($item)]['yesterday'];
+                           }) <= 0)? 'No calculado aún' : $consumptions->reduce(function($carry,$item){
                                 return $carry + $item[key($item)]['yesterday'];
                            }),
                 'unit' => 'kWh',
