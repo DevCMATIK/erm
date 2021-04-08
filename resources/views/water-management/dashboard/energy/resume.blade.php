@@ -19,7 +19,7 @@
         }
     </style>
    <div class="row">
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 ">
+       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary-300',
                 'value' => $consumptions->reduce(function($carry,$item){
