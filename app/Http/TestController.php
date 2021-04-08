@@ -34,16 +34,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        Redis::connection()->del('queues:default');
-        Restore::withChain([
-            new RestoreAlarmLog(),
-            new RestoreCommandLog(),
-            new RestoreSensorTriggerLog(),
-        ])->dispatch()->allOnQueue('default');
-
-        return $this->testResponse([
-            'Se han enviado los jobs'
-            ]);
+       dd(Carbon::now()->toDateTimeString());
     }
 
 
