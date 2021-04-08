@@ -108,9 +108,9 @@ class Kernel extends ConsoleKernel
             return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
         });
         $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');
-        $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('01:20');
-        $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('01:30');
-        $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('01:40');
+        $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('00:20');
+        $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('00:30');
+        $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('00:40');
         $schedule->job(new BackupWater())->dailyAt('02:20');
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
