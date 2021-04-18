@@ -3,27 +3,13 @@
 namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
-use App\App\Jobs\SendToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
-use App\Domain\Client\CheckPoint\CheckPoint;
-use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\Client\Zone\Zone;
-use App\Domain\Data\Analogous\AnalogousReport;
-use App\Domain\Data\Digital\DigitalReport;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
-use App\Http\ERM\Jobs\Restore;
-use App\Http\ERM\Jobs\RestoreAlarmLog;
-use App\Http\ERM\Jobs\RestoreAnalogousReport;
-use App\Http\ERM\Jobs\RestoreCommandLog;
-use App\Http\ERM\Jobs\RestoreDigitalReport;
-use App\Http\ERM\Jobs\RestoreSensorTriggerLog;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
-use Sentinel;
 
 
 class TestController extends SoapController
@@ -35,34 +21,9 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        /*$zone = Zone::with('sub_zones.consumptions')->find(11);
-        $consumptions = array();
+        Redis::command('flushdb');;
 
-        foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
-            $monthly = $this->getMonthlyTotal($sub_zone);
-            //$yesterday = $this->getYesterdayConsumption($sub_zone);
-            array_push($consumptions,[
-                $sub_zone->name => array_merge(
-                    ['this-year' => $this->getThisYearTotal($sub_zone)->toArray()],
-                     $monthly->toArray())
-                ]);
-        }
-
-        echo json_encode($consumptions);*/
-        $zone = Zone::with('sub_zones.consumptions')->find(11);
-        $consumptions = collect($this->getConsumptions())->collapse();
-        $months = array_keys(collect($consumptions->first())->collapse()->toArray());
-        $years = collect($months)->map(function($month){
-            return explode('-',$month)[0];
-        })->unique();
-        return view('water-management.dashboard.energy.resume-chart', [
-            'months' => $months,
-            'sub_zones' => $zone->sub_zones->map(function($item){
-                return str_replace(' TG-1','',str_replace(' TG-2','',$item->name));
-            })->unique()->toArray(),
-            'zone' => $zone,
-            'years' => $years
-        ]);
+        return $this->testResponse([]);
     }
 
 
