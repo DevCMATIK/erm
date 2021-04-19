@@ -99,11 +99,12 @@ class RestoreReports implements ShouldQueue
                 array_push($toRestore,[$day => $values]);
             }
         }
-
-        foreach($toRestore as $day => $items) {
-            foreach($items as $item) {
-                $date = $day.' '.$item['hour'];
-                RestoreToDGA::dispatch($item['tote'],$item['flow'],$item['level'],$item['work_code'],$this->checkpoint,$date)->onQueue('long-running-queue-low');
+        foreach($toRestore as $rests) {
+            foreach($rests as $day => $items) {
+                foreach($items as $item) {
+                    $date = $day.' '.$item['hour'];
+                    RestoreToDGA::dispatch($item['tote'],$item['flow'],$item['level'],$item['work_code'],$this->checkpoint,$date)->onQueue('long-running-queue-low');
+                }
             }
         }
 
