@@ -3,14 +3,7 @@
 namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
-use App\App\Jobs\DGA\GetChekpointsToRestore;
-use App\App\Jobs\DGA\RestoreToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
-use App\Domain\Client\CheckPoint\CheckPoint;
-use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
-use App\Domain\Client\Zone\Zone;
-use App\Domain\Data\Analogous\AnalogousReport;
-use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,9 +18,13 @@ class TestController extends SoapController
     public $current_date = '2020-12-01';
 
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        GetChekpointsToRestore::dispatch();
+        Redis::command('flushdb');
+        //$checkpoint = CheckPoint::find($request->check);
+
+        //RestoreReports::dispatch($checkpoint)->onQueue('long-running-queue-low');
+
     }
 
     protected function getSensors($checkPoint)
