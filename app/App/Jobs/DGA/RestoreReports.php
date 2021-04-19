@@ -71,42 +71,45 @@ class RestoreReports implements ShouldQueue
         $first_date = collect($dates)->first();
         $last_date = collect(array_reverse($dates->toArray()))->first();
 
-        $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id')->toArray())
-            ->whereRaw("date between '{$first_date} 00:00:00' and '{$last_date} 23:59:00'")->get();
+        if($first_date && $last_date) {
+            $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id')->toArray())
+                ->whereRaw("date between '{$first_date} 00:00:00' and '{$last_date} 23:59:00'")->get();
 
-        $toRestore = array();
-        foreach($missing as  $miss) {
-            foreach($miss as $day => $items) {
-                $values = array();
-                foreach($items as $hours) {
-                    $start_date = $day.' '.$hours['start_hour'];
-                    $end_date = $day.' '.$hours['end_hour'];
-                    array_push($values, [
-                        'work_code' => $this->checkpoint->work_code,
-                        'tote' => $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
-                                ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                ->first()->result ?? null,
-                        'flow' => $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
-                                ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                ->first()->result ?? null,
-                        'level' => $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
-                                ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                ->first()->result ?? null,
-                        'hour' => $start_date
-                    ]);
-                }
-                array_pop($values);
-                array_push($toRestore,[$day => $values]);
-            }
-        }
-        foreach($toRestore as $rests) {
-            foreach($rests as $day => $items) {
-                foreach($items as $item) {
-                    $date = $day.' '.$item['hour'];
-                    RestoreToDGA::dispatch($item['tote'],$item['flow'],$item['level'],$item['work_code'],$this->checkpoint,$date)->onQueue('long-running-queue-low');
+            $toRestore = array();
+            foreach($missing as  $miss) {
+                foreach($miss as $day => $items) {
+                    $values = array();
+                    foreach($items as $hours) {
+                        $start_date = $day.' '.$hours['start_hour'];
+                        $end_date = $day.' '.$hours['end_hour'];
+                        array_push($values, [
+                            'work_code' => $this->checkpoint->work_code,
+                            'tote' => $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
+                                    ->where("date", '>=',$start_date)->where('date','<=',$end_date)
+                                    ->first()->result ?? null,
+                            'flow' => $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
+                                    ->where("date", '>=',$start_date)->where('date','<=',$end_date)
+                                    ->first()->result ?? null,
+                            'level' => $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
+                                    ->where("date", '>=',$start_date)->where('date','<=',$end_date)
+                                    ->first()->result ?? null,
+                            'hour' => $start_date
+                        ]);
+                    }
+                    array_pop($values);
+                    array_push($toRestore,[$day => $values]);
                 }
             }
+            foreach($toRestore as $rests) {
+                foreach($rests as $day => $items) {
+                    foreach($items as $item) {
+                        $date = $day.' '.$item['hour'];
+                        RestoreToDGA::dispatch($item['tote'],$item['flow'],$item['level'],$item['work_code'],$this->checkpoint,$date)->onQueue('long-running-queue-low');
+                    }
+                }
+            }
         }
+
 
     }
 
