@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
+use App\App\Jobs\DGA\RestoreReports;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -20,10 +21,9 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        Redis::command('flushdb');
-        //$checkpoint = CheckPoint::find($request->check);
+        $checkpoint = CheckPoint::find($request->check);
 
-        //RestoreReports::dispatch($checkpoint)->onQueue('long-running-queue-low');
+        RestoreReports::dispatch($checkpoint)->onQueue('long-running-queue-low');
 
     }
 
