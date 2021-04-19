@@ -80,13 +80,13 @@ class TestController extends SoapController
                       'work_code' => $checkpoint->work_code,
                       'tote' => $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
                               ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                              ->first()->data ?? null,
+                              ->first()->result ?? null,
                       'flow' => $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
                               ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                              ->first()->data ?? null,
+                              ->first()->result ?? null,
                       'level' => $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
                               ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                              ->first()->data ?? null
+                              ->first()->result ?? null
                   ]);
               }
               array_push($toRestore,[$day => $values]);
