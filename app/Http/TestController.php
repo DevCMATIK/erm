@@ -26,7 +26,7 @@ class TestController extends SoapController
     public function __invoke()
     {
         $reports = CheckPointReport::where('check_point_id',77)
-            ->where('response',0)->get()->groupBy(function($item){
+            ->where('response',0)->whereRaw("report_date between '2021-03-01 00:00:00' and '2021-04-18 23:59:00'")->get()->groupBy(function($item){
                 return Carbon::parse($item->report_date)->format('Y-m-d');
             })->filter(function($item, $key) {
                 return count($item) < 24;
@@ -58,7 +58,15 @@ class TestController extends SoapController
             }
             array_push($missing,[$day => $report_day]);
         }
+        $dates =collect($missing)->map(function($item,$key){
+            return array_keys($item);
+        })->collapse();
 
+        $first_date = collect($dates)->first();
+        $last_date = collect(array_reverse($dates->toArray()))->first();
+
+        $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id'))
+            ->whereRaw("date between '{$first_date} 00:00:00' and '{$last_date} 23:59:00'")->get();
 
         foreach($missing as  $miss) {
             foreach($miss as $day => $items) {
@@ -69,17 +77,14 @@ class TestController extends SoapController
                   $end_date = $day.' '.$hours['end_hour'];
                   array_push($values, [
                       'work_code' => $checkpoint->work_code,
-                      'tote' => AnalogousReport::
-                          where('sensor_id',$this->getToteSensor($sensors)->id)
-                              ->whereRaw("date between '{$start_date}' and '{$end_date}'")
+                      'tote' => $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
+                              ->where("date", '>=',$start_date)->where('date','<=',$end_date)
                               ->first()->data ?? null,
-                      'flow' => AnalogousReport::
-                          where('sensor_id',$this->getFlowSensor($sensors)->id)
-                              ->whereRaw("date between '{$start_date}' and '{$end_date}'")
+                      'flow' => $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
+                              ->where("date", '>=',$start_date)->where('date','<=',$end_date)
                               ->first()->data ?? null,
-                      'level' => AnalogousReport::
-                          where('sensor_id',$this->getLevelSensor($sensors)->id)
-                              ->whereRaw("date between '{$start_date}' and '{$end_date}'")
+                      'level' => $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
+                              ->where("date", '>=',$start_date)->where('date','<=',$end_date)
                               ->first()->data ?? null
                   ]);
               }
