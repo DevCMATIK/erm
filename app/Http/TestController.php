@@ -89,6 +89,7 @@ class TestController extends SoapController
                               ->first()->result ?? null
                   ]);
               }
+              array_pop($values);
               array_push($toRestore,[$day => $values]);
            }
         }
