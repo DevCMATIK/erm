@@ -88,7 +88,7 @@ class RestoreToDGA extends SoapController implements ShouldQueue
                 'tote_reported' => $totalizador,
                 'flow_reported' => $caudal,
                 'water_table_reported' => $nivelFreatico,
-                'report_date' => Carbon::now()->toDateTimeString()
+                'report_date' => Carbon::parse($date)->toDateTimeString()
             ]);
 
 
@@ -100,7 +100,7 @@ class RestoreToDGA extends SoapController implements ShouldQueue
                 'tote_reported' => $totalizador,
                 'flow_reported' => $caudal,
                 'water_table_reported' => $nivelFreatico,
-                'report_date' => $date
+                'report_date' => Carbon::parse($date)->toDateTimeString()
             ]);
             return $e->getMessage();
         }
