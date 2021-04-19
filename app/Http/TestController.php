@@ -65,8 +65,9 @@ class TestController extends SoapController
         $first_date = collect($dates)->first();
         $last_date = collect(array_reverse($dates->toArray()))->first();
 
-        $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id'))
+        $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id')->toArray())
             ->whereRaw("date between '{$first_date} 00:00:00' and '{$last_date} 23:59:00'")->get();
+
         $toRestore = array();
         foreach($missing as  $miss) {
             foreach($miss as $day => $items) {
