@@ -67,10 +67,10 @@ class TestController extends SoapController
 
         $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id'))
             ->whereRaw("date between '{$first_date} 00:00:00' and '{$last_date} 23:59:00'")->get();
-
+        $toRestore = array();
         foreach($missing as  $miss) {
             foreach($miss as $day => $items) {
-                $toRestore = array();
+
                 $values = array();
               foreach($items as $hours) {
                   $start_date = $day.' '.$hours['start_hour'];
