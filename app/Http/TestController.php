@@ -23,8 +23,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $reports = CheckPointReport::
-            ->groupBy('date')
+        $reports = CheckPointReport::groupBy('date')
             ->orderBy('date', 'DESC')
             ->get(array(
                 DB::raw('Date(report_date) as date'),
