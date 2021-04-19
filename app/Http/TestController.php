@@ -5,6 +5,7 @@ namespace App\Http;
 use App\App\Controllers\Soap\SoapController;
 use App\App\Jobs\DGA\RestoreReports;
 use App\App\Traits\ERM\HasAnalogousData;
+use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
