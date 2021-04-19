@@ -4,9 +4,11 @@ namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
 use App\App\Traits\ERM\HasAnalogousData;
+use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
@@ -21,9 +23,18 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        Redis::command('flushdb');;
+        $reports = CheckPointReport::
+            ->groupBy('date')
+            ->orderBy('date', 'DESC')
+            ->get(array(
+                DB::raw('Date(report_date) as date'),
+                DB::raw('COUNT(*) as "reports"')
+            ))->sortByDesc('date')->groupBy(function($item) {
+                return Carbon::parse($item['date'])->format('Y-m');
+            });
 
-        return $this->testResponse([]);
+        echo json_encode($reports);
+
     }
 
 
