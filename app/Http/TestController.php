@@ -102,7 +102,6 @@ class TestController extends SoapController
             foreach($items as $item) {
                 $date = $day . ' ' . $item['hour'];
             }
-            }
         }
     }
 
