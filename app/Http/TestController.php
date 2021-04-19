@@ -23,15 +23,8 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $reports = CheckPointReport::where('response',0)
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
-            ->get(array(
-                DB::raw('Date(report_date) as date'),
-                DB::raw('COUNT(*) as "reports"')
-            ))->sortByDesc('date')->groupBy(function($item) {
-                return Carbon::parse($item['date'])->format('Y-m');
-            });
+        $reports = CheckPointReport::where('response',0)->get();
+
 
         echo json_encode($reports);
 
