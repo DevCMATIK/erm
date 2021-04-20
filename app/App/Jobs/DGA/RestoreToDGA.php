@@ -52,6 +52,7 @@ class RestoreToDGA extends SoapController implements ShouldQueue
 
     public function ReportToDGA($totalizador,$caudal,$nivelFreatico,$codigoDeObra,$checkPoint,$date)
     {
+        $nivelFreatico = $nivelFreatico *-1;
         try {
             ini_set('default_socket_timeout', 600);
             self::setWsdl('https://snia.mop.gob.cl/controlextraccion/wsdl/datosExtraccion/SendDataExtraccionService');
