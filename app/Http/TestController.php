@@ -25,7 +25,7 @@ class TestController extends SoapController
     public function __invoke(Request $request)
     {
 
-        $checkpoints = CheckPoint::->where('dga_report',2)
+        $checkpoints = CheckPoint::where('dga_report',2)
             ->get();
 
         $reports = CheckPointReport::with('check_point')->whereIn('check_point_id',$checkpoints->pluck('id')->toArray())
