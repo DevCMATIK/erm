@@ -86,13 +86,13 @@ class RestoreReports implements ShouldQueue
                             'work_code' => $this->checkpoint->work_code,
                             'tote' => $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
                                     ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                    ->first()->result ?? null,
+                                    ->first()->result ?? 0,
                             'flow' => $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
                                     ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                    ->first()->result ?? null,
+                                    ->first()->result ?? 0,
                             'level' => $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
                                     ->where("date", '>=',$start_date)->where('date','<=',$end_date)
-                                    ->first()->result ?? null,
+                                    ->first()->result ?? 0,
                             'hour' => $start_date
                         ]);
                     }
