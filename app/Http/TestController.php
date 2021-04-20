@@ -4,8 +4,10 @@ namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
 use App\App\Jobs\DGA\RestoreReports;
+use App\App\Jobs\DGA\RestoreToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
+use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,9 +24,23 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $checkpoint = CheckPoint::find($request->check);
 
-        RestoreReports::dispatch($checkpoint)->onQueue('long-running-queue-low');
+        $checkpoints = CheckPoint::->where('dga_report',2)
+            ->get();
+
+        $reports = CheckPointReport::with('check_point')->whereIn('check_point_id',$checkpoints->pluck('id')->toArray())
+            ->whereRaw("report_date between '2021-04-08 00:00:00' and '2021-04-08 23:59:00'")->get();
+
+        foreach($reports as $report) {
+            RestoreToDGA::dispatch(
+                $report->tote_reported ?? 0,
+                $report->flow_reported ?? 0,
+                $report->water_table_reported ?? 0,
+                $report->check_point->work_code,
+                $report->check_point,
+                $report->report_date
+            )->onQueue('long-running-queue-low');
+        }
 
     }
 
