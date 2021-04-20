@@ -32,10 +32,11 @@ class TestController extends SoapController
             ->whereRaw("report_date between '2021-04-08 00:00:00' and '2021-04-08 23:59:00'")->get();
 
         foreach($reports as $report) {
+            $level = $report->water_table_reported * -1;
             RestoreToDGA::dispatch(
                 $report->tote_reported ?? 0,
                 $report->flow_reported ?? 0,
-                $report->water_table_reported ?? 0,
+                $level ?? 0,
                 $report->check_point->work_code,
                 $report->check_point,
                 $report->report_date
