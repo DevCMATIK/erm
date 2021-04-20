@@ -29,7 +29,7 @@ class TestController extends SoapController
         $checkpoint = CheckPoint::find(69);
 
         $sensors = $this->getSensors($checkpoint->id);
-
+        dd($sensors);
         $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id')->toArray())
             ->whereRaw("date between '2021-04-08 00:00:00' and '2021-04-08 23:59:00'")->get();
 
