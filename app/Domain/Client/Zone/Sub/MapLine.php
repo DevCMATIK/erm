@@ -14,4 +14,12 @@ class MapLine extends Model
         'color',
         'position'
     ];
+
+    public function p_one () {
+        return $this->belongsTo(SubZone::class,'point_one','id');
+    }
+
+    public function p_two () {
+        return $this->belongsTo(SubZone::class,'point_two','id');
+    }
 }
