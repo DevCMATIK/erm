@@ -29,6 +29,7 @@
 <!-- Place favicon.ico in the root directory -->
 
     <link rel="mask-icon" href="" color="#5bbad5">
+    @yield('maps-content')
 </head>
 <body class="mod-bg-1">
 <!-- DOC: script to save and load page settings -->

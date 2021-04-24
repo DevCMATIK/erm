@@ -8,6 +8,7 @@ use App\App\Jobs\DGA\RestoreToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
+use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
 use Carbon\Carbon;
@@ -25,13 +26,9 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-
-        $checkpoint = CheckPoint::find(69);
-
-
-
-        RestoreToDGA::dispatch(14541549,0.07,-30.125,$checkpoint->work_code,$checkpoint,'2021-04-08 12:00:00')->onQueue('long-running-queue-low');
-
+        return view('test.map',[
+            'sub_zones' => SubZone::where('zone_id',11)->get()
+        ]);
     }
 
     protected function getSensors($checkPoint)
