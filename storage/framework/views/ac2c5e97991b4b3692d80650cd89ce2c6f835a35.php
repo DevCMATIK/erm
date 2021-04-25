@@ -34,20 +34,39 @@
             var data = <?php echo json_encode($sub_zones->toArray(),JSON_NUMERIC_CHECK); ?>;
 
             data.forEach(function(item, i) {
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: new google.maps.LatLng(item.lat,item.lng),
-                    });
-                    markers.push(new google.maps.LatLng(item.lat,item.lng));
-            })
-            var linePath = new google.maps.Polyline({
-                path: markers,
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeWeight : 10
-            });
+                var infoWindow = new google.maps.InfoWindow({});
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(item.lat,item.lng),
+                });
+                markers.push(new google.maps.LatLng(item.lat,item.lng));
 
-            linePath.setMap(map);
+                google.maps.event.addListener(marker, 'mouseover', function () {
+                    console.log(marker);
+                    infoWindow.setContent('<div><strong>' + item.name + '</strong><br>');
+                    infoWindow.open(map, marker); // open at marker's location
+                });
+
+                google.maps.event.addListener(marker, 'mouseout', function () {
+                    infoWindow.close();
+                });
+            })
+
+            var lines = <?php echo json_encode($lines,JSON_NUMERIC_CHECK); ?>;
+
+            lines.forEach(function(item, i) {
+                var path = [];
+                path.push(new google.maps.LatLng(item.p_one_lat,item.p_one_lng));
+                path.push(new google.maps.LatLng(item.p_two_lat,item.p_two_lng));
+                var linePath = new google.maps.Polyline({
+                    path: path,
+                    geodesic: true,
+                    strokeColor: item.color,
+                    strokeWeight : 10,
+                    map : map
+                });
+            })
+
 
 
             //var markerCluster = new MarkerClusterer(map, markers);

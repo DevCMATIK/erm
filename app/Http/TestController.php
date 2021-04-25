@@ -8,6 +8,7 @@ use App\App\Jobs\DGA\RestoreToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Client\CheckPoint\CheckPoint;
 use App\Domain\Client\CheckPoint\DGA\CheckPointReport;
+use App\Domain\Client\Zone\Sub\MapLine;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
@@ -26,8 +27,46 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
+        $lines = MapLine::with(['p_one','p_two'])->orderBy('position')->get()->map(function($item) {
+            $pOneLng = '';
+            $pOneLat = '';
+            $pTwoLng = '';
+            $pTwoLat = '';
+            if($item->one_lng !== null) {
+                $pOneLng = $item->one_lng;
+            } else {
+                $pOneLng = $item->p_one->lng;
+            }
+
+            if($item->one_lat !== null) {
+                $pOneLat = $item->one_lat;
+            } else {
+                $pOneLat = $item->p_one->lat;
+            }
+
+            if($item->two_lng !== null) {
+                $pTwoLng = $item->two_lng;
+            } else {
+                $pTwoLng = $item->p_two->lng;
+            }
+
+            if($item->two_lat !== null) {
+                $pTwoLat = $item->two_lat;
+            } else {
+                $pTwoLat = $item->p_two->lat;
+            }
+            return [
+                'p_one_lng' => $pOneLng,
+                'p_one_lat' => $pOneLat,
+                'p_two_lng' => $pTwoLng,
+                'p_two_lat' => $pTwoLat,
+                'color' => $item->color
+            ];
+        });
+
         return view('test.map',[
-            'sub_zones' => SubZone::where('zone_id',11)->get()
+            'sub_zones' => SubZone::where('zone_id',11)->get(),
+            'lines' => $lines
         ]);
     }
 

@@ -12,7 +12,11 @@ class MapLine extends Model
         'point_one',
         'point_two',
         'color',
-        'position'
+        'position',
+        'one_lng',
+        'one_lat',
+        'two_lng',
+        'two_lat'
     ];
 
     public function p_one () {
