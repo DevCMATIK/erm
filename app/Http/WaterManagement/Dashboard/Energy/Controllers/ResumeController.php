@@ -48,6 +48,7 @@ class ResumeController extends Controller
             return explode('-',$month)[0];
         })->unique();
 
+        $subZones = $this->getSubZones($zone_id);
         return view('water-management.dashboard.energy.resume', [
             'zone' => $zone,
             'consumptions' => collect($consumptions),
@@ -55,8 +56,84 @@ class ResumeController extends Controller
             'sub_zones' => $zone->sub_zones->map(function($item){
                 return str_replace(' TG-1','',str_replace(' TG-2','',$item->name));
             })->unique()->toArray(),
+            'subZones' => $subZones,
+            'lines' => $this->getLines($subZones),
             'years' => $years
         ]);
+    }
+
+    protected function getLines($subZones)
+    {
+        $subZones = collect($subZones);
+        return MapLine::with(['p_one','p_two'])->orderBy('position')->get()->map(function($item) use ($subZones) {
+            $l = array();
+
+            array_push($l,[
+                'lng' => $item->p_one->lng,
+                'lat' => $item->p_one->lat
+            ]);
+
+            if($item->points_between != null) {
+                foreach(json_decode($item->points_between) as $point) {
+                    $coords = explode(',',str_replace(' ','',$point));
+                    array_push($l,[
+                        'lng' => $coords[1],
+                        'lat' => $coords[0]
+                    ]);
+                }
+            }
+
+            array_push($l,[
+                'lng' => $item->p_two->lng,
+                'lat' => $item->p_two->lat
+            ]);
+
+            if($subZones->where('id',$item->point_one)->first()['status']['state'] == 1){
+                $color = $item->color;
+            } else {
+                $color = '#B2BABB';
+            }
+            return [
+                'lines' => $l,
+                'color' => $color
+            ];
+        });
+    }
+
+    protected function getSubZones($id)
+    {
+        return  SubZone::with('check_points.devices.report')
+            ->where('zone_id',$id)
+            ->get()
+            ->map(function($subZone){
+                return [
+                    'id' => $subZone->id,
+                    'name' => $subZone->name,
+                    'lat' => $subZone->lat,
+                    'lng' => $subZone->lng,
+                    'status' => $subZone->check_points->map(function($checkPoint){
+                        $okCount = 0;
+                        $offCount = 0;
+                        foreach($checkPoint->devices->map(function($device){
+                            return $device->report->state;
+                        }) as $state){
+                            if($state == 0) {
+                                $offCount++;
+                            } else {
+                                $okCount++;
+                            }
+                        }
+
+                        if($offCount > 0 && $okCount <= 0) {
+                            return ['state' => 0, 'color' => '#F74C41' ]; //rojo
+                        } elseif ($offCount > 0 && $okCount > 0) {
+                            return ['state' => 0, 'color' => '#ACACAC' ]; //plomo
+                        } else {
+                            return ['state' => 1, 'color' => '#6AD252' ]; //verde
+                        }
+                    })->toArray()[0]
+                ];
+            });
     }
 
     protected function getMonthlyTotalCon($sub_zone)

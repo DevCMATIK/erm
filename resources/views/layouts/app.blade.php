@@ -30,6 +30,7 @@
             border-color: #e5e5e5 !important;
         }
     </style>
+    @yield('maps-content')
 </head>
 <body class="mod-bg-1">
 <!-- DOC: script to save and load page settings -->
