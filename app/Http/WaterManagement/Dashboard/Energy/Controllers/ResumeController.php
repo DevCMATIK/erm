@@ -50,7 +50,13 @@ class ResumeController extends Controller
             return explode('-',$month)[0];
         })->unique();
 
-        $subZones = $this->getSubZones($zone_id);
+        if($zone_id == 11) {
+            $subZones = $this->getSubZones($zone_id);
+            $lines = $this->getLines($subZones);
+        } else {
+            $subZones = [];
+            $lines = [];
+        }
         return view('water-management.dashboard.energy.resume', [
             'zone' => $zone,
             'consumptions' => collect($consumptions),
@@ -59,7 +65,7 @@ class ResumeController extends Controller
                 return str_replace(' TG-1','',str_replace(' TG-2','',$item->name));
             })->unique()->toArray(),
             'subZones' => $subZones,
-            'lines' => $this->getLines($subZones),
+            'lines' => $lines,
             'years' => $years
         ]);
     }
