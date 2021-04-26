@@ -97,7 +97,7 @@ class ResumeController extends Controller
             ]);
 
             if($subZones->where('id',$item->point_one)->first()['status']['state'] == 1){
-                $color = $item->color;
+                $color = '#6AD252';
             } else {
                 $color = '#B2BABB';
             }
