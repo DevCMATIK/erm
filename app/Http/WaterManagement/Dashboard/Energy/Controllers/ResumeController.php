@@ -261,7 +261,7 @@ class ResumeController extends Controller
                 ->sensor_id
             );
         $value = $this->getAnalogousValue($sensor);
-        if(is_array($value['value'] )) {
+        if(is_array($value )) {
             $val = $value['value'] ;
         } else {
             $val = 0;
