@@ -27,49 +27,86 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $lines = MapLine::with(['p_one','p_two'])->orderBy('position')->get()->map(function($item) {
-            $pOneLng = '';
-            $pOneLat = '';
-            $pTwoLng = '';
-            $pTwoLat = '';
-            if($item->one_lng !== null) {
-                $pOneLng = $item->one_lng;
-            } else {
-                $pOneLng = $item->p_one->lng;
-            }
-
-            if($item->one_lat !== null) {
-                $pOneLat = $item->one_lat;
-            } else {
-                $pOneLat = $item->p_one->lat;
-            }
-
-            if($item->two_lng !== null) {
-                $pTwoLng = $item->two_lng;
-            } else {
-                $pTwoLng = $item->p_two->lng;
-            }
-
-            if($item->two_lat !== null) {
-                $pTwoLat = $item->two_lat;
-            } else {
-                $pTwoLat = $item->p_two->lat;
-            }
-            return [
-                'p_one_lng' => $pOneLng,
-                'p_one_lat' => $pOneLat,
-                'p_two_lng' => $pTwoLng,
-                'p_two_lat' => $pTwoLat,
-                'color' => $item->color
-            ];
-        });
-
+        $subZones = $this->getSubZones(11);
         return view('test.map',[
-            'sub_zones' => SubZone::where('zone_id',11)->get(),
-            'lines' => $lines
+            'sub_zones' => $subZones,
+            'lines' => $this->getLines($subZones)
         ]);
     }
 
+    protected function getLines($subZones)
+    {
+        $subZones = collect($subZones);
+        return MapLine::with(['p_one','p_two'])->orderBy('position')->get()->map(function($item) use ($subZones) {
+            $l = array();
+
+            array_push($l,[
+                'lng' => $item->p_one->lng,
+                'lat' => $item->p_one->lat
+            ]);
+
+            if($item->points_between != null) {
+                foreach(json_decode($item->points_between) as $point) {
+                    $coords = explode(',',str_replace(' ','',$point));
+                    array_push($l,[
+                        'lng' => $coords[1],
+                        'lat' => $coords[0]
+                    ]);
+                }
+            }
+
+            array_push($l,[
+                'lng' => $item->p_two->lng,
+                'lat' => $item->p_two->lat
+            ]);
+
+            if($subZones->where('id',$item->point_one)->first()['status']['state'] == 1){
+                $color = $item->color;
+            } else {
+                $color = '#B2BABB';
+            }
+            return [
+                'lines' => $l,
+                'color' => $color
+            ];
+        });
+    }
+
+    protected function getSubZones($id)
+    {
+       return  SubZone::with('check_points.devices.report')
+            ->where('zone_id',$id)
+            ->get()
+            ->map(function($subZone){
+                return [
+                    'id' => $subZone->id,
+                    'name' => $subZone->name,
+                    'lat' => $subZone->lat,
+                    'lng' => $subZone->lng,
+                    'status' => $subZone->check_points->map(function($checkPoint){
+                        $okCount = 0;
+                        $offCount = 0;
+                        foreach($checkPoint->devices->map(function($device){
+                            return $device->report->state;
+                        }) as $state){
+                            if($state == 0) {
+                                $offCount++;
+                            } else {
+                                $okCount++;
+                            }
+                        }
+
+                        if($offCount > 0 && $okCount <= 0) {
+                            return ['state' => 0, 'color' => '#F74C41' ]; //rojo
+                        } elseif ($offCount > 0 && $okCount > 0) {
+                            return ['state' => 0, 'color' => '#ACACAC' ]; //plomo
+                        } else {
+                            return ['state' => 1, 'color' => '#6AD252' ]; //verde
+                        }
+                    })->toArray()[0]
+                ];
+            });
+    }
     protected function getSensors($checkPoint)
     {
         return $this->getSensorsByCheckPoint($checkPoint)
