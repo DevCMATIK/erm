@@ -225,7 +225,7 @@
                 "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
 
             var markers = [];
-            var data = {!! json_encode($suZones->toArray(),JSON_NUMERIC_CHECK) !!};
+            var data = {!! json_encode($subZones->toArray(),JSON_NUMERIC_CHECK) !!};
 
             data.forEach(function(item, i) {
                 var infoWindow = new google.maps.InfoWindow({});
