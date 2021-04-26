@@ -67,7 +67,7 @@
             ])
        </div>
    </div>
-    <div class="row px-2 mb-2">
+    <div class="row px-2 mb-2 my-4">
         <div class="col" id="map" style="min-height: 600px;">
 
         </div>
