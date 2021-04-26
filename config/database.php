@@ -45,8 +45,8 @@ return [
         ],
         'grdxf' => [
             'driver' => 'mysql',
-            //'host' => '10.250.128.196',
-            'host' => '34.123.35.239',
+            'host' => '10.250.128.196',
+            //'host' => '34.123.35.239',
             'port' => '3306',
             'database' => 'grdxf',
             'username' => 'AppDev',
