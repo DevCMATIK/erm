@@ -261,8 +261,12 @@ class ResumeController extends Controller
                 ->sensor_id
             );
         $value = $this->getAnalogousValue($sensor);
-
-        return number_format( ((($last_read == 0)?0: $value['value']) - $last_read),2);
+        if(is_array($value['value'] )) {
+            $val = $value['value'] ;
+        } else {
+            $val = 0;
+        }
+        return number_format( ((($last_read == 0)?0:$val) - $last_read),2);
     }
 
     protected function getYesterdayConsumption($sub_zone)
