@@ -3,6 +3,8 @@
 namespace App\Http\WaterManagement\Dashboard\Energy\Controllers;
 
 use App\App\Traits\ERM\HasAnalogousData;
+use App\Domain\Client\Zone\Sub\MapLine;
+use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Client\Zone\Zone;
 use App\Domain\WaterManagement\Device\Sensor\Electric\ElectricityConsumption;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
