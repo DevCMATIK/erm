@@ -38,11 +38,11 @@
                 var marker = new google.maps.Marker({
                     map: map,
                     position: new google.maps.LatLng(item.lat,item.lng),
-                    icon:  pinSymbol(item.status.color)
                 });
                 markers.push(new google.maps.LatLng(item.lat,item.lng));
 
                 google.maps.event.addListener(marker, 'mouseover', function () {
+                    console.log(marker);
                     infoWindow.setContent('<div><strong>' + item.name + '</strong><br>');
                     infoWindow.open(map, marker); // open at marker's location
                 });
@@ -56,14 +56,13 @@
 
             lines.forEach(function(item, i) {
                 var path = [];
-                item.lines.forEach(function(point, i) {
-                    path.push(new google.maps.LatLng(point.lat,point.lng));
-                });
+                path.push(new google.maps.LatLng(item.p_one_lat,item.p_one_lng));
+                path.push(new google.maps.LatLng(item.p_two_lat,item.p_two_lng));
                 var linePath = new google.maps.Polyline({
                     path: path,
                     geodesic: true,
                     strokeColor: item.color,
-                    strokeWeight : 6,
+                    strokeWeight : 10,
                     map : map
                 });
             })
@@ -75,16 +74,6 @@
 
         }
 
-        function pinSymbol(color) {
-            return {
-                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-                fillColor: color,
-                fillOpacity: 1,
-                strokeColor: '#000',
-                strokeWeight: 2,
-                scale: 1,
-            };
-        }
 
 
         function getZonesData()
