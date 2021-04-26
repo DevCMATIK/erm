@@ -67,11 +67,13 @@
             ])
        </div>
    </div>
+    @if(count($lines) > 0)
     <div class="row px-2 mb-2 my-4">
         <div class="col" id="map" style="min-height: 600px;">
 
         </div>
     </div>
+    @endif
     <div class="row mt-4">
         <div class="col">
             <div class="card">
@@ -202,7 +204,8 @@
 @endsection
 
 @section('maps-content')
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    @if(count($lines) > 0)
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLIUC0DU8-V7nWP7CvP76Bp67MQDxTZY&callback=initMap&libraries=visualization&v=weekly"
@@ -289,7 +292,7 @@
         }
 
     </script>
-
+    @endif
 @endsection
 
 
