@@ -27,11 +27,27 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $subZones = $this->getSubZones(11);
-        return view('test.map',[
-            'sub_zones' => $subZones,
-            'lines' => $this->getLines($subZones)
-        ]);
+        $checkpoint = CheckPoint::find(231);
+
+        $sensors = $this->getSensors($checkpoint->id);
+
+        $analogous_reports = AnalogousReport::whereIn('sensor_id',$sensors->pluck('id')->toArray())
+            ->whereRaw("date between '2021-04-30 00:00:00' and '2021-04-30 30:59:00'")->get();
+
+        $tote =  $analogous_reports->where('sensor_id',$this->getToteSensor($sensors)->id)
+                ->where("date", '>=','2021-04-30 00:00:00')->where('date','<=','2021-04-30 23:59:00')
+                ->first()->result ?? 0;
+
+        $flow =  $analogous_reports->where('sensor_id',$this->getFlowSensor($sensors)->id)
+                ->where("date", '>=','2021-04-30 00:00:00')->where('date','<=','2021-04-30 23:59:00')
+                ->first()->result ?? 0;
+
+        $level =  $analogous_reports->where('sensor_id',$this->getLevelSensor($sensors)->id)
+                ->where("date", '>=','2021-04-30 00:00:00')->where('date','<=','2021-04-30 23:59:00')
+                ->first()->result ?? 0;
+
+        RestoreToDGA::dispatch($tote,$flow,$level,$checkpoint->work_code,$checkpoint,'2021-04-30 12:00:00')->onQueue('long-running-queue-low');
+
     }
 
     protected function getLines($subZones)
