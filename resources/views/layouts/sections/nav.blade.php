@@ -45,7 +45,7 @@
            $query->whereIn('id',Sentinel::getUser()->getSubZonesIds())->whereHas('configuration');
         })->with( ['zones.sub_zones' => $filter])->get();
     @endphp
-    @foreach($areas->sortBy('name') as $area)
+    @foreach($areas->sortBy('icon') as $area)
         @php
 
             $mainZones = $area->zones;
@@ -53,7 +53,7 @@
         @if(isset($mainZones) && count($mainZones) > 0)
             <li>
                 <a href="javascript:void(0);">
-                    <i class="fal @if($loop->first) fa-bolt @else fa-map-marker fa-flip-vertical @endif text-white"></i>
+                    <i class="fal {{ $area->icon }} text-white"></i>
                     <span class="nav-link-text text-white">{{ $area->name }}</span>
                 </a>
                 <ul>
