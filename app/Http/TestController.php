@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\App\Controllers\Soap\SoapController;
+use App\App\Jobs\DGA\GetChekpointsToRestore;
 use App\App\Jobs\DGA\RestoreReports;
 use App\App\Jobs\DGA\RestoreToDGA;
 use App\App\Traits\ERM\HasAnalogousData;
@@ -27,7 +28,7 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        Redis::command('flushdb');
+        GetChekpointsToRestore::dispatch();
     }
 
     protected function getLines($subZones)
