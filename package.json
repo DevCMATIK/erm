@@ -59,7 +59,7 @@
         "justifiedGallery": "^3.7.0",
         "laravel-mix": "^4.0.7",
         "lightgallery": "^1.6.12",
-        "lodash": "^4.17.5",
+        "lodash": "^4.17.21",
         "markdown": "^0.5.0",
         "moment": "^2.24.0",
         "node-waves": "^0.7.6",
