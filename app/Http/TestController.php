@@ -48,6 +48,7 @@ class TestController extends SoapController
                 ->first()->result ?? 0;
 
         RestoreToDGA::dispatch($tote,$flow,$level,$checkpoint->work_code,$checkpoint,'2021-05-07 00:00:00')->onQueue('long-running-queue-low');
+        dd($tote,$flow,$level);
     }
 
     protected function getLines($subZones)
