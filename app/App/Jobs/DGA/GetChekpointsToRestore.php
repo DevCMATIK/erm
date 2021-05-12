@@ -30,14 +30,12 @@ class GetChekpointsToRestore implements ShouldQueue
      */
     public function handle()
     {
-        $checkpoints =  CheckPoint::with('last_report')
+        $checkpoint =  CheckPoint::with('last_report')
             ->whereNotNull('work_code')
             ->where('dga_report',1)
-            ->get();
+            ->find(142);
 
-        foreach ($checkpoints as $checkpoint) {
             RestoreReports::dispatch($checkpoint)->onQueue('long-running-queue-low');
-        }
 
     }
 }
