@@ -23,10 +23,10 @@ class SubZoneDevicesAlarmController extends Controller
         $active = 0;
         $accused = 0;
         foreach($sub_zone->sub_elements as $sub_element) {
-            if($sub_element->device->active_and_not_accused_alarm->count() > 0) {
+            if(optional($sub_element->device)->active_and_not_accused_alarm->count() > 0) {
                 $active++;
             }
-            if($sub_element->device->active_and_accused_alarm->count() > 0) {
+            if(optional($sub_element)->device->active_and_accused_alarm->count() > 0) {
                 $accused++;
             }
         }

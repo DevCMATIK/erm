@@ -3,13 +3,13 @@
 $states = array();
     foreach($sub_element as $ss){
 
-         if($ss->device->from_bio === 1) {
+         if(optional($ss->device)->from_bio == 1) {
             $state =  DB::connection('bioseguridad')
                 ->table('reports')
                 ->where('grd_id',$ss->device->internal_id)
                 ->first()->state ?? null;
         } else {
-           if($ss->device->from_dpl === 1) {
+           if(optional($ss->device)->from_dpl == 1) {
                 $state = DB::connection('dpl')
                     ->table('reports')
                     ->where('grd_id',$ss->device->internal_id)
