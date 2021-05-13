@@ -15,7 +15,7 @@ $states = array();
                     ->where('grd_id',$ss->device->internal_id)
                     ->first()->state ?? false;
             } else {
-               $state = $ss->device->report->state;
+               $state = optional($ss->device)->report->state;
             }
         }
         array_push($states,$state);
