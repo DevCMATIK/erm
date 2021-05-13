@@ -9,7 +9,7 @@
 
         id="d_{{$analogous_sensor->id}}_{{$analogous_sensor->sensor->id}}">
 @endif
-        <h2 class=" mb-0  @if($off) text-muted @else text-{{ $color }} @endif">
+        <h2 class=" mb-0  @if(($off ?? 0)) text-muted @else text-{{ $color }} @endif">
             @if(!is_numeric((str_replace(',','.',$data))))
                 <span class="font-weight-bolder text-{{ $color ?? 'success' }}" style=" font-size: 0.9em !important;">{{ $data }}</span>
             @else
