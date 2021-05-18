@@ -13,13 +13,19 @@ class OfflineDevicesListDatatableController extends DataTableAbstract
 {
     public function getRecords()
     {
-        return  Device::with('report','check_point.sub_zones.zone','last_disconnection')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
-            if($device->from_bio === 1) {
-                $state =  DB::connection('bioseguridad')->table('reports')
-                    ->where('grd_id',optional($device)->internal_id)
+        return  Device::with('report','check_point.sub_zones.zone','last_dc')->withCount('disconnections')->whereIn('id',$this->getDevicesId())->get()->filter(function($device){
+            if($device->from_dpl === 1) {
+                $state =  DB::connection('dpl')->table('reports')
+                    ->where('grd_id',$device->internal_id)
                     ->first()->state;
             } else {
-                $state = optional($device->report)->state ;
+                if($device->from_bio === 1) {
+                    $state =  DB::connection('bioseguridad')->table('reports')
+                        ->where('grd_id',$device->internal_id)
+                        ->first()->state;
+                } else {
+                    $state = $device->report->state ?? 0;
+                }
             }
             return $state === 0;
         });
@@ -31,7 +37,7 @@ class OfflineDevicesListDatatableController extends DataTableAbstract
             $record->check_point->sub_zones->first()->zone->name,
             $record->check_point->sub_zones->first()->name,
             $record->check_point->name,
-            optional($record->last_disconnection()->first())->start_date ?? '',
+            optional($record->last_dc()->first())->start_date ?? '',
             Carbon::now()->longAbsoluteDiffForHumans(Carbon::parse($record->last_disconnection()->first()->start_date ?? now()->toDateTimeString() )),
         ];
     }
