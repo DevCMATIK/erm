@@ -19,6 +19,7 @@ class ElectricityConsumption extends Model implements Auditable
         'consumption',
         'first_read',
         'last_read',
+        'high_consumption',
         'sub_zone_id',
         'sensor_type',
         'date'
