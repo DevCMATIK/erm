@@ -27,7 +27,7 @@ class ResumeController extends Controller
             $yesterday = $this->getYesterdayConsumption($sub_zone);
             array_push($consumptions,[
                 $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray(),
+                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray() ?? 0,
                     'monthly' => $monthly->toArray(),
                     'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
                     'yesterday' => $yesterday->consumption ?? 0,
