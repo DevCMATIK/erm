@@ -34,7 +34,7 @@ class ResumeController extends Controller
             if($thisMonth = $monthly->where('month',now()->format('Y-m'))->first()) {
                 $thisMonth = $thisMonth->toArray();
             } else {
-                $thisMonth =['consumption' => 0]
+                $thisMonth =['consumption' => 0];
             }
             array_push($consumptions,[
                 $sub_zone->name => [
