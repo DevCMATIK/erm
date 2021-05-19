@@ -25,9 +25,14 @@ class ResumeController extends Controller
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
             $monthly = $this->getMonthlyTotal($sub_zone);
             $yesterday = $this->getYesterdayConsumption($sub_zone);
+            if($thisYearTotal = $this->getThisYearTotal($sub_zone)) {
+                $thisYearTotal = $thisYearTotal->toArray();
+            } else {
+                $thisYearTotal = ['consumption' => 0];
+            }
             array_push($consumptions,[
                 $sub_zone->name => [
-                    'this-year' => $this->getThisYearTotal($sub_zone)->toArray() ?? 0,
+                    'this-year' => $thisYearTotal,
                     'monthly' => $monthly->toArray(),
                     'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
                     'yesterday' => $yesterday->consumption ?? 0,

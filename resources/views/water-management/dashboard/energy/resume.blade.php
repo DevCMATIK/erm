@@ -59,7 +59,7 @@
            @include('water-management.dashboard.energy.components.main-box', [
                 'bg' => 'bg-primary',
                 'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['this-year']['consumption'];
+                                return $carry + ($item[key($item)]['this-year']['consumption'] ?? 0);
                            }),
                 'unit' => 'kWh',
                 'title' => 'Consumo este año',
