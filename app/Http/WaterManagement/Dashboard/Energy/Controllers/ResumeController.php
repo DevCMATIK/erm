@@ -30,11 +30,17 @@ class ResumeController extends Controller
             } else {
                 $thisYearTotal = ['consumption' => 0];
             }
+
+            if($thisMonth = $monthly->where('month',now()->format('Y-m'))->first()) {
+                $thisMonth = $thisMonth->toArray();
+            } else {
+                $thisMonth =['consumption' => 0]
+            }
             array_push($consumptions,[
                 $sub_zone->name => [
                     'this-year' => $thisYearTotal,
                     'monthly' => $monthly->toArray(),
-                    'this-month' => $monthly->where('month',now()->format('Y-m'))->first()->toArray(),
+                    'this-month' => $thisMonth,
                     'yesterday' => $yesterday->consumption ?? 0,
                     'today' => $this->getTodayConsumption($sub_zone,$yesterday->last_read ?? 0)
                 ]
