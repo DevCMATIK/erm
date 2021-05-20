@@ -52,20 +52,21 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
         
         $schedule->job(new CheckAlarms())->everyMinute();
-		*/
+		
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupAnalogousSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupAnalogousSensors(10),'long-running-queue')->everyTenMinutes();
         $schedule->job(new BackupAnalogousSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupAnalogousSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupAnalogousSensors(60),'long-running-queue')->hourly();
-/*
+*/
         $schedule->job(new BackupDigitalSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupDigitalSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupDigitalSensors(10),'long-running-queue')->everyTenMinutes();
         $schedule->job(new BackupDigitalSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupDigitalSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupDigitalSensors(60),'long-running-queue')->hourly();
+        /*
         $schedule->job(new BackupSensorAverages(),'long-running-queue-low')->everyFiveMinutes();
         $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('04:00');
         $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('03:00');
