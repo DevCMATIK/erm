@@ -120,7 +120,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupWater())->dailyAt('02:20');
         
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
-        */
+        
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
 
         $schedule->job(new NotifyDevicesOffline())->hourly();
