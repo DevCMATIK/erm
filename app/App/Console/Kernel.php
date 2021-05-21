@@ -52,7 +52,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
        
         $schedule->job(new CheckAlarms())->everyMinute();
-		
+		*/
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupAnalogousSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupAnalogousSensors(10),'long-running-queue')->everyTenMinutes();
