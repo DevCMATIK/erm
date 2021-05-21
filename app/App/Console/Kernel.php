@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
         /*$schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
-       */
+       
         $schedule->job(new CheckAlarms())->everyMinute();
 		
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupAnalogousSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupAnalogousSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupAnalogousSensors(60),'long-running-queue')->hourly();
-
+/*
         $schedule->job(new BackupDigitalSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupDigitalSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupDigitalSensors(10),'long-running-queue')->everyTenMinutes();
