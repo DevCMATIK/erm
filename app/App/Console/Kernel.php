@@ -118,8 +118,9 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('00:30');
         $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('00:40');
         $schedule->job(new BackupWater())->dailyAt('02:20');
+        /*
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
-        
+        */
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
 
         $schedule->job(new NotifyDevicesOffline())->hourly();
