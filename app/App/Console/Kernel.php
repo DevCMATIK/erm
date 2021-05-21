@@ -47,12 +47,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
+        /*$schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
-        /*
+       */
         $schedule->job(new CheckAlarms())->everyMinute();
-		
+		/*
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupAnalogousSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupAnalogousSensors(10),'long-running-queue')->everyTenMinutes();
