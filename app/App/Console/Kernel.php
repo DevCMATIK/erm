@@ -68,9 +68,9 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupDigitalSensors(60),'long-running-queue')->hourly();
 */
         $schedule->job(new BackupSensorAverages(),'long-running-queue-low')->everyFiveMinutes();
-        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('11:30');
-        $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('11:00');
-
+        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('12:00');
+        $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('11:30');
+/*
         //Al Cambio
         $seconds = 3;
 
@@ -112,8 +112,9 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CheckReportToDga(5))->dailyAt('12:34')->when(function () {
             return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
         });
-
-        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');
+*/
+        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('12:30');
+  /*
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('00:20');
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('00:30');
         $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('00:40');
