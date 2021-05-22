@@ -113,7 +113,7 @@ class Kernel extends ConsoleKernel
             return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
         });
 */
-        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('12:50');
+        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('13:30');
   /*
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('00:20');
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('00:30');
