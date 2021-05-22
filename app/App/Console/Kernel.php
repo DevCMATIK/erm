@@ -123,13 +123,13 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
         
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
-
+*/
         $schedule->job(new NotifyDevicesOffline())->hourly();
 
         $schedule->job(new TrackDisconnectionsFromWater(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromBio(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromDPL(),'tracking-queue')->everyMinute();
-
+/*
 
         // Get all tasks from the database
         $mailReports = MailReport::active()->get();
