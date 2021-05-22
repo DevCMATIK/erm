@@ -68,7 +68,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new BackupDigitalSensors(60),'long-running-queue')->hourly();
 */
         $schedule->job(new BackupSensorAverages(),'long-running-queue-low')->everyFiveMinutes();
-        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('04:00');
+        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('11:30');
         $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('11:00');
 
         //Al Cambio
