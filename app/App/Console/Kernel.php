@@ -143,7 +143,7 @@ class Kernel extends ConsoleKernel
 
 
 
-
+*/
         //chronometers
         $seconds = 10;
 
