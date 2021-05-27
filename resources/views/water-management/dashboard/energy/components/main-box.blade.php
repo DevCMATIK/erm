@@ -2,7 +2,11 @@
     <div class="">
         <h3 class="display-4 d-block l-h-n m-0 fw-500 main-box-number" @if($value > 99999999 && $value < 1000000000) style="font-size:2.5em;" @endif @if($value > 999999999) style="font-size:2.1em;" @endif>
             <div class="main-box-value" style="margin: 0; float: left; margin-right:3px;">
+                @if(is_numeric($value))
                 {{ number_format($value,0,',','.') }}
+                @else
+                    0
+                @endif
             </div>
             <span class="fs-nano main-box-measure" >
                     {{ $unit }}
