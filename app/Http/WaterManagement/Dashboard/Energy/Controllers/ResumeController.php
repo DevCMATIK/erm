@@ -269,15 +269,19 @@ class ResumeController extends Controller
             ->find($sub_zone->consumptions
                 ->where('sensor_type')
                 ->first()
-                ->sensor_id
+                ->sensor_id ?? null
             );
-        $value = $this->getAnalogousValue($sensor);
-        if(is_array($value )) {
-            $val = $value['value'] ;
-        } else {
-            $val = 0;
+        if($sensor) {
+            $value = $this->getAnalogousValue($sensor);
+            if(is_array($value )) {
+                $val = $value['value'] ;
+            } else {
+                $val = 0;
+            }
+            return number_format( ((($last_read == 0)?0:$val) - $last_read),2);
         }
-        return number_format( ((($last_read == 0)?0:$val) - $last_read),2);
+
+        return 0;
     }
 
     protected function getYesterdayConsumption($sub_zone)
