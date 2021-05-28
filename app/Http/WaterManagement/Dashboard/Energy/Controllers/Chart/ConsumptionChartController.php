@@ -129,7 +129,7 @@ class ConsumptionChartController extends Controller
         foreach ($rows->groupBy('date') as $key => $row) {
             array_push($array, [
                 'x' => (strtotime($key))*1000,
-                'y' => $row->sum('consumption') - $row->sum('high_consumption'),
+                'y' => ($row->sum('consumption') - $row->sum('high_consumption')),
                 'name' => Carbon::parse($key)->toDateString()
             ]);
         }
