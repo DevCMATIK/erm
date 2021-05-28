@@ -12,7 +12,7 @@
                 chart: {
                     renderTo : 'chartContainer'
                 },
-                colors : ['#2196F3','#0a6ebd','#FFD237'],
+                colors : ['#FF6600','#0070C1','#FFD237'],
                 title: {
                     text: 'Consumo Energía (kWh)'
                 },
