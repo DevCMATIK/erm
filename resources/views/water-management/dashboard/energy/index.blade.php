@@ -118,11 +118,16 @@
                             yAxis: data.yAxis,
                             plotOptions: {
                                 column: {
+                                    stacking: 'percent',
                                     dataLabels: {
                                         enabled: false,
-                                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                                        color: false,
+                                        padding: 0,
+                                        style : {
+                                            textOutline : false
+                                        }
                                     },
-                                    pointWidth: data.pointWidth,
+                                    pointWidth: 30,
                                     animation: false
                                 }
                             },

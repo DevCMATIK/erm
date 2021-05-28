@@ -34,9 +34,7 @@ class ConsumptionChartController extends Controller
             $data['tick'] = 1000 * 60 * 60 * 24;
         }
 
-
         $rows = $s->get();
-
         $data['series'] = array();
 
         if(count($rows) > 0) {
@@ -61,14 +59,33 @@ class ConsumptionChartController extends Controller
             ];
 
             if(count($rows) > 0) {
+
+                array_push($data['series'] , [
+                    'name' => 'Consumo horario normal',
+                    'data' => $this->transformDataNormal($rows),
+                    'type' => 'column',
+                    'turboThreshold' => 0,
+                    'yAxis' => 0,
+                    'zIndex' => 50
+                ]);
+                array_push($data['series'] , [
+                    'name' => 'Consumo horario punta',
+                    'data' => $this->transformDataPeak($rows),
+                    'type' => 'column',
+                    'turboThreshold' => 0,
+                    'yAxis' => 0,
+                    'zIndex' => 50
+                ]);
+
                 array_push($data['series'] , [
                     'name' => 'Consumo',
                     'data' => $this->transformData($rows),
                     'type' => 'spline',
-                    'turboThreshold' => 0
+                    'turboThreshold' => 0,
+                    'zIndex' => 100,
+                    'yAxis' => 1,
                 ]);
             }
-
 
             return json_encode($data,JSON_NUMERIC_CHECK);
         } else {
@@ -83,6 +100,32 @@ class ConsumptionChartController extends Controller
             array_push($array, [
                 'x' => (strtotime($key))*1000,
                 'y' => $row->sum('consumption'),
+                'name' => Carbon::parse($key)->toDateString()
+            ]);
+        }
+        return $array;
+    }
+
+    protected function transformDataNormal($rows){
+        $array = array();
+
+        foreach ($rows->groupBy('date') as $key => $row) {
+            array_push($array, [
+                'x' => (strtotime($key))*1000,
+                'y' => $row->sum('consumption') - $row->sum('high_consumption'),
+                'name' => Carbon::parse($key)->toDateString()
+            ]);
+        }
+        return $array;
+    }
+
+    protected function transformDataPeak($rows){
+        $array = array();
+
+        foreach ($rows->groupBy('date') as $key => $row) {
+            array_push($array, [
+                'x' => (strtotime($key))*1000,
+                'y' => $row->sum('high_consumption'),
                 'name' => Carbon::parse($key)->toDateString()
             ]);
         }
