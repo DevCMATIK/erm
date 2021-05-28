@@ -155,6 +155,25 @@ class ResumeController extends Controller
             });
     }
 
+    protected function getMonthlyTotalConChart($sub_zone)
+    {
+        return ElectricityConsumption::select(
+            DB::raw('sum(consumption) as consumption'),
+            DB::raw('sum(high_consumption) as high_consumption'),
+            DB::raw("DATE_FORMAT(date,'%Y-%m') as month")
+        )->where('sensor_type','ee-e-activa')
+            ->where('sub_zone_id',$sub_zone->id)
+            ->groupBy('month')
+            ->get()->map(function($item){
+                return [
+                    $item['month'] => [
+                        'consumption' => $item['consumption'] ?? 0,
+                        'high' => $item['high_consumption'] ?? 0
+                    ]
+                ];
+            });
+    }
+
     protected function getMonthlyTotalCon($sub_zone)
     {
         return ElectricityConsumption::select(
@@ -172,11 +191,37 @@ class ResumeController extends Controller
 
     public function chartData(Request $request,$zone_id)
     {
+        $data = array();
         $data['series'] = array();
-        array_push($data['series'] , [
-            'name' => "Consumo Energía Mensual",
-            'data' => $this->makeSeries($request,$zone_id),
-        ]) ;
+        $data['yAxis'] = [
+            [
+                'title' => [
+                    'text' => 'Consumo de energía en hora Peak (kWh)'
+                ],
+                'stackLabels' => [
+                    'enabled' => false,
+                    'style' => [
+                        'fontWeight' => 'bold'
+                    ]
+                ],
+                'zIndex' => 5
+            ],
+            [
+                'title' => [
+                    'text' => 'Consumo Energía Activa (kWh)'
+                ],
+                'stackLabels' => [
+                    'enabled' => true,
+                    'style' => [
+                        'fontWeight' => 'bold',
+                        'color'=>'gray'
+                    ]
+                ],
+                'opposite' => true,
+                'zIndex' => 100
+            ]
+        ];
+        $data['series'] = $this->makeSeries($request,$zone_id) ;
 
         return json_encode($data,JSON_NUMERIC_CHECK);
     }
@@ -186,7 +231,7 @@ class ResumeController extends Controller
         $zone = Zone::with('sub_zones.consumptions')->find($zone_id);
         $consumptions = array();
         foreach($zone->sub_zones->sortBy('name') as $sub_zone) {
-            $monthly = $this->getMonthlyTotalCon($sub_zone);
+            $monthly = $this->getMonthlyTotalConChart($sub_zone);
             //$yesterday = $this->getYesterdayConsumption($sub_zone);
             array_push($consumptions,
                 [
@@ -202,11 +247,13 @@ class ResumeController extends Controller
                 foreach(collect($consumption)->collapse() as $key => $data) {
                     if($row = collect($rows)->where('sub_zone',$name)->where('month',$key)->first()) {
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
+
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
                                 return [
                                     'sub_zone' => $name,
                                     'month' => $key,
-                                    'consumption' => $item['consumption'] +$data,
+                                    'consumption' => (float)$item['consumption']['consumption'] + (float)$data['consumption'],
+                                    'high' => (float)$item['consumption']['high'] + (float)$data['high'],
                                 ];
                             } else {
                                 return $item;
@@ -228,10 +275,13 @@ class ResumeController extends Controller
                 foreach (collect($consumption)->collapse() as $key => $data) {
                     if ($row = collect($rows)->where('month', $key)->first()) {
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
+
                             if ($item['month'] == $key) {
+
                                 return [
                                     'month' => $key,
-                                    'consumption' => $item['consumption'] + $data,
+                                    'consumption' => $item['consumption'] + $data['consumption'],
+                                    'high' => $item['high'] + $data['high'],
                                 ];
                             } else {
                                 return $item;
@@ -240,7 +290,8 @@ class ResumeController extends Controller
                     } else {
                         array_push($rows, [
                             'month' => $key,
-                            'consumption' => $data
+                            'consumption' => $data['consumption'],
+                            'high' => $data['high'],
                         ]);
                     }
 
@@ -248,17 +299,81 @@ class ResumeController extends Controller
             }
         }
         $rows = collect($rows)->whereIn('month',$request->months);
-
+        $series = array();
+        $normal = array();
+        $peak = array();
         $array = array();
+
         foreach ($rows as $key => $row) {
-            array_push($array, [
-                'x' => (strtotime($row['month'].'-01'))*1000,
-                'y' => (int)$row['consumption'],
-                'name' => $row['month']
-            ]);
+            if(is_array($row['consumption'])) {
+                array_push($normal, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['consumption'] - (int)$row['consumption']['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($peak, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($array, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['consumption'],
+                    'name' => $row['month']
+                ]);
+            } else {
+                array_push($normal, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption'] - (int)$row['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($peak, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($array, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption'],
+                    'name' => $row['month']
+                ]);
+            }
 
         }
-        return $array;
+
+
+
+        array_push($series , [
+            'name' => 'Consumo horario punta',
+            'data' => $peak,
+            'type' => 'column',
+            'turboThreshold' => 0,
+            'yAxis' => 0,
+            'zIndex' => 50
+        ]);
+
+        array_push($series , [
+            'name' => 'Consumo horario normal',
+            'data' => $normal,
+            'type' => 'column',
+            'turboThreshold' => 0,
+            'yAxis' => 0,
+            'zIndex' => 50
+        ]);
+
+        array_push($series , [
+            'name' => 'Consumo',
+            'data' => $array,
+            'type' => 'spline',
+            'turboThreshold' => 0,
+            'zIndex' => 100,
+            'yAxis' => 1,
+        ]);
+        return $series;
     }
 
 
@@ -267,9 +382,9 @@ class ResumeController extends Controller
         $sensor = Sensor::
         with(['device.report','dispositions.unit'])
             ->find($sub_zone->consumptions
-                ->where('sensor_type')
-                ->first()
-                ->sensor_id ?? null
+                    ->where('sensor_type')
+                    ->first()
+                    ->sensor_id ?? null
             );
         if($sensor) {
             $value = $this->getAnalogousValue($sensor);

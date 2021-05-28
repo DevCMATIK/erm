@@ -88,17 +88,14 @@
                                 height: $('#consumption-options-col').height(),
                                 animation: false
                             },
-
+                            colors : ['#2196F3','#0a6ebd','#FFD237'],
                             boost: {
                                 useGPUTranslations: true
                             },
                             legend: {
                                 enabled: true,
-                                align: 'right',
-                                verticalAlign: 'top',
-                                x: -10,
-                                y: 50,
-                                floating: true
+                                align: 'center',
+                                verticalAlign: 'bottom',
                             },
                             title: {
                                 text: data.title
@@ -118,11 +115,16 @@
                             yAxis: data.yAxis,
                             plotOptions: {
                                 column: {
+                                    stacking: 'percent',
                                     dataLabels: {
                                         enabled: false,
-                                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                                        color: false,
+                                        padding: 0,
+                                        style : {
+                                            textOutline : false
+                                        }
                                     },
-                                    pointWidth: data.pointWidth,
+                                    pointWidth: 20,
                                     animation: false
                                 }
                             },
@@ -230,7 +232,7 @@
                     }
 
 
-            });
+                });
         }
 
         function getStreamChartContainer(start,end){
@@ -375,7 +377,7 @@
                         };
                         var chartData3 = new Highcharts.Chart(options);
                     }
-            });
+                });
         }
 
         $('.btn-alarm').hide();

@@ -10,12 +10,19 @@
         $.getJSON('/zone-resume-chart/{{ $zone_id }}/data',getFilters(), function (data) {
             var options = {
                 chart: {
-                    type: 'column',
                     renderTo : 'chartContainer'
                 },
-                colors : ['#0a6ebd'],
+                colors : ['#2196F3','#0a6ebd','#FFD237'],
                 title: {
                     text: 'Consumo Energía (kWh)'
+                },
+                boost: {
+                    useGPUTranslations: true
+                },
+                legend: {
+                    enabled: true,
+                    align: 'center',
+                    verticalAlign: 'bottom',
                 },
                 xAxis: {
                     type: 'datetime',
@@ -29,23 +36,10 @@
                         year: '%Y'
                     }
                 },
-                yAxis: {
-
-                    min:0,
-                    title: {
-                        text: 'Energía Activa (kWh)'
-                    },
-                    stackLabels: {
-                        enabled: false,
-                        style: {
-                            fontWeight: 'bold'
-                        }
-                    },
-                    zIndex: 5
-                },
+                yAxis: data.yAxis,
                 plotOptions: {
                     column: {
-                        stacking: 'normal',
+                        stacking: 'percent',
                         dataLabels: {
                             enabled: false,
                             color: false,
@@ -54,18 +48,26 @@
                                 textOutline : false
                             }
                         },
-                        pointWidth: 30
+                        pointWidth: 20,
+                        animation: false
                     }
                 },
                 tooltip: {
-                    shared: true,
-                    valueSuffix: ' kWh',
+                    pointFormat: '{series.name}: {point.y:,.2f} kWh<br>',
+                    shared: true
                 },
 
                 credits: {
                     enabled: false
                 },
-                series : data.series
+                exporting: {
+                    buttons: {
+                        contextButton: {
+                            symbolStroke: '#0960a5'
+                        },
+                    }
+                },
+                series: data.series
             };
             var stackedChart = new Highcharts.Chart(options);
 

@@ -18,61 +18,61 @@
             }
         }
     </style>
-   <div class="row">
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
-           @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary-300',
-                'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + (is_numeric($item[key($item)]['today'])?$item[key($item)]['today']:0);
-                           }),
-                'unit' => 'kWh',
-                'title' => 'Consumo Hoy',
-                'icon' => 'fa-bolt'
-            ])
-       </div>
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
-           @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary-300',
-                'value' => ($consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['yesterday'];
-                           }) <= 0)? 'No calculado aún' : $consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['yesterday'];
-                           }),
-                'unit' => 'kWh',
-                'title' => 'Consumo Ayer',
-                'icon' => 'fa-bolt'
-            ])
-       </div>
+    <div class="row">
+        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
+            @include('water-management.dashboard.energy.components.main-box', [
+                 'bg' => 'bg-primary-300',
+                 'value' => $consumptions->reduce(function($carry,$item){
+                                 return $carry + (is_numeric($item[key($item)]['today'])?$item[key($item)]['today']:0);
+                            }),
+                 'unit' => 'kWh',
+                 'title' => 'Consumo Hoy',
+                 'icon' => 'fa-bolt'
+             ])
+        </div>
+        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
+            @include('water-management.dashboard.energy.components.main-box', [
+                 'bg' => 'bg-primary-300',
+                 'value' => ($consumptions->reduce(function($carry,$item){
+                                 return $carry + $item[key($item)]['yesterday'];
+                            }) <= 0)? 'No calculado aún' : $consumptions->reduce(function($carry,$item){
+                                 return $carry + $item[key($item)]['yesterday'];
+                            }),
+                 'unit' => 'kWh',
+                 'title' => 'Consumo Ayer',
+                 'icon' => 'fa-bolt'
+             ])
+        </div>
 
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
-           @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary',
-                'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + $item[key($item)]['this-month']['consumption'];
-                           }),
-                'unit' => 'kWh',
-                'title' => 'Consumo este mes',
-                'icon' => 'fa-calendar'
-            ])
-       </div>
-       <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
-           @include('water-management.dashboard.energy.components.main-box', [
-                'bg' => 'bg-primary',
-                'value' => $consumptions->reduce(function($carry,$item){
-                                return $carry + ($item[key($item)]['this-year']['consumption'] ?? 0);
-                           }),
-                'unit' => 'kWh',
-                'title' => 'Consumo este año',
-                'icon' => 'fa-calendar'
-            ])
-       </div>
-   </div>
-    @if(count($lines) > 0)
-    <div class="row px-2 mb-2 my-4">
-        <div class="col" id="map" style="min-height: 600px;">
-
+        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
+            @include('water-management.dashboard.energy.components.main-box', [
+                 'bg' => 'bg-primary',
+                 'value' => $consumptions->reduce(function($carry,$item){
+                                 return $carry + $item[key($item)]['this-month']['consumption'];
+                            }),
+                 'unit' => 'kWh',
+                 'title' => 'Consumo este mes',
+                 'icon' => 'fa-calendar'
+             ])
+        </div>
+        <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 mt-sm-2">
+            @include('water-management.dashboard.energy.components.main-box', [
+                 'bg' => 'bg-primary',
+                 'value' => $consumptions->reduce(function($carry,$item){
+                                 return $carry + ($item[key($item)]['this-year']['consumption'] ?? 0);
+                            }),
+                 'unit' => 'kWh',
+                 'title' => 'Consumo este año',
+                 'icon' => 'fa-calendar'
+             ])
         </div>
     </div>
+    @if(count($lines) > 0)
+        <div class="row px-2 mb-2 my-4">
+            <div class="col" id="map" style="min-height: 600px;">
+
+            </div>
+        </div>
     @endif
     <div class="row mt-4">
         <div class="col">
@@ -141,16 +141,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($consumptions as $consumption)
-                        <tr>
-                            <td>{{ key($consumption) }}</td>
-                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
-                            <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                @foreach($consumptions as $consumption)
+                    <tr>
+                        <td>{{ key($consumption) }}</td>
+                        <td><strong>{{ (is_numeric($consumption[key($consumption)]['today']))?number_format($consumption[key($consumption)]['today'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                        <td><strong>{{ (is_numeric($consumption[key($consumption)]['yesterday']))?number_format($consumption[key($consumption)]['yesterday'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                        <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-month']['consumption']))?number_format($consumption[key($consumption)]['this-month']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
+                        <td><strong>{{ (is_numeric($consumption[key($consumption)]['this-year']['consumption']))?number_format($consumption[key($consumption)]['this-year']['consumption'],1,',','.'):'0'}}</strong> <span class="fs-nano">kWh</span></td>
 
-                        </tr>
-                    @endforeach
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -207,91 +207,91 @@
     @if(count($lines) > 0)
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLIUC0DU8-V7nWP7CvP76Bp67MQDxTZY&callback=initMap&libraries=visualization&v=weekly"
-        defer
-    ></script>
-    <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLIUC0DU8-V7nWP7CvP76Bp67MQDxTZY&callback=initMap&libraries=visualization&v=weekly"
+            defer
+        ></script>
+        <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
 
-    <script>
+        <script>
 
-        let map;
-        function initMap() {
+            let map;
+            function initMap() {
 
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
-                center: { lat: -33.973347542860296, lng: -71.65837822592083},
-                mapTypeId: 'hybrid',
-            });
-
-            const image =
-                "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-
-            var markers = [];
-            var data = {!! json_encode($subZones->toArray(),JSON_NUMERIC_CHECK) !!};
-
-            data.forEach(function(item, i) {
-                var infoWindow = new google.maps.InfoWindow({});
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: new google.maps.LatLng(item.lat,item.lng),
-                    icon:  pinSymbol(item.status.color)
-                });
-                markers.push(new google.maps.LatLng(item.lat,item.lng));
-
-                google.maps.event.addListener(marker, 'mouseover', function () {
-                    infoWindow.setContent('<div><strong>' + item.name + '</strong><br>');
-                    infoWindow.open(map, marker); // open at marker's location
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 14,
+                    center: { lat: -33.973347542860296, lng: -71.65837822592083},
+                    mapTypeId: 'hybrid',
                 });
 
-                google.maps.event.addListener(marker, 'mouseout', function () {
-                    infoWindow.close();
-                });
-            })
+                const image =
+                    "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
 
-            var lines = {!! json_encode($lines,JSON_NUMERIC_CHECK) !!};
+                var markers = [];
+                var data = {!! json_encode($subZones->toArray(),JSON_NUMERIC_CHECK) !!};
 
-            lines.forEach(function(item, i) {
-                var path = [];
-                item.lines.forEach(function(point, i) {
-                    path.push(new google.maps.LatLng(point.lat,point.lng));
-                });
-                var linePath = new google.maps.Polyline({
-                    path: path,
-                    geodesic: true,
-                    strokeColor: item.color,
-                    strokeWeight : 6,
-                    map : map
-                });
-            })
+                data.forEach(function(item, i) {
+                    var infoWindow = new google.maps.InfoWindow({});
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: new google.maps.LatLng(item.lat,item.lng),
+                        icon:  pinSymbol(item.status.color)
+                    });
+                    markers.push(new google.maps.LatLng(item.lat,item.lng));
+
+                    google.maps.event.addListener(marker, 'mouseover', function () {
+                        infoWindow.setContent('<div><strong>' + item.name + '</strong><br>');
+                        infoWindow.open(map, marker); // open at marker's location
+                    });
+
+                    google.maps.event.addListener(marker, 'mouseout', function () {
+                        infoWindow.close();
+                    });
+                })
+
+                var lines = {!! json_encode($lines,JSON_NUMERIC_CHECK) !!};
+
+                lines.forEach(function(item, i) {
+                    var path = [];
+                    item.lines.forEach(function(point, i) {
+                        path.push(new google.maps.LatLng(point.lat,point.lng));
+                    });
+                    var linePath = new google.maps.Polyline({
+                        path: path,
+                        geodesic: true,
+                        strokeColor: item.color,
+                        strokeWeight : 6,
+                        map : map
+                    });
+                })
 
 
 
-            //var markerCluster = new MarkerClusterer(map, markers);
+                //var markerCluster = new MarkerClusterer(map, markers);
 
 
-        }
+            }
 
-        function pinSymbol(color) {
-            return {
-                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-                fillColor: color,
-                fillOpacity: 1,
-                strokeColor: '#000',
-                strokeWeight: 2,
-                scale: 1,
-            };
-        }
+            function pinSymbol(color) {
+                return {
+                    path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+                    fillColor: color,
+                    fillOpacity: 1,
+                    strokeColor: '#000',
+                    strokeWeight: 2,
+                    scale: 1,
+                };
+            }
 
 
-        function getZonesData()
-        {
-            var markers = [];
+            function getZonesData()
+            {
+                var markers = [];
 
-            return markers;
-        }
+                return markers;
+            }
 
-    </script>
+        </script>
     @endif
 @endsection
 
