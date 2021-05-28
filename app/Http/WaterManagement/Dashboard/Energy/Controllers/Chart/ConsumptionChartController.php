@@ -75,6 +75,14 @@ class ConsumptionChartController extends Controller
             ];
 
             if(count($rows) > 0) {
+                array_push($data['series'] , [
+                    'name' => 'Consumo horario punta',
+                    'data' => $this->transformDataPeak($rows),
+                    'type' => 'column',
+                    'turboThreshold' => 0,
+                    'yAxis' => 0,
+                    'zIndex' => 50
+                ]);
 
                 array_push($data['series'] , [
                     'name' => 'Consumo horario normal',
@@ -84,14 +92,7 @@ class ConsumptionChartController extends Controller
                     'yAxis' => 0,
                     'zIndex' => 50
                 ]);
-                array_push($data['series'] , [
-                    'name' => 'Consumo horario punta',
-                    'data' => $this->transformDataPeak($rows),
-                    'type' => 'column',
-                    'turboThreshold' => 0,
-                    'yAxis' => 0,
-                    'zIndex' => 50
-                ]);
+
 
                 array_push($data['series'] , [
                     'name' => 'Consumo',
