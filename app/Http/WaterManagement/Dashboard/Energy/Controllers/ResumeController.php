@@ -249,6 +249,7 @@ class ResumeController extends Controller
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
 
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
+                                dd($item,$data);
                                 return [
                                     'sub_zone' => $name,
                                     'month' => $key,
