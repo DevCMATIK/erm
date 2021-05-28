@@ -94,11 +94,8 @@
                             },
                             legend: {
                                 enabled: true,
-                                align: 'right',
-                                verticalAlign: 'top',
-                                x: -10,
-                                y: 50,
-                                floating: true
+                                align: 'center',
+                                verticalAlign: 'bottom',
                             },
                             title: {
                                 text: data.title
