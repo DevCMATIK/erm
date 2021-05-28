@@ -155,7 +155,7 @@ Route::middleware('auth')->group(function() {
             Route::get('energy/charts/stream/{sub_zone}','Chart\StreamChartController');
             //varData
             Route::get('downloadVarData/{sub_zone}', 'DownloadVarDataController');
-            Route::get('zone-resume/{zone_id}', 'ResumeController');
+            Route::get('zone-resume/{zone_id}', 'ResumeController@index');
 
 
         });
@@ -250,7 +250,7 @@ Route::middleware('auth')->group(function() {
     Route::get('getCheckPoints','Data\Export\ExportDataController@getCheckPoints');
 
 
-     // Export Alarm
+    // Export Alarm
     //Route::get('exportActiveAlarm','WaterManagement\Dashboard\Alarm\Exports\ActiveAlarmExportController');
     //Route::get('exportLastAlarm','WaterManagement\Dashboard\Alarm\Exports\LastAlarmExportController');
 
@@ -269,7 +269,7 @@ Route::get('/clear-cache', function() {
 });
 Route::get('/test','TestController');
 Route::get('/test2',function(){
-   (\App\Domain\Client\CheckPoint\DGA\CheckPointReport::get());
+    (\App\Domain\Client\CheckPoint\DGA\CheckPointReport::get());
 });
 
 Route::get('download-file/{id}',function($id){
@@ -295,7 +295,7 @@ Route::get('/config-cache', function() {
 });
 
 Route::get('zone-resume-table/{zone_id}', 'WaterManagement\Dashboard\Energy\Controllers\ResumePowerBIController');
-Route::get('zone-resume-chart/{zone_id}/data', [\App\Http\TestController::class,'chartData']);
+Route::get('zone-resume-chart/{zone_id}/data', [\App\Http\WaterManagement\Dashboard\Energy\Controllers\ResumeController::class,'chartData']);
 // Clear view cache:
 Route::get('/view-clear', function() {
     $exitCode = Artisan::call('view:clear');
