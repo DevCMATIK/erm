@@ -167,8 +167,8 @@ class ResumeController extends Controller
             ->get()->map(function($item){
                 return [
                     $item['month'] => [
-                        'consumption' => $item['consumption'],
-                        'high' => $item['high_consumption']
+                        'consumption' => $item['consumption'] ?? 0,
+                        'high' => $item['high_consumption'] ?? 0
                     ]
                 ];
             });
