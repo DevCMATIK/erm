@@ -247,13 +247,13 @@ class ResumeController extends Controller
                 foreach(collect($consumption)->collapse() as $key => $data) {
                     if($row = collect($rows)->where('sub_zone',$name)->where('month',$key)->first()) {
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
-                            dd($item);
+
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
                                 return [
                                     'sub_zone' => $name,
                                     'month' => $key,
                                     'consumption' => $item['consumption'] +$data['consumption'],
-                                    'high' => $item['high_consumption'] + $data['high']
+                                    'high' => $item['high'] + $data['high']
                                 ];
                             } else {
                                 return $item;
@@ -275,12 +275,12 @@ class ResumeController extends Controller
                 foreach (collect($consumption)->collapse() as $key => $data) {
                     if ($row = collect($rows)->where('month', $key)->first()) {
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
-                            dd($item);
+
                             if ($item['month'] == $key) {
                                 return [
                                     'month' => $key,
                                     'consumption' => $item['consumption'] + $data['consumption'],
-                                    'high' => $item['high_consumption'] + $data['high'],
+                                    'high' => $item['high'] + $data['high'],
                                 ];
                             } else {
                                 return $item;
