@@ -25,6 +25,7 @@ class TestController extends SoapController
 
     public $current_date = '2020-12-01';
 
+    public $sensor_type = 'ee-e-activa';
 
     public function __invoke(Request $request)
     {
