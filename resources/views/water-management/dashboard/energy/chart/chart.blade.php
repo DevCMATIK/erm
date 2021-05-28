@@ -53,7 +53,7 @@
                     }
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: {point.y:,.2f} ' + data.unit + '<br>',
+                    pointFormat: '{series.name}: {point.y:,.2f} kWh<br>',
                     shared: true
                 },
 
