@@ -277,7 +277,7 @@ class ResumeController extends Controller
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
 
                             if ($item['month'] == $key) {
-                                dd($item,$data);
+                     
                                 return [
                                     'month' => $key,
                                     'consumption' => $item['consumption'] + $data['consumption'],
