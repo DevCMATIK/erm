@@ -252,8 +252,8 @@ class ResumeController extends Controller
                                 return [
                                     'sub_zone' => $name,
                                     'month' => $key,
-                                    'consumption' => $item['consumption'] + $data['consumption'],
-                                    'high' => $item['high'] + $data['high'],
+                                    'consumption' => (float)$item['consumption'] + (float)$data['consumption'],
+                                    'high' => (float)$item['high'] + (float)$data['high'],
                                 ];
                             } else {
                                 return $item;
