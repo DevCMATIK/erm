@@ -124,7 +124,7 @@
                                             textOutline : false
                                         }
                                     },
-                                    pointWidth: 15,
+                                    pointWidth: 20,
                                     animation: false
                                 }
                             },
