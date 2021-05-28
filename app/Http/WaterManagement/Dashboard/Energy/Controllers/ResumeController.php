@@ -304,6 +304,7 @@ class ResumeController extends Controller
         $peak = array();
         $array = array();
         if($request->sub_zone != '') {
+            dd($rows);
             foreach ($rows as $key => $row) {
 
                 array_push($normal, [
