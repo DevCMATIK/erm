@@ -277,7 +277,7 @@ class ResumeController extends Controller
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
 
                             if ($item['month'] == $key) {
-                     
+
                                 return [
                                     'month' => $key,
                                     'consumption' => $item['consumption'] + $data['consumption'],
@@ -303,6 +303,7 @@ class ResumeController extends Controller
         $normal = array();
         $peak = array();
         $array = array();
+        dd($rows);
         foreach ($rows as $key => $row) {
 
             array_push($normal, [
