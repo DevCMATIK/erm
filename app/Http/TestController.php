@@ -51,6 +51,8 @@ class TestController extends SoapController
                 $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
                 $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
             }
+
+
             $consumption_yesterday = $sensor->consumptions->where('date',Carbon::yesterday()->toDateString())->first();
 
                 if($first_read && $last_read) {
@@ -63,7 +65,9 @@ class TestController extends SoapController
                         'consumption' => $consumption,
                         'sensor_type' => $sensor->type->slug,
                         'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                        'date' => Carbon::yesterday()->toDateString()
+                        'date' => Carbon::yesterday()->toDateString(),
+                        'first_peak_date' => $sensor->analogous_reports->where('date','>=',$first_date.' 18:00:00')->where('date','<=',$first_date.' 18:30:00')->first(),
+                        'second_peak_date' => $sensor->analogous_reports->where('date','>=',$first_date.' 23:00:00')->where('date','<=',$first_date.' 23:30:00')->first(),
                     ]);
                 }
 
