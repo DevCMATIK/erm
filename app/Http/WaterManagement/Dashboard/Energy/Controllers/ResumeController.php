@@ -247,6 +247,7 @@ class ResumeController extends Controller
                 foreach(collect($consumption)->collapse() as $key => $data) {
                     if($row = collect($rows)->where('sub_zone',$name)->where('month',$key)->first()) {
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
+                            dd($item);
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
                                 return [
                                     'sub_zone' => $name,
