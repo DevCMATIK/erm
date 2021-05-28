@@ -303,28 +303,52 @@ class ResumeController extends Controller
         $normal = array();
         $peak = array();
         $array = array();
-        dd($rows);
-        foreach ($rows as $key => $row) {
+        if($request->sub_zone != '') {
+            foreach ($rows as $key => $row) {
 
-            array_push($normal, [
-                'x' => (strtotime($row['month'].'-01'))*1000,
-                'y' => (int)$row['consumption'] - (int)$row['high'],
-                'name' => $row['month']
-            ]);
+                array_push($normal, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['consumption'] - (int)$row['consumption']['high'],
+                    'name' => $row['month']
+                ]);
 
-            array_push($peak, [
-                'x' => (strtotime($row['month'].'-01'))*1000,
-                'y' => (int)$row['high'],
-                'name' => $row['month']
-            ]);
+                array_push($peak, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['high'],
+                    'name' => $row['month']
+                ]);
 
-            array_push($array, [
-                'x' => (strtotime($row['month'].'-01'))*1000,
-                'y' => (int)$row['consumption'],
-                'name' => $row['month']
-            ]);
+                array_push($array, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption']['consumption'],
+                    'name' => $row['month']
+                ]);
 
+            }
+        } else {
+            foreach ($rows as $key => $row) {
+
+                array_push($normal, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption'] - (int)$row['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($peak, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['high'],
+                    'name' => $row['month']
+                ]);
+
+                array_push($array, [
+                    'x' => (strtotime($row['month'].'-01'))*1000,
+                    'y' => (int)$row['consumption'],
+                    'name' => $row['month']
+                ]);
+
+            }
         }
+
 
         array_push($series , [
             'name' => 'Consumo horario punta',
