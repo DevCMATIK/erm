@@ -303,10 +303,9 @@ class ResumeController extends Controller
         $normal = array();
         $peak = array();
         $array = array();
-        if($request->sub_zone != '') {
-            dd($rows);
-            foreach ($rows as $key => $row) {
 
+        foreach ($rows as $key => $row) {
+            if(is_array($row['consumption'])) {
                 array_push($normal, [
                     'x' => (strtotime($row['month'].'-01'))*1000,
                     'y' => (int)$row['consumption']['consumption'] - (int)$row['consumption']['high'],
@@ -324,11 +323,7 @@ class ResumeController extends Controller
                     'y' => (int)$row['consumption']['consumption'],
                     'name' => $row['month']
                 ]);
-
-            }
-        } else {
-            foreach ($rows as $key => $row) {
-
+            } else {
                 array_push($normal, [
                     'x' => (strtotime($row['month'].'-01'))*1000,
                     'y' => (int)$row['consumption'] - (int)$row['high'],
@@ -346,9 +341,10 @@ class ResumeController extends Controller
                     'y' => (int)$row['consumption'],
                     'name' => $row['month']
                 ]);
-
             }
+
         }
+
 
 
         array_push($series , [
