@@ -275,6 +275,7 @@ class ResumeController extends Controller
                 foreach (collect($consumption)->collapse() as $key => $data) {
                     if ($row = collect($rows)->where('month', $key)->first()) {
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
+                            dd($item);
                             if ($item['month'] == $key) {
                                 return [
                                     'month' => $key,
