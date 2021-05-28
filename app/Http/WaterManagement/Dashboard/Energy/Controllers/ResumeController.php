@@ -221,7 +221,7 @@ class ResumeController extends Controller
                 'zIndex' => 100
             ]
         ];
-        array_push($data['series'] , $this->makeSeries($request,$zone_id)) ;
+       $data['series'] = $this->makeSeries($request,$zone_id) ;
 
         return json_encode($data,JSON_NUMERIC_CHECK);
     }
