@@ -45,9 +45,11 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
+    /*
     protected function schedule(Schedule $schedule)
     {
-    	/*
+    	
         $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
@@ -168,11 +170,12 @@ class Kernel extends ConsoleKernel
 
     }
 
-    */
+    
      * Register the commands for the application.
      *
      * @return void
      
+     */
 
     protected function commands()
     {
