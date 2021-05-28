@@ -58,7 +58,13 @@ class BackupEnergy implements ShouldQueue
             if(!$consumption_yesterday) {
                 if($first_read && $last_read) {
                     $consumption = $last_read - $first_read;
-
+                    $first_peak = $sensor->analogous_reports->where('date','>=',$first_date.' 18:00:00')->where('date','<=',$first_date.' 18:30:00')->first();
+                    $second_peak = $sensor->analogous_reports->where('date','>=',$first_date.' 23:00:00')->where('date','<=',$first_date.' 23:30:00')->first();
+                    if($first_peak && $second_peak) {
+                        $peak = $second_peak->result - $first_peak->result;
+                    } else {
+                        $peak = 0;
+                    }
                     array_push($toInsert,[
                         'sensor_id' => $sensor->id,
                         'first_read' => $first_read,
@@ -66,7 +72,8 @@ class BackupEnergy implements ShouldQueue
                         'consumption' => $consumption,
                         'sensor_type' => $sensor->type->slug,
                         'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                        'date' => Carbon::yesterday()->toDateString()
+                        'date' => Carbon::yesterday()->toDateString(),
+                        'high_consumption' => $peak
                     ]);
                 }
             }

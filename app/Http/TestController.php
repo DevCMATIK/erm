@@ -13,6 +13,7 @@ use App\Domain\Client\Zone\Sub\MapLine;
 use App\Domain\Client\Zone\Sub\SubZone;
 use App\Domain\Data\Analogous\AnalogousReport;
 use App\Domain\WaterManagement\Device\Sensor\Sensor;
+use App\Jobs\RestoreConsumptionPeak;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,51 +30,15 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $toInsert = array();
-        $first_date = Carbon::yesterday()->toDateString();
-        $second_date = Carbon::today()->toDateString();
-        $sensors =  Sensor::whereHas('type', $typeFilter = function ($q) {
-            return $q->where('slug',$this->sensor_type);
-        })->whereHas('analogous_reports', $reportsFilter = function($query) use ($first_date,$second_date){
-            return $query->whereRaw("date between '{$first_date} 00:00:00' and '{$second_date} 00:01:00'");
-        })->with([
-            'type' => $typeFilter,
-            'device.check_point.sub_zones',
-            'analogous_reports' => $reportsFilter,
-            'consumptions'
-        ])->get();
+        $auxDate = Carbon::parse($request->start_date)->toDateString();
+        $endDate = Carbon::parse($request->end_date)->toDateString();
+        $dates = array();
+        do{
+            RestoreConsumptionPeak::dispatch($auxDate)->onQueue('long-running-queue-low');
+            $auxDate = Carbon::parse($auxDate)->addDay()->toDateString();
+        }while(strtotime($auxDate) <= strtotime($endDate));
 
-        foreach($sensors as $sensor) {
-            if(count($sensor->consumptions) > 0) {
-                $first_read = $sensor->consumptions->sortByDesc('date')->first()->last_read;
-                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-            } else {
-                $first_read = $sensor->analogous_reports->sortBy('date')->first()->result;
-                $last_read = $sensor->analogous_reports->sortByDesc('date')->first()->result;
-            }
-
-
-            $consumption_yesterday = $sensor->consumptions->where('date',Carbon::yesterday()->toDateString())->first();
-
-                if($first_read && $last_read) {
-                    $consumption = $last_read - $first_read;
-
-                    array_push($toInsert,[
-                        'sensor_id' => $sensor->id,
-                        'first_read' => $first_read,
-                        'last_read' => $last_read,
-                        'consumption' => $consumption,
-                        'sensor_type' => $sensor->type->slug,
-                        'sub_zone_id' => $sensor->device->check_point->sub_zones->first()->id,
-                        'date' => Carbon::yesterday()->toDateString(),
-                        'first_peak_date' => $sensor->analogous_reports->where('date','>=',$first_date.' 18:00:00')->where('date','<=',$first_date.' 18:30:00')->first(),
-                        'second_peak_date' => $sensor->analogous_reports->where('date','>=',$first_date.' 23:00:00')->where('date','<=',$first_date.' 23:30:00')->first(),
-                    ]);
-                }
-
-        }
-
-        return $this->testResponse([$toInsert]);
+        return $this->testResponse([$dates]);
     }
 
     protected function getLines($subZones)
