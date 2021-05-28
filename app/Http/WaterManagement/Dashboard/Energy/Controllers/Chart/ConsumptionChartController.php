@@ -46,15 +46,31 @@ class ConsumptionChartController extends Controller
 
             $data['unit'] = $disposition->unit->name;
             $data['yAxis'] = [
-                'title' => [
-                    'text' => $row->sensor->name.' ('.$disposition->unit->name.')'
+                [
+                    'title' => [
+                        'text' => 'Consumo de energía en hora Peak ('.$disposition->unit->name.')'
+                    ],
+                    'stackLabels' => [
+                        'enabled' => false,
+                        'style' => [
+                            'fontWeight' => 'bold'
+                        ]
+                    ],
+                    'zIndex' => 5
                 ],
-                'stackLabels' => [
-                    'enabled' => true,
-                    'style' => [
-                        'fontWeight' => 'bold',
-                        'color'=>'gray'
-                    ]
+                [
+                    'title' => [
+                        'text' => 'Consumo Energía '.$row->sensor->name.' ('.$disposition->unit->name.')'
+                    ],
+                    'stackLabels' => [
+                        'enabled' => true,
+                        'style' => [
+                            'fontWeight' => 'bold',
+                            'color'=>'gray'
+                        ]
+                    ],
+                    'opposite' => true,
+                    'zIndex' => 100
                 ]
             ];
 
