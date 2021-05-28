@@ -47,6 +47,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+    	/*
         $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
@@ -92,7 +93,7 @@ class Kernel extends ConsoleKernel
 
         })->everyMinute();
 
-/*
+
 
         //DGA REPORT
         $schedule->job(new ReportToDGA(1),'long-running-queue-low')->hourly();
@@ -112,7 +113,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CheckReportToDga(5))->dailyAt('12:34')->when(function () {
             return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
         });
-*/
+
         $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('13:30');
 
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('00:20');
