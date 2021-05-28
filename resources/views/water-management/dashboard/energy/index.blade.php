@@ -88,7 +88,7 @@
                                 height: $('#consumption-options-col').height(),
                                 animation: false
                             },
-                            colors : ['#FFD237','#0a6ebd','#03ee97'],
+                            colors : ['#2F84C7','#0a6ebd','#FFD237'],
                             boost: {
                                 useGPUTranslations: true
                             },

@@ -70,7 +70,7 @@
             ])
         </div>
     </div>
-    <div class="col-xl-9 col-md-9 col-lg-9 col-sm-12" id="consumptionChartContainer">
+    <div class="col-xl-9 col-md-9 col-lg-9 col-sm-12 mt-3" id="consumptionChartContainer">
 
     </div>
 </div>
