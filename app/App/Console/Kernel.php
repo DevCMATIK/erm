@@ -164,7 +164,7 @@ class Kernel extends ConsoleKernel
 
             } while($x-- > 0);
 
-        })->everyMinute();
+        })->everyMinute();*/
 
 
 
