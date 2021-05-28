@@ -45,39 +45,29 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-
-    /*
     protected function schedule(Schedule $schedule)
     {
-<<<<<<< HEAD
-    	
-        $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
-=======
-        /*$schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
->>>>>>> parent of add3877 (Update Kernel.php)
+       /* $schedule->job(new ExecuteCommandTriggered(1))->everyMinute();
         $schedule->job(new ExecuteCommandTriggered(5))->everyFiveMinutes();
         $schedule->job(new ExecuteCommandTriggered(10))->everyTenMinutes();
-       
         $schedule->job(new CheckAlarms())->everyMinute();
-		
+
         $schedule->job(new BackupAnalogousSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupAnalogousSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupAnalogousSensors(10),'long-running-queue')->everyTenMinutes();
         $schedule->job(new BackupAnalogousSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupAnalogousSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupAnalogousSensors(60),'long-running-queue')->hourly();
-*
         $schedule->job(new BackupDigitalSensors(1),'long-running-queue')->everyMinute();
         $schedule->job(new BackupDigitalSensors(5),'long-running-queue')->everyFiveMinutes();
         $schedule->job(new BackupDigitalSensors(10),'long-running-queue')->everyTenMinutes();
         $schedule->job(new BackupDigitalSensors(15),'long-running-queue')->everyFifteenMinutes();
         $schedule->job(new BackupDigitalSensors(30),'long-running-queue')->everyThirtyMinutes();
         $schedule->job(new BackupDigitalSensors(60),'long-running-queue')->hourly();
-*/
         $schedule->job(new BackupSensorAverages(),'long-running-queue-low')->everyFiveMinutes();
-        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('12:00');
-        $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('11:30');
-/*
+        $schedule->job(new BackupDailySensorAverages(),'long-running-queue-low')->dailyAt('04:00');
+        $schedule->job(new BackupAverageFlow(),'long-running-queue-low')->dailyAt('03:00');
+
         //Al Cambio
         $seconds = 3;
 
@@ -99,8 +89,6 @@ class Kernel extends ConsoleKernel
 
         })->everyMinute();
 
-
-
         //DGA REPORT
         $schedule->job(new ReportToDGA(1),'long-running-queue-low')->hourly();
         $schedule->job(new CheckReportToDga(1),'long-running-queue-low')->hourlyAt(30);
@@ -119,24 +107,17 @@ class Kernel extends ConsoleKernel
         $schedule->job(new CheckReportToDga(5))->dailyAt('12:34')->when(function () {
             return (Carbon::now()->toDateString() == Carbon::now()->year.'-01-01') || (Carbon::now()->toDateString() == Carbon::now()->year.'-06-01') ;
         });
-
-        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('13:30');
-  /*
+        $schedule->job(new BackupTotalizers(),'long-running-queue-low')->dailyAt('02:00');
         $schedule->job(new BackupEnergy('ee-e-activa'),'long-running-queue-low')->dailyAt('00:20');
         $schedule->job(new BackupEnergy('ee-e-reactiva'),'long-running-queue-low')->dailyAt('00:30');
         $schedule->job(new BackupEnergy('ee-e-aparente'),'long-running-queue-low')->dailyAt('00:40');
         $schedule->job(new BackupWater())->dailyAt('02:20');
-        
         $schedule->job(new CalculateConsumptions(),'long-running-queue-low')->hourlyAt(52);
-        
         $schedule->job(new SendReminderMail())->everyThirtyMinutes();
-*/
         $schedule->job(new NotifyDevicesOffline())->hourly();
-
         $schedule->job(new TrackDisconnectionsFromWater(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromBio(),'tracking-queue')->everyMinute();
         $schedule->job(new TrackDisconnectionsFromDPL(),'tracking-queue')->everyMinute();
-/*
 
         // Get all tasks from the database
         $mailReports = MailReport::active()->get();
@@ -144,13 +125,10 @@ class Kernel extends ConsoleKernel
         foreach ($mailReports as $task) {
             // Use the scheduler to add the task at its desired frequency
             $schedule->call(function() use ($task) {
-                   SendReportMail::dispatch($task->id);
+                SendReportMail::dispatch($task->id);
             })->cron($task->generateCron());
         }
 
-
-
-*/
         //chronometers
         $seconds = 10;
 
@@ -169,18 +147,13 @@ class Kernel extends ConsoleKernel
             } while($x-- > 0);
 
         })->everyMinute();*/
-
-
-
     }
 
-    
+    /**
      * Register the commands for the application.
      *
      * @return void
-     
      */
-
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
