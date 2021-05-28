@@ -64,7 +64,7 @@ class ConsumptionChartController extends Controller
                 array_push($data['series'] , [
                     'name' => 'Consumo',
                     'data' => $this->transformData($rows),
-                    'type' => 'column',
+                    'type' => 'spline',
                     'turboThreshold' => 0
                 ]);
             }
