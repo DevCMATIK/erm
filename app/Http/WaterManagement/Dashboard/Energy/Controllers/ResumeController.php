@@ -249,12 +249,11 @@ class ResumeController extends Controller
                         $rows =  collect($rows)->map(function($item) use($name,$data,$key){
 
                             if($item['sub_zone'] == $name && $item['month'] == $key) {
-                                dd($item,$data);
                                 return [
                                     'sub_zone' => $name,
                                     'month' => $key,
-                                    'consumption' => (float)$item['consumption'] + (float)$data['consumption'],
-                                    'high' => (float)$item['high'] + (float)$data['high'],
+                                    'consumption' => (float)$item['consumption']['consumption'] + (float)$data['consumption'],
+                                    'high' => (float)$item['high']['high'] + (float)$data['high'],
                                 ];
                             } else {
                                 return $item;
@@ -278,6 +277,7 @@ class ResumeController extends Controller
                         $rows = collect($rows)->map(function ($item) use ($data, $key) {
 
                             if ($item['month'] == $key) {
+                                dd($item,$data);
                                 return [
                                     'month' => $key,
                                     'consumption' => $item['consumption'] + $data['consumption'],
