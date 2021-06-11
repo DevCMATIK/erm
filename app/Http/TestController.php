@@ -30,7 +30,14 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        GetChekpointsToRestore::dispatch()->onQueue('long-running-queue-low');
+        $checkpoints =  CheckPoint::with('last_report')
+            ->whereNotNull('work_code')
+            ->where('dga_report',2)
+            ->get();
+        foreach($checkpoints as $checkpoint)
+        {
+            GetChekpointsToRestore::dispatch($checkpoint->id)->onQueue('long-running-queue-low');
+        }
     }
 
     protected function getLines($subZones)
