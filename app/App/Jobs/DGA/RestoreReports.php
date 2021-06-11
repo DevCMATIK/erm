@@ -32,7 +32,7 @@ class RestoreReports implements ShouldQueue
     public function handle()
     {
         $reports = CheckPointReport::where('check_point_id',$this->checkpoint->id)
-            ->where('response',0)->whereRaw("report_date between '2021-06-07 23:00:00' and '2021-05-07 23:59:00'")->get()->groupBy(function($item){
+            ->where('response',0)->whereRaw("report_date between '2021-06-10 00:00:00' and '2021-06-10 23:59:00'")->get()->groupBy(function($item){
                 return Carbon::parse($item->report_date)->format('Y-m-d');
             })->filter(function($item) {
                 return count($item) < 24;

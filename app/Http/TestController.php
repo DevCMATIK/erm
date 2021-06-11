@@ -30,15 +30,7 @@ class TestController extends SoapController
 
     public function __invoke(Request $request)
     {
-        $auxDate = Carbon::parse($request->start_date)->toDateString();
-        $endDate = Carbon::parse($request->end_date)->toDateString();
-        $dates = array();
-        do{
-            RestoreConsumptionPeak::dispatch($auxDate)->onQueue('long-running-queue-low');
-            $auxDate = Carbon::parse($auxDate)->addDay()->toDateString();
-        }while(strtotime($auxDate) <= strtotime($endDate));
-
-        return $this->testResponse([$dates]);
+        GetChekpointsToRestore::dispatch()->onQueue('long-running-queue-low');
     }
 
     protected function getLines($subZones)
