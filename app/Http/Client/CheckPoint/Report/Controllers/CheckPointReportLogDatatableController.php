@@ -15,12 +15,12 @@ class CheckPointReportLogDatatableController extends DataTableAbstract
     public function getRecord($record)
     {
         return [
+            $record->report_date,
             $record->response,
             $record->response_text,
             number_format($record->tote_reported,0,',','').' m3',
             number_format($record->flow_reported,2,',',''). ' l/s',
             number_format($record->water_table_reported ,2,',','').' mt',
-            $record->report_date
         ];
     }
 }

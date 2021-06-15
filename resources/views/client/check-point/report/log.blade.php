@@ -17,7 +17,7 @@
     </div>
     <div class="row">
         <div class="col-xl-12 table-responsive">
-            {!! makeTable(['Codigo respuesta','texto respuesta','totalizador','caudal','nivel freático','fecha reporte'],false,'table-log') !!}
+            {!! makeTable(['fecha reporte','Codigo respuesta','texto respuesta','totalizador','caudal','nivel freático'],false,'table-log') !!}
         </div>
     </div>
     {!! getAjaxTable2('check-point/dga-reports/'.$check_point->id,'table-log') !!}
