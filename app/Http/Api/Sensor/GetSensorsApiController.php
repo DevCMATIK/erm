@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\Sensor;
+namespace App\Http\Api\Sensor;
 
 use App\App\Traits\ERM\HasAnalogousData;
 use App\Domain\Api\ApiKey;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\App\Controllers\Controller;
 
 class GetSensorsApiController extends Controller
 {
     use HasAnalogousData;
 
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
         if(!$request->hasHeader('api-key')) {
             return response(['No posee permisos para ingresar al recurso.'],401);
