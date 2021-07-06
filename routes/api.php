@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Api\Sensor\GetSensorsApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/get-sensors-value', GetSensorsApiController::class);
