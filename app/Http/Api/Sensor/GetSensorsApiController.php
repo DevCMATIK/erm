@@ -34,7 +34,8 @@ class GetSensorsApiController extends Controller
                 'date' => Carbon::now()->toDateTimeString()
             ]);
         }
-
+        $api->last_access = Carbon::now()->toDateTimeString();
+        $api->save();
         return $data;
     }
 
