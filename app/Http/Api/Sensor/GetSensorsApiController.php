@@ -18,7 +18,7 @@ class GetSensorsApiController extends Controller
             return response(['No posee permisos para ingresar al recurso.'],401);
         }
 
-        if(!$api = ApiKey::with('sensors')->where('api_key',$request->header('api-key'))->first()) {
+        if(!$api = ApiKey::with('sensors')->where('key',$request->header('api-key'))->first()) {
             return response(['Llave no encontrada.'],404);
         }
 
