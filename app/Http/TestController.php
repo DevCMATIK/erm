@@ -34,8 +34,7 @@ class TestController extends SoapController
 
     public function __invoke()
     {
-        $date = '2020-04-07 23:58:56';
-       dd(Carbon::parse($date)->subDay()->toDateTimeString());
+        dd(hash('sha256', Str::random(40)));
     }
 
 
