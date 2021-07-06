@@ -16,4 +16,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get-sensors-data','Api\Sensor\GetSensorApiController@index');
+Route::get('/get-sensors-data','Api\Sensor\GetSensorsApiController@index');
