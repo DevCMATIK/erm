@@ -25,7 +25,7 @@ class GetSensorsApiController extends Controller
         $data = array();
         foreach($api->sensors as $sensor) {
             $s = $this->getSensorById($sensor->sensor_id);
-            $analogous_data = $this->getAnalogousValue($s,true);
+            $analogous_data = $this->getAnalogousValue($s);
 
             array_push($data,[
                 'name' => $s->device->check_point->name,
